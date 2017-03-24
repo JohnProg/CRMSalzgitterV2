@@ -1,0 +1,5 @@
+<md-select flex="100" #crmselect name="{{cName}}"  placeholder="{{placeholder}}" [(ngModel)]="value" >
+      <md-option *ngFor="let itm of itemList" [value]="itm.id">
+        {{itm.name}} - {{itm.description}}
+      </md-option>
+</md-select>

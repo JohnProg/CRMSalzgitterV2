@@ -1,0 +1,68 @@
+<md-card flex>
+
+  <md-card-content>
+
+    <form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
+      <section *ngIf="isEditing">
+
+        <div layout="column" layout-margin>
+
+          <md-input-container class="example-full-width">
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="Name" maxlength="150">
+            <md-hint align="end">{{name.value.length}} / 150</md-hint>
+          </md-input-container>
+
+
+          <md-input-container class="example-full-width">
+            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.Description" required placeholder="Description"
+              maxlength="150">
+            <md-hint align="end">{{description.value.length}} / 150</md-hint>
+          </md-input-container>
+
+          <div flex="20">
+
+            <md-input-container class="example-full-width">
+              <input mdInput #aSign name="aSign" [(ngModel)]="itemEdit.ASign" required placeholder="Sign" value="" maxlength="50">
+              <md-hint align="end">{{aSign.value.length}} / 50</md-hint>
+            </md-input-container>
+
+          </div>
+        </div>
+        <div layout="row" flex layout-align="end center">
+          <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
+                   <md-icon>highlight_off</md-icon>
+                    </button>
+          <button md-button type="button" class="md-icon-button md-primary" (click)="saveEntity()" [disabled]="!f.valid" aria-label="Save Item">
+                   <md-icon>save</md-icon>
+          </button>
+
+        </div>
+      </section>
+    </form>
+
+    <section *ngIf="!isEditing">
+
+      <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+        <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+          <div layout="row">
+            <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+          </div>
+        </template>
+
+        <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+          <div layout="row" flex="5">
+
+            <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+          </div>
+        </template>
+
+      </td-data-table>
+      <td-paging-bar [firstLast]="false" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+        (change)="change($event)">
+      </td-paging-bar>
+    </section>
+  </md-card-content>
+
+</md-card>

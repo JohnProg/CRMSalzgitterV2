@@ -1,0 +1,7 @@
+
+
+ <md-select flex="100" #idFamily name="idFamily"  placeholder="{{cplaceholder}}" [(ngModel)]="itemEdit.idFamily" >
+      <md-option *ngFor="let i of familyList" [value]="i.id">
+        {{i.name}} - {{i.description}}
+      </md-option>
+    </md-select>

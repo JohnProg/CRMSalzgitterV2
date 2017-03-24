@@ -1,0 +1,13 @@
+<td-layout #layout >
+  <md-nav-list menu-items>
+    <template let-item let-last="last" ngFor [ngForOf]="routes ">
+      <td-expansion-panel label="{{item.title}}" >
+          <template let-item  let-last="last" ngFor [ngForOf]="item.items">
+            <a md-list-item  [routerLink]="[item.route]" (click)="layout.close()"><md-icon>{{item.icon}}</md-icon>{{item.title}}</a>
+          </template>
+
+    </td-expansion-panel>
+    </template>
+  </md-nav-list>
+  <router-outlet></router-outlet>
+</td-layout>

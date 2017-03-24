@@ -1,0 +1,177 @@
+<td-layout-nav logo="assets:covalent">
+
+  <td-layout-manage-list #manageList
+                        [opened]="media.registerQuery('gt-sm') | async"
+                        [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'push'"
+                        [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
+    <md-toolbar td-sidenav-content>
+      <span>Catalogs</span>
+    </md-toolbar>
+    <md-nav-list td-sidenav-content>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['currency']">
+        <md-icon md-list-icon>dashboard</md-icon>
+        Currency
+      </a>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['colonytype']">
+        <md-icon md-list-icon>insert_chart</md-icon>
+        Colony Type
+      </a>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['country']">
+        <md-icon md-list-icon>star</md-icon>
+        Countries
+      </a>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['department']">
+        <md-icon md-list-icon>star</md-icon>
+        Departments
+      </a>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['documenttype']">
+        <md-icon md-list-icon>star</md-icon>
+        Document Type
+      </a>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['family']">
+        <md-icon md-list-icon>star</md-icon>
+        Family
+      </a>
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['linerterm']">
+        <md-icon md-list-icon>star</md-icon>
+        Liner Term
+      </a>  
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['market']">
+        <md-icon md-list-icon>star</md-icon>
+        Market
+      </a>  
+      <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['mill']">
+        <md-icon md-list-icon>star</md-icon>
+        Mills
+      </a> 
+
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['organization']">
+        <md-icon md-list-icon>star</md-icon>
+        Organization
+      </a>
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['paymentterm']">
+        <md-icon md-list-icon>star</md-icon>
+        Payment Term
+      </a>
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['port']">
+        <md-icon md-list-icon>star</md-icon>
+        Port
+      </a>
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['position']">
+        <md-icon md-list-icon>star</md-icon>
+        Position
+      </a>
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['property']">
+        <md-icon md-list-icon>star</md-icon>
+        Property
+      </a>
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['sector']">
+        <md-icon md-list-icon>star</md-icon>
+        Sector
+      </a>
+            <a md-list-item 
+        md-ripple class="block relative"
+        (click)="!media.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="['tender']">
+        <md-icon md-list-icon>star</md-icon>
+        Tender
+      </a>
+
+    </md-nav-list>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      
+      <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+            <span class="md-title">{{catalogTitle}}</span>
+      </span>
+      
+      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" (searchDebounce)="search($event)"
+        flex>
+      </td-search-box>
+      <button md-mini-fab class="md-mini md-primary" (click)="addItem()" aria-label="Add Item" >
+        <md-icon>add</md-icon>
+      </button>
+
+
+    </div>
+    <router-outlet></router-outlet>
+  </td-layout-manage-list>
+</td-layout-nav>
+
+

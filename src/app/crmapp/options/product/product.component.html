@@ -1,0 +1,73 @@
+
+
+  <md-card>
+    <md-card-content>
+    <td-data-table  [data]="entList | async" [columns]="columns" [sortable]="true" 
+           [sortBy]="sortBy" [sortOrder]="sortOrder"
+           (sortChange)="getSorted($event)">
+      <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+          
+       <a md-list-item 
+        md-ripple class="block relative"
+        [routerLink]="'edit/4'">
+
+        {{value}}
+      </a>
+       
+      </template>
+      <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+        <div layout="row" flex="5">
+          
+          <button md-icon-button (click)="confirmDelete(confirmDialog, row)" >
+            <md-icon>delete</md-icon>
+          </button>
+        </div>
+      </template>
+
+    </td-data-table>
+    
+    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="[5,10,20,50,100]" [pageSize]="5" [total]="totalItems"
+      (change)="change($event)">
+    </td-paging-bar>
+
+
+    <router-outlet></router-outlet>
+    </md-card-content>
+  </md-card>
+
+
+
+
+  <md2-dialog #confirmProperty>
+    <md2-dialog-title>Delete {{deleteCaption}}</md2-dialog-title>
+    <p>Would you like to delete</p>
+    <h4> {{deleteText}}</h4>
+    <div flex="100" layout="column" layout-align="end end" layout-margin>
+      <div flex="20">
+        <button md-icon-button (click)="confirmProperty.close()" aria-label="Cancel Delete"> 
+        <md-icon>clear</md-icon>
+      </button>
+        <button md-icon-button (click)="deleteProperty(confirmProperty)" aria-label="Delete"> 
+        <md-icon>done</md-icon>
+      </button>
+      </div>
+    </div>
+  </md2-dialog>
+
+<md2-dialog #confirmDialog>
+  <md2-dialog-title>Delete {{catalogName}}</md2-dialog-title>
+  <p>Would you like to delete</p>
+  <h4> {{itemEdit.name}}</h4>
+  <div flex="100" layout="column" layout-align="end end" layout-margin>
+    <div flex="20">
+      <button md-icon-button (click)="confirmDialog.close()" aria-label="Cancel Delete"> 
+        <md-icon>clear</md-icon>
+      </button>
+      <button md-icon-button (click)="deleteConfirmed(confirmDialog)" aria-label="Delete"> 
+        <md-icon>done</md-icon>
+      </button>
+    </div>
+  </div>
+</md2-dialog>
+
+

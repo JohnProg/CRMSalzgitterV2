@@ -1,0 +1,68 @@
+import { CurrencyComponent } from './crmapp/catalogs/currency/currency.component';
+import { ActionCatalogComponent } from './crmapp/components/action-catalog/action-catalog.component';
+import { ColonytypeComponent } from './crmapp/catalogs/colonytype.component';
+import { DepartmentComponent } from './crmapp/catalogs/department.component';
+
+import { DocumentTypeComponent } from './crmapp/catalogs/documenttype.component';
+import { FamilyComponent } from './crmapp/catalogs/family.component';
+import { LinerTermComponent } from './crmapp/catalogs/linerterm.component';
+import { MarketComponent } from './crmapp/catalogs/market.component';
+import { MillComponent } from './crmapp/catalogs/mills.component';
+import { MotiveDiferenceComponent } from './crmapp/catalogs/motivediference.component';
+import { OrganizationComponent } from './crmapp/catalogs/organization.component';
+import { PaymentTermComponent } from './crmapp/catalogs/paymentterm.component';
+import { PortComponent } from './crmapp/catalogs/port.component';
+import { PositionComponent } from './crmapp/catalogs/position.component';
+import { PropertyComponent } from './crmapp/catalogs/property.component';
+import { RailSpurTypeComponent } from './crmapp/catalogs/railspurtype.component';
+import { RailwayComponent } from './crmapp/catalogs/railway.component';
+import { SectorComponent } from './crmapp/catalogs/sector.component';
+
+import { StatusBidComponent } from './crmapp/catalogs/statusbid.component';
+import { StatusCampaignComponent } from './crmapp/catalogs/statuscampaign.component';
+import { StatusProjectComponent } from './crmapp/catalogs/statusproject.component';
+import { TenderComponent } from './crmapp/catalogs/tender.component';
+import { ActionoppComponent } from './crmapp/catalogs/actionopp/actionopp.component';
+import { CbxstatusoppComponent } from './crmapp/components/cbxstatusopp/cbxstatusopp.component';
+import { CbxstatusbidComponent } from './crmapp/components/cbxstatusbid/cbxstatusbid.component';
+import { CbxtemplateemailComponent } from './crmapp/components/cbxtemplateemail/cbxtemplateemail.component';
+import { CountryComponent } from './crmapp/catalogs/country.component';
+import { StateComponent } from './crmapp/catalogs/state/state.component';
+import { CbxcountryComponent } from './crmapp/components/cbxcountry/cbxcountry.component';
+import { IncotermComponent } from './crmapp/catalogs/incoterm/incoterm.component';
+import { CompanyComponent } from './crmapp/options/company/company.component';
+import { CatalogComponent } from './crmapp/catalogs/catalog/catalog.component';
+import { CbxcolonyComponent } from './crmapp/components/cbxcolony/cbxcolony.component';
+import { ProductComponent } from './crmapp/options/product/product.component';
+import { CbxfamilyComponent } from './crmapp/components/cbxfamily/cbxfamily.component';
+import { CrmSelectComponent } from './crmapp/components/crmselect/crmselect.component';
+
+
+
+
+    CurrencyComponent,
+    ColonytypeComponent,
+    DepartmentComponent,
+    DocumentTypeComponent,
+    FamilyComponent,
+    LinerTermComponent,
+    MarketComponent,
+    MillComponent,
+    MotiveDiferenceComponent,
+    OrganizationComponent,
+    PaymentTermComponent,
+    PortComponent,
+    PositionComponent, PropertyComponent, RailSpurTypeComponent,
+    RailwayComponent, SectorComponent, StatusBidComponent, StatusCampaignComponent,
+    StatusProjectComponent, TenderComponent, ActionoppComponent, 
+    CbxstatusoppComponent, CbxstatusbidComponent, CbxtemplateemailComponent,
+    CountryComponent,
+    StateComponent,
+    CbxcountryComponent,
+    IncotermComponent,
+    CompanyComponent,
+    CatalogComponent,
+    CbxcolonyComponent,
+    ProductComponent,
+    CbxfamilyComponent,
+    CrmSelectComponent,
