@@ -12,6 +12,7 @@ import { MainComponent } from './main/main.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { UsersFormComponent } from './users/form/form.component';
+import { UsersFormComponent2 } from './users/+form/form.component';
 import { LogsComponent } from './logs/logs.component';
 import { FormComponent } from './form/form.component';
 import { DetailComponent } from './detail/detail.component';
@@ -21,11 +22,14 @@ import { ProductOverviewComponent } from './dashboard-product/overview/overview.
 import { ProductStatsComponent } from './dashboard-product/stats/stats.component';
 import { ProductFeaturesComponent } from './dashboard-product/features/features.component';
 import { FeaturesFormComponent } from './dashboard-product/features/form/form.component';
+import { FeaturesFormComponent2 } from './dashboard-product/features/+form/form.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { DashboardTemplateComponent } from './templates/dashboard/dashboard.component';
 import { EmailTemplateComponent } from './templates/email/email.component';
 import { EditorTemplateComponent } from './templates/editor/editor.component';
 import { appRoutes, appRoutingProviders } from './app.routes';
+import { ButtonDisableFix } from '../directives/button-disable-fix.directive';
+
 
 import { ChartComponent } from '../components/chart/chart.component';
 
@@ -40,10 +44,11 @@ const httpInterceptorProviders: Type<any>[] = [
 
 
 //catalogs
+import { BaseComponent } from './crmapp/catalogs/base.component';
 import { CatalogComponent } from './crmapp/catalogs/catalog.component';
 import { OptionsComponent } from './crmapp/options/options.component';
 import { CurrencyComponent } from './crmapp/catalogs/currency/currency.component';
-import { ActionCatalogComponent } from './crmapp/components/action-catalog/action-catalog.component';
+
 import { ColonytypeComponent } from './crmapp/catalogs/genericcatalogs/colonytype.component';
 import { DepartmentComponent } from './crmapp/catalogs/genericcatalogs/department.component';
 import { DocumentTypeComponent } from './crmapp/catalogs/genericcatalogs/documenttype.component';
@@ -88,8 +93,10 @@ import { CompanyComponent } from './crmapp/options/company/company.component';
     ProductStatsComponent,
     ProductFeaturesComponent,
     FeaturesFormComponent,
+    FeaturesFormComponent2,
     UsersComponent,
     UsersFormComponent,
+    UsersFormComponent2,
     LogsComponent,
     FormComponent,
     DetailComponent,
@@ -99,9 +106,9 @@ import { CompanyComponent } from './crmapp/options/company/company.component';
     DashboardTemplateComponent,
     EmailTemplateComponent,
     EditorTemplateComponent,
+ButtonDisableFix,
 
-
-//    ActionCatalogComponent,
+    BaseComponent,
     CurrencyComponent,
     ColonytypeComponent,
     DepartmentComponent,
@@ -128,8 +135,8 @@ import { CompanyComponent } from './crmapp/options/company/company.component';
     CbxcolonyComponent,
     OptionsComponent,
 
-    //CompanyComponent,
-    //ProductComponent, ProducteditorComponent,
+    CompanyComponent,
+    ProductComponent, ProducteditorComponent,
     CbxfamilyComponent,
     CrmSelectComponent,
     

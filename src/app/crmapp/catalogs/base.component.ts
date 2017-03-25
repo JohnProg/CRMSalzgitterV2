@@ -13,6 +13,7 @@ import {
 import { MdSnackBar } from '@angular/material';
 
 
+
 import { TCRMEntity } from '../model/allmodels';
 import { ActionsService } from '../services/actions.services';
 
@@ -214,6 +215,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
       this.currentPage = event.page;
       this.pageSize = event.pageSize;
     }
+    
     this.reloadPaged();
     //this._curService.getPaged(event);
   }

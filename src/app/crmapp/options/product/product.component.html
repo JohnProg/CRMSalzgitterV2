@@ -38,36 +38,5 @@
 
 
 
-  <md2-dialog #confirmProperty>
-    <md2-dialog-title>Delete {{deleteCaption}}</md2-dialog-title>
-    <p>Would you like to delete</p>
-    <h4> {{deleteText}}</h4>
-    <div flex="100" layout="column" layout-align="end end" layout-margin>
-      <div flex="20">
-        <button md-icon-button (click)="confirmProperty.close()" aria-label="Cancel Delete"> 
-        <md-icon>clear</md-icon>
-      </button>
-        <button md-icon-button (click)="deleteProperty(confirmProperty)" aria-label="Delete"> 
-        <md-icon>done</md-icon>
-      </button>
-      </div>
-    </div>
-  </md2-dialog>
-
-<md2-dialog #confirmDialog>
-  <md2-dialog-title>Delete {{catalogName}}</md2-dialog-title>
-  <p>Would you like to delete</p>
-  <h4> {{itemEdit.name}}</h4>
-  <div flex="100" layout="column" layout-align="end end" layout-margin>
-    <div flex="20">
-      <button md-icon-button (click)="confirmDialog.close()" aria-label="Cancel Delete"> 
-        <md-icon>clear</md-icon>
-      </button>
-      <button md-icon-button (click)="deleteConfirmed(confirmDialog)" aria-label="Delete"> 
-        <md-icon>done</md-icon>
-      </button>
-    </div>
-  </div>
-</md2-dialog>
 
 

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CurrencyComponent } from './currency/currency.component';
 
 @NgModule({
-    declarations: [CurrencyComponent],
-    exports: [CurrencyComponent]
+    declarations: [],
+    exports: []
 })
 export class CatalogsModule {
 

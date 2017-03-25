@@ -10,7 +10,7 @@ import { FeaturesService, IFeature } from '../../../../services';
   styleUrls: ['./form.component.scss'],
   viewProviders: [ FeaturesService ],
 })
-export class FeaturesFormComponent implements OnInit  {
+export class FeaturesFormComponent2 implements OnInit  {
   id: string;
   title: string;
   icon: string;

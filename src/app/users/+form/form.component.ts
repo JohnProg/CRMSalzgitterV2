@@ -12,7 +12,7 @@ import { UsersService, IUser } from '../../../services';
   styleUrls: ['./form.component.scss'],
   viewProviders: [ UsersService ],
 })
-export class UsersFormComponent implements OnInit, AfterViewInit {
+export class UsersFormComponent2 implements OnInit, AfterViewInit {
 
   displayName: string;
   email: string;
