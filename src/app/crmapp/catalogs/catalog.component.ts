@@ -179,7 +179,9 @@ export class CatalogComponent implements OnInit, AfterViewInit {
     public media: TdMediaService,
     public _actions: ActionsService) {
 
-
+    this.catalogs = this.catalogs.sort() (a : MenuClass, b : MenuClass) => {
+       return a.displayName > b.displayName;
+    });
   }
 
   ngOnInit() {

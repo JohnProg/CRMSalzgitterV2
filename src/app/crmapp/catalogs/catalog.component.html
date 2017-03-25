@@ -11,7 +11,7 @@
 
 
 
-      <template let-item  ngFor [ngForOf]="catalogs | orderBy: 'displayName' ">
+      <template let-item  ngFor [ngForOf]="catalogs  ">
         <a md-list-item 
           md-ripple class="block relative"
           (click)="!media.query('gt-sm') && manageList.close()"
