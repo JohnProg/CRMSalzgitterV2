@@ -37,10 +37,6 @@ export class PositionComponent extends BaseComponent {
     this._curService.setAPI('Position/', this.catalogName);
   }
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

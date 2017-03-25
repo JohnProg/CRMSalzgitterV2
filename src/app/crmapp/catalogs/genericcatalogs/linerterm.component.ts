@@ -31,17 +31,11 @@ export class LinerTermComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-     this.catalogName = 'Opp Action';
-     this._curService.setAPI('ActionOpportunity/', this.catalogName);
-  }
-
-
-  ngOnInit() {
     this.catalogName = 'Liner Term';
     this._curService.setAPI('LinerTerm/', this.catalogName);
-    this.initData();
-      this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-   
   }
+
+
+
 
 }

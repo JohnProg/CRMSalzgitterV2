@@ -35,10 +35,6 @@ export class SectorComponent extends BaseComponent {
     this.catalogName = 'Sector';
     this._curService.setAPI('Sector/', this.catalogName);
   }
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

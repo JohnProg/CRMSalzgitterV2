@@ -55,12 +55,12 @@ export class BaseComponent implements OnInit, AfterViewInit {
   searchTerm: string = '';
   fromRow: number = 1;
   currentPage: number = 1;
-  pageSize: number = this._confs.pageSize;
+  pageSize: number; //this._confs.pageSize;
   sortBy: string = 'Name';
   sortType: string = "ASC"
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
-  pagesArray : number[] =  [5,8, 10,13, 20,50,100];
+  pagesArray: number[] = [5, 8, 10, 13, 20, 50, 100];
 
   emailTo: TCRMEntity[] = <TCRMEntity[]>[
     { Id: 1, Name: 'Internal' },
@@ -88,9 +88,16 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
-
+    this.ngOnInitClass();
   }
+
+
+  ngOnInitClass() {
+    this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
+    
+    this.initData();
+  }
+
 
   ngAfterViewInit(): void {
     // broadcast to all listener observables when loading the page
@@ -211,13 +218,15 @@ export class BaseComponent implements OnInit, AfterViewInit {
   }
 
   change(event: IPChangeEventSorted): void {
-    if (event != undefined) {
+    
+    if (event !== undefined) {
       this.currentPage = event.page;
       this.pageSize = event.pageSize;
     }
+
+      this.reloadPaged();
+      //this._curService.getPaged(event);
     
-    this.reloadPaged();
-    //this._curService.getPaged(event);
   }
 
 
@@ -249,9 +258,10 @@ export class BaseComponent implements OnInit, AfterViewInit {
   }
 
   page(pagingEvent: IPChangeEventSorted): void {
+
     this.fromRow = pagingEvent.fromRow;
     this.currentPage = pagingEvent.page;
-    this.pageSize = pagingEvent.pageSize;
+    //this.pageSize = pagingEvent.pageSize;
     this.reloadPaged();
   }
 
@@ -292,7 +302,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
           this.pageSize = 8;
           this.currentPage = 1;
-          this.change(undefined);
+          // this.change(undefined);
         }
       });
     });
@@ -305,7 +315,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
           this.pageSize = 13;
           this.currentPage = 1;
-          this.change(undefined);
+          // this.change(undefined);
         }
 
       });
@@ -319,7 +329,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
           this.pageSize = 10;
           this.currentPage = 1;
-          this.change(undefined);
+          //this.change(undefined);
         }
 
       });
@@ -334,7 +344,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
           this.pageSize = 13;
           this.currentPage = 1;
-          this.change(undefined);
+          //this.change(undefined);
         }
 
       });

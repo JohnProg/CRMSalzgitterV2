@@ -38,10 +38,6 @@ export class OrganizationComponent extends BaseComponent {
   }
 
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

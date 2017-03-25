@@ -40,17 +40,13 @@ export class CurrencyComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-
-  }
-
-  ngOnInit() {
-
-
     this.catalogName = 'Currencies';
     this._curService.setAPI('Currency', this.catalogName);
-    this.initData();
-    this.entList = <Observable<Currency[]>>this._curService.entList;
+  }
 
+  ngOnInitClass() {
+    this.entList = <Observable<Currency[]>>this._curService.entList;
+    this.initData();
   }
 
   ngAfterViewInit(): void {

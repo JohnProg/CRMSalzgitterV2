@@ -36,10 +36,6 @@ export class PortComponent extends BaseComponent {
     this._curService.setAPI('Port/', this.catalogName);
   }
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

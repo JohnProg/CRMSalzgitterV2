@@ -35,14 +35,5 @@ export class ColonytypeComponent extends BaseComponent {
     this._curService.setAPI('ColonyType/', this.catalogName);
   }
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
-
-  ngAfterViewInit(): void {
-    super.ngAfterViewInit();
-    
-  }  
 }

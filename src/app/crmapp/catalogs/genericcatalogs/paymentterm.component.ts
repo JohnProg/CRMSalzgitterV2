@@ -35,10 +35,6 @@ export class PaymentTermComponent extends BaseComponent {
     this._curService.setAPI('PaymentTerm/', this.catalogName);
   }
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

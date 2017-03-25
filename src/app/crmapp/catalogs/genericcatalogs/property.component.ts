@@ -36,10 +36,5 @@ export class PropertyComponent extends BaseComponent {
     this._curService.setAPI('Property/', this.catalogName);
   }
 
-  ngOnInit() {
-
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

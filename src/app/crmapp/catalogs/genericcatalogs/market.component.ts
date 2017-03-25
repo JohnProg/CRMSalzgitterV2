@@ -35,10 +35,6 @@ export class MarketComponent extends BaseComponent {
     this._curService.setAPI('Market/', this.catalogName);
   }
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }

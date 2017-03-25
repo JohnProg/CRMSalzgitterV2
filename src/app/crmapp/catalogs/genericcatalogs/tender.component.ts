@@ -36,10 +36,6 @@ export class TenderComponent extends BaseComponent {
     this._curService.setAPI('Tender/', this.catalogName);
   }
 
-  ngOnInit() {
 
-    this.initData();
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-  }
 
 }
