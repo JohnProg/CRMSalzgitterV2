@@ -29,6 +29,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
   private addEvent;
   private searchEvent;
   private deleteConfEvent;
+  private saveEvent;
   protected _querySubscriptionxs: Subscription;
   protected _querySubscriptionsm: Subscription;
   protected _querySubscriptionmd: Subscription;
@@ -55,7 +56,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
   searchTerm: string = '';
   fromRow: number = 1;
   currentPage: number = 1;
-  pageSize: number; //this._confs.pageSize;
+  pageSize: number = this._confs.pageSize;
   sortBy: string = 'Name';
   sortType: string = "ASC"
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
@@ -69,7 +70,9 @@ export class BaseComponent implements OnInit, AfterViewInit {
   ];
   autoLoad: boolean = true;
 
-
+  private afterLoadEvent;
+  private afterCreateEvent;
+  private afterUpdateEvent;
 
   constructor(public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -79,7 +82,9 @@ export class BaseComponent implements OnInit, AfterViewInit {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
 
-    this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
+    this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
+    this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
+    this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
     this.addColumns();
     this.addActionColumn();
 
@@ -102,6 +107,11 @@ export class BaseComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
+
+    this.saveEvent = this._actions.saveItem().subscribe( (save) => {
+       
+       this.saveEntity();
+    });
 
     this.addEvent = this._actions.addItem()
       .subscribe((res) => {
@@ -134,7 +144,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
     this._actions.updateTitle(this.catalogName);
     this._actions.showAdd(true);
     this._actions.showSearch(true);
-    this._actions.showSave(true);
+    this._actions.showSave(false);
     this._actions.showCancel(true);
 
   }
@@ -153,6 +163,12 @@ export class BaseComponent implements OnInit, AfterViewInit {
     if (this.addEvent !== undefined) { this.addEvent.unsubscribe(); }
     if (this.searchEvent !== undefined) { this.searchEvent.unsubscribe(); }
     if (this.deleteConfEvent !== undefined) { this.deleteConfEvent.unsubscribe(); }
+    if (this.saveEvent !== undefined) { this.saveEvent.unsubscribe(); }
+        
+    if (this.afterLoadEvent !== undefined) { this.afterLoadEvent.unsubscribe(); }
+    if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
+    if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
+    
   }
 
   addColumns() {
@@ -168,7 +184,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
   initData() {
 
-    this.watchScreen();
+
     if (this.autoLoad === true) {
       //this.reloadPaged();
     }
@@ -181,6 +197,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
     this.totalItems$ = this._curService.totalItems$.subscribe(total => {
       this.totalItems = total;
     });
+        this.watchScreen();
   }
 
 
@@ -215,6 +232,14 @@ export class BaseComponent implements OnInit, AfterViewInit {
     } else {
       this._curService.create(this.itemEdit);
     }
+  }
+
+  afterCreate(item: TCRMEntity) {
+debugger
+  }
+
+  afterUpdate(item: TCRMEntity) {
+debugger
   }
 
   change(event: IPChangeEventSorted): void {

@@ -1,82 +1,46 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
-import { CatalogService } from '../../services/catalog.service';
-import { Title }     from '@angular/platform-browser';
-import { ActionsService } from '../../services/actions.services';
+import { Component, AfterViewInit, ViewChild, ContentChild } from '@angular/core';
 
-import { ConfigurationService } from '../../services/configuration.service';
+import { Title } from '@angular/platform-browser';
+import { CatalogComponent } from '../../catalogs/catalog.component';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+         TdLoadingService, TdDialogService, TdMediaService, TdSearchBoxComponent } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 
-import { Product, ProductProperty } from '../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { BaseComponent } from '../../catalogs/base.component';
-import { CbxfamilyComponent } from '../../components/cbxfamily/cbxfamily.component';
+import { MenuClass } from '../../model/menuclass';
+
+
+import { ActionsService } from '../../services/actions.services';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
 @Component({
   selector: 'crm-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss'],
-  providers: [CatalogService, ConfigurationService ]
+  styleUrls: ['./product.component.scss']
 })
-export class ProductComponent extends BaseComponent {
+export class ProductComponent    {
 
-pTitle: string;
+
+  constructor(
+              public _loadingService: TdLoadingService,
+              public _dialogService: TdDialogService,
+              public _snackBarService: MdSnackBar,
+              public media: TdMediaService,  
+              public _actions: ActionsService,
+               ) { 
+              
+              //super(_loadingService, _dialogService, _snackBarService, media, _actions);
+
+              }
+
+  ngOnInitClass() {
+
+  }
+
+
+
 
   
-familyList: any[] ;
-propColumns: ITdDataTableColumn[] = [];
-deleteCaption: string;
-deleteText: string;
-currentProp: ProductProperty;
-
-
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-    this.catalogName = 'Product';
-    this._curService.setAPI('Product', this.catalogName);
-  }
-
-  ngOnInit() {
-    this.familyList = new Array<any>();
-    this.pTitle = '';
-
-    this._curService.loadCatalog('Family/', this.familyList, undefined);
-
-    this.initData();
-    this.entList = <Observable<Product[]>> this._curService.entList;
-
-    this.addPropColumns();
-  }
-
-  addPropColumns() {
-    this.propColumns.push({ name: 'POrder', label: 'Order' });
-    this.propColumns.push({ name: 'Property.name', label: 'Name' });
-    this.propColumns.push({ name: 'Property.description', label: 'Description' });
-    this.propColumns.push({ name: 'IsRequired', label: 'Required' });
-    this.propColumns.push({ name: 'tActions', label: '' });
-  }
-
-  deleteProperty(confirm: any) {
-      //this(this.currentProp.id);
-      //confirm.close();
-  }
-
-
-  confirmDeleteProperty(confirm: any, item: ProductProperty) {
-      this.currentProp = item;
-      this.deleteCaption = "Property";
-      this.deleteText = item.Property.Name;
-      confirm.show();
-    }
 }

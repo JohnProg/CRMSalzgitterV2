@@ -73,6 +73,11 @@ export class CatalogService {
 
 
   afterLoadEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  
+  afterUpdateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  afterCreateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+
+
   _rest: CRMRestService;
 
 
@@ -219,6 +224,10 @@ export class CatalogService {
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeState(false);
         this._snackBarService.open(this.catalogName + ' have been created', 'Ok');
+        this.itemEdit.Id = data.Id;
+        debugger
+        this.afterCreateEmitter.emit(data);
+        
 
       }, error => {
         this._loadingService.resolve('users.list');
@@ -239,6 +248,8 @@ export class CatalogService {
         this.changeState(false);
         this._loadingService.resolve('users.list');
         this._snackBarService.open(this.catalogName + ' have been Updated', 'Ok');
+        
+        this.afterUpdateEmitter.emit(data);
 
       }, error => {
 

@@ -11,15 +11,8 @@ import { MdSnackBar } from '@angular/material';
 import { ActionsService } from '../services/actions.services';
 import { CurrencyComponent } from './currency/currency.component';
 
+import { MenuClass } from '../model/menuclass';
 
-export class MenuClass {
-       name: string;
-       tooltip: string;
-       active: boolean;
-       routerlink: string;
-       icon: string;
-       displayName: string;
-}
 
 
 @Component({
@@ -35,9 +28,9 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   showSearch: boolean = true;
   showAdd: boolean = true;
   showCancel: boolean = true;
-  showSave: boolean = true;
+  showSave: boolean = false;
   showSideNav: boolean = true;
-
+  
 
 
   catalogs : MenuClass[] =  [
@@ -161,14 +154,7 @@ export class CatalogComponent implements OnInit, AfterViewInit {
        icon: 'euro_symbol',
        displayName: 'Tender',
      },      
-     {
-       name: 'tender',
-       tooltip: 'Create edit Tender',
-       active: true,
-       routerlink: 'tender',
-       icon: 'euro_symbol',
-       displayName: 'Tender',
-     }, 
+
   ];
 
 
@@ -179,9 +165,7 @@ export class CatalogComponent implements OnInit, AfterViewInit {
     public media: TdMediaService,
     public _actions: ActionsService) {
 
-    this.catalogs = this.catalogs.sort() (a : MenuClass, b : MenuClass) => {
-       return a.displayName > b.displayName;
-    });
+
   }
 
   ngOnInit() {
@@ -200,6 +184,7 @@ export class CatalogComponent implements OnInit, AfterViewInit {
         this.deleteItem(res);
       });
 
+
     this._actions.showSearchEvent
       .subscribe((res) => {
         this.showSearch = res;
@@ -207,6 +192,7 @@ export class CatalogComponent implements OnInit, AfterViewInit {
 
     this._actions.showAddEvent
       .subscribe((res) => {
+        
         this.showAdd = res;
       });
     this._actions.showSaveEvent
@@ -227,6 +213,9 @@ export class CatalogComponent implements OnInit, AfterViewInit {
 
   }
 
+  saveItem() {
+    this._actions.saveItem().emit() 
+  }
   addItem() {
     this._actions.addItem().emit();
   }

@@ -12,16 +12,20 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
-
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-producteditor',
   templateUrl: './producteditor.component.html',
-  styleUrls: ['./producteditor.component.scss']
+  styleUrls: ['./producteditor.component.scss'],
+  providers: [CatalogService, ConfigurationService ],
 })
 export class ProducteditorComponent extends BaseComponent{
 
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
+
+  families : TCRMEntity[] = new Array<TCRMEntity>();
+
+  constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
@@ -29,20 +33,43 @@ export class ProducteditorComponent extends BaseComponent{
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-    this.catalogName = 'Colony Type';
-    this._curService.setAPI('ColonyType/', this.catalogName);
+    this.catalogName = 'Product';
+    this._curService.setAPI('Product/', this.catalogName);
   }
 
 
-  ngOnInit() {
+  ngOnInitClass() {
 
-    this.initData();
     this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
+
+    this._curService.loadCatalog('Family', this.families, null);
+
+    this._route.params.subscribe((params: {id: number}) => {
+      let itemId: number = params.id;
+      if( itemId > 0) {
+         this.editEntity(itemId);
+      } else {
+        this.addEntity();
+      }
+        
+    });
+  
+
+   
+    //this.initData();
+
   }
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    
+     this._actions.showAdd(false);
+     this._actions.showSearch(false);
+     this._actions.showSave(true);
+
   }  
+
+  afterSave(item: TCRMEntity) {
+    debugger
+  }
 
 }

@@ -80,6 +80,8 @@ import { CrmSelectComponent } from './crmapp/components/crmselect/crmselect.comp
 import { ProductComponent } from './crmapp/options/product/product.component';
 import { ProducteditorComponent } from './crmapp/options/product/producteditor/producteditor.component';
 import { CompanyComponent } from './crmapp/options/company/company.component';
+import { ProductindexComponent } from './crmapp/options/product/productindex/productindex.component';
+import { CbxFamilyDirective } from './crmapp/directives/cbx-family/cbx-family.directive';
 
 
 
@@ -139,6 +141,8 @@ ButtonDisableFix,
     ProductComponent, ProducteditorComponent,
     CbxfamilyComponent,
     CrmSelectComponent,
+    ProductindexComponent,
+    CbxFamilyDirective,
     
         
   ], // directives, components, and pipes owned by this NgModule

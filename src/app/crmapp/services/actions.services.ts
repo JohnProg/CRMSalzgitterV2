@@ -6,7 +6,10 @@ export class ActionsService {
     @Output() editItemEvent:EventEmitter<any>=new EventEmitter();
 
     @Output() deleteItemEvent : EventEmitter<any> =new EventEmitter();
+    @Output() saveItemEvent : EventEmitter<any> =new EventEmitter();
   
+
+
     @Output() deleteItemConfirmedEvent : EventEmitter<any>=new EventEmitter();
 
     @Output() updateTitleEvent : EventEmitter<string>=new EventEmitter<string>();
@@ -55,6 +58,10 @@ export class ActionsService {
 
     deleteItem() {
         return this.deleteItemEvent;
+     }
+
+     saveItem() {
+       return this.saveItemEvent;
      }
 
      deleteItemConfirmed() {

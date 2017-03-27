@@ -8,24 +8,17 @@
       <span>Catalogs</span>
     </md-toolbar>
     <md-nav-list td-sidenav-content>
-      <a md-list-item 
-        md-ripple class="block relative"
-        (click)="!media.query('gt-sm') && manageList.close()"
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{exact:true}"
-        [routerLink]="['products']">
-        <md-icon md-list-icon>dashboard</md-icon>
-        Product
-      </a>
-      <a md-list-item 
-        md-ripple class="block relative"
-        (click)="!media.query('gt-sm') && manageList.close()"
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{exact:true}"
-        [routerLink]="['company']">
-        <md-icon md-list-icon>dashboard</md-icon>
-        Company
-      </a>     
+      <template let-item  ngFor [ngForOf]="catalogs  ">
+        <a md-list-item 
+          md-ripple class="block relative"
+          (click)="!media.query('gt-sm') && manageList.close()"
+          [routerLinkActive]="[item.active]"
+          [routerLinkActiveOptions]="{exact:true}"
+          [routerLink]="[item.routerlink]">
+          <md-icon md-list-icon>{{item.icon}}</md-icon>
+          {{item.displayName}}
+        </a>
+      </template>
      
     </md-nav-list>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
@@ -37,6 +30,10 @@
 </div>
       <button md-mini-fab class="md-mini md-primary" (click)="addItem()" aria-label="Add Item" *ngIf="showAdd">
         <md-icon>add</md-icon>
+      </button>
+      <p *ngIf="showSave" flex></p>
+            <button md-mini-fab class="md-mini md-primary" (click)="saveItem()" aria-label="Save Item" *ngIf="showSave">
+        <md-icon>save</md-icon>
       </button>
     </div>
     <router-outlet></router-outlet>

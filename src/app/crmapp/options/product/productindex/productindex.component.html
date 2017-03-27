@@ -1,0 +1,42 @@
+
+
+  <md-card>
+    <md-card-content>
+    <td-data-table  [data]="entList | async" [columns]="columns" [sortable]="true" 
+           [sortBy]="sortBy" [sortOrder]="sortOrder"
+           (sortChange)="getSorted($event)">
+      <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+          
+       <a md-list-item 
+        md-ripple class="block relative"
+        [routerLink]="['edit', row.Id]">
+
+        {{value}}
+      </a>
+       
+      </template>
+      <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+        <div layout="row" flex="5">
+          
+          <button md-icon-button (click)="confirmDelete(confirmDialog, row)" >
+            <md-icon>delete</md-icon>
+          </button>
+        </div>
+      </template>
+
+    </td-data-table>
+    
+    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="[5,10,20,50,100]" [pageSize]="5" [total]="totalItems"
+      (change)="change($event)">
+    </td-paging-bar>
+
+
+    <router-outlet></router-outlet>
+    </md-card-content>
+  </md-card>
+
+
+
+
+
+

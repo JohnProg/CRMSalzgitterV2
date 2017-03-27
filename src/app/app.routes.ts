@@ -44,8 +44,9 @@ import { StateComponent } from './crmapp/catalogs/state/state.component';
 import { IncotermComponent } from './crmapp/catalogs/incoterm/incoterm.component';
 
 //options
-//import { ProductComponent } from './crmapp/options/product/product.component';
-//import { ProducteditorComponent } from './crmapp/options/product/producteditor/producteditor.component';
+import { ProductComponent } from './crmapp/options/product/product.component';
+import { ProductindexComponent } from './crmapp/options/product/productindex/productindex.component';
+import { ProducteditorComponent } from './crmapp/options/product/producteditor/producteditor.component';
 //import { CompanyComponent } from './crmapp/options/company/company.component';
 
 
@@ -111,13 +112,14 @@ const routes: Routes = [
         path: 'options', component: OptionsComponent,
         children: [
             //{ path: 'company', component: CompanyComponent },
-           // { 
-            //  path: 'products', 
-            //  component: ProductComponent,
-            //  children: [
-            //    { path: 'edit', component: ProducteditorComponent }
-            //  ]
-           // },
+            { 
+              path: 'products', 
+              component: ProductComponent,
+              children: [
+                { path: '', component: ProductindexComponent },   
+                { path: 'edit/:id', component: ProducteditorComponent }
+              ]
+            },
         ]
       },          
   ]},
