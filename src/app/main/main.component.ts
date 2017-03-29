@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class MainComponent {
 
-  routes: Object[] = [{
+  routes: Object[] = [
+/*    {
       title: 'Dashboard',
       route: '/',
       icon: 'dashboard',
@@ -28,7 +29,7 @@ export class MainComponent {
       title: 'Covalent Templates',
       route: '/templates',
       icon: 'view_module',
-    },
+    },*/
      {
       title: 'Catalogs',
       route: '/catalogs',
