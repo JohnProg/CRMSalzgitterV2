@@ -36,22 +36,7 @@ export class OptionsComponent extends CatalogComponent  {
 
 
   catalogs : MenuClass[] =  [
-     {
-       name: 'products',
-       tooltip: 'Create edit Product',
-       active: true,
-       routerlink: 'products',
-       icon: 'euro_symbol',
-       displayName: 'Product',
-     },
-     {
-       name: 'company',
-       tooltip: 'Create edit Company',
-       active: true,
-       routerlink: 'company',
-       icon: 'euro_symbol',
-       displayName: 'Company',
-     },
+    
   ];
 
   constructor(

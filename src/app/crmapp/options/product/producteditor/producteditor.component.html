@@ -29,9 +29,33 @@
       <section layout-lt-sm="column" layout="row" flex>
 <td-expansion-panel  label="Properties" flex  >
   
-  ... add content that will be shown when the step is "expanded"
+    <td-data-table  [data]="propList | async" [columns]="propColumns" [sortable]="true" 
+           [sortBy]="['POrder']" [sortOrder]="['ASC']"
+           (sortChange)="getPropSorted($event)">
+      <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+          
+       <a md-list-item 
+        md-ripple class="block relative"
+        [routerLink]="['edit', row.Id]">
 
+        {{value}}
+      </a>
+       
+      </template>
+      <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+        <div layout="row" flex="5">
+          
+          <button md-icon-button (click)="confirmDelete(confirmDialog, row)" >
+            <md-icon>delete</md-icon>
+          </button>
+        </div>
+      </template>
 
+    </td-data-table>
+    
+    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="[5,10,20,50,100]" [pageSize]="5" [total]="totalItems"
+      (change)="change($event)">
+    </td-paging-bar>
 </td-expansion-panel>
 
 
