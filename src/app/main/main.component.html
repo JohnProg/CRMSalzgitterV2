@@ -1,10 +1,24 @@
 <td-layout #layout>
-  <td-navigation-drawer logo="assets:covalent" sidenavTitle="Quickstart" name="Firstname Lastname" email="firstname.lastname@company.com">
-    <md-nav-list>
-      <template let-item let-last="last" ngFor [ngForOf]="routes">
-        <a md-list-item [routerLink]="[item.route]" (click)="layout.close()"><md-icon>{{item.icon}}</md-icon>{{item.title}}</a>
-      </template>
-    </md-nav-list>
+  <td-navigation-drawer logo="assets:logocrm" sidenavTitle="Quickstart" name="Firstname Lastname" email="firstname.lastname@company.com">
+
+      
+     <template let-item  ngFor [ngForOf]="routes">
+        <td-expansion-panel [label]="item.title"  [expand]="false" >
+              <md-nav-list td-sidenav-content>
+          <template let-mitem  ngFor [ngForOf]="item.childrens">
+            <a md-list-item  md-ripple [routerLink]="[item.route + '/' + mitem.routerlink]" ><md-icon>{{mitem.icon}}</md-icon>{{mitem.displayName}}</a>
+
+          </template>
+              </md-nav-list>
+      </td-expansion-panel>      
+
+     </template>
+
+
+
+
+
+    
     <md-nav-list td-navigation-drawer-menu>
       <a md-list-item (click)="logout()"><md-icon>exit_to_app</md-icon>Sign out</a>
     </md-nav-list>

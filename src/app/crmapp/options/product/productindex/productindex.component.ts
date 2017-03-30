@@ -14,6 +14,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../../catalogs/base.component';
 import { TCRMEntity } from '../../../model/allmodels';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-productindex',
@@ -29,7 +30,8 @@ export class ProductindexComponent extends BaseComponent  {
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
+    public _ngZone: NgZone,
+    private _router: Router) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
     this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
@@ -40,6 +42,11 @@ export class ProductindexComponent extends BaseComponent  {
     
     this.initData();
     this.reloadPaged();
+  }
+
+  editEntity(id: number) {
+    
+    this._router.navigate(['options/products/edit/' + id]);
   }
 
 

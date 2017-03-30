@@ -6,13 +6,11 @@
            [sortBy]="sortBy" [sortOrder]="sortOrder"
            (sortChange)="getSorted($event)">
       <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
-          
-       <a md-list-item 
+       <button md-button
         md-ripple class="block relative"
-        [routerLink]="['edit', row.Id]">
-
+        (click)="editEntity(row.Id)">
         {{value}}
-      </a>
+      </button>
        
       </template>
       <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
