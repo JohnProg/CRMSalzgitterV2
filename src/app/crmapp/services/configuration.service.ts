@@ -8,7 +8,7 @@ export class ConfigurationService {
     public server: string = environment.server;
     public appBase: string = environment.appBase;
     public apiUrl: string = 'api/';
-    public apiCsutomUrl: string = 'apicustom/';
+    public apiCsutomUrl: string = 'customapi/';
     public serverWithApiUrl = this.server + this.apiUrl;
     public serverWithApiCustomUrl = this.server + this.apiCsutomUrl;
     public pageSize: number = 5;

@@ -29,6 +29,11 @@ export class ProductProperty extends TCRMEntity {
    Property : Property;
 }
 
+export class GetProductProperty extends TCRMEntity {
+   POrder: number;
+   IsRequired: boolean;
+}
+
 export class Company extends TCRMEntity {
    zipCode: string;
 }

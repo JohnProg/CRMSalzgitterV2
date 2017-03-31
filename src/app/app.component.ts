@@ -28,7 +28,7 @@ export class AppComponent {
     this._iconRegistry.addSvgIconInNamespace('assets', 'querygrid',
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/querygrid.svg'));
     this._iconRegistry.addSvgIconInNamespace('assets', 'logocrm',
-      this._domSanitizer.bypassSecurityTrustResourceUrl('assets/logo/logo.svg'));      
+      this._domSanitizer.bypassSecurityTrustResourceUrl('assets/logo/logocrm.svg'));      
 
   }
 

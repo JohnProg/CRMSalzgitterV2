@@ -5,10 +5,9 @@
     <td-data-table  [data]="entList | async" [columns]="columns" [sortable]="true" 
            [sortBy]="sortBy" [sortOrder]="sortOrder"
            (sortChange)="getSorted($event)">
-      <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+      <template tdDataTableTemplate="POrder" let-value="value" let-row="row" let-column="column">
        <button md-button
-        md-ripple class="block relative"
-        (click)="editEntity(row.Id)">
+        md-ripple class="block relative" [routerLink]="['../edit', row.Id]">
         {{value}}
       </button>
        
@@ -29,7 +28,6 @@
     </td-paging-bar>
 
 
-    <router-outlet></router-outlet>
     </md-card-content>
   </md-card>
 

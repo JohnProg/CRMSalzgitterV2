@@ -52,13 +52,18 @@ export class CRMRestService extends RESTService<TCRMEntity>  {
 export class CatalogService {
 
 
-  private _entList: BehaviorSubject<TCRMEntity[]>;
+
+
+
   private headers: Headers;
   private dataStore: {
     entities: TCRMEntity[]
   };
 
+  private _entList: BehaviorSubject<TCRMEntity[]>;
   entList: Observable<TCRMEntity[]>
+
+
 
   capi: string;
   fullapi: string;
@@ -73,7 +78,7 @@ export class CatalogService {
 
 
   afterLoadEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
-  
+
   afterUpdateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   afterCreateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
 
@@ -93,6 +98,8 @@ export class CatalogService {
     this.dataStore = { entities: [] };
     this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
     this.entList = this._entList.asObservable();
+
+
     this.itemEdit = new TCRMEntity();
 
     this.isEditing$ = new Observable<boolean>(observer => this.isEditing = observer).share();
@@ -179,11 +186,11 @@ export class CatalogService {
     });
 
     this._rest.custommQuery('GetPaged', { search: pparams })
-      .map(response => response.json()).subscribe(result => {
+      .map((response) => response.json()).subscribe((result) => {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeTotal(result.Total);
-      }, error => {
+      }, (error) => {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
@@ -227,7 +234,7 @@ export class CatalogService {
         this.itemEdit.Id = data.Id;
         debugger
         this.afterCreateEmitter.emit(data);
-        
+
 
       }, error => {
         this._loadingService.resolve('users.list');
@@ -248,7 +255,7 @@ export class CatalogService {
         this.changeState(false);
         this._loadingService.resolve('users.list');
         this._snackBarService.open(this.catalogName + ' have been Updated', 'Ok');
-        
+
         this.afterUpdateEmitter.emit(data);
 
       }, error => {
@@ -281,17 +288,41 @@ export class CatalogService {
 
     let pparams = new URLSearchParams();
     if (cparams != undefined) {
-      cparams.forEach(element => {
+      cparams.forEach((element) => {
         pparams.set(element.Name, element.Description);
       });
     }
     this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams })
-      .map(response => response.json()).subscribe(data => {
+      .map((response) => response.json()).subscribe((data) => {
         Object.assign(catList, <TCRMEntity[]>data);
-      }, error => {
+      }, (error) => {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
+  }
+
+  loadCatalogObs(catalog: string, catList: Observable<TCRMEntity[]>, cparams: TCRMEntity[]) : any {
+    let pparams = new URLSearchParams();
+
+
+    if (cparams !== undefined) {
+      cparams.forEach((element) => {
+        pparams.set(element.Name, element.Description);
+      });
+    }
+    return this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams });
+  }
+
+    loadCustomCatalogObs(catalog: string, catList: Observable<TCRMEntity[]>, cparams: TCRMEntity[]) : any {
+    let pparams = new URLSearchParams();
+
+
+    if (cparams !== undefined) {
+      cparams.forEach((element) => {
+        pparams.set(element.Name, element.Description);
+      });
+    }
+    return this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams });
   }
 
   afterLoadEmmiterEvent(itm: TCRMEntity) {

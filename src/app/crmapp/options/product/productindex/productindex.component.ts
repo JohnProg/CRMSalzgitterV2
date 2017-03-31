@@ -50,4 +50,11 @@ export class ProductindexComponent extends BaseComponent  {
   }
 
 
+  addColumns() {
+    this.columns.push({ name: 'POrder', label: 'Order', tooltip: '' });
+    super.addColumns();
+    this.columns.push({ name: 'FamilyName', label: 'Family', tooltip: '' });
+    this.columns.push({ name: 'FamilyDescription', label: 'Fam. Description' })
+  }
+
 }

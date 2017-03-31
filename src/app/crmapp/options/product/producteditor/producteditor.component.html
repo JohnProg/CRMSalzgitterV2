@@ -27,11 +27,9 @@
       </section>
 
       <section layout-lt-sm="column" layout="row" flex>
-<td-expansion-panel  label="Properties" flex  >
+<td-expansion-panel  label="Properties" flex (expanded)="expandProperties()"  >
   
-    <td-data-table  [data]="propList | async" [columns]="propColumns" [sortable]="true" 
-           [sortBy]="['POrder']" [sortOrder]="['ASC']"
-           (sortChange)="getPropSorted($event)">
+    <td-data-table  [data]="propList | async " [columns]="propColumns"   >
       <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
           
        <a md-list-item 
@@ -45,17 +43,13 @@
       <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
         <div layout="row" flex="5">
           
-          <button md-icon-button (click)="confirmDelete(confirmDialog, row)" >
-            <md-icon>delete</md-icon>
-          </button>
+
         </div>
       </template>
 
     </td-data-table>
     
-    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="[5,10,20,50,100]" [pageSize]="5" [total]="totalItems"
-      (change)="change($event)">
-    </td-paging-bar>
+
 </td-expansion-panel>
 
 
