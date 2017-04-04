@@ -26,12 +26,15 @@ export class Product extends TCRMEntity {
 
 export class Property extends TCRMEntity {}
 export class ProductProperty extends TCRMEntity {
-   Property : Property;
+   POrder: number;
+   IsRequired: boolean;
+   IdProduct: number;
 }
 
 export class GetProductProperty extends TCRMEntity {
    POrder: number;
    IsRequired: boolean;
+   IdProperty: number;
 }
 
 export class Company extends TCRMEntity {

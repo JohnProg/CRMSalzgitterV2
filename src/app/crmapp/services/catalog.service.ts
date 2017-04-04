@@ -26,6 +26,8 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
 @Injectable()
 export class CRMRestService extends RESTService<TCRMEntity>  {
 
+
+
   constructor(private _http: Http, private _confs: ConfigurationService) {
     super(_http, {
       baseUrl: _confs.serverWithApiUrl,
@@ -34,26 +36,25 @@ export class CRMRestService extends RESTService<TCRMEntity>  {
       dynamicHeaders: () => new Headers(),
       transform: (res: Response): any => res.json(),
     });
+
+
   }
-
-
 
   public setPath(dpath: string) {
     this._path = dpath;
   }
 
+
   public custommQuery(action: string, sparams: any) {
     return this._http.get(this._base + '/' + this._path + '/' + action, sparams);
   }
+
+
 }
 
 
 @Injectable()
 export class CatalogService {
-
-
-
-
 
   private headers: Headers;
   private dataStore: {
@@ -62,8 +63,6 @@ export class CatalogService {
 
   private _entList: BehaviorSubject<TCRMEntity[]>;
   entList: Observable<TCRMEntity[]>
-
-
 
   capi: string;
   fullapi: string;
@@ -76,15 +75,12 @@ export class CatalogService {
   totalItems$: Observable<number>;
   totalItems: Observer<number>;
 
+  apiCustom: string;
 
   afterLoadEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
-
   afterUpdateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   afterCreateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
-
-
   _rest: CRMRestService;
-
 
   constructor(public _http: Http, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -92,8 +88,8 @@ export class CatalogService {
     public _snackBarService: MdSnackBar,
   ) {
     this.headers = new Headers();
-    this.headers.append('Accept', 'application/json');
-    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Accept', '');
+    this.headers.append('Content-Type', '');
 
     this.dataStore = { entities: [] };
     this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
@@ -102,10 +98,11 @@ export class CatalogService {
 
     this.itemEdit = new TCRMEntity();
 
-    this.isEditing$ = new Observable<boolean>(observer => this.isEditing = observer).share();
+    this.isEditing$ = new Observable<boolean>( (observer) => this.isEditing = observer).share();
 
-    this.totalItems$ = new Observable<number>(tobserver => this.totalItems = tobserver);
+    this.totalItems$ = new Observable<number>( (tobserver) => this.totalItems = tobserver);
     this._rest = new CRMRestService(_http, _confs);
+    this.apiCustom = _confs.serverWithApiCustomUrl;
   }
 
   setAPI(tapi: string, cName: string) {
@@ -114,7 +111,6 @@ export class CatalogService {
     this.fullapi = this._confs.serverWithApiUrl + this.capi;
     this.catalogName = cName;
   }
-
 
 
   changeState(newState: boolean) {
@@ -130,7 +126,6 @@ export class CatalogService {
   }
 
   loadAll() {
-
     this._rest.query().subscribe((datas: TCRMEntity[]) => {
       this.dataStore.entities = datas;
       this._entList.next(Object.assign({}, this.dataStore).entities);
@@ -143,11 +138,11 @@ export class CatalogService {
 
   customQuery(pfunc: string, cparams: TCRMEntity[]) {
     let pparams = new URLSearchParams();
-    cparams.forEach(element => {
+    cparams.forEach( (element) => {
       pparams.set(element.Name, element.Description);
     });
     return this._http.get(this.fullapi + pfunc, { search: pparams })
-      .map(response => response.json());
+      .map( (response) => response.json());
   }
 
   getPaged(p: IPChangeEventSorted) {
@@ -161,11 +156,11 @@ export class CatalogService {
     pparams.set('sText', p.sText);
 
     this._rest.custommQuery('GetPaged', { search: pparams })
-      .map(response => response.json()).subscribe(result => {
+      .map( (response) => response.json()).subscribe(result => {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeTotal(result.Total);
-      }, error => {
+      }, (error) => {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
@@ -176,12 +171,12 @@ export class CatalogService {
     let pparams = new URLSearchParams();
     pparams.set('page', p.page.toString());
     pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy == undefined) p.sortBy = "Name";
-    if (p.sortType == undefined) p.sortType = "ASC";
+    if (p.sortBy === undefined) { p.sortBy = "Name";}
+    if (p.sortType === undefined) { p.sortType = "ASC"; }
     pparams.set("sortBy", p.sortBy);
     pparams.set("sortType", p.sortType);
     pparams.set("sText", p.sText);
-    cparams.forEach(element => {
+    cparams.forEach( (element) => {
       pparams.set(element.Name, element.Description);
     });
 
@@ -226,17 +221,14 @@ export class CatalogService {
 
   create(entity: any) {
     this._rest.create(entity)
-      .subscribe(data => {
+      .subscribe( (data) => {
         this.dataStore.entities.push(data);
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeState(false);
         this._snackBarService.open(this.catalogName + ' have been created', 'Ok');
         this.itemEdit.Id = data.Id;
-        debugger
         this.afterCreateEmitter.emit(data);
-
-
-      }, error => {
+      }, (error) => {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
@@ -245,7 +237,7 @@ export class CatalogService {
   update(entity: any) {
 
     this._rest.update(entity.Id, entity)
-      .subscribe(data => {
+      .subscribe( (data) => {
 
         this.dataStore.entities.forEach((t, i) => {
           if (t.Id === data.Id) { this.dataStore.entities[i] = data; }
@@ -258,7 +250,7 @@ export class CatalogService {
 
         this.afterUpdateEmitter.emit(data);
 
-      }, error => {
+      }, (error) => {
 
         this._dialogService.openAlert({ message: 'There was an error Updating ' });
         this._loadingService.resolve('users.list');
@@ -269,7 +261,7 @@ export class CatalogService {
 
   remove(entId: number) {
 
-    this._rest.delete(entId).subscribe(response => {
+    this._rest.delete(entId).subscribe( (response) => {
 
       this.dataStore.entities.forEach((t, i) => {
         if (t.Id === entId) { this.dataStore.entities.splice(i, 1); }
@@ -278,7 +270,7 @@ export class CatalogService {
       this._entList.next(Object.assign({}, this.dataStore).entities);
       this._loadingService.resolve('users.list');
       this._snackBarService.open(this.catalogName + ' have been deleted', 'Ok');
-    }, error => {
+    }, (error) => {
       this._dialogService.openAlert({ message: 'There was an error deleting ' });
       this._loadingService.resolve('users.list');
     });
@@ -302,7 +294,7 @@ export class CatalogService {
   }
 
   loadCatalogObs(catalog: string, catList: Observable<TCRMEntity[]>, cparams: TCRMEntity[]) : any {
-    let pparams = new URLSearchParams();
+    let pparams: URLSearchParams = new URLSearchParams();
 
 
     if (cparams !== undefined) {
@@ -333,7 +325,17 @@ export class CatalogService {
     return this.afterLoadEmitter;
   }
 
+  public customUpdate(url: string, cparams: any) {
+    return this._http.put(this.apiCustom  + url, cparams);
+  }
 
+  public customDelete(url: string, cparams: any) {
+    return this._http.delete(this.apiCustom  + url, cparams);
+  }
+ 
+  public customPost(url: string, cparams: any) {
+    return this._http.post(this.apiCustom  + url, cparams);
+  }
 }
 
 
