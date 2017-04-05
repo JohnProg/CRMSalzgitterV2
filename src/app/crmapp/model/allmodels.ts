@@ -1,4 +1,8 @@
-﻿
+﻿export class ReturnSaveRequest {
+  Message: string;
+  Data: any
+}
+
 
 export class TCRMEntity  {
   Id: number;
@@ -16,6 +20,10 @@ export class TCRMEntity  {
   WLJsPath: string;
 }
 
+
+
+
+
 export class Currency extends TCRMEntity {
 
 }
@@ -29,6 +37,7 @@ export class ProductProperty extends TCRMEntity {
    POrder: number;
    IsRequired: boolean;
    IdProduct: number;
+   IdProperty: number;
 }
 
 export class GetProductProperty extends TCRMEntity {

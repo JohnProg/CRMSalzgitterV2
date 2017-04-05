@@ -7,7 +7,7 @@ import { TdMediaService } from '@covalent/core';
 import { UsersService, IUser } from '../../../services';
 
 @Component({
-  selector: 'qs-user-form',
+  selector: 'crm-user-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   viewProviders: [ UsersService ],

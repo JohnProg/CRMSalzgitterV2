@@ -161,7 +161,6 @@ export class CatalogService {
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeTotal(result.Total);
       }, (error) => {
-        this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
 
@@ -222,14 +221,13 @@ export class CatalogService {
   create(entity: any) {
     this._rest.create(entity)
       .subscribe( (data) => {
-        this.dataStore.entities.push(data);
+        this.dataStore.entities.push(data.Data);
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeState(false);
-        this._snackBarService.open(this.catalogName + ' have been created', 'Ok');
-        this.itemEdit.Id = data.Id;
-        this.afterCreateEmitter.emit(data);
+        this._snackBarService.open( this.catalogName + data.Message, 'Ok');
+        this.itemEdit.Id = data.Data.Id;
+        this.afterCreateEmitter.emit(data.Data);
       }, (error) => {
-        this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
   }
@@ -240,20 +238,17 @@ export class CatalogService {
       .subscribe( (data) => {
 
         this.dataStore.entities.forEach((t, i) => {
-          if (t.Id === data.Id) { this.dataStore.entities[i] = data; }
+          if (t.Id === data.Id) { this.dataStore.entities[i] = data.Data; }
         });
 
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeState(false);
-        this._loadingService.resolve('users.list');
-        this._snackBarService.open(this.catalogName + ' have been Updated', 'Ok');
+        this._snackBarService.open(this.catalogName + data.Message, 'Ok');
 
         this.afterUpdateEmitter.emit(data);
 
       }, (error) => {
-
-        this._dialogService.openAlert({ message: 'There was an error Updating ' });
-        this._loadingService.resolve('users.list');
+        this._snackBarService.open(error.Message, 'Ok');
       });
   }
 
@@ -268,11 +263,9 @@ export class CatalogService {
       });
 
       this._entList.next(Object.assign({}, this.dataStore).entities);
-      this._loadingService.resolve('users.list');
-      this._snackBarService.open(this.catalogName + ' have been deleted', 'Ok');
+      this._snackBarService.open(response, 'Ok');
     }, (error) => {
-      this._dialogService.openAlert({ message: 'There was an error deleting ' });
-      this._loadingService.resolve('users.list');
+      this._snackBarService.open(error.Message, 'Ok');
     });
   }
 

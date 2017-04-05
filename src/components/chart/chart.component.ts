@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'qs-chart-component',
+  selector: 'crm-chart-component',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })

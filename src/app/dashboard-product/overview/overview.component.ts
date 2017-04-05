@@ -6,7 +6,7 @@ import { TdLoadingService, TdDigitsPipe } from '@covalent/core';
 import { ItemsService, UsersService } from '../../../services';
 
 @Component({
-  selector: 'qs-product-overview',
+  selector: 'crm-product-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
   viewProviders: [ ItemsService, UsersService ],

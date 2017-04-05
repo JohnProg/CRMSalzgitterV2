@@ -1,30 +1,32 @@
-import { Component, OnInit, Input, Output, AfterViewInit  } from '@angular/core';
+import { Component, Input, Output, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { TCRMEntity } from '../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { AbstractValueAccessor  } from '../abstractvalueaccessor';
+
+const CRM_CBX_CONTROL_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => CbxfamilyComponent),
+  multi: true
+};
 
 
 @Component({
-  selector: 'cbx-family',
+  selector: 'crm-cbx-family',
   templateUrl: './cbxfamily.component.html',
   styleUrls: ['./cbxfamily.component.scss'],
-  providers: [CatalogService, ConfigurationService ]
+  providers: [CRM_CBX_CONTROL_VALUE_ACCESSOR, CatalogService, ConfigurationService]
 })
-export class CbxfamilyComponent implements OnInit {
+export class CbxfamilyComponent extends AbstractValueAccessor {
 
- @Input() itemEdit: any;
- @Input() cplaceholder: string;
-  familyList: TCRMEntity[];
-  constructor(public _curService: CatalogService,public _confs: ConfigurationService) {
+
+  private familyList: TCRMEntity[];
+
+  constructor(public _curService: CatalogService, public _confs: ConfigurationService) {
+    super('Family', _curService, _confs);
   }
-
-  ngOnInit() {
-    this.familyList = <TCRMEntity[]>  [
-    ];
-
-    this._curService.loadCatalog('Family/', this.familyList, undefined);
-  }
-
+  
 }

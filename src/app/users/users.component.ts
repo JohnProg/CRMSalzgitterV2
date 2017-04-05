@@ -8,7 +8,7 @@ import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/cor
 import { UsersService, IUser } from '../../services';
 
 @Component({
-  selector: 'qs-users',
+  selector: 'crm-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   viewProviders: [ UsersService ],

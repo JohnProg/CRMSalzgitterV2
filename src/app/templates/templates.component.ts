@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'qs-templates',
+  selector: 'crm-templates',
   templateUrl: './templates.component.html',
   styleUrls: ['./templates.component.scss'],
 })

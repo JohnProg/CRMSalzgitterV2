@@ -11,7 +11,7 @@ const DECIMAL_FORMAT: any = (v: {value: number}) => v.value.toFixed(2);
 import { multi } from './data';
 
 @Component({
-  selector: 'qs-editor',
+  selector: 'crm-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
 })

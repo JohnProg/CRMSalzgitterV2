@@ -46,9 +46,7 @@ const httpInterceptorProviders: Type<any>[] = [
 //catalogs
 import { BaseComponent } from './crmapp/catalogs/base.component';
 import { CatalogComponent } from './crmapp/catalogs/catalog.component';
-import { OptionsComponent } from './crmapp/options/options.component';
 import { CurrencyComponent } from './crmapp/catalogs/currency/currency.component';
-
 import { ColonytypeComponent } from './crmapp/catalogs/genericcatalogs/colonytype.component';
 import { DepartmentComponent } from './crmapp/catalogs/genericcatalogs/department.component';
 import { DocumentTypeComponent } from './crmapp/catalogs/genericcatalogs/documenttype.component';
@@ -62,26 +60,29 @@ import { PortComponent } from './crmapp/catalogs/genericcatalogs/port.component'
 import { PositionComponent } from './crmapp/catalogs/genericcatalogs/position.component';
 import { PropertyComponent } from './crmapp/catalogs/genericcatalogs/property.component';
 import { SectorComponent } from './crmapp/catalogs/genericcatalogs/sector.component';
-
 import { TenderComponent } from './crmapp/catalogs/genericcatalogs/tender.component';
 import { ActionoppComponent } from './crmapp/catalogs/actionopp/actionopp.component';
 import { CbxstatusoppComponent } from './crmapp/components/cbxstatusopp/cbxstatusopp.component';
-import { CbxstatusbidComponent } from './crmapp/components/cbxstatusbid/cbxstatusbid.component';
-import { CbxtemplateemailComponent } from './crmapp/components/cbxtemplateemail/cbxtemplateemail.component';
 import { CountryComponent } from './crmapp/catalogs/genericcatalogs/country.component';
 import { StateComponent } from './crmapp/catalogs/state/state.component';
-import { CbxcountryComponent } from './crmapp/components/cbxcountry/cbxcountry.component';
 import { IncotermComponent } from './crmapp/catalogs/incoterm/incoterm.component';
-import { CbxcolonyComponent } from './crmapp/components/cbxcolony/cbxcolony.component';
-import { CbxfamilyComponent } from './crmapp/components/cbxfamily/cbxfamily.component';
-import { CrmSelectComponent } from './crmapp/components/crmselect/crmselect.component';
 
 //options
+import { OptionsComponent } from './crmapp/options/options.component';
+import { CompanyComponent } from './crmapp/options/company/company.component';
+
+// Products
 import { ProductComponent } from './crmapp/options/product/product.component';
 import { ProducteditorComponent } from './crmapp/options/product/producteditor/producteditor.component';
-import { CompanyComponent } from './crmapp/options/company/company.component';
+import { ProductpropertyComponent } from './crmapp/options/product/productproperty/productproperty.component';
 import { ProductindexComponent } from './crmapp/options/product/productindex/productindex.component';
-import { CbxFamilyDirective } from './crmapp/directives/cbx-family/cbx-family.directive';
+
+// cbx Components
+
+import { CbxcolonyComponent } from './crmapp/components/cbxcolony/cbxcolony.component';
+import { CbxfamilyComponent } from './crmapp/components/cbxfamily/cbxfamily.component';
+import { CbxcountryComponent } from './crmapp/components/cbxcountry/cbxcountry.component';
+
 
 
 
@@ -119,31 +120,35 @@ ButtonDisableFix,
     LinerTermComponent,
     MarketComponent,
     MillComponent,
-    
     OrganizationComponent,
     PaymentTermComponent,
     PortComponent,
-    PositionComponent, PropertyComponent, 
-     SectorComponent, 
-     TenderComponent, ActionoppComponent, 
-    CbxstatusoppComponent, CbxstatusbidComponent, CbxtemplateemailComponent,
+    PositionComponent, 
+    PropertyComponent, 
+    SectorComponent, 
+    TenderComponent, 
+    ActionoppComponent, 
     CountryComponent,
     StateComponent,
-    CbxcountryComponent,
-    IncotermComponent,
-    
-    CatalogComponent,
-    
-    CbxcolonyComponent,
-    OptionsComponent,
 
+    IncotermComponent,
+    CatalogComponent,
+
+
+    //Options
+    OptionsComponent,
     CompanyComponent,
-    ProductComponent, ProducteditorComponent,
-    CbxfamilyComponent,
-    CrmSelectComponent,
+      //Products
+    ProductComponent, 
+    ProducteditorComponent,
     ProductindexComponent,
-    CbxFamilyDirective,
-    
+    ProductpropertyComponent,
+// Cbx Components
+    CbxfamilyComponent,
+    CbxcountryComponent,
+    CbxcolonyComponent,
+    CbxstatusoppComponent,
+
         
   ], // directives, components, and pipes owned by this NgModule
   imports: [

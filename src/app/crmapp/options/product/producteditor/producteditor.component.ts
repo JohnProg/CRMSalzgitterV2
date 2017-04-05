@@ -18,26 +18,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ProductpropertyComponent } from '../productproperty/productproperty.component';
 
 @Component({
-  selector: 'app-producteditor',
+  selector: 'crm-producteditor',
   templateUrl: './producteditor.component.html',
   styleUrls: ['./producteditor.component.scss'],
   providers: [CatalogService, ConfigurationService],
 })
 export class ProducteditorComponent extends BaseComponent {
 
-  isEditProp: boolean = false;
-  families: TCRMEntity[] = new Array<TCRMEntity>();
 
-  _catList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
-
-  propList: Observable<GetProductProperty[]>;
-  _props: TCRMEntity[] = new Array<TCRMEntity>();
-
-  propEdit: ProductProperty;
-  propColumns: ITdDataTableColumn[] = [
-  ];
+@ViewChild(ProductpropertyComponent) _props: ProductpropertyComponent;
 
 
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
@@ -51,19 +43,14 @@ export class ProducteditorComponent extends BaseComponent {
     this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
 
-    this.propColumns.push({ name: 'POrder', label: 'Order', tooltip: '' });
-    this.propColumns.push({ name: 'Name', label: 'Name', tooltip: '' });
-    this.propColumns.push({ name: 'Description', label: 'Description' });
-    this.propColumns.push({ name: 'IsRequired', label: 'Required' });
-    this.propColumns.push({ name: 'tActions', label: '' });
-    this.propEdit = new ProductProperty();
+
 
   }
 
 
   ngOnInitClass() {
     this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
-    this._curService.loadCatalog('Family', this.families, null);
+
     this._route.params.subscribe((params: { id: number }) => {
       let itemId: number = params.id;
       if (itemId > 0) {
@@ -73,7 +60,7 @@ export class ProducteditorComponent extends BaseComponent {
       }
 
     });
-    //this.initData();
+
   }
 
   ngAfterViewInit(): void {
@@ -90,77 +77,8 @@ export class ProducteditorComponent extends BaseComponent {
 
   expandProperties() {
 
+    this._props.loadProperties();
 
-    if (this.propList == undefined) {
-
-      this.propList = this._catList.asObservable();
-      let cparams: TCRMEntity[] = new Array<TCRMEntity>();
-      let p: TCRMEntity = new TCRMEntity();
-      p.Name = 'prodId';
-      p.Description = this.itemEdit.Id.toString();
-      cparams.push(p);
-
-      let prop: TCRMEntity = new TCRMEntity();
-      prop.Name = 'idprop';
-      prop.Description = '0';
-      cparams.push(prop);
-
-      this._curService.loadCustomCatalogObs('Product/GetProperties', this.propList, cparams)
-        .map((response) => response.json()).subscribe((data) => {
-          this._catList.next(data);
-        }, (error) => {
-          this._loadingService.resolve('users.list');
-          this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-        });
-
-      this._curService.loadCatalog('Property', this._props, undefined);
-    }
   }
 
-  addProperty() {
-    this.propEdit = new ProductProperty();
-    this.propEdit.Id = 0;
-    this.propEdit.IdProduct = this.itemEdit.Id;
-    this.isEditProp = true;
-  }
-
-  cancelEditProp() {
-    this.isEditProp = false;
-  }
-
-  saveProp(item) {
-
-    if (item.Id == 0) {
-      this._curService.customPost('Product/SaveProperty', item)
-        .map((response) => response.json()).subscribe((data) => {
-          this.isEditProp = false;
-
-          this._snackBarService.open('Property have been created', 'Ok');
-        }, (error) => {
-          this._loadingService.resolve('users.list');
-          this._snackBarService.open(error, 'Ok');
-        });
-    } else {
-      this._curService.customPost('Product/UpdateProperty', item)
-        .map((response) => response.text()).subscribe((data) => {
-          this.isEditProp = false;
-          this._snackBarService.open(data, 'Ok');
-        }, (error) => {
-          this._loadingService.resolve('users.list');
-          this._snackBarService.open(error, 'Ok');
-        });
-    }
-  }
-
-  deleteProperty(item: TCRMEntity) {
-
-    let cparams: TCRMEntity[] = new Array<TCRMEntity>();
-    this._curService.customDelete('Product/DeleteProperty?idprop=' + item.Id.toString(), cparams)
-      .map((response) => response.json()).subscribe((data) => {
-        this._snackBarService.open('Property have been deleted', 'Ok');
-      }, (error) => {
-        this._loadingService.resolve('users.list');
-        this._snackBarService.open(error, 'Ok');
-      });
-  }
 }

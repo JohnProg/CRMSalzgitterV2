@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { single, multi } from './data';
 
 @Component({
-  selector: 'qs-dashboard',
+  selector: 'crm-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
