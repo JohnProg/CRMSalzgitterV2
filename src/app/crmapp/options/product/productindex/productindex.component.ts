@@ -17,7 +17,7 @@ import { TCRMEntity } from '../../../model/allmodels';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-productindex',
+  selector: 'crm-productindex',
   templateUrl: './productindex.component.html',
   styleUrls: ['./productindex.component.scss'],
   providers: [CatalogService, ConfigurationService ]
@@ -45,7 +45,7 @@ export class ProductindexComponent extends BaseComponent  {
   }
 
   editEntity(id: number) {
-    
+
     this._router.navigate(['options/products/edit/' + id]);
   }
 

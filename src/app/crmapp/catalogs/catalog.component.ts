@@ -17,7 +17,7 @@ import { MenuClass } from '../model/menuclass';
 
 
 @Component({
-  selector: 'app-catalog',
+  selector: 'crm-catalog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss'],
   providers: [ActionsService]

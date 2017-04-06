@@ -8,17 +8,17 @@ import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Title }  from '@angular/platform-browser';
-import { CatalogService } from '../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
 import { ActionsService } from '../../services/actions.services';
 import { ConfigurationService } from '../../services/configuration.service';
 
 import { Product } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
-import { TCRMEntity } from '../../model/allmodels';
+import { TCRMEntity, GeGetOpportunities } from '../../model/allmodels';
 
 
 @Component({
-  selector: 'app-opportunityindex',
+  selector: 'crm-opportunityindex',
   templateUrl: './opportunityindex.component.html',
   styleUrls: ['./opportunityindex.component.scss'],
   providers: [CatalogService, ConfigurationService , ActionsService]
@@ -35,31 +35,47 @@ export class OpportunityindexComponent extends BaseComponent  {
     public _ngZone: NgZone,
     private _router: Router) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-    
-    this.catalogName = 'Product';
-    this._curService.setAPI('Product/', this.catalogName);
+    this.sortBy = 'Id';
+    this.catalogName = 'Opportunity';
+    this._curService.setAPI('Opportunity/', this.catalogName);
   }
 
 
 
   ngOnInitClass() {
-    this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
-    
+    this.entList = <Observable<GeGetOpportunities[]>>this._curService.entList;
     this.initData();
     //this.reloadPaged();
   }
 
+  reloadPaged(sText: string = undefined) {
+
+    let p = {
+      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+      sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
+    } as IPChangeEventSorted;
+    this.addParams(p);
+    this._curService.getCustomPaged(p, 'opportunity/searchopps', null);
+
+  }
+
+
   editEntity(id: number) {
-    
+
     this._router.navigate(['opportunity/edit/' + id]);
   }
 
 
   addColumns() {
 
-    super.addColumns();
-    this.columns.push({ name: 'FamilyName', label: 'Family', tooltip: '' });
-    this.columns.push({ name: 'FamilyDescription', label: 'Fam. Description' })
+    //super.addColumns();
+    this.columns.push({ name: 'Id', label: 'Opportunity', tooltip: '' });
+    this.columns.push({ name: 'CustomerName', label: 'Customer Name' });
+    this.columns.push({ name: 'AsImporter', label: 'As Importer' });
+    this.columns.push({ name: 'ResponsibleName', label: 'Responsible' });
+    this.columns.push({ name: 'StatusName', label: 'Status' });
+    this.columns.push({ name: 'LastUpdated', label: 'Last Update' });
+
   }
 
 }

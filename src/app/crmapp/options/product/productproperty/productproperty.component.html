@@ -35,12 +35,8 @@
           <input mdInput type="number" #POrder flex name="POrder" [(ngModel)]="propEdit.POrder" required placeholder="Order" maxlength="150">
         </md-input-container>
 
+<crm-select #IdProperty name="IdProperty" catalog="Property" placeholder="Select Property" [(ngModel)]="propEdit.IdProperty"></crm-select>
 
-        <md-select #IdProperty flex name="IdProperty" placeholder="Property" [(ngModel)]="propEdit.IdProperty">
-          <md-option *ngFor="let aprop of _props" [value]="aprop.Id">
-            {{ aprop.Name }}
-          </md-option>
-        </md-select>
         <md-checkbox #IsRequired flex name="IsRequired" [(ngModel)]="propEdit.IsRequired">Required</md-checkbox>
       </section>
       <div layout="row" flex layout-align="end center">

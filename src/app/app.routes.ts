@@ -50,7 +50,7 @@ import { ProducteditorComponent } from './crmapp/options/product/producteditor/p
 //import { CompanyComponent } from './crmapp/options/company/company.component';
 import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
 import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
-
+import { OpportunityeditorComponent } from './crmapp/opportunity/opportunityeditor/opportunityeditor.component';
 
 
 
@@ -143,8 +143,8 @@ const routes: Routes = [
           component: OpportunityindexComponent
         },
 
-        { path: 'edit/:id', component: ProducteditorComponent },
-        { path: 'insert', component: ProducteditorComponent }
+        { path: 'edit/:id', component: OpportunityeditorComponent },
+        { path: 'insert', component: OpportunityeditorComponent }
       ]
     },
     ]

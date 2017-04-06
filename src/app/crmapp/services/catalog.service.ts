@@ -166,20 +166,23 @@ export class CatalogService {
 
   }
 
-  getCustomPaged(p: IPChangeEventSorted, action: string, cparams: TCRMEntity[]) {
+  getCustomPaged(p: IPChangeEventSorted, action: string = 'GetPaged', cparams: TCRMEntity[]) {
     let pparams = new URLSearchParams();
     pparams.set('page', p.page.toString());
     pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy === undefined) { p.sortBy = "Name";}
-    if (p.sortType === undefined) { p.sortType = "ASC"; }
-    pparams.set("sortBy", p.sortBy);
-    pparams.set("sortType", p.sortType);
-    pparams.set("sText", p.sText);
-    cparams.forEach( (element) => {
-      pparams.set(element.Name, element.Description);
-    });
 
-    this._rest.custommQuery('GetPaged', { search: pparams })
+      if (p.sortBy === undefined) { p.sortBy = "Name";}
+      if (p.sortType === undefined) { p.sortType = "ASC"; }
+      pparams.set("sortBy", p.sortBy);
+      pparams.set("sortType", p.sortType);
+      pparams.set("sText", p.sText);
+    if( cparams != undefined) {
+      cparams.forEach( (element) => {
+        pparams.set(element.Name, element.Description);
+      });
+    }
+
+    return this._http.get(this._confs.serverWithApiCustomUrl + action, { search: pparams })
       .map((response) => response.json()).subscribe((result) => {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);

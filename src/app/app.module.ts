@@ -62,7 +62,6 @@ import { PropertyComponent } from './crmapp/catalogs/genericcatalogs/property.co
 import { SectorComponent } from './crmapp/catalogs/genericcatalogs/sector.component';
 import { TenderComponent } from './crmapp/catalogs/genericcatalogs/tender.component';
 import { ActionoppComponent } from './crmapp/catalogs/actionopp/actionopp.component';
-import { CbxstatusoppComponent } from './crmapp/components/cbxstatusopp/cbxstatusopp.component';
 import { CountryComponent } from './crmapp/catalogs/genericcatalogs/country.component';
 import { StateComponent } from './crmapp/catalogs/state/state.component';
 import { IncotermComponent } from './crmapp/catalogs/incoterm/incoterm.component';
@@ -79,11 +78,10 @@ import { ProductindexComponent } from './crmapp/options/product/productindex/pro
 
 // cbx Components
 
-import { CbxcolonyComponent } from './crmapp/components/cbxcolony/cbxcolony.component';
-import { CbxfamilyComponent } from './crmapp/components/cbxfamily/cbxfamily.component';
-import { CbxcountryComponent } from './crmapp/components/cbxcountry/cbxcountry.component';
+import { CRMSelectComponent } from './crmapp/components/crmselect/crmselect.component';
 import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
 import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
+import { OpportunityeditorComponent } from './crmapp/opportunity/opportunityeditor/opportunityeditor.component';
 
 
 
@@ -146,14 +144,12 @@ ButtonDisableFix,
     ProductindexComponent,
     ProductpropertyComponent,
 // Cbx Components
-    CbxfamilyComponent,
-    CbxcountryComponent,
-    CbxcolonyComponent,
-    CbxstatusoppComponent,
+    CRMSelectComponent,
     OpportunityComponent,
     OpportunityindexComponent,
+    OpportunityeditorComponent,
 
-        
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserModule,

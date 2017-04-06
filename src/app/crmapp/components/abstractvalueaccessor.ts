@@ -1,23 +1,27 @@
-import { Component, Input, Output, Provider, forwardRef } from "@angular/core";
+import { Component, Input, Output, Provider, forwardRef, OnInit } from "@angular/core";
 import { ControlValueAccessor } from '@angular/forms';
 import { CatalogService } from '../services/catalog.service';
 import { ConfigurationService } from '../services/configuration.service';
 import { TCRMEntity } from '../model/allmodels';
 
 
-export abstract class AbstractValueAccessor implements ControlValueAccessor {
+export abstract class AbstractValueAccessor implements ControlValueAccessor, OnInit {
     _value: any = '';
     catList: TCRMEntity[];
 
     @Input() placeholder: string;
     @Input() cwidth: number = 100;
+    @Input() catalog: string = '';
 
-
-  constructor(catName: string, public _curService: CatalogService, public _confs: ConfigurationService) {
+  constructor( public _curService: CatalogService, public _confs: ConfigurationService) {
     this.catList = <TCRMEntity[]>[];
-    this._curService.loadCatalog( catName + '/', this.catList, undefined);
+
   }
 
+  ngOnInit() {
+    
+    this._curService.loadCatalog( this.catalog + '/', this.catList, undefined);
+  }
 
     get value(): any { return this._value; };
     set value(v: any) {

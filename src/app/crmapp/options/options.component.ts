@@ -17,7 +17,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-options',
+  selector: 'crm-options',
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.scss'],
   providers: [ ActionsService ],

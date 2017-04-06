@@ -12,12 +12,11 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 import { TCRMEntity, Company } from '../../model/allmodels';
-import { CbxcolonyComponent } from '../../components/cbxcolony/cbxcolony.component';
-
+import { CRMSelectComponent } from '../../components/crmselect/crmselect.component';
 
 
 @Component({
-  selector: 'app-company',
+  selector: 'crm-company',
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.scss'],
    providers: [CatalogService, ConfigurationService ],
@@ -27,7 +26,7 @@ export class CompanyComponent extends BaseComponent {
 
   itemEdit: Company = new Company();
   zipCode: string = "";
-  @ViewChild('colony') colony: CbxcolonyComponent;
+  @ViewChild('colony') colony: CRMSelectComponent;
 
   constructor( public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -57,13 +56,13 @@ export class CompanyComponent extends BaseComponent {
 
   afterLoadItem(item : TCRMEntity) {
       this.zipCode = (<Company>item).zipCode;
-      this.colony.reloadFromZipCode(this.zipCode);
+      //this.colony.reloadFromZipCode(this.zipCode);
       this._actions.showAdd(false);
       this._actions.showSearch(false);
   }
 
   zipChange(event) {
-     this.colony.reloadFromZipCode(event);
+     //this.colony.reloadFromZipCode(event);
   }
 
 }

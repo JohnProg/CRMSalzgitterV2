@@ -18,7 +18,7 @@ import { BaseComponent } from '../base.component';
 import { IncoTerm } from '../../model/allmodels';
 
 @Component({
-  selector: 'app-incoterm',
+  selector: 'crm-incoterm',
   templateUrl: './incoterm.component.html',
   styleUrls: ['./incoterm.component.scss'],
     providers: [CatalogService, ConfigurationService ],

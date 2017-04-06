@@ -9,24 +9,21 @@ import { AbstractValueAccessor  } from '../abstractvalueaccessor';
 
 const CRM_CBX_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => CbxfamilyComponent),
+  useExisting: forwardRef(() => CRMSelectComponent),
   multi: true
 };
 
 
 @Component({
-  selector: 'crm-cbx-family',
-  templateUrl: './cbxfamily.component.html',
-  styleUrls: ['./cbxfamily.component.scss'],
+  selector: 'crm-select',
+  templateUrl: './crmselect.component.html',
+  styleUrls: ['./crmselect.component.scss'],
   providers: [CRM_CBX_CONTROL_VALUE_ACCESSOR, CatalogService, ConfigurationService]
 })
-export class CbxfamilyComponent extends AbstractValueAccessor {
-
-
-  private familyList: TCRMEntity[];
-
+export class CRMSelectComponent extends AbstractValueAccessor {
+  @Input() catalog: string;
   constructor(public _curService: CatalogService, public _confs: ConfigurationService) {
-    super('Family', _curService, _confs);
+    super(_curService, _confs);
   }
   
 }

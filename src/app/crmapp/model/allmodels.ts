@@ -9,7 +9,6 @@ export class TCRMEntity  {
   Name: string;
   Description: string;
   NameDescription: string;
-  
   EmailType: string;
   Selected: boolean;
   RecordStatus: number;
@@ -46,6 +45,23 @@ export class GetProductProperty extends TCRMEntity {
    IdProperty: number;
 }
 
+export class GeGetOpportunities extends TCRMEntity{
+   Idcustomer: number;
+   CustomerName: string;
+   ResponsibleName: string;
+   DateCreated: Date;
+   IdStatus: number;
+   StatusName: string;
+   LastUpdated: Date;
+   IdUser: number;
+   UserName: string;
+   PastDue: number;
+   DaysUpdate: number;
+   IsActive: boolean;
+   AsImporter: boolean;
+
+}
+
 export class Company extends TCRMEntity {
    zipCode: string;
 }
@@ -56,9 +72,12 @@ export class IncoTerm extends TCRMEntity {
 
 export class State extends TCRMEntity {
    IdCountry: number;
-
 }
 
 export class ActionOpportunity extends TCRMEntity {
+}
+
+
+export class Opportunity extends TCRMEntity {
   
 }

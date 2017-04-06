@@ -20,7 +20,7 @@ import { State } from '../../model/allmodels';
 
 
 @Component({
-  selector: 'app-state',
+  selector: 'crm-state',
   templateUrl: './state.component.html',
   styleUrls: ['./state.component.scss'],
   providers: [CatalogService, ConfigurationService ],
