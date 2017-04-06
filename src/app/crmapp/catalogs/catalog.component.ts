@@ -15,6 +15,7 @@ import { MenuClass } from '../model/menuclass';
 
 
 
+
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',

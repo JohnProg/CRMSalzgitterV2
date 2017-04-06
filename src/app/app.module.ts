@@ -82,6 +82,8 @@ import { ProductindexComponent } from './crmapp/options/product/productindex/pro
 import { CbxcolonyComponent } from './crmapp/components/cbxcolony/cbxcolony.component';
 import { CbxfamilyComponent } from './crmapp/components/cbxfamily/cbxfamily.component';
 import { CbxcountryComponent } from './crmapp/components/cbxcountry/cbxcountry.component';
+import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
+import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
 
 
 
@@ -148,6 +150,8 @@ ButtonDisableFix,
     CbxcountryComponent,
     CbxcolonyComponent,
     CbxstatusoppComponent,
+    OpportunityComponent,
+    OpportunityindexComponent,
 
         
   ], // directives, components, and pipes owned by this NgModule

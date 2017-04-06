@@ -48,81 +48,107 @@ import { ProductComponent } from './crmapp/options/product/product.component';
 import { ProductindexComponent } from './crmapp/options/product/productindex/productindex.component';
 import { ProducteditorComponent } from './crmapp/options/product/producteditor/producteditor.component';
 //import { CompanyComponent } from './crmapp/options/company/company.component';
+import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
+import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
+
+
 
 
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: '', component: MainComponent, children: [{
+  { path: 'login', component: LoginComponent },
+  {
+    path: '', component: MainComponent, children: [{
       component: DashboardComponent,
       path: '',
     },
-    {path: 'product', component: DashboardProductComponent, children: [
-      {path: '', component: ProductOverviewComponent},
-      {path: 'stats', component: ProductStatsComponent},
-      {path: 'features', children: [
-        {path: '', component: ProductFeaturesComponent},
-        {path: 'add', component: FeaturesFormComponent},
-        {path: ':id/delete', component: FeaturesFormComponent},
-        {path: ':id/edit', component: FeaturesFormComponent},
-      ]},
-    ]},
-    {path: 'item/:id', component: DetailComponent},
-    {path: 'logs', component: LogsComponent},
-    {path: 'form', component: FormComponent},
-    {path: 'users', children: [
-      {path: '', component: UsersComponent},
-      {path: 'add', component: UsersFormComponent},
-      {path: ':id/delete', component: UsersFormComponent},
-      {path: ':id/edit', component: UsersFormComponent},
-    ]},
-    {path: 'templates', children: [
-      {path: '', component: TemplatesComponent},
-      {path: 'dashboard', component: DashboardTemplateComponent},
-      {path: 'email', component: EmailTemplateComponent},
-      {path: 'editor', component: EditorTemplateComponent},
-    ]},
+    {
+      path: 'product', component: DashboardProductComponent, children: [
+        { path: '', component: ProductOverviewComponent },
+        { path: 'stats', component: ProductStatsComponent },
+        {
+          path: 'features', children: [
+            { path: '', component: ProductFeaturesComponent },
+            { path: 'add', component: FeaturesFormComponent },
+            { path: ':id/delete', component: FeaturesFormComponent },
+            { path: ':id/edit', component: FeaturesFormComponent },
+          ]
+        },
+      ]
+    },
+    { path: 'item/:id', component: DetailComponent },
+    { path: 'logs', component: LogsComponent },
+    { path: 'form', component: FormComponent },
+    {
+      path: 'users', children: [
+        { path: '', component: UsersComponent },
+        { path: 'add', component: UsersFormComponent },
+        { path: ':id/delete', component: UsersFormComponent },
+        { path: ':id/edit', component: UsersFormComponent },
+      ]
+    },
+    {
+      path: 'templates', children: [
+        { path: '', component: TemplatesComponent },
+        { path: 'dashboard', component: DashboardTemplateComponent },
+        { path: 'email', component: EmailTemplateComponent },
+        { path: 'editor', component: EditorTemplateComponent },
+      ]
+    },
 
- {
-        path: 'catalogs', component: CatalogComponent,
-        children: [
-            { path: 'currency', component: CurrencyComponent },
-            { path: 'colonytype', component: ColonytypeComponent },
-            { path: 'department', component: DepartmentComponent },
-            { path: 'documenttype', component: DocumentTypeComponent },
-            { path: 'family', component: FamilyComponent },
-            { path: 'linerterm', component: LinerTermComponent },
-            { path: 'market', component: MarketComponent },
-            { path: 'mill', component: MillComponent },
-            { path: 'organization', component: OrganizationComponent },
-            { path: 'paymentterm', component: PaymentTermComponent },
-            { path: 'port', component: PortComponent },
-            { path: 'position', component: PositionComponent },
-            { path: 'property', component: PropertyComponent },
-            { path: 'sector', component: SectorComponent },
-            { path: 'tender', component: TenderComponent },
-            { path: 'actionopp', component: ActionoppComponent },
-            { path: 'country', component: CountryComponent },
-            { path: 'state', component: StateComponent },
-            { path: 'incoterm', component: IncotermComponent },
-            
-        ]  
-      },
-      {
-        path: 'options', component: OptionsComponent,
-        children: [
-            //{ path: 'company', component: CompanyComponent },
-            { 
-              path: 'products', 
-              component: ProductComponent,
-              children: [
-                { path: '', component: ProductindexComponent },   
-                { path: 'edit/:id', component: ProducteditorComponent }
-              ]
-            },
-        ]
-      },          
-  ]},
+    {
+      path: 'catalogs', component: CatalogComponent,
+      children: [
+        { path: 'currency', component: CurrencyComponent },
+        { path: 'colonytype', component: ColonytypeComponent },
+        { path: 'department', component: DepartmentComponent },
+        { path: 'documenttype', component: DocumentTypeComponent },
+        { path: 'family', component: FamilyComponent },
+        { path: 'linerterm', component: LinerTermComponent },
+        { path: 'market', component: MarketComponent },
+        { path: 'mill', component: MillComponent },
+        { path: 'organization', component: OrganizationComponent },
+        { path: 'paymentterm', component: PaymentTermComponent },
+        { path: 'port', component: PortComponent },
+        { path: 'position', component: PositionComponent },
+        { path: 'property', component: PropertyComponent },
+        { path: 'sector', component: SectorComponent },
+        { path: 'tender', component: TenderComponent },
+        { path: 'actionopp', component: ActionoppComponent },
+        { path: 'country', component: CountryComponent },
+        { path: 'state', component: StateComponent },
+        { path: 'incoterm', component: IncotermComponent },
+
+      ]
+    },
+    {
+      path: 'options', component: OptionsComponent,
+      children: [
+        //{ path: 'company', component: CompanyComponent },
+        {
+          path: 'products',
+          component: ProductComponent,
+          children: [
+            { path: '', component: ProductindexComponent },
+            { path: 'edit/:id', component: ProducteditorComponent }
+          ]
+        },
+      ]
+    },
+    {
+      path: 'opportunity', component: OpportunityComponent,
+      children: [
+        {
+          path: '',
+          component: OpportunityindexComponent
+        },
+
+        { path: 'edit/:id', component: ProducteditorComponent },
+        { path: 'insert', component: ProducteditorComponent }
+      ]
+    },
+    ]
+  },
 ];
 
 export const appRoutingProviders: any[] = [

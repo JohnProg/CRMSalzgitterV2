@@ -181,8 +181,24 @@ export class MainComponent {
             routerlink: 'company',
             icon: 'euro_symbol',
             displayName: 'Company',
-          },
+          },        
       ]
+    },
+
+    {
+      title: 'Opportunity',
+      icon: 'euro_symbol',
+      route: '',
+      childrens: [
+          {
+            name: 'index',
+            tooltip: 'Create edit Opportunity',
+            active: true,
+            routerlink: 'opportunity',
+            icon: 'euro_symbol',
+            displayName: 'Opportunity',
+          },        
+      ]      
     },
   ];
 
