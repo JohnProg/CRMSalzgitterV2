@@ -30,6 +30,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class OpportunityeditorComponent extends BaseComponent {
 
+  idOpp: number = 0;
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -47,9 +48,9 @@ export class OpportunityeditorComponent extends BaseComponent {
     this.entList = <Observable<Opportunity[]>>this._curService.entList;
 
     this._route.params.subscribe((params: { id: number }) => {
-      let itemId: number = params.id;
-      if (itemId > 0) {
-        this.editEntity(itemId);
+      this.idOpp = params.id;
+      if ( this.idOpp > 0) {
+        this.editEntity( this.idOpp);
       } else {
         this.addEntity();
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { CatalogService, IPChangeEventSorted } from '../services/catalog.service';
@@ -21,19 +21,22 @@ import { ActionsService } from '../services/actions.services';
   selector: 'base-component',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [CatalogService, ConfigurationService, ActionsService],
+  providers: [CatalogService],
 })
-export class BaseComponent implements OnInit, AfterViewInit {
+export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   private addEvent;
   private searchEvent;
   private deleteConfEvent;
   private saveEvent;
-  protected _querySubscriptionxs: Subscription;
-  protected _querySubscriptionsm: Subscription;
-  protected _querySubscriptionmd: Subscription;
-  protected _querySubscriptionlg: Subscription;
+
+  private afterLoadEvent;
+  private afterCreateEvent;
+  private afterUpdateEvent;
+
+
+
 
   isSmallScreen: boolean = false;
 
@@ -55,7 +58,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
   filteredTotal: number = 0;
   searchTerm: string = '';
   fromRow: number = 1;
-  currentPage: number = 1;
+  currentPage: number = 0;
   pageSize: number = this._confs.pageSize;
   sortBy: string = 'Name';
   sortType: string = "ASC"
@@ -69,10 +72,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
     { Id: 3, Name: 'Both' }
   ];
   autoLoad: boolean = true;
-
-  private afterLoadEvent;
-  private afterCreateEvent;
-  private afterUpdateEvent;
+  isLoading: boolean = false;
 
   constructor(public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -87,7 +87,8 @@ export class BaseComponent implements OnInit, AfterViewInit {
     this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
     this.addColumns();
     this.addActionColumn();
-
+    debugger
+    this.pageSize = this._confs.pageSize;
 
   }
 
@@ -109,7 +110,6 @@ export class BaseComponent implements OnInit, AfterViewInit {
     this._mediaService.broadcast();
 
     this.saveEvent = this._actions.saveItem().subscribe( (save) => {
-       
        this.saveEntity();
     });
 
@@ -151,24 +151,15 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
   ngOnDestroy() {
 
-    //this._actions.addItemEvent.unsubscribe()
-    //this._actions.searchEvent.unsubscribe();
-    //this._actions.deleteItemEvent.unsubscribe();
-    if (this._querySubscriptionxs !== undefined) { this._querySubscriptionxs.unsubscribe(); }
-    if (this._querySubscriptionsm !== undefined) { this._querySubscriptionsm.unsubscribe(); }
-    if (this._querySubscriptionmd !== undefined) { this._querySubscriptionmd.unsubscribe(); }
-    if (this._querySubscriptionlg !== undefined) { this._querySubscriptionlg.unsubscribe(); }
-
-
     if (this.addEvent !== undefined) { this.addEvent.unsubscribe(); }
     if (this.searchEvent !== undefined) { this.searchEvent.unsubscribe(); }
     if (this.deleteConfEvent !== undefined) { this.deleteConfEvent.unsubscribe(); }
     if (this.saveEvent !== undefined) { this.saveEvent.unsubscribe(); }
-        
+
     if (this.afterLoadEvent !== undefined) { this.afterLoadEvent.unsubscribe(); }
     if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
-    
+
   }
 
   addColumns() {
@@ -186,23 +177,25 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
 
     if (this.autoLoad === true) {
-      //this.reloadPaged();
+        this._curService.loadAll(this.getPageParams(''));
     }
 
     this.itemEdit = new TCRMEntity();
     this.isEditing$ = this._curService.isEditing$.subscribe(status => {
       this.isEditing = status;
+      this.reloadPaged('');
     });
 
     this.totalItems$ = this._curService.totalItems$.subscribe(total => {
       this.totalItems = total;
+      
+      this.isLoading = false;
     });
-        this.watchScreen();
+
   }
 
 
   editEntity(id: number) {
-
     this._actions.updateTitle('Edit ' + this.catalogName);
     this.itemEdit = <TCRMEntity>this._curService.itemEdit;
     this._curService.load(id);
@@ -234,18 +227,19 @@ export class BaseComponent implements OnInit, AfterViewInit {
     }
   }
 
-  afterCreate(item: TCRMEntity) {
+  afterCreate(item: any) {
 debugger
   }
 
-  afterUpdate(item: TCRMEntity) {
-debugger
+  afterUpdate(item: any) {
+
+    Object.assign(this.itemEdit, item.Data);
   }
 
   change(event: IPChangeEventSorted): void {
     
     if (event !== undefined) {
-      this.currentPage = event.page;
+      this.currentPage = event.page - 1;
       this.pageSize = event.pageSize;
     }
 
@@ -266,39 +260,46 @@ debugger
   }
 
 
-
+  getPageParams(sText: string) : IPChangeEventSorted {
+    return {
+      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+      sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
+    } as IPChangeEventSorted;
+  }
 
   getSorted(sortEvent: ITdDataTableSortChangeEvent): void {
     this.sortBy = sortEvent.name;
     this.sortOrder = sortEvent.order;
     this.sortType = this.sortOrder.toString();
+    
     this.reloadPaged();
   }
 
 
   search(searchTerm: string): void {
     this.searchTerm = searchTerm;
-    this.currentPage = 1;
+    this.currentPage = 0;
+    
     this.reloadPaged(this.searchTerm);
   }
 
   page(pagingEvent: IPChangeEventSorted): void {
-
     this.fromRow = pagingEvent.fromRow;
-    this.currentPage = pagingEvent.page;
+    this.currentPage = pagingEvent.page - 1;
     //this.pageSize = pagingEvent.pageSize;
     this.reloadPaged();
   }
 
   reloadPaged(sText: string = undefined) {
-
-    let p = {
-      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
-      sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
-    } as IPChangeEventSorted;
-    this.addParams(p);
-    this._curService.getPaged(p);
-
+    if( this.isLoading === false) {
+      this.isLoading = true;
+      let p = {
+        page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+        sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
+      } as IPChangeEventSorted;
+      this.addParams(p);
+      this._curService.getPaged(p);
+    }
   }
 
   addParams(p: IPChangeEventSorted) {
@@ -309,74 +310,7 @@ debugger
   }
 
 
-  checkScreen(): void {
 
-    this._ngZone.run(() => {
-
-      this.isSmallScreen = this._mediaService.query('sm'); // or '(min-width: 960px) and (max-width: 1279px)'
-    });
-  }
-
-  watchScreen(): void {
-
-    this._querySubscriptionxs = this._mediaService.registerQuery('xs').subscribe((matches: boolean) => {
-      this._ngZone.run(() => {
-        this.isSmallScreen = matches;
-
-        if (matches == true) {
-
-          this.pageSize = 8;
-          this.currentPage = 1;
-          // this.change(undefined);
-        }
-      });
-    });
-
-    this._querySubscriptionsm = this._mediaService.registerQuery('sm').subscribe((matches: boolean) => {
-      this._ngZone.run(() => {
-        this.isSmallScreen = matches;
-
-        if (matches == true) {
-
-          this.pageSize = 13;
-          this.currentPage = 1;
-          // this.change(undefined);
-        }
-
-      });
-    });
-
-    this._querySubscriptionmd = this._mediaService.registerQuery('md').subscribe((matches: boolean) => {
-      this._ngZone.run(() => {
-        this.isSmallScreen = matches;
-
-        if (matches == true) {
-
-          this.pageSize = 10;
-          this.currentPage = 1;
-          //this.change(undefined);
-        }
-
-      });
-    });
-
-
-    this._querySubscriptionlg = this._mediaService.registerQuery('gt-md').subscribe((matches: boolean) => {
-      this._ngZone.run(() => {
-        this.isSmallScreen = matches;
-
-        if (matches == true) {
-
-          this.pageSize = 13;
-          this.currentPage = 1;
-          //this.change(undefined);
-        }
-
-      });
-    });
-
-
-  }
 
 
 

@@ -1,25 +1,2 @@
-<td-layout-nav logo="assets:logocrm">
-
-
-    <md-toolbar td-sidenav-content>
-      <span>Opportunities</span>
-          <div *ngIf="showSearch" flex>
-
-      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" (searchDebounce)="search($event)"
-        flex>
-      </td-search-box>
-      <button md-mini-fab class="md-mini md-primary" (click)="addItem()" aria-label="Add Item" ></button>
-    </div>
-    <button md-mini-fab class="md-mini md-primary" (click)="addItem()" aria-label="Add Item" *ngIf="showAdd">
-        <md-icon>add</md-icon>
-      </button>
-    <p *ngIf="showSave" flex></p>
-    <button md-mini-fab class="md-mini md-primary" (click)="saveItem()" aria-label="Save Item" *ngIf="showSave">
-        <md-icon>save</md-icon>
-      </button>
-
-    </md-toolbar>
 
 <router-outlet></router-outlet>
-</td-layout-nav>
-

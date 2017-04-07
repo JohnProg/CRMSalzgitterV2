@@ -32,7 +32,7 @@
 
 
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+        <template tdDataTableTemplate="Name" let-value="value" let-row="row"  let-column="column">
           <div layout="row">
             <button md-button (click)="editEntity(row.Id)">{{value}}</button>
           </div>

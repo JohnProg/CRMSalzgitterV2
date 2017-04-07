@@ -13,4 +13,6 @@ export class ConfigurationService {
     public serverWithApiCustomUrl = this.server + this.apiCsutomUrl;
     public pageSize: number = 5;
     public hideDelayToast: number = 2000;
+    public currentPage: number = 0;
+
 }

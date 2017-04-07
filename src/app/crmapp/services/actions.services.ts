@@ -7,21 +7,19 @@ export class ActionsService {
 
     @Output() deleteItemEvent : EventEmitter<any> =new EventEmitter();
     @Output() saveItemEvent : EventEmitter<any> =new EventEmitter();
-  
-
 
     @Output() deleteItemConfirmedEvent : EventEmitter<any>=new EventEmitter();
 
     @Output() updateTitleEvent : EventEmitter<string>=new EventEmitter<string>();
     @Output() searchEvent : EventEmitter<string>=new EventEmitter<string>();
-    
+
     @Output() showSearchEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
     @Output() showAddEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
     @Output() showSaveEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
     @Output() showCancelEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
     @Output() showSideNavEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
 
-
+    @Output() screenSizeChangeEvent: EventEmitter<any> = new EventEmitter<boolean>();
 
     updateTitle(atitle: string) {
       this.updateTitleEvent.emit(atitle);

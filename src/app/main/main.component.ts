@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { TdMediaService } from '@covalent/core';
+import { Subscription } from 'rxjs/Subscription';
+import { ConfigurationService } from '../crmapp/services/configuration.service';
 
 @Component({
   selector: 'crm-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
+  providers: [ConfigurationService],
 })
-export class MainComponent {
+export class MainComponent implements OnInit, OnDestroy {
+
+  isSmallScreen: boolean = false;
+
+  protected _querySubscriptionxs: Subscription;
+  protected _querySubscriptionsm: Subscription;
+  protected _querySubscriptionmd: Subscription;
+  protected _querySubscriptionlg: Subscription;
+
 
   routes: Object[] = [
 
@@ -197,14 +209,102 @@ export class MainComponent {
             routerlink: 'opportunity',
             icon: 'euro_symbol',
             displayName: 'Opportunity',
-          },        
-      ]      
+          },
+      ]
     },
   ];
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router,
+              private _mediaService: TdMediaService,
+              private _ngZone: NgZone,
+              private _confs: ConfigurationService) {
+    this.watchScreen();
+              }
 
   logout(): void {
     this._router.navigate(['/login']);
+
+  }
+
+
+
+  ngOnInit() {
+    
+
+  }
+
+  ngOnDestroy() {
+
+    if (this._querySubscriptionxs !== undefined) { this._querySubscriptionxs.unsubscribe(); }
+    if (this._querySubscriptionsm !== undefined) { this._querySubscriptionsm.unsubscribe(); }
+    if (this._querySubscriptionmd !== undefined) { this._querySubscriptionmd.unsubscribe(); }
+    if (this._querySubscriptionlg !== undefined) { this._querySubscriptionlg.unsubscribe(); }
+
+  }
+
+
+    checkScreen(): void {
+
+    this._ngZone.run(() => {
+
+      this.isSmallScreen = this._mediaService.query('sm'); // or '(min-width: 960px) and (max-width: 1279px)'
+    });
+  }
+
+  watchScreen(): void {
+
+    this._querySubscriptionxs = this._mediaService.registerQuery('xs').subscribe((matches: boolean) => {
+      this._ngZone.run(() => {
+        this.isSmallScreen = matches;
+        if (matches === true) {
+          this._confs.pageSize = 5;
+          this._confs.currentPage = 0;
+          // this.change(undefined);
+        }
+      });
+    });
+
+    this._querySubscriptionsm = this._mediaService.registerQuery('sm').subscribe((matches: boolean) => {
+      this._ngZone.run(() => {
+        this.isSmallScreen = matches;
+
+        if (matches === true) {
+
+          this._confs.pageSize = 8;
+          this._confs.currentPage = 0;
+          // this.change(undefined);
+        }
+
+      });
+    });
+
+    this._querySubscriptionmd = this._mediaService.registerQuery('md').subscribe((matches: boolean) => {
+      this._ngZone.run(() => {
+        this.isSmallScreen = matches;
+
+        if (matches === true) {
+
+          this._confs.pageSize = 10;
+          this._confs.currentPage = 0;
+          //this.change(undefined);
+        }
+
+      });
+    });
+
+
+    this._querySubscriptionlg = this._mediaService.registerQuery('gt-md').subscribe((matches: boolean) => {
+      this._ngZone.run(() => {
+        this.isSmallScreen = matches;
+        if (matches === true) {
+          
+          this._confs.pageSize = 13;
+          this._confs.currentPage = 0;
+        }
+
+      });
+    });
+
+
   }
 }

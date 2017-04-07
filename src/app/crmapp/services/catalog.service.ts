@@ -86,6 +86,7 @@ export class CatalogService {
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
+    private _tableService: TdDataTableService
   ) {
     this.headers = new Headers();
     this.headers.append('Accept', '');
@@ -125,10 +126,11 @@ export class CatalogService {
     }
   }
 
-  loadAll() {
+  loadAll(cparams: IPChangeEventSorted) {
     this._rest.query().subscribe((datas: TCRMEntity[]) => {
       this.dataStore.entities = datas;
-      this._entList.next(Object.assign({}, this.dataStore).entities);
+      let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
+      this._entList.next(t);
       this.changeTotal(this.dataStore.entities.length);
     }, (error: Error) => {
       this._loadingService.resolve('users.list');
@@ -149,21 +151,24 @@ export class CatalogService {
     let pparams = new URLSearchParams();
     pparams.set('page', p.page.toString());
     pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy == undefined) { p.sortBy = 'Name'; }
-    if (p.sortType == undefined) { p.sortType = 'ASC'; }
+    if (p.sortBy === undefined) { p.sortBy = 'Name'; }
+    if (p.sortType === undefined) { p.sortType = 'ASC'; }
     pparams.set('sortBy', p.sortBy);
     pparams.set('sortType', p.sortType);
     pparams.set('sText', p.sText);
+    let index = (p.page * p.pageSize) + 1;
 
-    this._rest.custommQuery('GetPaged', { search: pparams })
-      .map( (response) => response.json()).subscribe(result => {
-        this.dataStore.entities = result.Data;
-        this._entList.next(Object.assign({}, this.dataStore).entities);
-        this.changeTotal(result.Total);
-      }, (error) => {
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-      });
-
+    let t = this._tableService.pageData(this.dataStore.entities, index , --index + p.pageSize) ;
+    this._entList.next(t);
+    this.changeTotal(this.dataStore.entities.length);
+   // this._rest.custommQuery('GetPaged', { search: pparams })
+   //   .map( (response) => response.json()).subscribe( (result) => {
+   //     this.dataStore.entities = result.Data;
+   //     this._entList.next(Object.assign({}, this.dataStore).entities);
+   //     this.changeTotal(result.Total);
+   //   }, (error) => {
+   //     this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+   //   });s
   }
 
   getCustomPaged(p: IPChangeEventSorted, action: string = 'GetPaged', cparams: TCRMEntity[]) {
@@ -241,7 +246,7 @@ export class CatalogService {
       .subscribe( (data) => {
 
         this.dataStore.entities.forEach((t, i) => {
-          if (t.Id === data.Id) { this.dataStore.entities[i] = data.Data; }
+          if (t.Id === data.Data.Id) { this.dataStore.entities[i] = data.Data; }
         });
 
         this._entList.next(Object.assign({}, this.dataStore).entities);

@@ -21,7 +21,7 @@ import { TCRMEntity, GeGetOpportunities } from '../../model/allmodels';
   selector: 'crm-opportunityindex',
   templateUrl: './opportunityindex.component.html',
   styleUrls: ['./opportunityindex.component.scss'],
-  providers: [CatalogService, ConfigurationService , ActionsService]
+  providers: [CatalogService,  ActionsService]
 })
 export class OpportunityindexComponent extends BaseComponent  {
 
@@ -38,7 +38,10 @@ export class OpportunityindexComponent extends BaseComponent  {
     this.sortBy = 'Id';
     this.catalogName = 'Opportunity';
     this._curService.setAPI('Opportunity/', this.catalogName);
+
   }
+
+
 
 
 
@@ -49,14 +52,7 @@ export class OpportunityindexComponent extends BaseComponent  {
   }
 
   reloadPaged(sText: string = undefined) {
-
-    let p = {
-      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
-      sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
-    } as IPChangeEventSorted;
-    this.addParams(p);
-    this._curService.getCustomPaged(p, 'opportunity/searchopps', null);
-
+    this._curService.getPaged(this.getPageParams(sText));
   }
 
 

@@ -1,11 +1,30 @@
-<form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
-  <md-card>
+<td-layout-nav logo="assets:logocrm">
 
-    <md-card-content>
 
+    <md-toolbar td-sidenav-content>
+      <span *ngIf="idOpp > 0">Edit Opportunity  </span>
+      <span *ngIf="idOpp == 0">Create Opportunity  </span>
+      <div flex></div>
       <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
         Opportunity Index
       </a>
-    </md-card-content>
-  </md-card>
+    </md-toolbar>
+
+
+<md-card>
+  <md-card-content>
+
+<form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
+
 </form>
+  </md-card-content>
+</md-card>
+
+</td-layout-nav>
+
+
+
+
+
+
+
