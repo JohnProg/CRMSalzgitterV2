@@ -306,7 +306,7 @@ export class CatalogService {
     return this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams });
   }
 
-    loadCustomCatalogObs(catalog: string, catList: Observable<TCRMEntity[]>, cparams: TCRMEntity[]) : any {
+    loadCustomCatalogObs(catalog: string, cparams: TCRMEntity[]) : any {
     let pparams = new URLSearchParams();
 
 

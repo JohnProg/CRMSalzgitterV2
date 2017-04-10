@@ -1,5 +1,5 @@
 
- <md-select class="cbxClass"  [placeholder]="placeholder" [(ngModel)]="value" >
+ <md-select class="cbxClass"  [placeholder]="placeholder" [(ngModel)]="value" (change)="onChange($event)">
       <md-option *ngFor="let i of catList" [value]="i.Id">
         {{i.Name}} - {{i.Description}}
       </md-option>

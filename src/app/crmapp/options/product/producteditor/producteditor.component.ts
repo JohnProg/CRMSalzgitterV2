@@ -72,7 +72,7 @@ export class ProducteditorComponent extends BaseComponent {
   }
 
   afterSave(item: TCRMEntity) {
-    debugger
+    
   }
 
   expandProperties() {

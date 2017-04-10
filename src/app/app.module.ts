@@ -82,6 +82,7 @@ import { CRMSelectComponent } from './crmapp/components/crmselect/crmselect.comp
 import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
 import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
 import { OpportunityeditorComponent } from './crmapp/opportunity/opportunityeditor/opportunityeditor.component';
+import { CrmselectchildComponent } from './crmapp/components/crmselectchild/crmselectchild.component';
 
 
 
@@ -148,6 +149,7 @@ ButtonDisableFix,
     OpportunityComponent,
     OpportunityindexComponent,
     OpportunityeditorComponent,
+    CrmselectchildComponent,
 
 
   ], // directives, components, and pipes owned by this NgModule

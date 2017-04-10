@@ -21,7 +21,7 @@ import { TCRMEntity, GeGetOpportunities } from '../../model/allmodels';
   selector: 'crm-opportunityindex',
   templateUrl: './opportunityindex.component.html',
   styleUrls: ['./opportunityindex.component.scss'],
-  providers: [CatalogService,  ActionsService]
+  providers: [CatalogService,  ActionsService, ConfigurationService]
 })
 export class OpportunityindexComponent extends BaseComponent  {
 

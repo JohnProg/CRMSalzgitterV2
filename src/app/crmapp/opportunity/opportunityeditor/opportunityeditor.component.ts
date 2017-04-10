@@ -68,8 +68,11 @@ export class OpportunityeditorComponent extends BaseComponent {
   }
 
   afterSave(item: TCRMEntity) {
-    debugger
+    
   }
 
+  onCustomerChange(event) {
+    debugger
+  }
 
 }

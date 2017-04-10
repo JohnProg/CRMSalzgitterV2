@@ -21,7 +21,7 @@ import { ActionsService } from '../services/actions.services';
   selector: 'base-component',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [CatalogService],
+  providers: [CatalogService, ConfigurationService],
 })
 export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -87,7 +87,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
     this.addColumns();
     this.addActionColumn();
-    debugger
+    
     this.pageSize = this._confs.pageSize;
 
   }
@@ -228,7 +228,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   afterCreate(item: any) {
-debugger
+
   }
 
   afterUpdate(item: any) {
