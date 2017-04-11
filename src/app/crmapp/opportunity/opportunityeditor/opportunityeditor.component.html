@@ -1,12 +1,55 @@
 <td-layout-nav logo="assets:logocrm">
-  <md-toolbar td-sidenav-content>
-    <span *ngIf="idOpp > 0">Edit Opportunity  </span>
-    <span *ngIf="idOpp == 0">Create Opportunity  </span>
-    <div flex></div>
-    <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
-        Opportunity Index
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>Opportunities</span>
+          <div flex></div>
+  </div>
+  <td-layout-manage-list #manageList
+                        [opened]="_mediaService.registerQuery('gt-sm') | async"
+                        [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
+                        [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '257px' : '100%'">
+    <md-toolbar td-sidenav-content>
+      <span *ngIf="idOpp > 0">Edit Opportunity  </span>
+      <span *ngIf="idOpp == 0">Create Opportunity  </span>
+    </md-toolbar>
+    <md-nav-list td-sidenav-content>
+            <a md-list-item
+        md-ripple class="block relative"
+        (click)="!_mediaService.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="[false]"
+        [routerLinkActiveOptions]="{exact:true}"
+        [routerLink]="'/opportunity'"
+       >
+        <md-icon md-list-icon>dashboard</md-icon>
+       Opportunity
       </a>
-  </md-toolbar>
+      <a md-list-item
+        md-ripple class="block relative"
+        (click)="!_mediaService.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="[false]"
+        [routerLinkActiveOptions]="{exact:true}"
+       >
+        <md-icon md-list-icon>dashboard</md-icon>
+        Quotation To Supplier
+      </a>
+      <a md-list-item
+        md-ripple class="block relative"
+        (click)="!_mediaService.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="[false]"
+        [routerLinkActiveOptions]="{exact:true}"
+       >
+        <md-icon md-list-icon>insert_chart</md-icon>
+        Quotation To Customer
+      </a>
+     
+    </md-nav-list>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+
+      <div flex></div>
+      <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
+          Opportunity Index
+        </a>
+    </div>
+
   <md-card>
     <md-card-content>
       <form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
@@ -22,7 +65,12 @@
 
 
       </form>
+
+    <router-outlet></router-outlet>
     </md-card-content>
   </md-card>
 
+  </td-layout-manage-list>
 </td-layout-nav>
+
+

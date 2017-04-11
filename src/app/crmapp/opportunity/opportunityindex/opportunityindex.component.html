@@ -1,6 +1,4 @@
 <td-layout-nav logo="assets:logocrm">
-
-
     <md-toolbar td-sidenav-content>
       <span>Opportunities</span>
     <div  flex>
@@ -10,6 +8,7 @@
       </td-search-box>
 
     </div>
+
 
     <td-paging-bar  #pagingBar  [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
       (change)="change($event)">
@@ -23,7 +22,27 @@
     </md-toolbar>
 
 
-<md-card>
+
+  <td-layout-manage-list #manageList
+                        [opened]="[true]"
+                        [mode]=" 'push'"
+                        >
+    <md-toolbar td-sidenav-content>
+      <span *ngIf="idOpp > 0">Filters  </span>
+    </md-toolbar>
+    <md-nav-list td-sidenav-content>
+
+     
+    </md-nav-list>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+
+      <div flex></div>
+      <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
+          Opportunity Index
+        </a>
+    </div>
+
+  <md-card>
   <md-card-content>
     <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
       <template tdDataTableTemplate="Id" let-value="value" let-row="row" let-column="column">
@@ -50,7 +69,10 @@
   </md-card-content>
 </md-card>
 
+  </td-layout-manage-list>
+
 </td-layout-nav>
+
 
 
 

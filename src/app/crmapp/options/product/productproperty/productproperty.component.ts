@@ -78,7 +78,7 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
       prop.Description = '0';
       cparams.push(prop);
 
-      this._curService.loadCustomCatalogObs('Product/GetProperties', this.propList, cparams)
+      this._curService.loadCustomCatalogObs('Product/GetProperties',  cparams)
         .map((response) => response.json()).subscribe((data) => {
           this.dataStore.properties = data;
           this._catList.next(Object.assign({}, this.dataStore).properties);
