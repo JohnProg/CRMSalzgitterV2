@@ -1,7 +1,7 @@
 
  <md-select class="cbxClass"  [placeholder]="placeholder" [(ngModel)]="value" (change)="onChange($event)">
-      <md-option *ngFor="let i of catList" [value]="i.Id">
-        {{i.Name}} - {{i.Description}}
+      <md-option *ngFor="let i of catList" [disabled]="i.IsActive || false" [value]="i.Id">
+        {{i.NameDescription || i.Name}} 
       </md-option>
     </md-select>
 

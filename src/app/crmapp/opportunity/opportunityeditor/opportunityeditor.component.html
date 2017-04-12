@@ -12,15 +12,14 @@
       <span *ngIf="idOpp == 0">Create Opportunity  </span>
     </md-toolbar>
     <md-nav-list td-sidenav-content>
-            <a md-list-item
+        <a md-list-item
         md-ripple class="block relative"
         (click)="!_mediaService.query('gt-sm') && manageList.close()"
         [routerLinkActive]="[false]"
         [routerLinkActiveOptions]="{exact:true}"
-        [routerLink]="'/opportunity'"
-       >
+        [routerLink]="['/opportunity/edit', itemEdit.Id]">
         <md-icon md-list-icon>dashboard</md-icon>
-       Opportunity
+       Header
       </a>
       <a md-list-item
         md-ripple class="block relative"
@@ -29,7 +28,7 @@
         [routerLinkActiveOptions]="{exact:true}"
        >
         <md-icon md-list-icon>dashboard</md-icon>
-        Quotation To Supplier
+        Details
       </a>
       <a md-list-item
         md-ripple class="block relative"
@@ -38,9 +37,17 @@
         [routerLinkActiveOptions]="{exact:true}"
        >
         <md-icon md-list-icon>insert_chart</md-icon>
-        Quotation To Customer
+        Dialogs
       </a>
-     
+       <a md-list-item
+        md-ripple class="block relative"
+        (click)="!_mediaService.query('gt-sm') && manageList.close()"
+        [routerLinkActive]="[false]"
+        [routerLinkActiveOptions]="{exact:true}"
+       >
+        <md-icon md-list-icon>insert_chart</md-icon>
+        Documents
+      </a>    
     </md-nav-list>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
 
@@ -54,14 +61,30 @@
     <md-card-content>
       <form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section flex-gt-sm="30" >
+          <section flex-gt-sm="35" >
             <crm-select #idResponsible name="idResponsible" catalog="Responsible" placeholder="Select Responsible" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
           </section>
-          <section  flex-gt-sm="70" >
+          <section  flex-gt-sm="30" >
+            <crm-select #idCurrency name="idCurrency" catalog="Currency" placeholder="Select Currency" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
+          </section>    
+          <section  flex-gt-sm="35" >
+            <crm-select #idStatus name="idStatus" catalog="EstatusOpportunity" placeholder="Select Status" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+          </section>             
+        </div>
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section  flex-gt-sm="35" >
             <crm-select #idCustomer name="idCustomer" catalog="Customer" placeholder="Select Customer" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
           </section>
+          <section  flex-gt-sm="35" >
+            <crm-select #idCustomerContact name="idCustomerContact" 
+                         parentCatalog="Customer/contactsByCustomer?idCustomer=" 
+                         [parentSelect]="idCustomer"
+                         placeholder="Select Customer Contact" [(ngModel)]="itemEdit.IdCustomerContact" ></crm-select>
+          </section>
+          <section  flex-gt-sm="30" >
+            <crm-select #idContact name="idContact" catalog="Contact" placeholder="Select Contact" [(ngModel)]="itemEdit.IdContact" ></crm-select>
+          </section>          
         </div>
-
 
 
       </form>

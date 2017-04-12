@@ -32,10 +32,11 @@ describe('Component: ProductOverview', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        CovalentCoreModule.forRoot(),
+        CovalentCoreModule,
         CovalentHttpModule.forRoot(),
         RouterTestingModule,
         NgxChartsModule,
+        NoopAnimationsModule,
       ],
       declarations: [
         ProductOverviewComponent,
@@ -47,7 +48,6 @@ describe('Component: ProductOverview', () => {
         { provide: TdLoadingService, useValue: {
             createComponent: noop,
             createReplaceComponent: noop,
-            createOverlayComponent: noop,
             register: noop,
             resolve: noop,
           },

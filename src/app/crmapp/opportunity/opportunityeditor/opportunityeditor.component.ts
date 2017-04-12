@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../services/actions.services';
 
@@ -18,7 +18,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 
 
 
@@ -31,6 +31,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class OpportunityeditorComponent extends BaseComponent {
 
   idOpp: number = 0;
+  @ViewChild('idCustomerContact') custContactSelect: AbstractValueAccessor;
+  //IdCustomerContact
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -67,12 +69,18 @@ export class OpportunityeditorComponent extends BaseComponent {
 
   }
 
+ afterLoadItem(item: any) {
+   
+   this.custContactSelect.loadCustomData(item.IdCustomer);
+    
+ }
+
   afterSave(item: TCRMEntity) {
     
   }
 
   onCustomerChange(event) {
-    debugger
+    
   }
 
 }

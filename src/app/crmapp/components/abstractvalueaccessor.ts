@@ -70,7 +70,8 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
     public loadCustomData(pid : number) {
       if( this.parentCatalog !== undefined && this.parentCatalog !== '') {
        this.parentCataSubscribe = this._curService.loadCustomCatalogObs( this.parentCatalog + pid.toString() , undefined)
-        .subscribe((data) => {
+        .map((response) => response.json()).subscribe((data) => {
+            this.catList = [];
             Object.assign(this.catList, data);
           });
       }
