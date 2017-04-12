@@ -43,20 +43,20 @@
     <section *ngIf="!isEditing">
 
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+        <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
           <div layout="row">
             <button md-button (click)="editEntity(row.Id)">{{value}}</button>
           </div>
-        </template>
+        </ng-template>
 
-        <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+        <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
 
             <button md-icon-button (click)="confirmDelete( row)">
             <md-icon>delete</md-icon>
           </button>
           </div>
-        </template>
+        </ng-template>
 
       </td-data-table>
       <td-paging-bar [firstLast]="false" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"

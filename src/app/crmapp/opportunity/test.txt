@@ -1,21 +1,21 @@
     <td-data-table  [data]="entList | async" [columns]="columns" [sortable]="true" 
            [sortBy]="sortBy" [sortOrder]="sortOrder"
            (sortChange)="getSorted($event)">
-      <template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
        <button md-button
         md-ripple class="block relative" [routerLink]="['../edit', row.Id]">
         {{value}}
       </button>
        
-      </template>
-      <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      </ng-template>
+      <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
         <div layout="row" flex="5">
           
           <button md-icon-button (click)="confirmDelete(confirmDialog, row)" >
             <md-icon>delete</md-icon>
           </button>
         </div>
-      </template>
+      </ng-template>
 
     </td-data-table>
     

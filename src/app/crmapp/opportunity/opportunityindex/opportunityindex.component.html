@@ -45,24 +45,24 @@
   <md-card>
   <md-card-content>
     <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-      <template tdDataTableTemplate="Id" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="Id" let-value="value" let-row="row" let-column="column">
         <button md-button md-ripple class="block relative" [routerLink]="['edit', row.Id]">
         {{value}}
       </button>
-      </template>
+      </ng-template>
 
-      <template tdDataTableTemplate="LastUpdated" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="LastUpdated" let-value="value" let-row="row" let-column="column">
         <span>{{value | date }}</span>
-      </template>
+      </ng-template>
 
-      <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
         <div layout="row" flex="5">
 
           <button md-icon-button (click)="confirmDelete( row)">
             <md-icon>delete</md-icon>
           </button>
         </div>
-      </template>
+      </ng-template>
 
     </td-data-table>
 

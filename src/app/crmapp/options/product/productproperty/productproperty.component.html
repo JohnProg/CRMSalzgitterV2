@@ -10,18 +10,18 @@
 
 <section flex *ngIf="!isEditProp">
   <td-data-table [data]="propList | async " [columns]="propColumns">
-    <template tdDataTableTemplate="POrder" let-value="value" let-row="row" let-column="column">
+    <ng-template tdDataTableTemplate="POrder" let-value="value" let-row="row" let-column="column">
       <button md-button (click)="editProperty(row)">{{value}}</button>
 
-    </template>
-    <template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+    </ng-template>
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
       <div layout="row" flex="5">
 
         <button md-icon-button (click)="deleteProperty(row)">
             <md-icon>delete</md-icon>
           </button>
       </div>
-    </template>
+    </ng-template>
 
   </td-data-table>
 </section>

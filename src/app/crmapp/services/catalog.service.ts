@@ -23,6 +23,7 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
 }
 
 
+
 @Injectable()
 export class CRMRestService extends RESTService<TCRMEntity>  {
 
@@ -51,6 +52,8 @@ export class CRMRestService extends RESTService<TCRMEntity>  {
 
 
 }
+
+
 
 
 @Injectable()
