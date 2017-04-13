@@ -27,8 +27,6 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
 @Injectable()
 export class CRMRestService extends RESTService<TCRMEntity>  {
 
-
-
   constructor(private _http: Http, private _confs: ConfigurationService) {
     super(_http, {
       baseUrl: _confs.serverWithApiUrl,

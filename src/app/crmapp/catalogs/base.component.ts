@@ -162,6 +162,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+
+
+
   addColumns() {
 
     this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
@@ -191,6 +194,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.isLoading = false;
     });
+
+  }
+
+
+  submitForm(form) {
 
   }
 
