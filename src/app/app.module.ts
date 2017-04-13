@@ -26,7 +26,7 @@ import { DashboardTemplateComponent } from './templates/dashboard/dashboard.comp
 import { EmailTemplateComponent } from './templates/email/email.component';
 import { EditorTemplateComponent } from './templates/editor/editor.component';
 import { appRoutes, appRoutingProviders } from './app.routes';
-import { ButtonDisableFix } from '../directives/button-disable-fix.directive';
+
 import { RequestInterceptor } from '../config/interceptors/request.interceptor';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -101,7 +101,7 @@ import { CrmselectchildComponent } from './crmapp/components/crmselectchild/crms
     DashboardTemplateComponent,
     EmailTemplateComponent,
     EditorTemplateComponent,
-ButtonDisableFix,
+
 
     BaseComponent,
     CurrencyComponent,
