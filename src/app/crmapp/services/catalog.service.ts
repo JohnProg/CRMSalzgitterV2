@@ -6,7 +6,7 @@ import { RESTService, HttpInterceptorService } from '@covalent/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { ConfigurationService } from './configuration.service';
-import { Currency, TCRMEntity } from '../model/allmodels';
+import {  TCRMEntity } from '../model/allmodels';
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {
@@ -96,6 +96,7 @@ export class CatalogService {
     this.dataStore = { entities: [] };
     this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
     this.entList = this._entList.asObservable();
+
 
 
     this.itemEdit = new TCRMEntity();

@@ -5,7 +5,7 @@ import { ActionsService } from '../../services/actions.services';
 
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
-import { TCRMEntity } from '../../model/allmodels';
+
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../base.component';

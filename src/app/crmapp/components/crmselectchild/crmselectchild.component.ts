@@ -2,7 +2,7 @@ import { Component, Input, Output, forwardRef, EventEmitter } from '@angular/cor
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
-import { TCRMEntity } from '../../model/allmodels';
+
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { AbstractValueAccessor  } from '../abstractvalueaccessor';

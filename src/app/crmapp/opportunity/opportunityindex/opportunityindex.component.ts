@@ -14,7 +14,7 @@ import { ConfigurationService } from '../../services/configuration.service';
 
 import { Product } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
-import { TCRMEntity, GeGetOpportunities } from '../../model/allmodels';
+import { GeGetOpportunities } from '../../model/allmodels';
 
 
 @Component({

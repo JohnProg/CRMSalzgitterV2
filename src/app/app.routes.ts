@@ -37,6 +37,10 @@ import { ProducteditorComponent } from './crmapp/options/product/producteditor/p
 import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
 import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
 import { OpportunityeditorComponent } from './crmapp/opportunity/opportunityeditor/opportunityeditor.component';
+import { OpportunitydetailComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydetail/opportunitydetail.component';
+import { OpportunityheaderComponent } from './crmapp/opportunity/opportunityeditor/+opportunityheader/opportunityheader.component';
+import { OpportunitydialogsComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydialogs/opportunitydialogs.component';
+import { OpportunitydocumentsComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydocuments/opportunitydocuments.component';
 
 
 
@@ -84,7 +88,8 @@ const routes: Routes = [
           component: ProductComponent,
           children: [
             { path: '', component: ProductindexComponent },
-            { path: 'edit/:id', component: ProducteditorComponent }
+            { path: 'edit/:id', component: ProducteditorComponent },
+
           ]
         },
       ]
@@ -97,7 +102,14 @@ const routes: Routes = [
           component: OpportunityindexComponent
         },
 
-        { path: 'edit/:id', component: OpportunityeditorComponent },
+        { path: 'edit/:id', component: OpportunityeditorComponent,
+          children: [
+            { path: '', component: OpportunityheaderComponent },
+            { path: 'details/:id', component: OpportunitydetailComponent },
+            { path: 'dialogs/:id', component: OpportunitydialogsComponent },
+            { path: 'documents/:id', component: OpportunitydocumentsComponent },
+          ]
+        },
         { path: 'insert', component: OpportunityeditorComponent }
       ]
     },

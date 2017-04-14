@@ -1,0 +1,29 @@
+      <form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section flex-gt-sm="35" >
+            <crm-select #idResponsible name="idResponsible" catalog="Responsible" placeholder="Select Responsible" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
+          </section>
+          <section  flex-gt-sm="30" >
+            <crm-select #idCurrency name="idCurrency" catalog="Currency" placeholder="Select Currency" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
+          </section>    
+          <section  flex-gt-sm="35" >
+            <crm-select #idStatus name="idStatus" catalog="EstatusOpportunity" placeholder="Select Status" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+          </section>             
+        </div>
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section  flex-gt-sm="35" >
+            <crm-select #idCustomer name="idCustomer" catalog="Customer" placeholder="Select Customer" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
+          </section>
+          <section  flex-gt-sm="35" >
+            <crm-select #idCustomerContact name="idCustomerContact" 
+                         parentCatalog="Customer/contactsByCustomer?idCustomer=" 
+                         [parentSelect]="idCustomer"
+                         placeholder="Select Customer Contact" [(ngModel)]="itemEdit.IdCustomerContact" ></crm-select>
+          </section>
+          <section  flex-gt-sm="30" >
+            <crm-select #idContact name="idContact" catalog="Contact" placeholder="Select Contact" [(ngModel)]="itemEdit.IdContact" ></crm-select>
+          </section>          
+        </div>
+
+
+      </form>

@@ -62,7 +62,10 @@ import { OpportunityComponent } from './crmapp/opportunity/opportunity.component
 import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
 import { OpportunityeditorComponent } from './crmapp/opportunity/opportunityeditor/opportunityeditor.component';
 import { CrmselectchildComponent } from './crmapp/components/crmselectchild/crmselectchild.component';
-
+import { OpportunitydetailComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydetail/opportunitydetail.component';
+import { OpportunityheaderComponent } from './crmapp/opportunity/opportunityeditor/+opportunityheader/opportunityheader.component';
+import { OpportunitydialogsComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydialogs/opportunitydialogs.component';
+import { OpportunitydocumentsComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydocuments/opportunitydocuments.component';
 
 
 
@@ -112,6 +115,10 @@ import { CrmselectchildComponent } from './crmapp/components/crmselectchild/crms
     OpportunityindexComponent,
     OpportunityeditorComponent,
     CrmselectchildComponent,
+    OpportunitydetailComponent,
+    OpportunityheaderComponent,
+    OpportunitydialogsComponent,
+    OpportunitydocumentsComponent,
 
 
   ], // directives, components, and pipes owned by this NgModule

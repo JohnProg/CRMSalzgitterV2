@@ -11,7 +11,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
-import { TCRMEntity, Company } from '../../model/allmodels';
+import {  Company } from '../../model/allmodels';
 import { CRMSelectComponent } from '../../components/crmselect/crmselect.component';
 
 
@@ -54,7 +54,7 @@ export class CompanyComponent extends BaseComponent {
       this._curService.load(id);
     }
 
-  afterLoadItem(item : TCRMEntity) {
+  afterLoadItem(item : Company) {
       this.zipCode = (<Company>item).zipCode;
       //this.colony.reloadFromZipCode(this.zipCode);
       this._actions.showAdd(false);

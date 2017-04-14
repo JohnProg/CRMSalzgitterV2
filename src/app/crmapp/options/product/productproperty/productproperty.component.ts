@@ -146,7 +146,7 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
 
   deleteProperty(item: TCRMEntity) {
 
-    let cparams: TCRMEntity[] = new Array<TCRMEntity>();
+    let cparams: TCRMEntity[] = [];
     this._curService.customDelete('Product/DeleteProperty?idprop=' + item.Id.toString(), cparams)
       .map((response) => response.text()).subscribe((data) => {
 

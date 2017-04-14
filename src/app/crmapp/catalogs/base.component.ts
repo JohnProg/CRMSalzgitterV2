@@ -45,8 +45,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
 
-  entList: Observable<TCRMEntity[]>;
-  itemEdit: TCRMEntity;
+  entList: Observable< TCRMEntity[]>;
+  itemEdit:  TCRMEntity;
   curIndex: number;
   isEditing: boolean;
   isEditing$: any;
@@ -66,10 +66,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pagesArray: number[] = [5, 8, 10, 13, 20, 50, 100];
 
-  emailTo: TCRMEntity[] = <TCRMEntity[]>[
-    { Id: 1, Name: 'Internal' },
-    { Id: 2, Name: 'Customer' },
-    { Id: 3, Name: 'Both' }
+  emailTo: TCRMEntity[] =  [
+
   ];
   autoLoad: boolean = true;
   isLoading: boolean = false;
@@ -82,24 +80,24 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
 
+    this.emailTo.push({ Id: 1, Name: 'Internal' });
+    this.emailTo.push({ Id: 2, Name: 'Customer' });
+    this.emailTo.push({ Id: 3, Name: 'Both' });
     this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
     this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
     this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
     this.addColumns();
     this.addActionColumn();
-    
     this.pageSize = this._confs.pageSize;
 
   }
-
 
   ngOnInit() {
     this.ngOnInitClass();
   }
 
-
   ngOnInitClass() {
-    this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
+    this.entList = <Observable<TCRMEntity>[]>this._curService.entList;
     
     this.initData();
   }
@@ -183,7 +181,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this._curService.loadAll(this.getPageParams(''));
     }
 
-    this.itemEdit = new TCRMEntity();
+    this.itemEdit = new  TCRMEntity();
     this.isEditing$ = this._curService.isEditing$.subscribe(status => {
       this.isEditing = status;
       this.reloadPaged('');
@@ -205,14 +203,14 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editEntity(id: number) {
     this._actions.updateTitle('Edit ' + this.catalogName);
-    this.itemEdit = <TCRMEntity>this._curService.itemEdit;
+    this.itemEdit = < TCRMEntity>this._curService.itemEdit;
     this._curService.load(id);
   }
 
   addEntity() {
 
     this._actions.updateTitle('Add ' + this.catalogName);
-    this.itemEdit = new TCRMEntity();
+    this.itemEdit = new  TCRMEntity();
     this.itemEdit.Id = 0;
     this._curService.changeState(true);
   }
@@ -257,7 +255,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  confirmDelete(item: TCRMEntity) {
+  confirmDelete(item:  TCRMEntity) {
     this.itemEdit = item;
     this._actions.deleteItemEvent.emit(item.Description);
   }
@@ -313,7 +311,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   addParams(p: IPChangeEventSorted) {
   }
 
-  afterLoadItem(itm: TCRMEntity) {
+  afterLoadItem(itm:  TCRMEntity) {
 
   }
 

@@ -1,10 +1,10 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
-import {  GetProductProperty, ProductProperty } from '../../../model/allmodels';
+import {  OpportunityDocument  } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -18,18 +18,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductpropertyComponent } from '../productproperty/productproperty.component';
+import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 
 @Component({
-  selector: 'crm-producteditor',
-  templateUrl: './producteditor.component.html',
-  styleUrls: ['./producteditor.component.scss'],
-  providers: [CatalogService, ConfigurationService],
+  selector: 'crm-opportunitydocuments',
+  templateUrl: './opportunitydocuments.component.html',
+  styleUrls: ['./opportunitydocuments.component.scss'],
+  providers: [CatalogService, ConfigurationService, ActionsService],  
 })
-export class ProducteditorComponent extends BaseComponent {
+export class OpportunitydocumentsComponent extends BaseComponent {
 
+ idOpp: number = 0;
 
-@ViewChild(ProductpropertyComponent) _props: ProductpropertyComponent;
 
 
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
@@ -40,42 +40,24 @@ export class ProducteditorComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-    this.catalogName = 'Product';
-    this._curService.setAPI('Product/', this.catalogName);
-
-
-
+    this.catalogName = 'Opportunity';
+    this._curService.setAPI('Opportunity/', this.catalogName);
   }
 
-
-  ngOnInitClass() {
-    this.entList = <Observable<GetProductProperty[]>>this._curService.entList;
+ ngOnInitClass() {
+    this.entList = <Observable<Opportunity[]>>this._curService.entList;
 
     this._route.params.subscribe((params: { id: number }) => {
-      let itemId: number = params.id;
-      if (itemId > 0) {
-        this.editEntity(itemId);
-      } else {
-        this.addEntity();
-      }
+      
+      this.idOpp = params.id;
+      this.itemEdit = new OppotunityDocument();
+      // if ( this.idOpp > 0) {
+      //   this.editEntity( this.idOpp);
+      // } else {
+      //   this.addEntity();
+      // }
 
     });
-
-  }
-
-  ngAfterViewInit(): void {
-    super.ngAfterViewInit();
-    this._actions.showAdd(false);
-    this._actions.showSearch(false);
-    this._actions.showSave(true);
-
-  }
-
-
-
-  expandProperties() {
-
-    this._props.loadProperties();
 
   }
 
