@@ -25,6 +25,7 @@ import { IncoTerm } from '../../model/allmodels';
 })
 export class IncotermComponent extends BaseComponent {
 
+  itemEdit: IncoTerm;
   constructor( public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,

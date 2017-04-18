@@ -30,7 +30,7 @@ export class StateComponent extends BaseComponent {
 
    idCountry: number = 0;
    enableAdd: boolean = false;
-
+   itemEdit: State;
   constructor( public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,

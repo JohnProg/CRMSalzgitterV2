@@ -4,7 +4,7 @@ import { ActionsService } from '../../../services/actions.services';
 
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
-import {  GetProductProperty, ProductProperty } from '../../../model/allmodels';
+import {  GetProductProperty, ProductProperty, Product } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -29,6 +29,7 @@ import { ProductpropertyComponent } from '../productproperty/productproperty.com
 export class ProducteditorComponent extends BaseComponent {
 
 
+   itemEdit: Product;
 @ViewChild(ProductpropertyComponent) _props: ProductpropertyComponent;
 
 
@@ -71,6 +72,9 @@ export class ProducteditorComponent extends BaseComponent {
 
   }
 
+  initEntity() {
+    this.itemEdit = new  Product();
+  }
 
 
   expandProperties() {

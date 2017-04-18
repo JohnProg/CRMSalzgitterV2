@@ -99,7 +99,7 @@ export class CatalogService {
 
 
 
-    this.itemEdit = new TCRMEntity();
+    this.itemEdit = <TCRMEntity>{  };
 
     this.isEditing$ = new Observable<boolean>( (observer) => this.isEditing = observer).share();
 
@@ -138,6 +138,18 @@ export class CatalogService {
       this._loadingService.resolve('users.list');
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     });
+  }
+
+  loadCustomAll( url: string,  cparams: URLSearchParams) {
+    this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
+      .map((response) => response.json()).subscribe((result) => {
+        
+        this.dataStore.entities = result;
+        this._entList.next(Object.assign({}, this.dataStore).entities);
+      }, (error) => {
+        this._loadingService.resolve('users.list');
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      });
   }
 
   customQuery(pfunc: string, cparams: TCRMEntity[]) {

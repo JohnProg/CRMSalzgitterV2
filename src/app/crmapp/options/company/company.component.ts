@@ -49,6 +49,10 @@ export class CompanyComponent extends BaseComponent {
     this.editEntity(1);
   }
 
+  initEntity() {
+    this.itemEdit = new  Company();
+  }
+
     editEntity( id: number ) {
       this.itemEdit = <Company>this._curService.itemEdit;
       this._curService.load(id);

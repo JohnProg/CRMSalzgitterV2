@@ -6,10 +6,9 @@
   <td-layout-manage-list #manageList
                         [opened]="_mediaService.registerQuery('gt-sm') | async"
                         [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
-                        [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '257px' : '100%'">
+                        [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '150px' : '100%'">
     <md-toolbar td-sidenav-content>
-      <span *ngIf="idOpp > 0">Edit Opportunity  </span>
-      <span *ngIf="idOpp == 0">Create Opportunity  </span>
+
     </md-toolbar>
     <md-nav-list td-sidenav-content>
         <a md-list-item
@@ -53,7 +52,8 @@
       </a>    
     </md-nav-list>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
-
+      <span *ngIf="idOpp > 0">Edit Opportunity {{idOpp}} </span>
+      <span *ngIf="idOpp == 0">Create Opportunity  </span>
       <div flex></div>
       <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
           Opportunity Index

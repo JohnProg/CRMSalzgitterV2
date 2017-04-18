@@ -37,10 +37,5 @@ export class DepartmentComponent extends BaseComponent {
   }
 
 
-  ngOnInit() {
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-    this.initData();
-
-  }
 
 }

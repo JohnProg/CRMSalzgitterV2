@@ -1,6 +1,6 @@
 <md-card>
   <md-card-content>
-    <form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
+    <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
       <section *ngIf="isEditing">
         <section layout="column" flex="100" layout-margin>
           <md-input-container>

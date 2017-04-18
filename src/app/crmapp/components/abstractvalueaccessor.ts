@@ -14,7 +14,7 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
     @Input() placeholder: string;
     @Input() cwidth: number = 100;
     @Input() catalog: string = '';
-
+    @Input() selDisabled: boolean = false;
 
     parentCataSubscribe: any;
     @Input() parentCatalog : string = '';

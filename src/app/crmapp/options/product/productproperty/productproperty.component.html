@@ -26,7 +26,7 @@
   </td-data-table>
 </section>
 
-<form #fprop="ngForm" flex (ngSubmit)="submitProperty(form.value)">
+<form #fprop="ngForm" flex (ngSubmit)="submitProperty(fprop.value)">
   <section flex layout="row">
     <section flex="25"></section>
     <section *ngIf="isEditProp" flex="50">

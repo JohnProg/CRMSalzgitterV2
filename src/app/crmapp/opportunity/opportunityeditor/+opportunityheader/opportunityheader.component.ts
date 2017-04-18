@@ -30,7 +30,7 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
 export class OpportunityheaderComponent extends BaseComponent {
 
   @Input() idOpp: number = 0;
-
+itemEdit: Opportunity;
   @ViewChild('idCustomerContact') custContactSelect: AbstractValueAccessor;
   //IdCustomerContact
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
@@ -68,7 +68,9 @@ export class OpportunityheaderComponent extends BaseComponent {
 
   }
 
-
+  initEntity() {
+    this.itemEdit = new  Opportunity();
+  }
 
   afterLoadItem(item: any) {
 

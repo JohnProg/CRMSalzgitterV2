@@ -37,11 +37,5 @@ export class CountryComponent extends BaseComponent {
   }
 
 
-  ngOnInit() {
-   
-    this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
-     this.initData();
-  }
-
 
 }

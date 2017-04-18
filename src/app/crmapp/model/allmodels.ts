@@ -1,6 +1,6 @@
 ﻿
 
-	export interface BaseEntity {
+	export class BaseEntity {
 		AccessToken: string;
 		AuthenticationToken: string;
 		CLASS_NAME: string;
@@ -9,7 +9,7 @@
 		CREATED_ON: Date;
 		Description: string;
 		EmailType: string;
-		Id: T;
+		Id: number;
 		MACHINE_NAME: string;
 		Name: string;
 		NameDescription: string;
@@ -18,11 +18,11 @@
 		Selected: boolean;
 		WLJsPath: string;
 	}
-	export interface TCRMEntity extends BaseEntity {
+	export class TCRMEntity extends BaseEntity {
 	}
 
 
-	export interface ActionOpportunity extends TCRMEntity {
+	export class ActionOpportunity extends TCRMEntity {
 		EMailTo: number;
 		EstatusOpportunity: EstatusOpportunity;
 		Id: number;
@@ -33,15 +33,15 @@
 		ShowActionType: number;
 		TemplateEMail: TemplateEMail;
 	}
-	export interface Bank extends TCRMEntity {
+	export class Bank extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface BreakStringIntoRows_Result {
+	export class BreakStringIntoRows_Result {
 		Column1: string;
 	}
-	export interface Broker extends TCRMEntity {
+	export class Broker extends TCRMEntity {
 		AgentNumber: string;
 		Colony: Colony;
 		ContactName: string;
@@ -55,19 +55,19 @@
 		RFC: string;
 		Street: string;
 	}
-	export interface Category extends TCRMEntity {
+	export class Category extends TCRMEntity {
 		CategoryID: number;
 		CategoryLogs: CategoryLog[];
 		CategoryName: string;
 	}
-	export interface CategoryLog extends TCRMEntity {
+	export class CategoryLog extends TCRMEntity {
 		Category: Category;
 		CategoryID: number;
 		CategoryLogID: number;
 		Log: Log;
 		LogID: number;
 	}
-	export interface City extends TCRMEntity {
+	export class City extends TCRMEntity {
 		Colonies: Colony[];
 		Description: string;
 		Id: number;
@@ -75,7 +75,7 @@
 		Name: string;
 		State: State;
 	}
-	export interface CollectionDataType extends TCRMEntity {
+	export class CollectionDataType extends TCRMEntity {
 		ApplyTax: boolean;
 		AsImporter: boolean;
 		CType: number;
@@ -84,13 +84,13 @@
 		Id: number;
 		Name: string;
 	}
-	export interface CollectionImporterRelation extends TCRMEntity {
+	export class CollectionImporterRelation extends TCRMEntity {
 		AsImporter: boolean;
 		CType: number;
 		Id: number;
 		IdCollectionDataType: number;
 	}
-	export interface Colony extends TCRMEntity {
+	export class Colony extends TCRMEntity {
 		Brokers: Broker[];
 		City: City;
 		ColonyType: ColonyType;
@@ -105,13 +105,13 @@
 		RailSpurs: RailSpur[];
 		ZipCode: string;
 	}
-	export interface ColonyType extends TCRMEntity {
+	export class ColonyType extends TCRMEntity {
 		Colonies: Colony[];
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface Company extends TCRMEntity {
+	export class Company extends TCRMEntity {
 		Colony: Colony;
 		CompanyName: string;
 		CompanyTargets: CompanyTarget[];
@@ -124,8 +124,9 @@
 		Phone: string;
 		Street: string;
 		TaxAmount: number;
+		zipCode: string;
 	}
-	export interface CompanyTarget extends TCRMEntity {
+	export class CompanyTarget extends TCRMEntity {
 		Company: Company;
 		Family: Family;
 		Id: number;
@@ -134,7 +135,7 @@
 		Target: number;
 		TargetYear: number;
 	}
-	export interface Contact extends TCRMEntity {
+	export class Contact extends TCRMEntity {
 		CellPhone: string;
 		Department: Department;
 		EMail: string;
@@ -147,7 +148,7 @@
 		OpportunityDialogs: OpportunityDialog[];
 		Organization: Organization;
 	}
-	export interface Country extends TCRMEntity {
+	export class Country extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Mills: Mill[];
@@ -157,7 +158,7 @@
 		States: State[];
 		Suppliers: Supplier[];
 	}
-	export interface Currency extends TCRMEntity {
+	export class Currency extends TCRMEntity {
 		ASign: string;
 		Description: string;
 		ExchangeRates: ExchangeRate[];
@@ -167,7 +168,7 @@
 		QuotationFromSuppliers: QuotationFromSupplier[];
 		QuotationToCustomers: QuotationToCustomer[];
 	}
-	export interface Customer extends TCRMEntity {
+	export class Customer extends TCRMEntity {
 		Brokers: Broker[];
 		Colony: Colony;
 		CustomerContacts: CustomerContact[];
@@ -193,7 +194,7 @@
 		Sectors: Sector[];
 		Street: string;
 	}
-	export interface CustomerContact extends TCRMEntity {
+	export class CustomerContact extends TCRMEntity {
 		CellPhone: string;
 		Customer: Customer;
 		email: string;
@@ -210,7 +211,7 @@
 		OpportunityDialogs: OpportunityDialog[];
 		Position: Position;
 	}
-	export interface CustomerDeliveryPoint extends TCRMEntity {
+	export class CustomerDeliveryPoint extends TCRMEntity {
 		CDPContact: string;
 		CDPCP: string;
 		CDPName: string;
@@ -224,7 +225,7 @@
 		IdCustomer: number;
 		IdDeliveryType: number;
 	}
-	export interface CustomerDocument extends TCRMEntity {
+	export class CustomerDocument extends TCRMEntity {
 		Comment: string;
 		Customer: Customer;
 		DateUploaded: Date;
@@ -234,19 +235,19 @@
 		IdCustomer: number;
 		ParentFolder: string;
 	}
-	export interface DeliveryType extends TCRMEntity {
+	export class DeliveryType extends TCRMEntity {
 		CustomerDeliveryPoints: CustomerDeliveryPoint[];
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface Department extends TCRMEntity {
+	export class Department extends TCRMEntity {
 		Contacts: Contact[];
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface DocumentType extends TCRMEntity {
+	export class DocumentType extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
@@ -255,7 +256,7 @@
 		QuotationToCustomerDocuments: QuotationToCustomerDocument[];
 		TemplateEMails: TemplateEMail[];
 	}
-	export interface EstatusOpportunity extends TCRMEntity {
+	export class EstatusOpportunity extends TCRMEntity {
 		ActionOpportunities: ActionOpportunity[];
 		Description: string;
 		Id: number;
@@ -265,14 +266,14 @@
 		QuotationFromSuppliers: QuotationFromSupplier[];
 		QuotationToCustomers: QuotationToCustomer[];
 	}
-	export interface ExchangeRate extends TCRMEntity {
+	export class ExchangeRate extends TCRMEntity {
 		Currency: Currency;
 		Id: number;
 		IdCurrency: number;
 		TDate: Date;
 		Value: number;
 	}
-	export interface Family extends TCRMEntity {
+	export class Family extends TCRMEntity {
 		CompanyTargets: CompanyTarget[];
 		Description: string;
 		Id: number;
@@ -280,18 +281,18 @@
 		Products: Product[];
 		ResponsibleTargets: ResponsibleTarget[];
 	}
-	export interface GenericList extends TCRMEntity {
+	export class GenericList extends TCRMEntity {
 		Descripcion: string;
 		IdString: string;
 		Name: string;
 	}
-	export interface getAllContactsWithCustomers_Result {
+	export class getAllContactsWithCustomers_Result {
 		ATipo: string;
 		EMail: string;
 		Id: number;
 		Name: string;
 	}
-	export interface getCitites_Result {
+	export class getCitites_Result {
 		CountryName: string;
 		Description: string;
 		FullName: string;
@@ -301,7 +302,7 @@
 		Name: string;
 		StateName: string;
 	}
-	export interface getColonies_Result {
+	export class getColonies_Result {
 		CityName: string;
 		CountryName: string;
 		CTypeName: string;
@@ -315,7 +316,7 @@
 		StateName: string;
 		ZipCode: string;
 	}
-	export interface GetColoniesFromZipCode_Result {
+	export class GetColoniesFromZipCode_Result {
 		Description: string;
 		Id: number;
 		IdCity: number;
@@ -323,7 +324,7 @@
 		Name: string;
 		ZipCode: string;
 	}
-	export interface GetCompanyInfo_Result {
+	export class GetCompanyInfo_Result {
 		Address1: string;
 		Address2: string;
 		CityDescription: string;
@@ -350,25 +351,25 @@
 		Street: string;
 		ZipCode: string;
 	}
-	export interface getCountries_Result {
+	export class getCountries_Result {
 		Description: string;
 		FullName: string;
 		Id: number;
 		Name: string;
 	}
-	export interface getCountriesFromIdMill_Result {
+	export class getCountriesFromIdMill_Result {
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface getCustomerContactList_Result {
+	export class getCustomerContactList_Result {
 		email: string;
 		Id: number;
 		IdCustomer: number;
 		Name: string;
 		NickName: string;
 	}
-	export interface GetCustomerDirectory_Result {
+	export class GetCustomerDirectory_Result {
 		Address: string;
 		City: string;
 		id: number;
@@ -379,7 +380,7 @@
 		Responsible: string;
 		Sector: string;
 	}
-	export interface GetCustomerProducts_Result {
+	export class GetCustomerProducts_Result {
 		CustomerName: string;
 		FamilyName: string;
 		IdCustomer: number;
@@ -387,7 +388,7 @@
 		IdProduct: number;
 		ProductName: string;
 	}
-	export interface getCustomers_Result {
+	export class getCustomers_Result {
 		ColonyName: string;
 		DaysCredit: number;
 		Id: number;
@@ -403,10 +404,10 @@
 		RFC: string;
 		Street: string;
 	}
-	export interface getListIntFomXML_Result {
+	export class getListIntFomXML_Result {
 		id: number;
 	}
-	export interface GetOpportunities {
+	export class GetOpportunities {
 		AsImporter: boolean;
 		CustomerName: string;
 		DateCreated: Date;
@@ -422,7 +423,7 @@
 		StatusName: string;
 		UserName: string;
 	}
-	export interface GetOpportunityDetails_Result {
+	export class GetOpportunityDetails_Result {
 		DateAdded: Date;
 		Id: number;
 		IdOpportunity: number;
@@ -434,7 +435,7 @@
 		ProductDescription: string;
 		ProductName: string;
 	}
-	export interface getProductProperties_Result {
+	export class getProductProperties_Result {
 		Description: string;
 		Id: number;
 		IdProperty: number;
@@ -442,7 +443,7 @@
 		Name: string;
 		POrder: number;
 	}
-	export interface getProducts_Result {
+	export class getProducts_Result {
 		Description: string;
 		FamilyDescription: string;
 		FamilyName: string;
@@ -450,7 +451,7 @@
 		IdFamily: number;
 		Name: string;
 	}
-	export interface GetProductsPaged {
+	export class GetProductsPaged {
 		Description: string;
 		FamilyDescription: string;
 		FamilyName: string;
@@ -458,7 +459,7 @@
 		IdFamily: number;
 		Name: string;
 	}
-	export interface getProductsPaged_Result {
+	export class getProductsPaged_Result {
 		Description: string;
 		FamilyDescription: string;
 		FamilyName: string;
@@ -466,7 +467,7 @@
 		IdFamily: number;
 		Name: string;
 	}
-	export interface getResponsible_Result {
+	export class getResponsible_Result {
 		CellPhone: string;
 		EMail: string;
 		Id: number;
@@ -476,7 +477,7 @@
 		OfficePhone: string;
 		PositionDescription: string;
 	}
-	export interface getState_Result {
+	export class getState_Result {
 		CountryName: string;
 		Description: string;
 		FullName: string;
@@ -484,7 +485,7 @@
 		IdCountry: number;
 		Name: string;
 	}
-	export interface getUsers_Result {
+	export class getUsers_Result {
 		FirstName: string;
 		Id: number;
 		IsActive: boolean;
@@ -493,7 +494,7 @@
 		userPassword: string;
 		userPassword1: string;
 	}
-	export interface IncoTerm extends TCRMEntity {
+	export class IncoTerm extends TCRMEntity {
 		DeliveryRequired: boolean;
 		Description: string;
 		Id: number;
@@ -502,7 +503,7 @@
 		QuotationFromSuppliers: QuotationFromSupplier[];
 		QuotationToCustomers: QuotationToCustomer[];
 	}
-	export interface LinerTerm extends TCRMEntity {
+	export class LinerTerm extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
@@ -510,7 +511,7 @@
 		QuotationFromSuppliers: QuotationFromSupplier[];
 		QuotationToCustomers: QuotationToCustomer[];
 	}
-	export interface Log extends TCRMEntity {
+	export class Log extends TCRMEntity {
 		AppDomainName: string;
 		CategoryLogs: CategoryLog[];
 		EventId: number;
@@ -527,19 +528,19 @@
 		Title: string;
 		Win32ThreadId: string;
 	}
-	export interface Market extends TCRMEntity {
+	export class Market extends TCRMEntity {
 		Customers: Customer[];
 		Description: string;
 		Id: number;
 		Name: string;
 		Opportunities: Opportunity[];
 	}
-	export interface MessageTemplate extends TCRMEntity {
+	export class MessageTemplate extends TCRMEntity {
 		Id: number;
 		MessageBody: string;
 		MessageSubject: string;
 	}
-	export interface Mill extends TCRMEntity {
+	export class Mill extends TCRMEntity {
 		Countries: Country[];
 		Description: string;
 		Id: number;
@@ -547,13 +548,13 @@
 		QuotationFromSuppliers: QuotationFromSupplier[];
 		QuotationToCustomers: QuotationToCustomer[];
 	}
-	export interface OEM extends TCRMEntity {
+	export class OEM extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 		ProductExtendeds: ProductExtended[];
 	}
-	export interface Opportunity extends TCRMEntity {
+	export class Opportunity extends TCRMEntity {
 		AsImporter: boolean;
 		Contact: Contact;
 		Currency: Currency;
@@ -589,7 +590,7 @@
 		Sector: Sector;
 		User: User;
 	}
-	export interface OpportunityDetail extends TCRMEntity {
+	export class OpportunityDetail extends TCRMEntity {
 		DateAdded: Date;
 		Id: number;
 		IdOpportunity: number;
@@ -602,7 +603,7 @@
 		OpportunityDetailSumays: OpportunityDetailSumay[];
 		Product: Product;
 	}
-	export interface OpportunityDetailSumaryProperty extends TCRMEntity {
+	export class OpportunityDetailSumaryProperty extends TCRMEntity {
 		Id: number;
 		IdOpportunityDetailSumary: number;
 		IdProperty: number;
@@ -610,7 +611,7 @@
 		Property: Property;
 		PropertyValue: string;
 	}
-	export interface OpportunityDetailSumay extends TCRMEntity {
+	export class OpportunityDetailSumay extends TCRMEntity {
 		Amount: number;
 		Comment: string;
 		DateCreated: Date;
@@ -621,7 +622,7 @@
 		Price: number;
 		Quantity: number;
 	}
-	export interface OpportunityDialog extends TCRMEntity {
+	export class OpportunityDialog extends TCRMEntity {
 		ActionOpportunity: ActionOpportunity;
 		Contact: Contact;
 		CustomerContact: CustomerContact;
@@ -641,7 +642,7 @@
 		Subject: string;
 		ToContact: number;
 	}
-	export interface OpportunityDocument extends TCRMEntity {
+	export class OpportunityDocument extends TCRMEntity {
 		ADocument: number[];
 		DateUploaded: Date;
 		DNotes: string;
@@ -654,32 +655,32 @@
 		OpportunityDialog: OpportunityDialog;
 		ParentFolder: string;
 	}
-	export interface Organization extends TCRMEntity {
+	export class Organization extends TCRMEntity {
 		Contacts: Contact[];
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface PaymentTerm extends TCRMEntity {
+	export class PaymentTerm extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface Port extends TCRMEntity {
+	export class Port extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 		Opportunities: Opportunity[];
 		QuotationFromSuppliers: QuotationFromSupplier[];
 	}
-	export interface Position extends TCRMEntity {
+	export class Position extends TCRMEntity {
 		CustomerContacts: CustomerContact[];
 		Description: string;
 		Id: number;
 		Name: string;
 		Responsibles: Responsible[];
 	}
-	export interface Product extends TCRMEntity {
+	export class Product extends TCRMEntity {
 		CampaignTemplate: string;
 		CampaignTemplateSubject: string;
 		Customers: Customer[];
@@ -695,7 +696,7 @@
 		QuotationToCustomerDetails: QuotationToCustomerDetail[];
 		Suppliers: Supplier[];
 	}
-	export interface ProductExtended extends TCRMEntity {
+	export class ProductExtended extends TCRMEntity {
 		BuyerName: string;
 		Customer: Customer;
 		CustomerName: string;
@@ -715,7 +716,7 @@
 		Thickness: number;
 		Width: number;
 	}
-	export interface ProductExtendedPrice extends TCRMEntity {
+	export class ProductExtendedPrice extends TCRMEntity {
 		Id: number;
 		IdProductExtended: number;
 		Price: number;
@@ -723,7 +724,7 @@
 		ValidFrom: Date;
 		ValidTo: Date;
 	}
-	export interface ProductProperty extends TCRMEntity {
+	export class ProductProperty extends TCRMEntity {
 		Id: number;
 		IdProduct: number;
 		IdProperty: number;
@@ -732,7 +733,7 @@
 		Product: Product;
 		Property: Property;
 	}
-	export interface Property extends TCRMEntity {
+	export class Property extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
@@ -741,7 +742,7 @@
 		QuotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
 		QuotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
 	}
-	export interface QuotationFromSupplier extends TCRMEntity {
+	export class QuotationFromSupplier extends TCRMEntity {
 		Country: Country;
 		Currency: Currency;
 		DateReceived: Date;
@@ -766,7 +767,7 @@
 		QuotationToCustomers: QuotationToCustomer[];
 		User: User;
 	}
-	export interface QuotationFromSupplierDetail extends TCRMEntity {
+	export class QuotationFromSupplierDetail extends TCRMEntity {
 		Id: number;
 		IdProduct: number;
 		IdQuotationFromSupplier: number;
@@ -778,7 +779,7 @@
 		QuotationFromSupplier: QuotationFromSupplier;
 		QuotationFromSupplierDetailSumaries: QuotationFromSupplierDetailSumary[];
 	}
-	export interface QuotationFromSupplierDetailSumary extends TCRMEntity {
+	export class QuotationFromSupplierDetailSumary extends TCRMEntity {
 		Amount: number;
 		Comment: string;
 		DateCreated: Date;
@@ -789,7 +790,7 @@
 		QuotationFromSupplierDetail: QuotationFromSupplierDetail;
 		QuotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
 	}
-	export interface QuotationFromSupplierDetailSumaryProperty extends TCRMEntity {
+	export class QuotationFromSupplierDetailSumaryProperty extends TCRMEntity {
 		Id: number;
 		IdProperty: number;
 		IdQuotationFromSupplierDetailSumary: number;
@@ -797,7 +798,7 @@
 		PropertyValue: string;
 		QuotationFromSupplierDetailSumary: QuotationFromSupplierDetailSumary;
 	}
-	export interface QuotationFromSupplierDocument extends TCRMEntity {
+	export class QuotationFromSupplierDocument extends TCRMEntity {
 		DateUploaded: Date;
 		DocId: string;
 		DocName: string;
@@ -809,7 +810,7 @@
 		QDocNotes: string;
 		QuotationFromSupplier: QuotationFromSupplier;
 	}
-	export interface QuotationToCustomer extends TCRMEntity {
+	export class QuotationToCustomer extends TCRMEntity {
 		Country: Country;
 		Currency: Currency;
 		DateCreated: Date;
@@ -832,7 +833,7 @@
 		QuotationToCustomerDocuments: QuotationToCustomerDocument[];
 		User: User;
 	}
-	export interface QuotationToCustomerDetail extends TCRMEntity {
+	export class QuotationToCustomerDetail extends TCRMEntity {
 		Id: number;
 		IdProduct: number;
 		IdQuotationToCustomer: number;
@@ -848,7 +849,7 @@
 		QuotationToCustomer: QuotationToCustomer;
 		QuotationToCustomerDetailSumaries: QuotationToCustomerDetailSumary[];
 	}
-	export interface QuotationToCustomerDetailSumary extends TCRMEntity {
+	export class QuotationToCustomerDetailSumary extends TCRMEntity {
 		Comment: string;
 		DateCreated: Date;
 		Id: number;
@@ -857,7 +858,7 @@
 		QuotationToCustomerDetail: QuotationToCustomerDetail;
 		QuotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
 	}
-	export interface QuotationToCustomerDetailSumaryProperty extends TCRMEntity {
+	export class QuotationToCustomerDetailSumaryProperty extends TCRMEntity {
 		Id: number;
 		IdProperty: number;
 		IdQuotationToCustomerDetailSumary: number;
@@ -865,7 +866,7 @@
 		PropertyValue: string;
 		QuotationToCustomerDetailSumary: QuotationToCustomerDetailSumary;
 	}
-	export interface QuotationToCustomerDocument extends TCRMEntity {
+	export class QuotationToCustomerDocument extends TCRMEntity {
 		DateUploaded: Date;
 		DocId: string;
 		DocName: string;
@@ -877,7 +878,7 @@
 		QDocNotes: string;
 		QuotationToCustomer: QuotationToCustomer;
 	}
-	export interface RailSpur extends TCRMEntity {
+	export class RailSpur extends TCRMEntity {
 		CarsPerDay: number;
 		Colony: Colony;
 		Customers: Customer[];
@@ -896,19 +897,19 @@
 		Street: string;
 		Zona: string;
 	}
-	export interface RailSpurType extends TCRMEntity {
+	export class RailSpurType extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 		RailSpurs: RailSpur[];
 	}
-	export interface Railway extends TCRMEntity {
+	export class Railway extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 		RailSpurs: RailSpur[];
 	}
-	export interface Responsible extends TCRMEntity {
+	export class Responsible extends TCRMEntity {
 		CellPhone: string;
 		Customers: Customer[];
 		EMail: string;
@@ -926,7 +927,7 @@
 		RspUserCredential: string;
 		User: User;
 	}
-	export interface ResponsibleTarget extends TCRMEntity {
+	export class ResponsibleTarget extends TCRMEntity {
 		Family: Family;
 		Id: number;
 		IdFamily: number;
@@ -935,18 +936,18 @@
 		ResponsibleTargetYear: number;
 		TargetQty: number;
 	}
-	export interface ReturnSaveRequest {
+	export class ReturnSaveRequest {
 		Data: any;
 		Message: string;
 	}
-	export interface Sector extends TCRMEntity {
+	export class Sector extends TCRMEntity {
 		Customers: Customer[];
 		Description: string;
 		Id: number;
 		Name: string;
 		Opportunities: Opportunity[];
 	}
-	export interface State extends TCRMEntity {
+	export class State extends TCRMEntity {
 		Cities: City[];
 		Country: Country;
 		Description: string;
@@ -954,7 +955,7 @@
 		IdCountry: number;
 		Name: string;
 	}
-	export interface Supplier extends TCRMEntity {
+	export class Supplier extends TCRMEntity {
 		Country: Country;
 		Id: number;
 		IdCountry: number;
@@ -964,7 +965,7 @@
 		ShortName: string;
 		SupplierContacts: SupplierContact[];
 	}
-	export interface SupplierContact extends TCRMEntity {
+	export class SupplierContact extends TCRMEntity {
 		CellPhone: string;
 		Department: string;
 		EMail: string;
@@ -975,14 +976,14 @@
 		OfficePhone: string;
 		Supplier: Supplier;
 	}
-	export interface sysdiagram extends TCRMEntity {
+	export class sysdiagram extends TCRMEntity {
 		definition: number[];
 		diagram_id: number;
 		name: string;
 		principal_id: number;
 		version: number;
 	}
-	export interface TemplateEMail extends TCRMEntity {
+	export class TemplateEMail extends TCRMEntity {
 		ActionOpportunities: ActionOpportunity[];
 		DocumentTypes: DocumentType[];
 		EMailBody: string;
@@ -990,12 +991,12 @@
 		Id: number;
 		Name: string;
 	}
-	export interface Tender extends TCRMEntity {
+	export class Tender extends TCRMEntity {
 		Description: string;
 		Id: number;
 		Name: string;
 	}
-	export interface User extends TCRMEntity {
+	export class User extends TCRMEntity {
 		FirstName: string;
 		Id: number;
 		IsActive: boolean;
@@ -1007,4 +1008,33 @@
 		Responsibles: Responsible[];
 		UserName: string;
 		userPassword: string;
+
+		NameDescription: string = this.FirstName + ' ' + this.LastName;
 	}
+
+
+
+
+
+export class GeGetOpportunities extends TCRMEntity{
+   Idcustomer: number;
+   CustomerName: string;
+   ResponsibleName: string;
+   DateCreated: Date;
+   IdStatus: number;
+   StatusName: string;
+   LastUpdated: Date;
+   IdUser: number;
+   UserName: string;
+   PastDue: number;
+   DaysUpdate: number;
+   IsActive: boolean;
+   AsImporter: boolean;
+
+}
+
+export class GetProductProperty extends TCRMEntity {
+   POrder: number;
+   IsRequired: boolean;
+   IdProperty: number;
+}

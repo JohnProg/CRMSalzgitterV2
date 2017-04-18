@@ -13,7 +13,6 @@ import { Product } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../../catalogs/base.component';
-import { Product } from '../../../model/allmodels';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -38,7 +37,7 @@ export class ProductindexComponent extends BaseComponent  {
   }
 
   ngOnInitClass() {
-    this.entList = <Observable<Product<number>[]>>this._curService.entList;
+    this.entList = <Observable<Product[]>>this._curService.entList;
     
     this.initData();
     this.reloadPaged();

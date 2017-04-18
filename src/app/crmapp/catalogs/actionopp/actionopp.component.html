@@ -19,7 +19,7 @@
 
 
 
-    <form #f="ngForm" flex (ngSubmit)="submitForm(form.value)">
+    <form #f="ngForm" #form flex (ngSubmit)="submitForm(form.value)">
       <section *ngIf="isEditing" flex="100">
 
  <div class="form-group"   flex="100">

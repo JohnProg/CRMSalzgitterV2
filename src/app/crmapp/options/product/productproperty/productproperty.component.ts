@@ -91,7 +91,9 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
     }
   }
 
-
+  initEntity() {
+    this.itemEdit = new  ProductProperty();
+  }
 
   editProperty(item: GetProductProperty) {
     this.itemEdit = item;
@@ -159,6 +161,10 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
         this._loadingService.resolve('users.list');
         this._snackBarService.open(error, 'Ok');
       });
+  }
+
+  submitProperty(form: any) {
+
   }
 
 }

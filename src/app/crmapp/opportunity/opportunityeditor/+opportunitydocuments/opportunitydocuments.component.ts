@@ -30,7 +30,7 @@ export class OpportunitydocumentsComponent extends BaseComponent {
 
  idOpp: number = 0;
 
-
+itemEdit: OpportunityDocument;
 
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -45,12 +45,12 @@ export class OpportunitydocumentsComponent extends BaseComponent {
   }
 
  ngOnInitClass() {
-    this.entList = <Observable<Opportunity[]>>this._curService.entList;
+    this.entList = <Observable<OpportunityDocument[]>>this._curService.entList;
 
     this._route.params.subscribe((params: { id: number }) => {
       
       this.idOpp = params.id;
-      this.itemEdit = new OppotunityDocument();
+      this.itemEdit = new OpportunityDocument();
       // if ( this.idOpp > 0) {
       //   this.editEntity( this.idOpp);
       // } else {
@@ -59,6 +59,10 @@ export class OpportunitydocumentsComponent extends BaseComponent {
 
     });
 
+  }
+
+  initEntity() {
+    this.itemEdit = new  OpportunityDocument();
   }
 
 }

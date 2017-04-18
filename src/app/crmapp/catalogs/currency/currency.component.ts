@@ -31,7 +31,8 @@ export class CurrencyComponent extends BaseComponent {
 
 
 
-
+  itemEdit: Currency;
+  
   constructor( public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
