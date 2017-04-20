@@ -555,6 +555,7 @@
 		ProductExtendeds: ProductExtended[];
 	}
 	export class Opportunity extends TCRMEntity {
+		ProjectName: string;
 		AsImporter: boolean;
 		Contact: Contact;
 		Currency: Currency;
@@ -600,18 +601,18 @@
 		ItemPrice: number;
 		ItemQuantity: number;
 		Opportunity: Opportunity;
-		OpportunityDetailSumays: OpportunityDetailSumay[];
+		OpportunityDetailSumays: OpportunityDetailSumary[];
 		Product: Product;
 	}
 	export class OpportunityDetailSumaryProperty extends TCRMEntity {
 		Id: number;
 		IdOpportunityDetailSumary: number;
 		IdProperty: number;
-		OpportunityDetailSumay: OpportunityDetailSumay;
+		OpportunityDetailSumary: OpportunityDetailSumary;
 		Property: Property;
 		PropertyValue: string;
 	}
-	export class OpportunityDetailSumay extends TCRMEntity {
+	export class OpportunityDetailSumary extends TCRMEntity {
 		Amount: number;
 		Comment: string;
 		DateCreated: Date;

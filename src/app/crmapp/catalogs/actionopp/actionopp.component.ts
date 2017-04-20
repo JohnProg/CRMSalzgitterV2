@@ -22,7 +22,7 @@ import { MdSnackBar } from '@angular/material';
   selector: 'crm-actionopp',
   templateUrl: './actionopp.component.html',
   styleUrls: ['./actionopp.component.scss'],
-  providers: [CatalogService, ConfigurationService ]
+  providers: [ ]
 })
 export class ActionoppComponent extends BaseComponent {
 

@@ -23,7 +23,7 @@ import { State } from '../../model/allmodels';
   selector: 'crm-state',
   templateUrl: './state.component.html',
   styleUrls: ['./state.component.scss'],
-  providers: [CatalogService, ConfigurationService ],
+  providers: [ ],
 })
 export class StateComponent extends BaseComponent {
 

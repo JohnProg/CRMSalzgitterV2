@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+
 
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
@@ -24,13 +26,13 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
   selector: 'crm-opportunitydocuments',
   templateUrl: './opportunitydocuments.component.html',
   styleUrls: ['./opportunitydocuments.component.scss'],
-  providers: [CatalogService, ConfigurationService, ActionsService],  
+  providers: [],  
 })
 export class OpportunitydocumentsComponent extends BaseComponent {
 
- idOpp: number = 0;
-
-itemEdit: OpportunityDocument;
+ @Input() idOpp: number = 0;
+ sortBy: string = 'DocTypeName';
+ itemEdit: OpportunityDocument;
 
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -40,26 +42,45 @@ itemEdit: OpportunityDocument;
     public _mediaService: TdMediaService,
     public _ngZone: NgZone) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-    this.catalogName = 'Opportunity';
-    this._curService.setAPI('Opportunity/', this.catalogName);
+    this.catalogName = 'Opportunity Document';
+    this._curService.setAPI('OpportunityDocument/', this.catalogName);
   }
 
  ngOnInitClass() {
     this.entList = <Observable<OpportunityDocument[]>>this._curService.entList;
 
-    this._route.params.subscribe((params: { id: number }) => {
+    //this._route.params.subscribe((params: { id: number }) => {
       
-      this.idOpp = params.id;
-      this.itemEdit = new OpportunityDocument();
+      //this.idOpp = params.id;
+      this.initData();
       // if ( this.idOpp > 0) {
       //   this.editEntity( this.idOpp);
       // } else {
       //   this.addEntity();
       // }
 
-    });
+    //});
 
   }
+
+ initData() {
+    let pparams = new URLSearchParams();
+    pparams.set('idopp', this.idOpp.toString());
+    pparams.set('iddialog', '0');
+    this._curService.loadCustomAll('OpportunityDocument/searchByOpp', pparams);
+
+    this.initEntity();
+    this.isEditing$ = this._curService.isEditing$.subscribe(status => {
+      this.isEditing = status;
+    });
+  }
+
+  addColumns() {
+     this.columns.push({ name: 'DocTypeName', label: 'Doc. Type' });
+     this.columns.push({ name: 'DateUploaded', label: 'Date Uploaded', tooltip: '' });
+     this.columns.push({ name: 'DocName', label: 'Document Name' });
+  }
+
 
   initEntity() {
     this.itemEdit = new  OpportunityDocument();

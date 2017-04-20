@@ -18,7 +18,7 @@ const CRM_CBX_SELECT_CONTROL_VALUE_ACCESSOR = {
   selector: 'crm-select',
   templateUrl: './crmselect.component.html',
   styleUrls: ['./crmselect.component.scss'],
-  providers: [CRM_CBX_SELECT_CONTROL_VALUE_ACCESSOR, CatalogService, ConfigurationService]
+  providers: [CRM_CBX_SELECT_CONTROL_VALUE_ACCESSOR]
 })
 export class CRMSelectComponent extends AbstractValueAccessor {
 

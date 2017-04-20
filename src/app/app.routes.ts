@@ -104,10 +104,10 @@ const routes: Routes = [
 
         { path: 'edit/:id', component: OpportunityeditorComponent,
           children: [
-            { path: '', component: OpportunityheaderComponent },
-            { path: 'details/:id', component: OpportunitydetailComponent },
-            { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-            { path: 'documents/:id', component: OpportunitydocumentsComponent },
+            //{ path: '', component: OpportunityheaderComponent },
+            // { path: 'details/:id', component: OpportunitydetailComponent },
+            // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
+            // { path: 'documents/:id', component: OpportunitydocumentsComponent },
           ]
         },
         { path: 'insert', component: OpportunityeditorComponent }

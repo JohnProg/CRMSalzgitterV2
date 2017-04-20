@@ -18,7 +18,7 @@ import { MdSnackBar } from '@angular/material';
   selector: 'crm-country',
   templateUrl: '../base.component.html',
   styleUrls: ['../base.component.scss'],
-  providers: [CatalogService, ConfigurationService ],
+  providers: [ ],
 })
 export class CountryComponent extends BaseComponent {
 

@@ -21,7 +21,7 @@ import { ActionsService } from '../services/actions.services';
   selector: 'base-component',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [CatalogService, ConfigurationService],
+  providers: [],
 })
 export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -30,6 +30,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private searchEvent;
   private deleteConfEvent;
   private saveEvent;
+  private editItemEvent;
+  private screenSizeChangeEvent;
+  private cancelEditEvent;
 
   private afterLoadEvent;
   private afterCreateEvent;
@@ -83,9 +86,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _ngZone: NgZone) {
 
 
-    this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
-    this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
-    this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
     this.addColumns();
     this.addActionColumn();
     this.pageSize = this._confs.pageSize;
@@ -98,7 +98,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInitClass() {
     this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
-    
     this.initData();
   }
 
@@ -107,11 +106,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
 
-    this.saveEvent = this._actions.saveItem().subscribe( (save) => {
+    this.saveEvent = this._actions.saveItemEvent.subscribe( (save) => {
        this.saveEntity();
     });
-
-    this.addEvent = this._actions.addItem()
+    this.addEvent = this._actions.addItemEvent
       .subscribe((res) => {
 
         this.addEntity();
@@ -135,17 +133,37 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this.deleteConfirmed();
       },
       err => console.log(err),   //removed dot
-      () => console.log('recived data') //removed dot                    
+      () => console.log('recived data') //removed dot
       );
 
+    this.editItemEvent = this._actions.editItemEvent.subscribe( (id: number) => {
+      this.editEntity(id);
+    } )
+
+    this.cancelEditEvent = this._actions.cancelEditEvent.subscribe( () => {
+      this.cancelEdit();
+    } );
+
+    this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e) => {
+        this.sreenChange(e);
+    });
+
+
+      // Service events
+    this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
+    this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
+    this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
 
     this._actions.updateTitle(this.catalogName);
     this._actions.showAdd(true);
     this._actions.showSearch(true);
     this._actions.showSave(false);
     this._actions.showCancel(true);
-
+    this.afterViewInit();
   }
+
+
+  afterViewInit() {}
 
   ngOnDestroy() {
 
@@ -153,7 +171,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.searchEvent !== undefined) { this.searchEvent.unsubscribe(); }
     if (this.deleteConfEvent !== undefined) { this.deleteConfEvent.unsubscribe(); }
     if (this.saveEvent !== undefined) { this.saveEvent.unsubscribe(); }
-
+    if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
+    if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
+    if (this.cancelEditEvent !== undefined) { this.cancelEditEvent.unsubscribe(); }
     if (this.afterLoadEvent !== undefined) { this.afterLoadEvent.unsubscribe(); }
     if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
@@ -164,10 +184,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   addColumns() {
-
     this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
     this.columns.push({ name: 'Description', label: 'Description' })
-
   }
 
   addActionColumn() {
@@ -175,8 +193,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initData() {
-
-
     if (this.autoLoad === true) {
         this._curService.loadAll(this.getPageParams(''));
     }
@@ -189,19 +205,16 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.totalItems$ = this._curService.totalItems$.subscribe(total => {
       this.totalItems = total;
-      
       this.isLoading = false;
     });
 
   }
-
 
   initEntity() {
     this.itemEdit = new  TCRMEntity();
   }
 
   submitForm(form) {
-
   }
 
 
@@ -212,7 +225,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addEntity() {
-
     this._actions.updateTitle('Add ' + this.catalogName);
     this.initEntity();
     this.itemEdit.Id = 0;
@@ -321,7 +333,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-
+  sreenChange(e: any) {
+    
+  }
 
 
 }

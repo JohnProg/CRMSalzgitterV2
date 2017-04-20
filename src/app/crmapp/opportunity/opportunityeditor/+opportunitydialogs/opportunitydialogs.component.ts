@@ -27,14 +27,14 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
   selector: 'crm-opportunitydialogs',
   templateUrl: './opportunitydialogs.component.html',
   styleUrls: ['./opportunitydialogs.component.scss'],
-  providers: [CatalogService, ConfigurationService, ActionsService],    
+  providers: [],    
 })
 export class OpportunitydialogsComponent extends BaseComponent {
 
 
- idOpp: number = 0;
+ @Input() idOpp: number = 0;
  sortBy: string = 'ActionName';
-itemEdit: OpportunityDialog;
+ itemEdit: OpportunityDialog;
 
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -49,41 +49,29 @@ itemEdit: OpportunityDialog;
 
  ngOnInitClass() {
     this.entList = <Observable<OpportunityDialog[]>>this._curService.entList;
-
-    this._route.params.subscribe((params: { id: number }) => {
-      
-      this.idOpp = params.id;
-      this.initData();
-      // if ( this.idOpp > 0) {
-      //   this.editEntity( this.idOpp);
-      // } else {
-      //   this.addEntity();
-      // }
-
-    });
-
+    this.initData();
   }
+
  initData() {
     let pparams = new URLSearchParams();
     pparams.set('idopp', this.idOpp.toString());
-    
-   this._curService.loadCustomAll('OpportunityDialog/searchByOpp', pparams);
+
+    this._curService.loadCustomAll('OpportunityDialog/searchByOpp', pparams);
 
     this.initEntity();
     this.isEditing$ = this._curService.isEditing$.subscribe(status => {
       this.isEditing = status;
-      this.reloadPaged('');
     });
   }
 
+  afterViewInit(): void {
+    this._actions.updateTitle('Dialogs for opportunity ' + this.idOpp.toString());
+  }
+
   addColumns() {
-
-
      this.columns.push({ name: 'ActionName', label: 'Action' });    
      this.columns.push({ name: 'Contact', label: 'Contact', tooltip: '' });
      this.columns.push({ name: 'ResponsibleName', label: 'Responsible' });        
-    
-
   }
 
 

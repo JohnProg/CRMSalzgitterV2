@@ -11,37 +11,57 @@ import { BaseComponent } from '../../catalogs/base.component';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
+  TdLoadingService, TdDialogService, TdMediaService, TdLayoutManageListComponent 
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
-
+import { CatalogComponent } from '../../catalogs/catalog.component';
 
 
 @Component({
   selector: 'crm-opportunityeditor',
   templateUrl: './opportunityeditor.component.html',
   styleUrls: ['./opportunityeditor.component.scss'],
-  providers: [CatalogService, ConfigurationService, ActionsService],
+  providers: [],
 })
-export class OpportunityeditorComponent implements OnInit {
+export class OpportunityeditorComponent extends CatalogComponent {
 
   idOpp: number = 0;
+  scrId: number = 1;
 
-  constructor(public _router: Router, public _route: ActivatedRoute,
-     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-
+  constructor(
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _mediaService: TdMediaService,
+    public _actions: ActionsService,
+    public _ngZone: NgZone,
+    public _router: Router, public _route: ActivatedRoute) {
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
   }
 
-  ngOnInit() {
+
+  afterInit() {
     this._route.params.subscribe((params: { id: number }) => {
       this.idOpp = params.id;
     });
   }
 
+
+  linkClick(scr: number ) : boolean {
+    this.scrId = scr;
+    return true;
+  }
+
+  saveEntity() {
+
+  }
+
+  addEntity() {
+
+  }
 
 }

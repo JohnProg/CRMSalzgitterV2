@@ -18,7 +18,7 @@ import { MdSnackBar } from '@angular/material';
   selector: 'crm-family',
   templateUrl: '../base.component.html',
   styleUrls: ['../base.component.scss'],
-  providers: [CatalogService, ConfigurationService ],
+  providers: [ ],
 })
 export class FamilyComponent extends BaseComponent {
 

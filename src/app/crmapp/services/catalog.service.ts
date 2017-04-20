@@ -22,6 +22,9 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
   sText: string
 }
 
+export const NUMBER_FORMAT: any = (v: number) => v;
+export const DECIMAL_FORMAT: any = (v: number) => v.toFixed(2);
+export const CURRENCY_FORMAT: any = (v: number ) =>  '$' + v.toLocaleString();
 
 
 @Injectable()
@@ -143,7 +146,6 @@ export class CatalogService {
   loadCustomAll( url: string,  cparams: URLSearchParams) {
     this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
       .map((response) => response.json()).subscribe((result) => {
-        
         this.dataStore.entities = result;
         this._entList.next(Object.assign({}, this.dataStore).entities);
       }, (error) => {
@@ -242,16 +244,22 @@ export class CatalogService {
 
   create(entity: any) {
     this._rest.create(entity)
-      .subscribe( (data) => {
-        this.dataStore.entities.push(data.Data);
-        this._entList.next(Object.assign({}, this.dataStore).entities);
-        this.changeState(false);
-        this._snackBarService.open( this.catalogName + data.Message, 'Ok');
-        this.itemEdit.Id = data.Data.Id;
-        this.afterCreateEmitter.emit(data.Data);
+      .subscribe( (data: any) => {
+
+        if( data.Data !== undefined) {
+          this.dataStore.entities.push(data.Data);
+          this._entList.next(Object.assign({}, this.dataStore).entities);
+          this.changeState(false);
+          this._snackBarService.open( this.catalogName + ' ' + data.Message, 'Ok');
+          this.itemEdit.Id = (<TCRMEntity>data.Data).Id;
+          this.afterCreateEmitter.emit(data.Data);
+        }
       }, (error) => {
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-      });
+      },
+       () =>  {
+        debugger
+       });
   }
 
   update(entity: any) {

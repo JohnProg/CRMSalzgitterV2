@@ -19,7 +19,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'crm-productindex',
   templateUrl: './productindex.component.html',
   styleUrls: ['./productindex.component.scss'],
-  providers: [CatalogService, ConfigurationService ]
+  providers: [ ]
 })
 export class ProductindexComponent extends BaseComponent  {
 

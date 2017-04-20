@@ -19,7 +19,7 @@ import { MdSnackBar } from '@angular/material';
   selector: 'crm-port',
   templateUrl: '../base.component.html',
   styleUrls: ['../base.component.scss'],
-  providers: [CatalogService, ConfigurationService ],
+  providers: [ ],
 })
 export class PortComponent extends BaseComponent {
 

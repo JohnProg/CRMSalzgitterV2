@@ -25,14 +25,14 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
   selector: 'crm-opportunityheader',
   templateUrl: './opportunityheader.component.html',
   styleUrls: ['./opportunityheader.component.scss'],
-  providers: [CatalogService, ConfigurationService, ActionsService],
+  providers: [],
 })
 export class OpportunityheaderComponent extends BaseComponent {
 
   @Input() idOpp: number = 0;
-itemEdit: Opportunity;
+  itemEdit: Opportunity;
   @ViewChild('idCustomerContact') custContactSelect: AbstractValueAccessor;
-  //IdCustomerContact
+
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -48,24 +48,23 @@ itemEdit: Opportunity;
 
   ngOnInitClass() {
     this.entList = <Observable<Opportunity[]>>this._curService.entList;
-
-    this._route.params.subscribe((params: { id: number }) => {
-      
-      this.idOpp = params.id;
-      if (this.idOpp > 0) {
-        this.editEntity(this.idOpp);
-      } else {
-        this.addEntity();
-      }
-    });
+    if (this.idOpp > 0) {
+      this.editEntity(this.idOpp);
+    } else {
+      this.addEntity();
+    }
   }
 
-  ngAfterViewInit(): void {
-    super.ngAfterViewInit();
+  afterViewInit(): void {
     this._actions.showAdd(false);
     this._actions.showSearch(false);
     this._actions.showSave(true);
 
+    if (this.idOpp > 0) {
+      this._actions.updateTitle('Edit opportunity ' + this.idOpp.toString());
+    } else {
+      this._actions.updateTitle('Create opportunity ');
+    }
   }
 
   initEntity() {
@@ -78,12 +77,8 @@ itemEdit: Opportunity;
 
   }
 
-  afterSave(item: Opportunity) {
+  afterSave(item: Opportunity) {}
 
-  }
-
-  onCustomerChange(event) {
-
-  }
+  onCustomerChange(event: any) {}
 
 }

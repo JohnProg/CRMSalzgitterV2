@@ -11,6 +11,18 @@
           </section>             
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <md-input-container flex class="">
+            <textarea mdInput flex #projectName name="projectName" maxlength="500"  placeholder="Project Name" [(ngModel)]="itemEdit.ProjectName" ></textarea>
+                  <md-hint align="end">{{projectName.value.length}} / 500</md-hint>
+          </md-input-container>         
+        </div>         
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <md-input-container flex class="">
+            <textarea mdInput flex #oppNotes name="oppNotes" maxlength="500"  placeholder="Opportunity Description" [(ngModel)]="itemEdit.OppNotes" ></textarea>
+                  <md-hint align="end">{{oppNotes.value.length}} / 500</md-hint>
+          </md-input-container>         
+        </div>         
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section  flex-gt-sm="35" >
             <crm-select #idCustomer name="idCustomer" catalog="Customer" placeholder="Customer" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
           </section>
@@ -37,26 +49,24 @@
         </div>
 
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section flex-gt-sm="35" >
-            <crm-select #idUser name="idUser" catalog="User" placeholder="User" [(ngModel)]="itemEdit.IdUser" ></crm-select>
-          </section>
+
           <section flex-gt-sm="35" >
             <crm-select #idIncoTerm name="idIncoTerm" catalog="IncoTerm" placeholder="Incoterm" [(ngModel)]="itemEdit.IdIncoTerm" ></crm-select>
           </section>  
-          <section flex-gt-sm="30" >
+          <section flex-gt-sm="35" >
             <crm-select #IdLinerTerm name="IdLinerTerm" catalog="LinerTerm" placeholder="IdLinerTerm" [(ngModel)]="itemEdit.IdLinerTerms" ></crm-select>
-          </section>          
+          </section>   
+          <section flex-gt-sm="30" >
+            <md-slide-toggle #asImporter name="asImporter" [(ngModel)]="itemEdit.AsImporter">As Importer!</md-slide-toggle>
+          </section>                 
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex class="">
-            <textarea mdInput flex #deliveryLocation name="deliveryLocation"  placeholder="Delivery Location" [(ngModel)]="itemEdit.DeliveryLocation" ></textarea>
+            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="Delivery Location" [(ngModel)]="itemEdit.DeliveryLocation" ></textarea>
                   <md-hint align="end">{{deliveryLocation.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <md-input-container flex class="">
-            <textarea mdInput flex #oppNotes name="oppNotes"  placeholder="Opp Notes" [(ngModel)]="itemEdit.OppNotes" ></textarea>
-                  <md-hint align="end">{{oppNotes.value.length}} / 500</md-hint>
-          </md-input-container>         
-        </div>        
+       
+
+       
       </form>

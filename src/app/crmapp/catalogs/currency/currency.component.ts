@@ -24,7 +24,7 @@ import { BaseComponent } from '../base.component';
   selector: 'crm-currency',
   templateUrl: './currency.component.html',
   styleUrls: ['./currency.component.scss'],
-  providers: [CatalogService, ConfigurationService],
+  providers: [],
 
 })
 export class CurrencyComponent extends BaseComponent {

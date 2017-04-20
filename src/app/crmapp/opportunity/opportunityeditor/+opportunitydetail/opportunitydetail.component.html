@@ -4,16 +4,12 @@
 
 
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <ng-template tdDataTableTemplate="ItemDescription" let-value="value" let-row="row"  let-column="column">
-          <div layout="row">
+        <ng-template tdDataTableTemplate="ItemDescription"  let-value="value" let-row="row"  let-column="column">
+          <div layout="row" flex="30">
             <button md-button (click)="editEntity(row.Id)">{{value}}</button>
           </div>
         </ng-template>
-        <ng-template tdDataTableTemplate="ItemPrice" let-value="value" let-row="row"  let-column="column">
-          <div layout="row">
-            {{ value | currency}}
-          </div>
-        </ng-template>
+
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
 

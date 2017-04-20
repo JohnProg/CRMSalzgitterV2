@@ -1,0 +1,16 @@
+
+  <div td-toolbar-content layout="row" layout-align="start center" flex >
+<span>{{catalogTitle}} Test</span>
+    <div flex></div>
+      <td-search-box *ngIf="showSearch" #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" (searchDebounce)="search($event)" >
+      </td-search-box>
+    <button md-mini-fab class=""  (click)="addItem()" aria-label="Add Item" *ngIf="showAdd">
+        <md-icon>add</md-icon>
+    </button>
+    <button md-mini-fab class="" (click)="saveItem()" aria-label="Save Item" *ngIf="showSave">
+        <md-icon>save</md-icon>
+    </button>
+    <button md-mini-fab class="" (click)="cancelEdit()" aria-label="Cancel" *ngIf="showSave">
+        <md-icon>undo</md-icon>
+    </button>
+  </div>

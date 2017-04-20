@@ -19,7 +19,7 @@ import { CRMSelectComponent } from '../../components/crmselect/crmselect.compone
   selector: 'crm-company',
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.scss'],
-   providers: [CatalogService, ConfigurationService ],
+   providers: [ ],
 })
 export class CompanyComponent extends BaseComponent {
 

@@ -24,7 +24,7 @@ import { ProductpropertyComponent } from '../productproperty/productproperty.com
   selector: 'crm-producteditor',
   templateUrl: './producteditor.component.html',
   styleUrls: ['./producteditor.component.scss'],
-  providers: [CatalogService, ConfigurationService],
+  providers: [],
 })
 export class ProducteditorComponent extends BaseComponent {
 

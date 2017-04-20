@@ -2,72 +2,81 @@ import {Component, Injectable,Input,Output,EventEmitter} from '@angular/core'
 
 @Injectable()
 export class ActionsService {
-    @Output() addItemEvent:EventEmitter<any>=new EventEmitter();
-    @Output() editItemEvent:EventEmitter<any>=new EventEmitter();
+    public addItemEvent:EventEmitter<any>=new EventEmitter();
+    public editItemEvent:EventEmitter<any>=new EventEmitter();
+    public saveItemEvent : EventEmitter<any> =new EventEmitter();
+    public deleteItemEvent : EventEmitter<any> =new EventEmitter();
+    public deleteItemConfirmedEvent : EventEmitter<any>=new EventEmitter();
+    public cancelEditEvent : EventEmitter<any>=new EventEmitter();
 
-    @Output() deleteItemEvent : EventEmitter<any> =new EventEmitter();
-    @Output() saveItemEvent : EventEmitter<any> =new EventEmitter();
 
-    @Output() deleteItemConfirmedEvent : EventEmitter<any>=new EventEmitter();
+    public updateTitleEvent : EventEmitter<string>=new EventEmitter<string>();
+    public searchEvent : EventEmitter<string>=new EventEmitter<string>();
+    public showSearchEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
+    public showAddEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
+    public showSaveEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
+    public showCancelEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
+    public showSideNavEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
+    public screenSizeChangeEvent: EventEmitter<any> = new EventEmitter<any>();
 
-    @Output() updateTitleEvent : EventEmitter<string>=new EventEmitter<string>();
-    @Output() searchEvent : EventEmitter<string>=new EventEmitter<string>();
+    public addItem() {
+      this.addItemEvent.emit();
+    }
 
-    @Output() showSearchEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
-    @Output() showAddEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
-    @Output() showSaveEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
-    @Output() showCancelEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
-    @Output() showSideNavEvent : EventEmitter<boolean>=new EventEmitter<boolean>();
+    public editItem() {
+      this.editItemEvent.emit();
+    }
 
-    @Output() screenSizeChangeEvent: EventEmitter<any> = new EventEmitter<boolean>();
+    public saveItem() {
+      this.saveItemEvent.emit();
+    }
 
-    updateTitle(atitle: string) {
+    public deleteItem() {
+      this.deleteItemEvent.emit();
+    }
+
+    public deleteItemConfirmed() {
+         this.deleteItemConfirmedEvent.emit();
+    }
+
+    public cancelEdit() {
+      this.cancelEditEvent.emit();
+    }
+
+    public updateTitle(atitle: string) {
       this.updateTitleEvent.emit(atitle);
     }
 
-    showSearch(ashow: boolean) {
+    public search(afilter: string) {
+        this.searchEvent.emit(afilter);
+    }
+
+
+    public showSearch(ashow: boolean) {
       this.showSearchEvent.emit(ashow);
     }
 
-    showAdd(ashow: boolean) {
+    public showAdd(ashow: boolean) {
       this.showAddEvent.emit(ashow);
     }
 
-    showSave(ashow: boolean) {
+    public showSave(ashow: boolean) {
       this.showSaveEvent.emit(ashow);
     }
 
-    showCancel(ashow: boolean) {
+    public showCancel(ashow: boolean) {
       this.showCancelEvent.emit(ashow);
     }
 
-    showSideNav(ashow: boolean) {
+    public showSideNav(ashow: boolean) {
       this.showSideNavEvent.emit(ashow);
     }
-  
-    addItem() { 
-       return this.addItemEvent; 
+
+    public screenSizeChange(e: any) {
+      this.screenSizeChangeEvent.emit(e);
     }
 
-    editItem() {
-        return this.editItemEvent;
-     }
 
 
-    deleteItem() {
-        return this.deleteItemEvent;
-     }
-
-     saveItem() {
-       return this.saveItemEvent;
-     }
-
-     deleteItemConfirmed() {
-         this.deleteItemConfirmedEvent.emit();
-     }
-
-     search(afilter: string) {
-        this.searchEvent.emit(afilter);
-     }
 
 }

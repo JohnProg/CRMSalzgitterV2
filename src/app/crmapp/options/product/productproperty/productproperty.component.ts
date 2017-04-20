@@ -25,7 +25,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'crm-productproperty',
   templateUrl: './productproperty.component.html',
   styleUrls: ['./productproperty.component.scss'],
-  providers: [CatalogService, ConfigurationService],
+  providers: [],
 })
 export class ProductpropertyComponent   {
   @Input() idprop: number;

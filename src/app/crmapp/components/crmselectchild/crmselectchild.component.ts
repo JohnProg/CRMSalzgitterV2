@@ -17,7 +17,7 @@ const CRM_CBX_SELECT_CHILD_CONTROL_VALUE_ACCESSOR = {
   selector: 'app-crmselectchild',
   templateUrl: './crmselectchild.component.html',
   styleUrls: ['./crmselectchild.component.scss'],
-  providers: [CRM_CBX_SELECT_CHILD_CONTROL_VALUE_ACCESSOR, CatalogService, ConfigurationService]
+  providers: [CRM_CBX_SELECT_CHILD_CONTROL_VALUE_ACCESSOR]
 
 })
 export class CrmselectchildComponent extends AbstractValueAccessor  {

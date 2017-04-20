@@ -21,7 +21,7 @@ import { GeGetOpportunities } from '../../model/allmodels';
   selector: 'crm-opportunityindex',
   templateUrl: './opportunityindex.component.html',
   styleUrls: ['./opportunityindex.component.scss'],
-  providers: [CatalogService,  ActionsService, ConfigurationService]
+  providers: []
 })
 export class OpportunityindexComponent extends BaseComponent  {
 
@@ -67,8 +67,8 @@ export class OpportunityindexComponent extends BaseComponent  {
     //super.addColumns();
     this.columns.push({ name: 'Id', label: 'Opportunity', tooltip: '' });
     this.columns.push({ name: 'CustomerName', label: 'Customer Name' });
-    this.columns.push({ name: 'AsImporter', label: 'As Importer' });
-    this.columns.push({ name: 'ResponsibleName', label: 'Responsible' });
+    this.columns.push({ name: 'ProjectName', label: 'Project Name' });
+    this.columns.push({ name: 'AsImporter', label: 'IOR' });
     this.columns.push({ name: 'StatusName', label: 'Status' });
     this.columns.push({ name: 'LastUpdated', label: 'Last Update' });
 

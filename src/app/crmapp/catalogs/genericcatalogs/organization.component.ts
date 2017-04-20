@@ -19,7 +19,7 @@ import { MdSnackBar } from '@angular/material';
   selector: 'crm-organization',
   templateUrl: '../base.component.html',
   styleUrls: ['../base.component.scss'],
-  providers: [CatalogService, ConfigurationService ],
+  providers: [],
 })
 export class OrganizationComponent extends BaseComponent {
 
