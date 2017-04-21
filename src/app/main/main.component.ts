@@ -1,5 +1,11 @@
-import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { Component, NgZone, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+import { ConfigurationService } from '../crmapp/services/configuration.service';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 
 @Component({
   selector: 'crm-main',
@@ -7,189 +13,39 @@ import { Router } from '@angular/router';
   styleUrls: ['./main.component.scss'],
 
 })
-export class MainComponent {
+export class MainComponent implements AfterViewInit {
 
 
 
 
-  routes: Object[] = [
-      {
-        title: 'Catalogs',
-        route: '/catalogs',
-        icon: 'euro_symbol',
-        childrens: [
-          {
-                name: 'currency',
-                tooltip: 'Create edit Currencies',
-                active: true,
-                routerlink: 'currency',
-                icon: 'euro_symbol',
-                displayName: 'Currency',
-              },
-              {
-                name: 'colonytype',
-                tooltip: 'Create edit Colonies Type',
-                active: true,
-                routerlink: 'colonytype',
-                icon: 'euro_symbol',
-                displayName: 'Colony Type',
-              },
-              {
-                name: 'country',
-                tooltip: 'Create edit Countries',
-                active: true,
-                routerlink: 'country',
-                icon: 'euro_symbol',
-                displayName: 'Countries',
-              },
-              {
-                name: 'department',
-                tooltip: 'Create edit Departments',
-                active: true,
-                routerlink: 'department',
-                icon: 'euro_symbol',
-                displayName: 'Departments',
-              },
-              {
-                name: 'documenttype',
-                tooltip: 'Create edit Document Type',
-                active: true,
-                routerlink: 'documenttype',
-                icon: 'euro_symbol',
-                displayName: 'Document Type',
-              },
-              {
-                name: 'family',
-                tooltip: 'Create edit Families',
-                active: true,
-                routerlink: 'family',
-                icon: 'euro_symbol',
-                displayName: 'Families',
-              }, 
-              {
-                name: 'linerterm',
-                tooltip: 'Create edit Liner Term',
-                active: true,
-                routerlink: 'linerterm',
-                icon: 'euro_symbol',
-                displayName: 'Liner Term',
-              }, 
-              {
-                name: 'market',
-                tooltip: 'Create edit Market',
-                active: true,
-                routerlink: 'market',
-                icon: 'euro_symbol',
-                displayName: 'Market',
-              },   
-              {
-                name: 'mill',
-                tooltip: 'Create edit Mills',
-                active: true,
-                routerlink: 'mill',
-                icon: 'euro_symbol',
-                displayName: 'Mills',
-              }, 
-              {
-                name: 'organization',
-                tooltip: 'Create edit Organization',
-                active: true,
-                routerlink: 'organization',
-                icon: 'euro_symbol',
-                displayName: 'Organization',
-              }, 
-              {
-                name: 'paymentterm',
-                tooltip: 'Create edit Payment Term',
-                active: true,
-                routerlink: 'paymentterm',
-                icon: 'euro_symbol',
-                displayName: 'Payment Term',
-              }, 
-              {
-                name: 'port',
-                tooltip: 'Create edit Port',
-                active: true,
-                routerlink: 'port',
-                icon: 'euro_symbol',
-                displayName: 'Port',
-              }, 
-              {
-                name: 'position',
-                tooltip: 'Create edit Position',
-                active: true,
-                routerlink: 'position',
-                icon: 'euro_symbol',
-                displayName: 'Position',
-              }, 
-              {
-                name: 'sector',
-                tooltip: 'Create edit Sector',
-                active: true,
-                routerlink: 'sector',
-                icon: 'euro_symbol',
-                displayName: 'Sector',
-              }, 
-              {
-                name: 'tender',
-                tooltip: 'Create edit Tender',
-                active: true,
-                routerlink: 'tender',
-                icon: 'euro_symbol',
-                displayName: 'Tender',
-              },      
+  _routeList: BehaviorSubject<Object[]>;
 
-      ],
+  routes: Observable<Object[]>;
 
-    },
-    {
-      title: 'Options',
-      route: '/options',
-      icon: 'euro_symbol',
-      childrens: [
-          {
-            name: 'products',
-            tooltip: 'Create edit Product',
-            active: true,
-            routerlink: 'products',
-            icon: 'euro_symbol',
-            displayName: 'Product',
-          },
-          {
-            name: 'company',
-            tooltip: 'Create edit Company',
-            active: true,
-            routerlink: 'company',
-            icon: 'euro_symbol',
-            displayName: 'Company',
-          },        
-      ]
-    },
+  constructor(private _router: Router, 
+              private _http: Http,
+              private _confs: ConfigurationService ) {
 
-    {
-      title: 'Opportunity',
-      icon: 'euro_symbol',
-      route: '',
-      childrens: [
-          {
-            name: 'index',
-            tooltip: 'Create edit Opportunity',
-            active: true,
-            routerlink: 'opportunity',
-            icon: 'euro_symbol',
-            displayName: 'Opportunity',
-          },
-      ]
-    },
-  ];
+    this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
+    this.routes = this._routeList.asObservable();
+    }
 
-  constructor(private _router: Router) {
 
-              }
+
 
   logout(): void {
     this._router.navigate(['/login']);
 
   }
 
+  ngAfterViewInit() {
+     this._http.get(this._confs.appBase + '/data/crm-menu.json')
+      .map((response) => response.json()).subscribe((result) => {
+        
+        this._routeList.next(result);
+        
+      }, (error) => {
+         debugger
+      });
+  }
 }

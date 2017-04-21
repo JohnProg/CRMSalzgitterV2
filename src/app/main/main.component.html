@@ -3,7 +3,7 @@
   <td-navigation-drawer logo="assets:logocrm" sidenavTitle="CRM Salzgitter" name="rafael.esteban" email="firstname.lastname@company.com">
 
       
-     <ng-template let-item  ngFor [ngForOf]="routes">
+     <ng-template let-item  ngFor [ngForOf]="routes | async">
         <td-expansion-panel [label]="item.title"  [expand]="false" >
               <md-nav-list td-sidenav-content>
           <ng-template let-mitem  ngFor [ngForOf]="item.childrens">

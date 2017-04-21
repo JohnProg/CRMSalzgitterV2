@@ -38,7 +38,7 @@ import { ProductComponent, ProducteditorComponent, ProductpropertyComponent,
 
 // cbx Components
 
-import { CRMSelectComponent, GenericActionsComponent } from './components/index';
+import { CRMSelectComponent, GenericActionsComponent, CrmselectchildComponent } from './components/index';
 
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
@@ -98,7 +98,7 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
 
 // Components
   // Cbx Components
-    CRMSelectComponent,
+    CRMSelectComponent, CrmselectchildComponent,
     GenericActionsComponent,
 
   ], // directives, components, and pipes owned by this NgModule

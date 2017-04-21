@@ -27,19 +27,7 @@
       </a>
     </md-nav-list>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
-          <span>{{catalogTitle}}</span>
-      <div flex></div>
-
-      <button md-mini-fab class="md-mini md-primary" [routerLink]="'/opportunity'">
-            <md-icon>apps</md-icon>
-      </button>
-      <button md-mini-fab class="md-mini md-primary" (click)="addEntity()" aria-label="Add Item" *ngIf="showAdd" >
-        <md-icon>add</md-icon>
-      </button>
-
-    <button md-mini-fab class="md-mini md-primary" (click)="saveEntity()" aria-label="Save Item" *ngIf="showSave">
-        <md-icon>save</md-icon>
-      </button>
+         <crm-gactions></crm-gactions>
     </div>
 
     <md-card>

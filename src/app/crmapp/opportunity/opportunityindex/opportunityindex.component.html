@@ -1,5 +1,7 @@
 <td-layout-nav logo="assets:logocrm">
-  <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
+  <td-layout-manage-list #manageList 
+  [opened]="false" 
+  [mode]="'push'"
     [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '257px' : '100%'">
 
     <md-toolbar td-sidenav-content>
