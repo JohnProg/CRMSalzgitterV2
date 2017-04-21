@@ -75,7 +75,7 @@ export class CurrencyComponent extends BaseComponent {
     this._actions.updateTitle('Add ' + this.catalogName);
     this.itemEdit = new Currency();
     this.itemEdit.Id = 0;
-    this._curService.changeState(true);
+
   }
 
 

@@ -6,7 +6,7 @@ import { RESTService, HttpInterceptorService } from '@covalent/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { ConfigurationService } from './configuration.service';
-import {  TCRMEntity } from '../model/allmodels';
+import {  TCRMEntity, ReturnSaveRequest } from '../model/allmodels';
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {
@@ -24,7 +24,7 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
 
 export const NUMBER_FORMAT: any = (v: number) => v;
 export const DECIMAL_FORMAT: any = (v: number) => v.toFixed(2);
-export const CURRENCY_FORMAT: any = (v: number ) =>  '$' + v.toLocaleString();
+export const CURRENCY_FORMAT: any = (v: number ) =>  '$' + (v || 0).toLocaleString();
 
 
 @Injectable()
@@ -73,11 +73,8 @@ export class CatalogService {
   catalogName: string;
   itemEdit: TCRMEntity;
 
-  isEditing$: Observable<boolean>;
-  isEditing: Observer<boolean>;
-
-  totalItems$: Observable<number>;
-  totalItems: Observer<number>;
+  _totalItems: BehaviorSubject<number>;
+  totalItems: Observable<number>;
 
   apiCustom: string;
 
@@ -94,7 +91,7 @@ export class CatalogService {
   ) {
     this.headers = new Headers();
     this.headers.append('Accept', '');
-    this.headers.append('Content-Type', '');
+    this.headers.append('Content-Type', 'application/json');
 
     this.dataStore = { entities: [] };
     this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
@@ -104,9 +101,12 @@ export class CatalogService {
 
     this.itemEdit = <TCRMEntity>{  };
 
-    this.isEditing$ = new Observable<boolean>( (observer) => this.isEditing = observer).share();
 
-    this.totalItems$ = new Observable<number>( (tobserver) => this.totalItems = tobserver);
+
+
+    this._totalItems = <BehaviorSubject<number>>new BehaviorSubject(0);
+    this.totalItems = this._totalItems.asObservable();
+
     this._rest = new CRMRestService(_http, _confs);
     this.apiCustom = _confs.serverWithApiCustomUrl;
   }
@@ -118,17 +118,8 @@ export class CatalogService {
     this.catalogName = cName;
   }
 
-
-  changeState(newState: boolean) {
-    if (this.isEditing !== undefined) {
-      this.isEditing.next(newState);
-    }
-  }
-
   changeTotal(total: number) {
-    if (this.totalItems !== undefined) {
-      this.totalItems.next(total);
-    }
+      this._totalItems.next(total);
   }
 
   loadAll(cparams: IPChangeEventSorted) {
@@ -176,15 +167,6 @@ export class CatalogService {
 
     let t = this._tableService.pageData(this.dataStore.entities, index , --index + p.pageSize) ;
     this._entList.next(t);
-    this.changeTotal(this.dataStore.entities.length);
-   // this._rest.custommQuery('GetPaged', { search: pparams })
-   //   .map( (response) => response.json()).subscribe( (result) => {
-   //     this.dataStore.entities = result.Data;
-   //     this._entList.next(Object.assign({}, this.dataStore).entities);
-   //     this.changeTotal(result.Total);
-   //   }, (error) => {
-   //     this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-   //   });s
   }
 
   getCustomPaged(p: IPChangeEventSorted, action: string = 'GetPaged', cparams: TCRMEntity[]) {
@@ -217,23 +199,8 @@ export class CatalogService {
 
   load(id: number | string) {
     // return this._http.get( this.fullapi + id).map(response => response.json());
-    this._rest.get(id).subscribe(data => {
-      let notFound = true;
-
-      this.dataStore.entities.forEach((item, index) => {
-        if (item.Id === data.Id) {
-          this.dataStore.entities[index] = data;
-          notFound = false;
-        }
-      });
-
-      if (notFound) {
-        this.dataStore.entities.push(data);
-      }
-
-      this._entList.next(Object.assign({}, this.dataStore).entities);
+    this._rest.get(id).subscribe( (data: TCRMEntity) => {
       Object.assign(this.itemEdit, data);
-      this.changeState(true);
       this.afterLoadEmmiterEvent(this.itemEdit);
     }, error => {
       this._loadingService.resolve('users.list');
@@ -243,40 +210,32 @@ export class CatalogService {
 
 
   create(entity: any) {
-    this._rest.create(entity)
-      .subscribe( (data: any) => {
-
+    this._rest.create( entity)
+      .map((response) => response.json())
+      .subscribe( (data: ReturnSaveRequest) => {
         if( data.Data !== undefined) {
           this.dataStore.entities.push(data.Data);
           this._entList.next(Object.assign({}, this.dataStore).entities);
-          this.changeState(false);
-          this._snackBarService.open( this.catalogName + ' ' + data.Message, 'Ok');
-          this.itemEdit.Id = (<TCRMEntity>data.Data).Id;
+          this.itemEdit.Id = data.Data.Id;
           this.afterCreateEmitter.emit(data.Data);
+          this._snackBarService.open( this.catalogName + ' ' + data.Message, 'Ok');
         }
       }, (error) => {
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-      },
-       () =>  {
-        debugger
-       });
+      });
   }
 
   update(entity: any) {
 
     this._rest.update(entity.Id, entity)
-      .subscribe( (data) => {
-
+   // .map((response) => response.json())
+      .subscribe( (data: ReturnSaveRequest) => {
         this.dataStore.entities.forEach((t, i) => {
           if (t.Id === data.Data.Id) { this.dataStore.entities[i] = data.Data; }
         });
-
         this._entList.next(Object.assign({}, this.dataStore).entities);
-        this.changeState(false);
+        this.afterUpdateEmitter.emit(data.Data);
         this._snackBarService.open(this.catalogName + data.Message, 'Ok');
-
-        this.afterUpdateEmitter.emit(data);
-
       }, (error) => {
         this._snackBarService.open(error.Message, 'Ok');
       });

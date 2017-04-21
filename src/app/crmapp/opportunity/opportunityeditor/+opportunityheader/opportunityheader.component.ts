@@ -31,8 +31,9 @@ export class OpportunityheaderComponent extends BaseComponent {
 
   @Input() idOpp: number = 0;
   itemEdit: Opportunity;
+  
   @ViewChild('idCustomerContact') custContactSelect: AbstractValueAccessor;
-
+  
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -43,10 +44,13 @@ export class OpportunityheaderComponent extends BaseComponent {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
     this.catalogName = 'Opportunity';
     this._curService.setAPI('Opportunity/', this.catalogName);
+    this.singleEditor = true;
+
   }
 
 
   ngOnInitClass() {
+
     this.entList = <Observable<Opportunity[]>>this._curService.entList;
     if (this.idOpp > 0) {
       this.editEntity(this.idOpp);
@@ -59,7 +63,7 @@ export class OpportunityheaderComponent extends BaseComponent {
     this._actions.showAdd(false);
     this._actions.showSearch(false);
     this._actions.showSave(true);
-
+    this._actions.showCancel(false);
     if (this.idOpp > 0) {
       this._actions.updateTitle('Edit opportunity ' + this.idOpp.toString());
     } else {

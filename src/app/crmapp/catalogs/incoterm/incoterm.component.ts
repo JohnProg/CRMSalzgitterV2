@@ -63,6 +63,6 @@ export class IncotermComponent extends BaseComponent {
     addEntity() {
       this.itemEdit = new IncoTerm();
       this.itemEdit.Id = 0;
-      this._curService.changeState(true);
+
     }
 }

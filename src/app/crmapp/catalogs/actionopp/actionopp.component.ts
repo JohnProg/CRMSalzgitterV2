@@ -66,7 +66,7 @@ export class ActionoppComponent extends BaseComponent {
     addEntity() {
       this.itemEdit = new ActionOpportunity();
       this.itemEdit.Id = 0;
-      this._curService.changeState(true);
+
     }
 
 

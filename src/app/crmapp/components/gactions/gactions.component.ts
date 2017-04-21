@@ -23,8 +23,9 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
 
   // private addEvent;
   // private searchEvent;
-  // private saveEvent;
-  
+  // private saveEvent;editItemEvent
+  private editItemEvent: Subscription;
+  private setEditEvent: Subscription;
   private cancelEditEvent: Subscription;
 
   private screenSizeChangeEvent: Subscription;
@@ -43,7 +44,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   showCancel: boolean = true;
   showSave: boolean = false;
   showSideNav: boolean = true;
-
+  showCancelEdit: boolean = true;
 
   constructor(    public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -94,6 +95,11 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
         this.cancelEdition();
       });
 
+    this.setEditEvent = this._actions.setEditEvent
+      .subscribe((e: any) => {
+        this.setEdit();
+      });
+
 
     this.afterInit();
   }
@@ -113,29 +119,35 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.showSideNavEvent !== undefined) { this.showSideNavEvent.unsubscribe(); }
     if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     if (this.cancelEditEvent !== undefined) { this.cancelEditEvent.unsubscribe(); }
+    if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
   }
 
 
 
-  saveItem() {
+  private saveItem() {
     this._actions.saveItemEvent.emit();
   }
-  addItem() {
+
+  private addItem() {
     this.showSave = true;
     this.showAdd = false;
     this.showSearch = false;
+    this.showCancel = true;
     this._actions.addItemEvent.emit();
   }
 
-  editItem() {
-    this._actions.editItemEvent.emit();
+  private setEdit() {
+    this.showSave = true;
+    this.showAdd = false;
+    this.showSearch = false;
+    this.showCancel = true;
   }
 
-  search(atext: string) {
+  private search(atext: string) {
     this._actions.search(atext);
   }
 
-  deleteItem(deleteDesc: string) {
+  private deleteItem(deleteDesc: string) {
 
     this._dialogService
       .openConfirm({ message: 'Are you sure you want to delete ' + deleteDesc + '?' })
@@ -148,23 +160,24 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
 
   }
 
-  deleteConfirmed() {
+  private deleteConfirmed() {
     this._actions.deleteItemConfirmedEvent.emit();
   }
 
-  cancelEdit() {
+  private cancelEdit() {
     this._actions.cancelEditEvent.emit();
     this.cancelEdition();
   }
 
-  cancelEdition() {
+  private cancelEdition() {
     this.showSave = false;
     this.showAdd = true;
     this.showSearch = true;;
+    this.showCancel = false;
   }
 
 
-  screenSizeChange(e: any) {
+  private screenSizeChange(e: any) {
 
   }
 }

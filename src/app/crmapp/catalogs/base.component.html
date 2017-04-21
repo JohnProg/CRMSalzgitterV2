@@ -15,15 +15,6 @@
 
 
         </section>
-        <div layout="row" flex layout-align="end center">
-          <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
-                   <md-icon>highlight_off</md-icon>
-                    </button>
-          <button md-button type="button" class="md-icon-button md-primary" (click)="saveEntity()" [disabled]="!f.valid" aria-label="Save Item">
-                   <md-icon>save</md-icon>
-          </button>
-
-        </div>
       </section>
     </form>
 
@@ -47,9 +38,12 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-        (change)="change($event)">
+      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize | async" [total]="totalItems"
+   (change)="change($event)"
+        >
       </td-paging-bar>
     </section>
   </md-card-content>
 </md-card>
+
+     

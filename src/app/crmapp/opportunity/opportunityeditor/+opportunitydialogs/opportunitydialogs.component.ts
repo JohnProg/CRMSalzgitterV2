@@ -59,9 +59,7 @@ export class OpportunitydialogsComponent extends BaseComponent {
     this._curService.loadCustomAll('OpportunityDialog/searchByOpp', pparams);
 
     this.initEntity();
-    this.isEditing$ = this._curService.isEditing$.subscribe(status => {
-      this.isEditing = status;
-    });
+
   }
 
   afterViewInit(): void {

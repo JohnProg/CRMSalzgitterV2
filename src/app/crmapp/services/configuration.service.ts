@@ -11,8 +11,12 @@ export class ConfigurationService {
     public apiCsutomUrl: string = 'customapi/';
     public serverWithApiUrl = this.server + this.apiUrl;
     public serverWithApiCustomUrl = this.server + this.apiCsutomUrl;
-    public pageSize: number = 5;
+
     public hideDelayToast: number = 2000;
+
+    public pageSize: number = 5;
     public currentPage: number = 0;
+
+
 
 }

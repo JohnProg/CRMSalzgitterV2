@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./catalog.component.scss'],
   providers: [  ]
 })
-export class CatalogComponent {
+export class CatalogComponent implements AfterViewInit {
   catalogs: MenuClass[] = [
   ];
 
@@ -34,5 +34,11 @@ export class CatalogComponent {
     public _actions: ActionsService) {
   }
 
+  ngAfterViewInit() {
+    this.afterInit();
+  }
 
+  afterInit() {
+
+  }
 }

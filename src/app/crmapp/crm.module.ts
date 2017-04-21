@@ -40,13 +40,13 @@ import { ProductComponent, ProducteditorComponent, ProductpropertyComponent,
 
 import { CRMSelectComponent, GenericActionsComponent, CrmselectchildComponent } from './components/index';
 
+// Directives
+
+import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/index';
+
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
         OpportunityheaderComponent, OpportunitydialogsComponent, OpportunitydocumentsComponent } from './opportunity/index';
-
-
-
-//import { CrmselectchildComponent } from './crmapp/components/crmselectchild/crmselectchild.component';
 
 
 @NgModule({
@@ -101,6 +101,8 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
     CRMSelectComponent, CrmselectchildComponent,
     GenericActionsComponent,
 
+
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserModule,
@@ -118,9 +120,14 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
   ], // modules needed to run this module
   providers: [
     appRoutingProviders,
-    ActionsService, CatalogService, ConfigurationService
+    ActionsService, CatalogService, ConfigurationService,
+
+    // Directives
+    CRMCurrencyPipe, CRMCurrencyFormatterDirective,
+
   ], // additional providers needed for this module
   entryComponents: [ ],
+
   bootstrap: [  ],
 })
 export class CRMModule {}

@@ -61,7 +61,6 @@ export class StateComponent extends BaseComponent {
       this.itemEdit = new State();
       this.itemEdit.Id = 0;
       (<State>this.itemEdit).IdCountry = this.idCountry;
-      this._curService.changeState(true);
     }
 
     onCountrySelected(event: any) {
@@ -75,7 +74,7 @@ export class StateComponent extends BaseComponent {
     }
 
       reloadPaged(sText: string = undefined) {
-        let p = { page: this.currentPage, pageSize: this.pageSize, sortBy : this.sortBy, sortType: this.sortType, 
+        let p = { page: this.currentPage, pageSize: this.currentPageSize, sortBy : this.sortBy, sortType: this.sortType, 
                   sText: undefined, maxPage: 0, total: 0, fromRow: 0, toRow: 0 } as IPChangeEventSorted;
 
         this._curService.getCustomPaged(p, 'GetPaged', [

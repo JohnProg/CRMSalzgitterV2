@@ -70,9 +70,7 @@ export class OpportunitydocumentsComponent extends BaseComponent {
     this._curService.loadCustomAll('OpportunityDocument/searchByOpp', pparams);
 
     this.initEntity();
-    this.isEditing$ = this._curService.isEditing$.subscribe(status => {
-      this.isEditing = status;
-    });
+
   }
 
   addColumns() {

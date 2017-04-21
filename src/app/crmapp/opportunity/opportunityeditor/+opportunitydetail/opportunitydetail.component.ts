@@ -46,7 +46,7 @@ export class OpportunitydetailComponent extends BaseComponent {
     public _ngZone: NgZone) {
     super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
     this.catalogName = 'Opp Details';
-    //this._curService.setAPI('OpportunityDetail', this.catalogName);
+    this._curService.setAPI('OpportunityDetail', this.catalogName);
   }
 
   ngOnInitClass() {
@@ -61,14 +61,11 @@ export class OpportunitydetailComponent extends BaseComponent {
 
 
     this.initEntity();
-    this.isEditing$ = this._curService.isEditing$.subscribe(status => {
-      this.isEditing = status;
-      this.reloadPaged('');
-    });
+
   }
 
   afterViewInit(): void {
-    
+
     this._actions.updateTitle('Details for opportunity ' + this.idOpp.toString());
   }
 
@@ -83,6 +80,12 @@ export class OpportunitydetailComponent extends BaseComponent {
 
   initEntity() {
     this.itemEdit = new OpportunityDetail();
+  }
+
+
+  afterLoadItem(itm: OpportunityDetail) {
+    super.afterLoadItem(itm);
+    this._actions.updateTitle('Edit ' + itm.ItemDescription + ' for opportunity ' + this.idOpp.toString());
   }
 
 }

@@ -5,6 +5,7 @@ import { CatalogService, IPChangeEventSorted } from '../services/catalog.service
 import { ConfigurationService } from '../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -31,15 +32,17 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private deleteConfEvent;
   private saveEvent;
   private editItemEvent;
-  private screenSizeChangeEvent;
+  private screenSizeChangeEvent: Subscription;
   private cancelEditEvent;
 
   private afterLoadEvent;
   private afterCreateEvent;
   private afterUpdateEvent;
+  
 
-
-
+  pageChange: Subscription;
+  isEditing: boolean;
+  singleEditor: boolean = false;
 
   isSmallScreen: boolean = false;
 
@@ -51,10 +54,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   entList: Observable< TCRMEntity[]>;
   itemEdit:  TCRMEntity;
   curIndex: number;
-  isEditing: boolean;
-  isEditing$: any;
   totalItems: number;
-  totalItems$: any;
+  _totalItems: any;
+
   catalogName: string;
 
   filteredData: any[];
@@ -62,7 +64,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   searchTerm: string = '';
   fromRow: number = 1;
   currentPage: number = 0;
-  pageSize: number = this._confs.pageSize;
+
+  _pageSize: BehaviorSubject<number> = <BehaviorSubject<number>>new BehaviorSubject(this._confs.pageSize);
+  pageSize: Observable<number> = this._pageSize.asObservable();
+  __pageSize: Subscription;
+  currentPageSize: number = 5;
+
   sortBy: string = 'Name';
   sortType: string = "ASC"
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
@@ -88,11 +95,19 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.addColumns();
     this.addActionColumn();
-    this.pageSize = this._confs.pageSize;
+    ;
 
   }
 
   ngOnInit() {
+    this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: IPageChangeEvent) => {
+        this.sreenChange(e);
+    });
+
+    this.__pageSize = this.pageSize.subscribe( (p: number) => {
+         this.currentPageSize = p;
+         this.reloadPaged();
+    });
     this.ngOnInitClass();
   }
 
@@ -103,8 +118,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngAfterViewInit(): void {
+    
     // broadcast to all listener observables when loading the page
-    this._mediaService.broadcast();
+    //this._mediaService.broadcast();
 
     this.saveEvent = this._actions.saveItemEvent.subscribe( (save) => {
        this.saveEntity();
@@ -144,11 +160,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cancelEdit();
     } );
 
-    this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e) => {
-        this.sreenChange(e);
-    });
-
-
       // Service events
     this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
     this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
@@ -158,7 +169,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this._actions.showAdd(true);
     this._actions.showSearch(true);
     this._actions.showSave(false);
-    this._actions.showCancel(true);
+    this._actions.showCancel(false);
+
+
+
     this.afterViewInit();
   }
 
@@ -177,7 +191,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.afterLoadEvent !== undefined) { this.afterLoadEvent.unsubscribe(); }
     if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
-
+    this._pageSize.unsubscribe();
+    this.__pageSize.unsubscribe();
   }
 
 
@@ -198,14 +213,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.initEntity();
-    this.isEditing$ = this._curService.isEditing$.subscribe(status => {
-      this.isEditing = status;
-      this.reloadPaged('');
-    });
-
-    this.totalItems$ = this._curService.totalItems$.subscribe(total => {
+    this._totalItems = this._curService.totalItems.subscribe((total: number) => {
       this.totalItems = total;
-      this.isLoading = false;
+      //this.isLoading = false;
     });
 
   }
@@ -214,8 +224,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.itemEdit = new  TCRMEntity();
   }
 
-  submitForm(form) {
-  }
+  submitForm(form) {}
 
 
   editEntity(id: number) {
@@ -228,7 +237,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this._actions.updateTitle('Add ' + this.catalogName);
     this.initEntity();
     this.itemEdit.Id = 0;
-    this._curService.changeState(true);
+    this.isEditing = true;
   }
 
   deleteEntity(id: number) {
@@ -237,7 +246,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   cancelEdit(): void {
     this._actions.updateTitle(this.catalogName);
-    this._curService.changeState(false);
+    this.isEditing = false;
   }
 
 
@@ -250,24 +259,32 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   afterCreate(item: any) {
+     this._actions.cancelEditEvent.emit();
 
+     if( this.singleEditor === false) {
+        this.isEditing = false;
+        this._actions.cancelEdit();
+     }
   }
 
   afterUpdate(item: any) {
 
     Object.assign(this.itemEdit, item.Data);
+    if( this.singleEditor === false) {
+        this.isEditing = false;
+        this._actions.cancelEdit();
+    }
   }
 
   change(event: IPChangeEventSorted): void {
     
     if (event !== undefined) {
       this.currentPage = event.page - 1;
-      this.pageSize = event.pageSize;
+      this._pageSize.next(event.pageSize);
+      //this.reloadPaged();
     }
 
-      this.reloadPaged();
-      //this._curService.getPaged(event);
-    
+
   }
 
 
@@ -284,12 +301,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getPageParams(sText: string) : IPChangeEventSorted {
     return {
-      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+      page: this.currentPage, pageSize: this.currentPageSize, sortBy: this.sortBy,
       sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
     } as IPChangeEventSorted;
   }
 
   getSorted(sortEvent: ITdDataTableSortChangeEvent): void {
+    debugger
     this.sortBy = sortEvent.name;
     this.sortOrder = sortEvent.order;
     this.sortType = this.sortOrder.toString();
@@ -316,7 +334,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if( this.isLoading === false) {
       this.isLoading = true;
       let p = {
-        page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+        page: this.currentPage, pageSize: this.currentPageSize, sortBy: this.sortBy,
         sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
       } as IPChangeEventSorted;
       this.addParams(p);
@@ -324,17 +342,22 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  addParams(p: IPChangeEventSorted) {
-  }
+  addParams(p: IPChangeEventSorted) {}
 
   afterLoadItem(itm:  TCRMEntity) {
-
+     this.isEditing = true;
+     this._actions.setEditItem();
   }
 
+  sreenChange(e: IPageChangeEvent) {
+    if (e !== undefined) {
+      if( e.pageSize !== this.currentPageSize ) {
+        this.isLoading = false;
+        this.currentPage = e.page - 1;
+        this._pageSize.next(e.pageSize);
+      }
+    }
 
-
-  sreenChange(e: any) {
-    
   }
 
 

@@ -41,13 +41,15 @@ export class OpportunityeditorComponent extends CatalogComponent {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+
+    this._route.params.subscribe((params: { id: number }) => {
+      this.idOpp = params.id;
+    });
   }
 
 
   afterInit() {
-    this._route.params.subscribe((params: { id: number }) => {
-      this.idOpp = params.id;
-    });
+
   }
 
 
@@ -55,13 +57,4 @@ export class OpportunityeditorComponent extends CatalogComponent {
     this.scrId = scr;
     return true;
   }
-
-  saveEntity() {
-
-  }
-
-  addEntity() {
-
-  }
-
 }
