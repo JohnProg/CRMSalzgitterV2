@@ -4,16 +4,14 @@
       <section *ngIf="isEditing">
         <section layout="column" flex="100" layout-margin>
           <md-input-container>
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="Name" maxlength="150" />
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
             <md-hint align="end">{{name.value.length}} / 150</md-hint>
           </md-input-container>
           <md-input-container>
-            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.Description" required placeholder="Description"
+            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.Description" required placeholder="{{ 'DESCRIPTION' | translate}}"
               maxlength="150">
             <md-hint align="end">{{description.value.length}} / 150</md-hint>
           </md-input-container>
-
-
         </section>
       </section>
     </form>

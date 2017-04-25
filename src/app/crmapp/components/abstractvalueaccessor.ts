@@ -58,6 +58,7 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
 
 
     writeValue(value: any) {
+      
       this._value = value;
       this.onChange(value);
     }

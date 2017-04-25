@@ -1,6 +1,6 @@
 <td-layout-nav logo="assets:logocrm">
   <div td-toolbar-content layout="row" layout-align="center center" flex>
-    <span>Opportunities</span>
+    <span>{{ 'HOME.MENU.OPPORTUNITY.DISPLAYNAME' | translate }}</span>
     <div flex></div>
   </div>
   <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
@@ -11,19 +11,19 @@
     <md-nav-list td-sidenav-content>
       <a md-list-item md-ripple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
         <md-icon md-list-icon>dashboard</md-icon>
-        Header
+        {{ "HEADER" | translate}}
       </a>
       <a md-list-item md-ripple class="block relative" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <md-icon md-list-icon>dashboard</md-icon>
-        Details
+        {{ "DETAILS" | translate}}
       </a>
       <a md-list-item md-ripple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <md-icon md-list-icon>insert_chart</md-icon>
-        Dialogs
+        {{ "DIALOGS" | translate}}
       </a>
       <a md-list-item md-ripple class="block relative" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <md-icon md-list-icon>insert_chart</md-icon>
-        Documents
+        {{ "DOCUMENTS" | translate}}
       </a>
     </md-nav-list>
 

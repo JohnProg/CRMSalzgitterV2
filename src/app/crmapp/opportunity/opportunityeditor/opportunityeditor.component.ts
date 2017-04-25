@@ -14,6 +14,7 @@ import {
   TdLoadingService, TdDialogService, TdMediaService, TdLayoutManageListComponent 
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {TranslateService} from '@ngx-translate/core';
 
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -39,7 +40,8 @@ export class OpportunityeditorComponent extends CatalogComponent {
     public _mediaService: TdMediaService,
     public _actions: ActionsService,
     public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute) {
+    public _router: Router, public _route: ActivatedRoute,
+    translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
 
     this._route.params.subscribe((params: { id: number }) => {

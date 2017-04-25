@@ -80,6 +80,8 @@ export class OpportunitydetailComponent extends BaseComponent {
 
   initEntity() {
     this.itemEdit = new OpportunityDetail();
+    this.itemEdit.IdOpportunity  = this.idOpp;
+    this.itemEdit.DateAdded = new Date();
   }
 
 

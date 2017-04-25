@@ -228,7 +228,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   editEntity(id: number) {
-    this._actions.updateTitle('Edit ' + this.catalogName);
+    this._actions.updateTitle('EDITCAT ' + this.catalogName);
     this.itemEdit = < TCRMEntity>this._curService.itemEdit;
     this._curService.load(id);
   }
@@ -251,6 +251,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   saveEntity() {
+    
     if (this.itemEdit.Id > 0) {
       this._curService.update(this.itemEdit);
     } else {

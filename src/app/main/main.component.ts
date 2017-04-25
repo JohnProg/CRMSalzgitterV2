@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -37,8 +38,13 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
               private _actions: ActionsService,
               private _loadingService: TdLoadingService, 
               private _mediaService: TdMediaService,
-              private _ngZone: NgZone) {
+              private _ngZone: NgZone,
+              translate: TranslateService) {
+        // this language will be used as a fallback when a translation isn't found in the current language
+        translate.setDefaultLang('es');
 
+         // the lang to use, if the lang isn't available, it will use the current loader to get them
+        translate.use('es');
     this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
     this.routes = this._routeList.asObservable();
     }

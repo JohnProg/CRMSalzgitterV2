@@ -5,24 +5,24 @@
     [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '257px' : '100%'">
 
     <md-toolbar td-sidenav-content>
-      <span>Opportunities</span>
+      <span> {{ 'OPPORTUNITIES' | translate }} </span>
     </md-toolbar>
 
     <md-nav-list td-sidenav-content>
-      <span>Filters  </span>
+      <span>{{ 'FILTERS' | translate }}  </span>
     </md-nav-list>
 
     <div td-toolbar-content layout="row" layout-align="start center" flex>
       <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
-          Opportunity Index
+          {{ 'OPPORTUNITIESINDEX' | translate }}
         </a>
-      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" (searchDebounce)="search($event)"
+      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="{{ 'SEARCHHERE' | translate }}" (searchDebounce)="search($event)"
         flex>
       </td-search-box>
 
       <td-paging-bar #pagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
         (change)="change($event)">
-        <span td-paging-bar-label hide-xs>Row per page:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+        <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
       </td-paging-bar>
 
       <button md-mini-fab class="md-mini md-primary" [routerLink]="['edit', 0]" aria-label="Add Item">

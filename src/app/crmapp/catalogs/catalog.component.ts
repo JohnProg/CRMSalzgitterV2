@@ -23,6 +23,8 @@ import { Subscription } from 'rxjs/Subscription';
   providers: [  ]
 })
 export class CatalogComponent implements AfterViewInit {
+
+  
   catalogs: MenuClass[] = [
   ];
 

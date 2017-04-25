@@ -1,0 +1,113 @@
+{
+  "HOME": {
+    "CRMSALZGITTER": "CRM Salzgitter",
+    "TITLE": "CRM Salzgitter Mexico",
+    "SELECT": "Cambiar lenguaje",
+    "SIGNOUT": "Salir",
+
+    "MENU": {
+        "CATALOGS": {
+            "DISPLAYNAME": "Catalogos",
+
+            "CURRENCY": {
+                "DISPLAYNAME": "Monedas",
+                "TOOLTIP": "Crear/Editar monedas"
+            },
+             "COLONYTYPE": {
+                "DISPLAYNAME": "Tipos de Colonias",
+                "TOOLTIP": "Crear/Editar Tipos de colonias"
+            },    
+            "COUNTRY": {
+                "DISPLAYNAME": "Paises",
+                "TOOLTIP": "Crear/Editar Paises"
+            },                   
+            "DEPARTMENT": {
+                "DISPLAYNAME": "Departamentos",
+                "TOOLTIP": "Crear/Editar Departamentos"
+            },            
+            "DOCUMENTTYPE": {
+                "DISPLAYNAME": "Tipos de Documentos",
+                "TOOLTIP": "Crear/Editar Tipos de Documentos"
+            },
+            "FAMILY": {
+                "DISPLAYNAME": "Familias",
+                "TOOLTIP": "Crear/Editar Familias"
+            },            
+            "LINERTERM": {
+                "DISPLAYNAME": "Liner Terms",
+                "TOOLTIP": "Crear/Editar Liner Terms"
+            },            
+            "MARKET": {
+                "DISPLAYNAME": "Mercados",
+                "TOOLTIP": "Crear/Editar Mercados"
+            },   
+            "MILL": {
+                "DISPLAYNAME": "Molinos",
+                "TOOLTIP": "Crear/Editar Molinos"
+            },                     
+            "ORGANIZATION": {
+                "DISPLAYNAME": "Organizaciones",
+                "TOOLTIP": "Crear/Editar Organizaciones"
+            },            
+            "PAYMENTTERM": {
+                "DISPLAYNAME": "Terminos de Pago",
+                "TOOLTIP": "Crear/Editar Terminos de pago"
+            },            
+            "PORT": {
+                "DISPLAYNAME": "Puertos",
+                "TOOLTIP": "Crear/Editar Purtos"
+            },            
+            "POSITION": {
+                "DISPLAYNAME": "Posiciones",
+                "TOOLTIP": "Crear/Editar Posiciones"
+            },            
+            "SECTOR": {
+                "DISPLAYNAME": "Sectores",
+                "TOOLTIP": "Crear/Editar Sectores"
+            },            
+            "TENDER": {
+                "DISPLAYNAME": "Tenders",
+                "TOOLTIP": "Crear/Editar Tenders"
+            }               
+        },
+        "OPTIONS": {
+            "DISPLAYNAME": "Opciones",
+            "PRODUCT": {
+                "TOOLTIP": "Crear/Editar  Productos",
+                "DISPLAYNAME": "Productos"
+            },
+            "COMPANY": {
+                "TOOLTIP": "Crear/Editar  Compañias",
+                "DISPLAYNAME": "Informacion de la Compañia"
+            }            
+        },
+        "OPPORTUNITY": {
+            "DISPLAYNAME": "Oportunidades",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Crear/Editar Oportunidades",
+                "DISPLAYNAME": "Oportunidades"
+            }           
+        }
+    }
+  },
+  "OPPORTUNITY": {
+       "EDITOPPORTUNITY": "Editar oportunidad {{value}}"
+  },
+    "NAME": "Nombre",
+    "DESCRIPTION": "Description",   
+    "SAVE": "Salvar",
+    "EDIT": "Editar",
+    "DELETE": "Eliminar",
+    "WISHDELETE": "Desea eliminar?",
+    "HEADER": "Cabecera",
+    "DETAILS": "Detalles",
+    "DIALOGS": "Dialogos",
+    "DOCUMENTS": "Documentos",
+    "OPPORTUNITIES": "Oportunidades",
+    "FILTERS": "Filtros"    ,
+    "OPPORTUNITIESINDEX": "Lista de oportunidades",
+    "ROWSPERPAGE": "Renglon por pag.",
+    "SEARCH": "Buscar",
+    "SEARCHHERE": "Buscar aqui",
+    "EDITCAT": "Editar {{value}}"  
+}

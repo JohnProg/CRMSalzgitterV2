@@ -1,169 +1,169 @@
 [
       {
-        "title": "Catalogs",
+        "title": "HOME.MENU.CATALOGS.DISPLAYNAME",
         "route": "/catalogs",
         "icon": "euro_symbol",
         "childrens": [
           {
                 "name": "currency",
-                "tooltip": "Create edit Currencies",
+                "tooltip": "HOME.MENU.CATALOGS.CURRENCY.TOOLTIP",
                 "active": "true",
                 "routerlink": "currency",
                 "icon": "euro_symbol",
-                "displayName": "Currency"
+                "displayName": "HOME.MENU.CATALOGS.CURRENCY.DISPLAYNAME"
               },
               {
                 "name": "colonytype",
-                "tooltip": "Create edit Colonies Type",
+                "tooltip": "HOME.MENU.CATALOGS.COLONYTYPE.TOOLTIP",
                 "active": "true",
                 "routerlink": "colonytype",
                 "icon": "euro_symbol",
-                "displayName": "Colony Type"
+                "displayName": "HOME.MENU.CATALOGS.COLONYTYPE.DISPLAYNAME"
               },
               {
                 "name": "country",
-                "tooltip": "Create edit Countries",
+                "tooltip": "HOME.MENU.CATALOGS.COUNTRY.TOOLTIP",
                 "active": "true",
                 "routerlink": "country",
                 "icon": "euro_symbol",
-                "displayName": "Countries"
+                "displayName": "HOME.MENU.CATALOGS.COUNTRY.DISPLAYNAME"
               },
               {
                 "name": "department",
-                "tooltip": "Create edit Departments",
+                "tooltip": "HOME.MENU.CATALOGS.DEPARTMENT.TOOLTIP",
                 "active": "true",
                 "routerlink": "department",
                 "icon": "euro_symbol",
-                "displayName": "Departments"
+                "displayName": "HOME.MENU.CATALOGS.DEPARTMENT.DISPLAYNAME"
               },
               {
                 "name": "documenttype",
-                "tooltip": "Create edit Document Type",
+                "tooltip": "HOME.MENU.CATALOGS.DOCUMENTTYPE.TOOLTIP",
                 "active": "true",
                 "routerlink": "documenttype",
                 "icon": "euro_symbol",
-                "displayName": "Document Type"
+                "displayName": "HOME.MENU.CATALOGS.DOCUMENTTYPE.DISPLAYNAME"
               },
               {
                 "name": "family",
-                "tooltip": "Create edit Families",
+                "tooltip": "HOME.MENU.CATALOGS.FAMILY.TOOLTIP",
                 "active": "true",
                 "routerlink": "family",
                 "icon": "euro_symbol",
-                "displayName": "Families"
+                "displayName": "HOME.MENU.CATALOGS.FAMILY.DISPLAYNAME"
               }, 
               {
                 "name": "linerterm",
-                "tooltip": "Create edit Liner Term",
+                "tooltip": "HOME.MENU.CATALOGS.LINERTERM.TOOLTIP",
                 "active": "true",
                 "routerlink": "linerterm",
                 "icon": "euro_symbol",
-                "displayName": "Liner Term"
+                "displayName": "HOME.MENU.CATALOGS.LINERTERM.DISPLAYNAME"
               }, 
               {
                 "name": "market",
-                "tooltip": "Create edit Market",
+                "tooltip": "HOME.MENU.CATALOGS.MARKET.TOOLTIP",
                 "active": "true",
                 "routerlink": "market",
                 "icon": "euro_symbol",
-                "displayName": "Market"
+                "displayName": "HOME.MENU.CATALOGS.MARKET.DISPLAYNAME"
               },   
               {
                 "name": "mill",
-                "tooltip": "Create edit Mills",
+                "tooltip": "HOME.MENU.CATALOGS.MILL.TOOLTIP",
                 "active": "true",
                 "routerlink": "mill",
                 "icon": "euro_symbol",
-                "displayName": "Mills"
+                "displayName": "HOME.MENU.CATALOGS.MILL.DISPLAYNAME"
               }, 
               {
                 "name": "organization",
-                "tooltip": "Create edit Organization",
+                "tooltip": "HOME.MENU.CATALOGS.ORGANIZATION.TOOLTIP",
                 "active": "true",
                 "routerlink": "organization",
                 "icon": "euro_symbol",
-                "displayName": "Organization"
+                "displayName": "HOME.MENU.CATALOGS.ORGANIZATION.DISPLAYNAME"
               }, 
               {
                 "name": "paymentterm",
-                "tooltip": "Create edit Payment Term",
+                "tooltip": "HOME.MENU.CATALOGS.PAYMENTTERM.TOOLTIP",
                 "active": "true",
                 "routerlink": "paymentterm",
                 "icon": "euro_symbol",
-                "displayName": "Payment Term"
+                "displayName": "HOME.MENU.CATALOGS.PAYMENTTERM.DISPLAYNAME"
               }, 
               {
                 "name": "port",
-                "tooltip": "Create edit Port",
+                "tooltip": "HOME.MENU.CATALOGS.PORT.TOOLTIP",
                 "active": "true",
                 "routerlink": "port",
                 "icon": "euro_symbol",
-                "displayName": "Port"
+                "displayName": "HOME.MENU.CATALOGS.PORT.DISPLAYNAME"
               }, 
               {
                 "name": "position",
-                "tooltip": "Create edit Position",
+                "tooltip": "HOME.MENU.CATALOGS.POSITION.TOOLTIP",
                 "active": "true",
                 "routerlink": "position",
                 "icon": "euro_symbol",
-                "displayName": "Position"
+                "displayName": "HOME.MENU.CATALOGS.POSITION.DISPLAYNAME"
               }, 
               {
                 "name": "sector",
-                "tooltip": "Create edit Sector",
+                "tooltip": "HOME.MENU.CATALOGS.SECTOR.TOOLTIP",
                 "active": "true",
                 "routerlink": "sector",
                 "icon": "euro_symbol",
-                "displayName": "Sector"
+                "displayName": "HOME.MENU.CATALOGS.SECTOR.DISPLAYNAME"
               }, 
               {
                 "name": "tender",
-                "tooltip": "Create edit Tender",
+                "tooltip": "HOME.MENU.CATALOGS.TENDER.TOOLTIP",
                 "active": "true",
                 "routerlink": "tender",
                 "icon": "euro_symbol",
-                "displayName": "Tender"
+                "displayName": "HOME.MENU.CATALOGS.TENDER.DISPLAYNAME"
               }
 
       ]
 
     },
     {
-      "title": "Options",
+      "title": "HOME.MENU.OPTIONS.DISPLAYNAME",
       "route": "/options",
       "icon": "euro_symbol",
       "childrens": [
           {
             "name": "products",
-            "tooltip": "Create edit Product",
+            "tooltip": "HOME.MENU.OPTIONS.PRODUCT.TOOLTIP",
             "active": "true",
             "routerlink": "products",
             "icon": "euro_symbol",
-            "displayName": "Product"
+            "displayName": "HOME.MENU.OPTIONS.PRODUCT.DISPLAYNAME"
           },
           {
             "name": "company",
-            "tooltip": "Create edit Company",
+            "tooltip": "HOME.MENU.OPTIONS.COMPANY.TOOLTIP",
             "active": "true",
             "routerlink": "company",
             "icon": "euro_symbol",
-            "displayName": "Company"
+            "displayName": "HOME.MENU.OPTIONS.COMPANY.DISPLAYNAME"
           }        
       ]
     },
 
     {
-      "title": "Opportunity",
+      "title": "HOME.MENU.OPPORTUNITY.DISPLAYNAME",
       "icon": "euro_symbol",
       "route": "",
       "childrens": [
           {
             "name": "index",
-            "tooltip": "Create edit Opportunity",
+            "tooltip": "HOME.MENU.OPPORTUNITY.OPPORTUNITY.TOOLTIP",
             "active": "true",
             "routerlink": "opportunity",
             "icon": "euro_symbol",
-            "displayName": "Opportunity"
+            "displayName": "HOME.MENU.OPPORTUNITY.OPPORTUNITY.DISPLAYNAME"
           }
       ]
     }

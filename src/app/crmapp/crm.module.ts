@@ -11,12 +11,13 @@ import { RequestInterceptor } from '../../config/interceptors/request.intercepto
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+import {HttpModule, Http} from '@angular/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 
 // services 
 import { ActionsService, CatalogService, ConfigurationService } from './services/index';
-
-
 
 
 //catalogs
@@ -108,16 +109,30 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
     BrowserModule,
     BrowserAnimationsModule,
     CovalentCoreModule,
-    CovalentHttpModule.forRoot({
-      interceptors: [{
-        interceptor: RequestInterceptor, paths: ['**'],
-      }],
-    }),
+    CovalentHttpModule
+    // .forRoot({
+    //   interceptors: [{
+    //     interceptor: RequestInterceptor, paths: ['**'],
+    //   }],
+    // })
+    ,
     CovalentHighlightModule,
     CovalentMarkdownModule,
     NgxChartsModule,
+    TranslateModule
+    // .forChild({
+    //         loader: {
+    //             provide: TranslateLoader,
+    //             useFactory: HttpLoaderFactory,
+    //             deps: [Http]
+    //         }
+    //     })
+        , 
     appRoutes
   ], // modules needed to run this module
+  exports: [
+       TranslateModule
+  ],
   providers: [
     appRoutingProviders,
     ActionsService, CatalogService, ConfigurationService,

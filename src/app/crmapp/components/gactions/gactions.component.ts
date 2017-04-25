@@ -1,7 +1,5 @@
-import { Component, AfterViewInit, OnInit, ViewChild, ContentChild, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Input, ViewChild, ContentChild, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-
-
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -9,9 +7,7 @@ import {
 } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 import { ActionsService } from '../../services/actions.services';
-
 import { Subscription } from 'rxjs/Subscription';
-
 
 @Component({
   selector: 'crm-gactions',
@@ -21,6 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
+  @Input() inpuParam1: any = '';;
   // private addEvent;
   // private searchEvent;
   // private saveEvent;editItemEvent

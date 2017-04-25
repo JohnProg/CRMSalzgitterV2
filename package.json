@@ -8,7 +8,7 @@
     "components",
     "reusable"
   ],
- "scripts": {
+  "scripts": {
     "e2e": "ng e2e",
     "lint": "ng lint",
     "reinstall": "rm -rf node_modules tmp deploy dist && npm i",
@@ -34,7 +34,7 @@
     "Jeremy Smartt <jeremy.smartt@teradata.com>",
     "Ilsun Park <ilsun.park@teradata.com>"
   ],
- "dependencies": {
+  "dependencies": {
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -52,6 +52,8 @@
     "@covalent/highlight": "1.0.0-beta.3",
     "@covalent/http": "1.0.0-beta.3",
     "@covalent/markdown": "1.0.0-beta.3",
+    "@ngx-translate/core": "^6.0.1",
+    "@ngx-translate/http-loader": "0.0.3",
     "@swimlane/ngx-charts": "^5.0.0",
     "core-js": "^2.4.1",
     "d3": "^4.6.0",

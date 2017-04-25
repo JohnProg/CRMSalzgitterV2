@@ -15,12 +15,19 @@ import { appRoutes, appRoutingProviders } from './app.routes';
 import { RequestInterceptor } from '../config/interceptors/request.interceptor';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {HttpModule, Http} from '@angular/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
 
-
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: Http) {
+    return new TranslateHttpLoader(http, "/assets/i18n/", "-lang.json");
+}
 //CRM APP Module
 import { CRMModule } from './crmapp/crm.module';
 
@@ -42,6 +49,13 @@ import { CRMModule } from './crmapp/crm.module';
         interceptor: RequestInterceptor, paths: ['**'],
       }],
     }),
+    TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [Http]
+            }
+        }), 
     CovalentHighlightModule,
     CovalentMarkdownModule,
     appRoutes,

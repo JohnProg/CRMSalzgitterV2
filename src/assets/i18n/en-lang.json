@@ -1,0 +1,111 @@
+{
+  "HOME": {
+    "CRMSALZGITTER": "CRM Salzgitter",
+    "TITLE": "CRM Salzgitter Mexico",
+    "SELECT": "Change language",
+    "SIGNOUT": "Sign out",
+    "MENU": {
+        "CATALOGS": {
+            "DISPLAYNAME": "Catalogs",
+            "CURRENCY": {
+                "DISPLAYNAME": "Currency",
+                "TOOLTIP": "Create edit Currencies"
+            },
+             "COLONYTYPE": {
+                "DISPLAYNAME": "Colony Types",
+                "TOOLTIP": "Create/Edit Colony Types"
+            },    
+            "COUNTRY": {
+                "DISPLAYNAME": "Countries",
+                "TOOLTIP": "Create edit Countries"
+            },                   
+            "DEPARTMENT": {
+                "DISPLAYNAME": "Departments",
+                "TOOLTIP": "Create edit Departments"
+            },            
+            "DOCUMENTTYPE": {
+                "DISPLAYNAME": "Document Type",
+                "TOOLTIP": "Create edit Documents Type"
+            },
+            "FAMILY": {
+                "DISPLAYNAME": "Families",
+                "TOOLTIP": "Create edit Families"
+            },            
+            "LINERTERM": {
+                "DISPLAYNAME": "Liner Terms",
+                "TOOLTIP": "Create edit Liner Terms"
+            },            
+            "MARKET": {
+                "DISPLAYNAME": "Markets",
+                "TOOLTIP": "Create edit Markets"
+            },   
+            "MILL": {
+                "DISPLAYNAME": "Mills",
+                "TOOLTIP": "Create edit Mills"
+            },                     
+            "ORGANIZATION": {
+                "DISPLAYNAME": "Organizations",
+                "TOOLTIP": "Create edit Organizations"
+            },            
+            "PAYMENTTERM": {
+                "DISPLAYNAME": "Payment Terms",
+                "TOOLTIP": "Create edit Payment Terms"
+            },            
+            "PORT": {
+                "DISPLAYNAME": "Ports",
+                "TOOLTIP": "Create edit Ports"
+            },            
+            "POSITION": {
+                "DISPLAYNAME": "Positions",
+                "TOOLTIP": "Create edit Positions"
+            },            
+            "SECTOR": {
+                "DISPLAYNAME": "Sectors",
+                "TOOLTIP": "Create edit Sectors"
+            },            
+            "TENDER": {
+                "DISPLAYNAME": "Tenders",
+                "TOOLTIP": "Create edit Tenders"
+            }           
+        },
+        "OPTIONS": {
+            "DISPLAYNAME": "Options",
+            "PRODUCT": {
+                "TOOLTIP": "Create/Edit Products",
+                "DISPLAYNAME": "Products"
+            },
+            "COMPANY": {
+                "TOOLTIP": "Create/Edit Company",
+                "DISPLAYNAME": "Company Information"
+            }            
+        },
+        "OPPORTUNITY": {
+            "DISPLAYNAME": "Opportunities",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Opportunities",
+                "DISPLAYNAME": "Opportunity"
+            }           
+        }
+    }
+  },
+  "OPPORTUNITY": {
+       "EDITOPPORTUNITY": "Edit opportunity {{value}}"
+  },  
+  "NAME": "Nombre",
+  "DESCRIPTION": "Description",
+  "SAVE": "Save",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
+  "WISHDELETE": "Wish delete?",
+  "HEADER": "Header",
+  "DETAILS": "Details",
+  "DIALOGS": "Dialogos",
+  "DOCUMENTS": "Documents",
+  "OPPORTUNITIES": "Opportunities",
+  "FILTERS": "Filters",
+  "OPPORTUNITIESINDEX": "Opportunities Index",
+  "ROWSPERPAGE": "Row per page",
+  "SEARCH": "Search",
+  "SEARCHHERE": "Search here",
+  "EDITCAT": "Edit {{value}}"
+}
