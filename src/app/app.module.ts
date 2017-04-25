@@ -32,13 +32,11 @@ export function HttpLoaderFactory(http: Http) {
 import { CRMModule } from './crmapp/crm.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    DashboardComponent,
-    
+    DashboardComponent,  
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserModule,

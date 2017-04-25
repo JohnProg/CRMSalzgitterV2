@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 
 import { CatalogService, IPChangeEventSorted } from '../services/catalog.service';
 import { ConfigurationService } from '../services/configuration.service';
@@ -38,7 +39,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private afterLoadEvent;
   private afterCreateEvent;
   private afterUpdateEvent;
-  
+  private afterLoadAllEvent;
 
   pageChange: Subscription;
   isEditing: boolean;
@@ -84,15 +85,19 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   autoLoad: boolean = true;
   isLoading: boolean = false;
 
-  constructor(public _curService: CatalogService, public _confs: ConfigurationService,
+   _curService: CatalogService;
+
+  constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-
-
+    public _ngZone: NgZone,
+    public _http: Http, 
+    public _tableService: TdDataTableService) {
+    this._curService = new CatalogService(_http, _confs, _loadingService, 
+                       _dialogService,_snackBarService, _tableService);
     this.addColumns();
     this.addActionColumn();
     ;
@@ -164,7 +169,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
     this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
     this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
-
+    this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
     this._actions.updateTitle(this.catalogName);
     this._actions.showAdd(true);
     this._actions.showSearch(true);
@@ -191,6 +196,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.afterLoadEvent !== undefined) { this.afterLoadEvent.unsubscribe(); }
     if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
+    if (this.afterLoadAllEvent !== undefined) { this.afterLoadAllEvent.unsubscribe(); }
+
+    
     this._pageSize.unsubscribe();
     this.__pageSize.unsubscribe();
   }
@@ -200,7 +208,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addColumns() {
     this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
-    this.columns.push({ name: 'Description', label: 'Description' })
+    this.columns.push({ name: 'Description', label: 'Description' });
   }
 
   addActionColumn() {
@@ -228,8 +236,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   editEntity(id: number) {
+    
     this._actions.updateTitle('EDITCAT ' + this.catalogName);
-    this.itemEdit = < TCRMEntity>this._curService.itemEdit;
+    //this.itemEdit = < TCRMEntity>this._curService.itemEdit;
     this._curService.load(id);
   }
 
@@ -251,7 +260,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   saveEntity() {
-    
+    debugger
     if (this.itemEdit.Id > 0) {
       this._curService.update(this.itemEdit);
     } else {
@@ -332,7 +341,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   reloadPaged(sText: string = undefined) {
-    if( this.isLoading === false) {
+    if( this.isLoading === false && this.singleEditor === false) {
       this.isLoading = true;
       let p = {
         page: this.currentPage, pageSize: this.currentPageSize, sortBy: this.sortBy,
@@ -360,6 +369,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
   }
+
+  afterLoadAll(itms: TCRMEntity[]) {}
 
 
 }

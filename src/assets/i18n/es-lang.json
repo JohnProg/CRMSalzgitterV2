@@ -109,5 +109,25 @@
     "ROWSPERPAGE": "Renglon por pag.",
     "SEARCH": "Buscar",
     "SEARCHHERE": "Buscar aqui",
-    "EDITCAT": "Editar {{value}}"  
+    "EDITCAT": "Editar {{value}}",
+    "QUANTITY": "Cantidad",
+    "PRICE": "Precio",
+    "TOTAL": "Total",
+    "PRODUCT": "Producto",
+    "RESPONSIBLE": "Responsable",
+    "CURRENCY": "Moneda",
+
+    "STATUS": "Estatus",
+    "PROJECTNAME": "Nombre del Proyecto",
+    "OPPDESCRIPTION": "Description de la Opp.",
+    "CUSTOMER": "Cliente",
+    "CUSTOMERCONTACT": "Contacto del Cliente",
+    "CONTACT": "Contacto",
+    "MARKET": "Mercado",
+    "SECTOR": "Sector",
+    "PORT": "Puerto",
+    "INCOTERM": "Incoterm",
+    "LINERTERM": "Linerterm",
+    "ASIMPORTER": "Como Importador?",
+    "DELIVERYLOCATION": "Ubicacióm de entrega"      
 }

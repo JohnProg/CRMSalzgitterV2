@@ -1,68 +1,68 @@
       <form #f="ngForm" #form flex (ngSubmit)="submitForm(form)">
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="35" >
-            <crm-select #idResponsible name="idResponsible" catalog="Responsible" placeholder="Responsible" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
+            <crm-select #idResponsible name="idResponsible" catalog="Responsible" placeholder="RESPONSIBLE" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
           </section>
           <section  flex-gt-sm="35" >
-            <crm-select #idCurrency name="idCurrency" catalog="Currency" placeholder="Currency" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
+            <crm-select #idCurrency name="idCurrency" catalog="Currency" placeholder="CURRENCY" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
           </section>    
           <section  flex-gt-sm="30" >
-            <crm-select #idStatus name="idStatus" selDisabled="true" catalog="EstatusOpportunity" placeholder="Status" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+            <crm-select #idStatus name="idStatus" selDisabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
           </section>             
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex class="">
-            <textarea mdInput flex #projectName name="projectName" maxlength="500"  placeholder="Project Name" [(ngModel)]="itemEdit.ProjectName" ></textarea>
+            <textarea mdInput flex #projectName name="projectName" maxlength="500"  placeholder="PROJECTNAME" [(ngModel)]="itemEdit.ProjectName" ></textarea>
                   <md-hint align="end">{{projectName.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>         
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex class="">
-            <textarea mdInput flex #oppNotes name="oppNotes" maxlength="500"  placeholder="Opportunity Description" [(ngModel)]="itemEdit.OppNotes" ></textarea>
+            <textarea mdInput flex #oppNotes name="oppNotes" maxlength="500"  placeholder="OPPDESCRIPTION" [(ngModel)]="itemEdit.OppNotes" ></textarea>
                   <md-hint align="end">{{oppNotes.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>         
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section  flex-gt-sm="35" >
-            <crm-select #idCustomer name="idCustomer" catalog="Customer" placeholder="Customer" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
+            <crm-select #idCustomer name="idCustomer" catalog="Customer" placeholder="CUSTOMER" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
           </section>
           <section  flex-gt-sm="35" >
             <crm-select #idCustomerContact name="idCustomerContact" 
                          parentCatalog="Customer/contactsByCustomer?idCustomer=" 
                          [parentSelect]="idCustomer"
-                         placeholder="Select Customer Contact" [(ngModel)]="itemEdit.IdCustomerContact" ></crm-select>
+                         placeholder="CUSTOMERCONTACT" [(ngModel)]="itemEdit.IdCustomerContact" ></crm-select>
           </section>
           <section  flex-gt-sm="30" >
-            <crm-select #idContact name="idContact" catalog="Contact" placeholder="Contact" [(ngModel)]="itemEdit.IdContact" ></crm-select>
+            <crm-select #idContact name="idContact" catalog="Contact" placeholder="CONTACT" [(ngModel)]="itemEdit.IdContact" ></crm-select>
           </section>          
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="35" >
-            <crm-select #idMarket name="idMarket" catalog="Market" placeholder="Market" [(ngModel)]="itemEdit.IdMarket" ></crm-select>
+            <crm-select #idMarket name="idMarket" catalog="Market" placeholder="MARKET" [(ngModel)]="itemEdit.IdMarket" ></crm-select>
           </section>
           <section  flex-gt-sm="35" >
-            <crm-select #idSector name="idSector" catalog="Sector" placeholder="Sector" [(ngModel)]="itemEdit.IdSector" ></crm-select>
+            <crm-select #idSector name="idSector" catalog="Sector" placeholder="SECTOR" [(ngModel)]="itemEdit.IdSector" ></crm-select>
           </section>      
           <section  flex-gt-sm="30" >
-            <crm-select #idPort name="idPort" catalog="Port" placeholder="Port" [(ngModel)]="itemEdit.IdPort" ></crm-select>
+            <crm-select #idPort name="idPort" catalog="Port" placeholder="PORT" [(ngModel)]="itemEdit.IdPort" ></crm-select>
           </section>           
         </div>
 
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
 
           <section flex-gt-sm="35" >
-            <crm-select #idIncoTerm name="idIncoTerm" catalog="IncoTerm" placeholder="Incoterm" [(ngModel)]="itemEdit.IdIncoTerm" ></crm-select>
+            <crm-select #idIncoTerm name="idIncoTerm" catalog="IncoTerm" placeholder="INCOTERM" [(ngModel)]="itemEdit.IdIncoTerm" ></crm-select>
           </section>  
           <section flex-gt-sm="35" >
-            <crm-select #IdLinerTerm name="IdLinerTerm" catalog="LinerTerm" placeholder="IdLinerTerm" [(ngModel)]="itemEdit.IdLinerTerms" ></crm-select>
+            <crm-select #IdLinerTerm name="IdLinerTerm" catalog="LinerTerm" placeholder="LINERTERM" [(ngModel)]="itemEdit.IdLinerTerms" ></crm-select>
           </section>   
           <section flex-gt-sm="30" >
-            <md-slide-toggle #asImporter name="asImporter" [(ngModel)]="itemEdit.AsImporter">As Importer!</md-slide-toggle>
+            <md-slide-toggle #asImporter name="asImporter" [(ngModel)]="itemEdit.AsImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
           </section>                 
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex class="">
-            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="Delivery Location" [(ngModel)]="itemEdit.DeliveryLocation" ></textarea>
+            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.DeliveryLocation" ></textarea>
                   <md-hint align="end">{{deliveryLocation.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>

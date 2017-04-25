@@ -50,6 +50,7 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
     get value(): any { return this._value; };
     set value(v: any) {
       if (v !== this._value) {
+        
         this._value = v;
         this.onChange(v);
         this.valueChange.emit(v);
@@ -58,7 +59,6 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
 
 
     writeValue(value: any) {
-      
       this._value = value;
       this.onChange(value);
     }

@@ -3,6 +3,8 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Title }     from '@angular/platform-browser';
 import { ActionsService } from '../../services/actions.services';
 
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { TCRMEntity } from '../../model/allmodels';
@@ -23,14 +25,17 @@ import { MdSnackBar } from '@angular/material';
 export class ColonytypeComponent extends BaseComponent {
 
 
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
+ constructor(
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
+    public _ngZone: NgZone, 
+    public _http: Http, 
+    public _tableService: TdDataTableService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
     this.catalogName = 'Colony Type';
     this._curService.setAPI('ColonyType/', this.catalogName);
   }

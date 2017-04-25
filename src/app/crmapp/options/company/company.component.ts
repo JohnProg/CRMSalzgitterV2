@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
 import { ActionsService } from '../../services/actions.services';
-
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import 'rxjs/add/operator/map';
@@ -34,8 +34,9 @@ export class CompanyComponent extends BaseComponent {
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
+    public _ngZone: NgZone,    public _http: Http, 
+    public _tableService: TdDataTableService) {
+     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
     this.catalogName = 'Company';
     this._curService.setAPI('Company/', this.catalogName);
   }

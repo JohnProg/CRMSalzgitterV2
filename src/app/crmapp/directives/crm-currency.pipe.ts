@@ -23,7 +23,7 @@ export class CRMCurrencyPipe implements PipeTransform {
       : "";
 
     integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
-debugger
+
     return integer + fraction;
   }
 

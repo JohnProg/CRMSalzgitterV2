@@ -107,5 +107,26 @@
   "ROWSPERPAGE": "Row per page",
   "SEARCH": "Search",
   "SEARCHHERE": "Search here",
-  "EDITCAT": "Edit {{value}}"
+  "EDITCAT": "Edit {{value}}",
+  "QUANTITY": "Quantity",
+  "PRICE": "Price",
+  "TOTAL": "Total",
+  "PRODUCT": "Product",
+  "RESPONSIBLE": "Responsible",
+  "CURRENCY": "Currency",
+
+  "STATUS": "Status",
+  "PROJECTNAME": "Project Name",
+  "OPPDESCRIPTION": "Opp. Description",
+  "CUSTOMER": "Customer",
+  "CUSTOMERCONTACT": "Customer Contact",
+  "CONTACT": "Contact",
+  "MARKET": "Market",
+  "SECTOR": "Sector",
+  "PORT": "Port",
+  "INCOTERM": "Incoterm",
+  "LINERTERM": "Linerterm",
+  "ASIMPORTER": "As importer",
+  "DELIVERYLOCATION": "Delivery Location"
+
 }

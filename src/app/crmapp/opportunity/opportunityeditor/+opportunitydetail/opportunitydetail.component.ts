@@ -37,16 +37,21 @@ export class OpportunitydetailComponent extends BaseComponent {
   sortBy: string = 'ItemDescription';
 
 
-  constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
+ constructor(public _router: Router, public _route: ActivatedRoute, 
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
+    public _ngZone: NgZone, 
+    public _http: Http, 
+    public _tableService: TdDataTableService) {
+
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
     this.catalogName = 'Opp Details';
     this._curService.setAPI('OpportunityDetail', this.catalogName);
+    this.itemEdit = new OpportunityDetail();
   }
 
   ngOnInitClass() {
@@ -79,14 +84,19 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
   initEntity() {
-    this.itemEdit = new OpportunityDetail();
+    this.itemEdit = new OpportunityDetail() ;
     this.itemEdit.IdOpportunity  = this.idOpp;
     this.itemEdit.DateAdded = new Date();
+    this.itemEdit.IdProduct = 0;
+    
+    
   }
 
 
   afterLoadItem(itm: OpportunityDetail) {
+
     super.afterLoadItem(itm);
+    this.itemEdit = itm;
     this._actions.updateTitle('Edit ' + itm.ItemDescription + ' for opportunity ' + this.idOpp.toString());
   }
 

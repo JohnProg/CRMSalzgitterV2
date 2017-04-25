@@ -42,8 +42,10 @@ export class OpportunitydialogsComponent extends BaseComponent {
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
+    public _ngZone: NgZone,
+    public _http: Http, 
+    public _tableService: TdDataTableService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
     this.catalogName = 'Opp Dialogs';
   }
 

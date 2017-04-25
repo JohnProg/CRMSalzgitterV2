@@ -47,7 +47,10 @@ import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/ind
 
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
-        OpportunityheaderComponent, OpportunitydialogsComponent, OpportunitydocumentsComponent } from './opportunity/index';
+        OpportunityheaderComponent, OpportunitydialogsComponent, 
+        OpportunitydocumentsComponent, OpportunitydetailsumaryComponent } from './opportunity/index';
+
+
 
 
 @NgModule({
@@ -95,7 +98,7 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
     OpportunityheaderComponent,
     OpportunitydialogsComponent,
     OpportunitydocumentsComponent,
-
+    OpportunitydetailsumaryComponent,
 
 // Components
   // Cbx Components

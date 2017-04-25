@@ -65,7 +65,7 @@ export class CatalogService {
     entities: TCRMEntity[]
   };
 
-  private _entList: BehaviorSubject<TCRMEntity[]>;
+  _entList: BehaviorSubject<TCRMEntity[]>;
   entList: Observable<TCRMEntity[]>
 
   capi: string;
@@ -81,6 +81,7 @@ export class CatalogService {
   afterLoadEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   afterUpdateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   afterCreateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  afterLoadAllEvent: EventEmitter<TCRMEntity[]> = new EventEmitter<TCRMEntity[]>();
   _rest: CRMRestService;
 
   constructor(public _http: Http, public _confs: ConfigurationService,
@@ -96,14 +97,7 @@ export class CatalogService {
     this.dataStore = { entities: [] };
     this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
     this.entList = this._entList.asObservable();
-
-
-
     this.itemEdit = <TCRMEntity>{  };
-
-
-
-
     this._totalItems = <BehaviorSubject<number>>new BehaviorSubject(0);
     this.totalItems = this._totalItems.asObservable();
 
@@ -122,23 +116,30 @@ export class CatalogService {
       this._totalItems.next(total);
   }
 
-  loadAll(cparams: IPChangeEventSorted) {
+  loadAll(cparams: IPChangeEventSorted, customHandle: boolean = false) {
     this._rest.query().subscribe((datas: TCRMEntity[]) => {
       this.dataStore.entities = datas;
       let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
       this._entList.next(t);
       this.changeTotal(this.dataStore.entities.length);
+      this.afterLoadAllEvent.next(this.dataStore.entities);
     }, (error: Error) => {
       this._loadingService.resolve('users.list');
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     });
   }
 
-  loadCustomAll( url: string,  cparams: URLSearchParams) {
+  loadCustomAll( url: string,  cparams: URLSearchParams, customHandle: boolean = false) {
     this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
       .map((response) => response.json()).subscribe((result) => {
         this.dataStore.entities = result;
-        this._entList.next(Object.assign({}, this.dataStore).entities);
+        
+        if( customHandle === false) {
+          this._entList.next(Object.assign({}, this.dataStore).entities);
+          this.afterLoadAllEvent.next(this.dataStore.entities);
+        } else {
+           this.afterLoadAllEvent.next(this.dataStore.entities);
+        }
       }, (error) => {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
@@ -190,6 +191,7 @@ export class CatalogService {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeTotal(result.Total);
+        this.afterLoadAllEvent.next(this.dataStore.entities);
       }, (error) => {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
@@ -200,6 +202,7 @@ export class CatalogService {
   load(id: number | string) {
     // return this._http.get( this.fullapi + id).map(response => response.json());
     this._rest.get(id).subscribe( (data: TCRMEntity) => {
+      
       Object.assign(this.itemEdit, data);
       this.afterLoadEmmiterEvent(this.itemEdit);
     }, error => {
@@ -318,6 +321,8 @@ export class CatalogService {
   public customPost(url: string, cparams: any) {
     return this._http.post(this.apiCustom  + url, cparams);
   }
+
+
 }
 
 

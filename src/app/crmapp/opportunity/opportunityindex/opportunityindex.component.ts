@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { Title }  from '@angular/platform-browser';
 import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
 import { ActionsService } from '../../services/actions.services';
@@ -33,8 +34,11 @@ export class OpportunityindexComponent extends BaseComponent  {
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
     public _ngZone: NgZone,
-    private _router: Router) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
+    private _router: Router,
+    public _http: Http, 
+    public _tableService: TdDataTableService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
+
     this.sortBy = 'Id';
     this.catalogName = 'Opportunity';
     this._curService.setAPI('Opportunity/', this.catalogName);
