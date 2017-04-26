@@ -1,42 +1,69 @@
+<md-card flex>
+  <md-card-title>Sumary Detail</md-card-title>
+  <md-card-subtitle>
+    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
+    <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
+    <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
+  </md-card-subtitle>
+  <md-card-content>
 
-<section *ngIf="isEditing">
-<form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
-  <section *ngIf="isEditing">
-    <section layout="column" flex="100" layout-margin>
-        <ng-template *ngFor="let pc of (pcolumns | async)"  >
-              <md-input-container flex="50">
-                <input mdInput [placeholder]="pc.label"  disabled value="Google">
-              </md-input-container>
-        </ng-template>
+    <section *ngIf="isEditing" flex>
+      <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
 
+        <section layout="row" flex="100" layout-margin>
+          <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">
+            <md-input-container>
+              <input mdInput flex [name]="pc.NameDescription" maxlength="500" [placeholder]="pc.Property.Name" [required]="pc.IsRequired"
+                [(ngModel)]="pc.PropertyValue">
+              <md-hint align="end"> 500</md-hint>
+            </md-input-container>
+          </div>
+
+        </section>
+        <section layout="row" flex="100" layout-margin>
+
+          <md-input-container flex="30">
+            <input type="number" mdInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.Quantity">
+          </md-input-container>
+          <md-input-container flex="30">
+            <input type="number" mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.Price">
+          </md-input-container>
+          <md-input-container flex="35">
+            <input type="number" mdInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [value]="itemEdit.Quantity * itemEdit.Price">
+          </md-input-container>
+
+        </section>
+
+        <div layout-gt-sm="row" layout-lt-sm="column">
+          <md-input-container flex class="">
+            <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.Comment"></textarea>
+            <md-hint align="end">{{Comment.value.length}} / 250</md-hint>
+          </md-input-container>
+        </div>
+
+      </form>
     </section>
-  </section>
-</form>
-</section>
 
 
-<md-card flex >
+    <section flex *ngIf="!isEditing">
 
-<md-card-content>
-
-  <section flex *ngIf="!isEditing">
-  <td-data-table flex [columns]="pcolumns | async"  [data]="entList | async" [sortable]="false">
-    <ng-template *ngFor="let pc of (pcolumns | async)" [tdDataTableTemplate]="pc.name" let-value="value" let-row="row"  let-column="column">
-        <span flex>{{value}} </span> 
-    </ng-template>
-    <ng-template [tdDataTableTemplate]="tActions" let-row="row"  let-column="column">
+      <td-data-table flex [columns]="pcolumns | async" [data]="entList | async" [sortable]="false">
+        <ng-template *ngFor="let pc of (pcolumns | async)" [tdDataTableTemplate]="pc.name" let-value="value" let-row="row" let-column="column">
+          <span flex>{{value}} </span>
+        </ng-template>
+        <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
             <button md-icon-button (click)="confirmDelete( row)">
             <md-icon>delete</md-icon>
           </button>
           </div>
-    </ng-template>
+        </ng-template>
 
-  </td-data-table>
-  </section>
-</md-card-content>
-  <md-card-actions>
-    <button md-button  color="accent" class="text-upper" (click)="addEntity()"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
-    <button md-button class="text-upper" (click)="cancelEdit()">Cancel</button>
-  </md-card-actions>
+      </td-data-table>
+      <td-paging-bar #dpagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize | async" [total]="totalItems" (change)="change($event)">
+                <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{dpagingBar.range}} <span hide-xs>of {{dpagingBar.total}}</span>
+      </td-paging-bar>
+    </section>
+  </md-card-content>
+
 </md-card>

@@ -18,6 +18,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {HttpModule, Http} from '@angular/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { environment } from '../environments/environment';
 
 
 const httpInterceptorProviders: Type<any>[] = [
@@ -26,7 +27,7 @@ const httpInterceptorProviders: Type<any>[] = [
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, "/assets/i18n/", "-lang.json");
+    return new TranslateHttpLoader(http,  environment.appBase + 'assets/i18n/', '-lang.json');
 }
 //CRM APP Module
 import { CRMModule } from './crmapp/crm.module';

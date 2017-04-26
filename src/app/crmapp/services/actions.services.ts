@@ -9,7 +9,7 @@ export class ActionsService {
     public addItemEvent: EventEmitter<any>=new EventEmitter();
     public editItemEvent: EventEmitter<any>=new EventEmitter();
     public saveItemEvent: EventEmitter<any> =new EventEmitter();
-    public deleteItemEvent: EventEmitter<any> =new EventEmitter();
+    public deleteItemEvent: EventEmitter<string> =new EventEmitter();
     public deleteItemConfirmedEvent: EventEmitter<any>=new EventEmitter();
     public cancelEditEvent: EventEmitter<any>=new EventEmitter();
     public setEditEvent: EventEmitter<any>=new EventEmitter();
@@ -38,8 +38,8 @@ export class ActionsService {
       this.saveItemEvent.emit();
     }
 
-    public deleteItem() {
-      this.deleteItemEvent.emit();
+    public deleteItem(name: string) {
+      this.deleteItemEvent.emit(name);
     }
 
     public deleteItemConfirmed() {

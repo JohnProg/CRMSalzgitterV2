@@ -4,7 +4,7 @@
         <section layout="column" flex="100" layout-margin>
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex >
-            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
+            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" [selDisabled]="allowProduct" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
         </div>
 
 
@@ -29,7 +29,7 @@
 
         </section>
 
-        <crm-opportunitydetailsumary [idDetail]="itemEdit.Id" ></crm-opportunitydetailsumary>
+        <crm-opportunitydetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.Id" [idProduct]="itemEdit.IdProduct" *ngIf="isEditing && itemEdit.Id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.ItemQuantity" [price]="itemEdit.ItemPrice" ></crm-opportunitydetailsumary>
       </section>
     </form>
 

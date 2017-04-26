@@ -104,7 +104,8 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
   // Cbx Components
     CRMSelectComponent, CrmselectchildComponent,
     GenericActionsComponent,
-
+    // Directives
+    CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
 
   ], // directives, components, and pipes owned by this NgModule
@@ -139,9 +140,8 @@ import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorCompo
   providers: [
     appRoutingProviders,
     ActionsService, CatalogService, ConfigurationService,
-
-    // Directives
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
+
 
   ], // additional providers needed for this module
   entryComponents: [ ],

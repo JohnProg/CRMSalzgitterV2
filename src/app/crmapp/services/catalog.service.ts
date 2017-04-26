@@ -79,8 +79,9 @@ export class CatalogService {
   apiCustom: string;
 
   afterLoadEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
-  afterUpdateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
-  afterCreateEmitter: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  afterUpdateEmitter: EventEmitter<any> = new EventEmitter<any>();
+  afterCreateEmitter: EventEmitter<any> = new EventEmitter<any>();
+  afterDeleteEmitter: EventEmitter<any> = new EventEmitter<any>();
   afterLoadAllEvent: EventEmitter<TCRMEntity[]> = new EventEmitter<TCRMEntity[]>();
   _rest: CRMRestService;
 
@@ -132,8 +133,8 @@ export class CatalogService {
   loadCustomAll( url: string,  cparams: URLSearchParams, customHandle: boolean = false) {
     this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
       .map((response) => response.json()).subscribe((result) => {
-        this.dataStore.entities = result;
         
+        this.dataStore.entities = result;
         if( customHandle === false) {
           this._entList.next(Object.assign({}, this.dataStore).entities);
           this.afterLoadAllEvent.next(this.dataStore.entities);
@@ -144,6 +145,11 @@ export class CatalogService {
         this._loadingService.resolve('users.list');
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
+  }
+
+  loadCustomAllObs( url: string,  cparams: URLSearchParams, customHandle: boolean = false) {
+    return this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
+      .map((response) => response.json());
   }
 
   customQuery(pfunc: string, cparams: TCRMEntity[]) {
@@ -165,7 +171,20 @@ export class CatalogService {
     pparams.set('sortType', p.sortType);
     pparams.set('sText', p.sText);
     let index = (p.page * p.pageSize) + 1;
+    let t = this._tableService.pageData(this.dataStore.entities, index , --index + p.pageSize) ;
+    this._entList.next(t);
+  }
 
+  refreshPaged(p: IPChangeEventSorted, items: TCRMEntity[]) {
+    let pparams = new URLSearchParams();
+    pparams.set('page', p.page.toString());
+    pparams.set('pageSize', p.pageSize.toString());
+    if (p.sortBy === undefined) { p.sortBy = 'Name'; }
+    if (p.sortType === undefined) { p.sortType = 'ASC'; }
+    pparams.set('sortBy', p.sortBy);
+    pparams.set('sortType', p.sortType);
+    pparams.set('sText', p.sText);
+    let index = (p.page * p.pageSize) + 1;
     let t = this._tableService.pageData(this.dataStore.entities, index , --index + p.pageSize) ;
     this._entList.next(t);
   }
@@ -202,7 +221,6 @@ export class CatalogService {
   load(id: number | string) {
     // return this._http.get( this.fullapi + id).map(response => response.json());
     this._rest.get(id).subscribe( (data: TCRMEntity) => {
-      
       Object.assign(this.itemEdit, data);
       this.afterLoadEmmiterEvent(this.itemEdit);
     }, error => {
@@ -212,23 +230,29 @@ export class CatalogService {
   }
 
 
-  create(entity: any) {
+  create(entity: any, customHandle: boolean = false) {
     this._rest.create( entity)
       .map((response) => response.json())
       .subscribe( (data: ReturnSaveRequest) => {
-        if( data.Data !== undefined) {
+        if(customHandle === false ) {
           this.dataStore.entities.push(data.Data);
-          this._entList.next(Object.assign({}, this.dataStore).entities);
+          this.afterCreateEmitter.emit(  data.Data);
           this.itemEdit.Id = data.Data.Id;
-          this.afterCreateEmitter.emit(data.Data);
           this._snackBarService.open( this.catalogName + ' ' + data.Message, 'Ok');
+        } else {
+           this.dataStore.entities.push(data.Data);
+           this.afterCreateEmitter.emit( this.dataStore.entities);
         }
       }, (error) => {
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       });
   }
 
-  update(entity: any) {
+  assignList(items: TCRMEntity[]) {
+     this._entList.next(Object.assign({}, this.dataStore).entities);
+  }
+
+  update(entity: any, customHandle: boolean = false) {
 
     this._rest.update(entity.Id, entity)
    // .map((response) => response.json())
@@ -236,8 +260,12 @@ export class CatalogService {
         this.dataStore.entities.forEach((t, i) => {
           if (t.Id === data.Data.Id) { this.dataStore.entities[i] = data.Data; }
         });
-        this._entList.next(Object.assign({}, this.dataStore).entities);
-        this.afterUpdateEmitter.emit(data.Data);
+        if( customHandle === false) {
+          this._entList.next(Object.assign({}, this.dataStore).entities);
+          this.afterUpdateEmitter.emit(data.Data);
+        } else {
+          this.afterUpdateEmitter.emit(this.dataStore.entities);
+        }
         this._snackBarService.open(this.catalogName + data.Message, 'Ok');
       }, (error) => {
         this._snackBarService.open(error.Message, 'Ok');
@@ -246,7 +274,7 @@ export class CatalogService {
 
 
 
-  remove(entId: number) {
+  remove(entId: number, customHandle: boolean = false ) {
 
     this._rest.delete(entId).subscribe( (response) => {
 
@@ -254,8 +282,12 @@ export class CatalogService {
         if (t.Id === entId) { this.dataStore.entities.splice(i, 1); }
       });
 
-      this._entList.next(Object.assign({}, this.dataStore).entities);
+      if( customHandle === false) {
+        this._entList.next(Object.assign({}, this.dataStore).entities);
+      }
+      this.afterDeleteEmitter.emit(this.dataStore.entities);
       this._snackBarService.open(response, 'Ok');
+
     }, (error) => {
       this._snackBarService.open(error.Message, 'Ok');
     });

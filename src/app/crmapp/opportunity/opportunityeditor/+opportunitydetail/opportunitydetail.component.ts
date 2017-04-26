@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-
+import { Subscription } from 'rxjs/Subscription';
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { OpportunityDetail } from '../../../model/allmodels';
@@ -20,7 +20,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
-
+import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';
 
 
 @Component({
@@ -32,11 +32,10 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
 export class OpportunitydetailComponent extends BaseComponent {
 
   @Input() idOpp: number = 0;
-
   itemEdit: OpportunityDetail;
   sortBy: string = 'ItemDescription';
-
-
+  allowProduct: boolean = true;
+  propSubscription: Subscription;
  constructor(public _router: Router, public _route: ActivatedRoute, 
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -56,22 +55,25 @@ export class OpportunitydetailComponent extends BaseComponent {
 
   ngOnInitClass() {
     this.entList = <Observable<OpportunityDetail[]>>this._curService.entList;
+
+
     this.initData();
+
   }
 
   initData() {
     let pparams = new URLSearchParams();
     pparams.set('idopp', this.idOpp.toString());
     this._curService.loadCustomAll('OpportunityDetail/searchByOpp', pparams);
-
-
     this.initEntity();
-
   }
 
   afterViewInit(): void {
-
     this._actions.updateTitle('Details for opportunity ' + this.idOpp.toString());
+  }
+
+  onDestroy() {
+    if (this.propSubscription !== undefined) { this.propSubscription.unsubscribe(); }
   }
 
   addColumns() {
@@ -88,8 +90,6 @@ export class OpportunitydetailComponent extends BaseComponent {
     this.itemEdit.IdOpportunity  = this.idOpp;
     this.itemEdit.DateAdded = new Date();
     this.itemEdit.IdProduct = 0;
-    
-    
   }
 
 
@@ -102,10 +102,20 @@ export class OpportunitydetailComponent extends BaseComponent {
 
 
   confirmDelete(item:  OpportunityDetail) {
-    debugger
     this.itemEdit = item;
-    this._actions.deleteItem();
+    this._actions.deleteItem(item.ItemDescription);
   }
 
+  afterCreate(item: OpportunityDetail) {
+    Object.assign(this.itemEdit, item);
+  }
 
+  afterUpdate(item: OpportunityDetail) {
+    Object.assign(this.itemEdit, item);
+  }
+
+  hasSumary(h: boolean) {
+    debugger
+    this.allowProduct = h;
+  }
 }

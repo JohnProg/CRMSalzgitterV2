@@ -5,7 +5,7 @@
 
 export const environment: {production: boolean, server: string, appBase: string} = {
   production: false,
-  appBase: 'http://localhost:4200',
+  appBase: 'http://localhost:4200/',
   server: 'https://crmsalzgittermx.com/testservices/',
   //server: 'http://localhost/CRM.Salzgitter.Services/',
 };

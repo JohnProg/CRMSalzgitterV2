@@ -93,7 +93,7 @@
   "OPPORTUNITY": {
        "EDITOPPORTUNITY": "Editar oportunidad {{value}}",
        "ADDPROPERTY": "Agegar Propiedad",
-       "ADDSUMARY": "Agregar"
+       "ADDSUMARY": "Agregar detalle"
   },
     "NAME": "Nombre",
     "DESCRIPTION": "Description",   
@@ -131,5 +131,6 @@
     "INCOTERM": "Incoterm",
     "LINERTERM": "Linerterm",
     "ASIMPORTER": "Como Importador?",
-    "DELIVERYLOCATION": "Ubicacióm de entrega"      
+    "DELIVERYLOCATION": "Ubicacióm de entrega",
+    "CANCEL": "Cancelar"  
 }

@@ -24,7 +24,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   private editItemEvent: Subscription;
   private setEditEvent: Subscription;
   private cancelEditEvent: Subscription;
-  private deleteEditEvent: Subscription;
+  private deleteItemEvent: Subscription;
 
   private screenSizeChangeEvent: Subscription;
   private updateTitleEvent: Subscription;
@@ -98,8 +98,8 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
         this.setEdit();
       });
 
-    this.deleteEditEvent = this._actions.deleteEditEvent
-      .subscribe((e: any) => {
+    this.deleteItemEvent = this._actions.deleteItemEvent
+      .subscribe((e: string) => {
         this.deleteItem(e);
       });
 
@@ -123,7 +123,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     if (this.cancelEditEvent !== undefined) { this.cancelEditEvent.unsubscribe(); }
     if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
-    if (this.deleteEditEvent !== undefined) { this.deleteEditEvent.unsubscribe(); }
+    if (this.deleteItemEvent !== undefined) { this.deleteItemEvent.unsubscribe(); }
   }
 
 
@@ -147,11 +147,11 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.showCancel = true;
   }
 
-  private search(atext: string) {
+  private search(atext: string): void {
     this._actions.search(atext);
   }
 
-  private deleteItem(deleteDesc: string) {
+  private deleteItem(deleteDesc: string): void {
 
     this._dialogService
       .openConfirm({ message: 'Are you sure you want to delete ' + deleteDesc + '?' })

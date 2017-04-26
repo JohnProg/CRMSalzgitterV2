@@ -41,10 +41,10 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
               private _ngZone: NgZone,
               translate: TranslateService) {
         // this language will be used as a fallback when a translation isn't found in the current language
-        translate.setDefaultLang('es');
+        translate.setDefaultLang('en');
 
          // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use('es');
+        translate.use('en');
     this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
     this.routes = this._routeList.asObservable();
     }
@@ -61,12 +61,19 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   ngAfterViewInit() {
-     this._http.get(this._confs.appBase + '/data/crm-menu.json')
-      .map((response) => response.json()).subscribe((result) => {
-        this._routeList.next(result);
-      }, (error) => {
-         debugger
-      });
+    this._http.get(this._confs.appBase + 'data/crm-menu.json')
+    .map((response) => response.json()).subscribe((result) => {
+      this._routeList.next(result);
+    }, (error) => {
+        debugger
+    });
+
+    this._http.get(this._confs.appBase + 'data/data.json')
+    .map((response) => response.json()).subscribe((result) => {
+      this._routeList.next(result);
+    }, (error) => {
+        debugger
+    });
   }
 
   
@@ -94,7 +101,6 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       this._ngZone.run(() => {
         this.isSmallScreen = matches;
         if (matches === true) {
-          
           this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 5, maxPage: 0 }) );
           this._confs.pageSize = 5;
           this._confs.currentPage = 0;
@@ -108,7 +114,6 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isSmallScreen = matches;
 
         if (matches === true) {
-          
           this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 8, maxPage: 0 }) );
           this._confs.pageSize = 8;
           this._confs.currentPage = 0;
@@ -123,7 +128,6 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isSmallScreen = matches;
 
         if (matches === true) {
-          
           this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 13, maxPage: 0 }) );
           this._confs.pageSize = 10;
           this._confs.currentPage = 0;
@@ -142,7 +146,6 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
           this._confs.pageSize = 13;
           this._confs.currentPage = 0;
         }
-
       });
     });
 

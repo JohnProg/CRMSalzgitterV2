@@ -611,6 +611,7 @@
 		OpportunityDetailSumary: OpportunityDetailSumary;
 		Property: Property;
 		PropertyValue: string;
+		IsRequired: boolean;
 	}
 	export class OpportunityDetailSumary extends TCRMEntity {
 		Amount: number;
