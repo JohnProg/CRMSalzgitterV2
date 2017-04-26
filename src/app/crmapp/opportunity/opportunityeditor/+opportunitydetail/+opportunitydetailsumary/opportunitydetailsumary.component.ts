@@ -23,6 +23,7 @@ import { AbstractValueAccessor } from '../../../../components/abstractvalueacces
 
 
 
+
 @Component({
   selector: 'crm-opportunitydetailsumary',
   templateUrl: './opportunitydetailsumary.component.html',
@@ -34,6 +35,7 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
 
    _columns: BehaviorSubject<ITdDataTableColumn[]>;
   pcolumns: Observable<ITdDataTableColumn[]>;
+  _pcolumns: Array<ITdDataTableColumn>;
   itemEdit: OpportunityDetailSumary;
   sortBy: string = 'ItemDescription';
   
@@ -61,7 +63,6 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
 
   ngOnInitClass() {
     this.entList = <Observable<OpportunityDetailSumary[]>>this._curService.entList;
-
     this.initData();
   }
 
@@ -78,14 +79,23 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     this.itemEdit = new OpportunityDetailSumary() ;
     this.itemEdit.IdOpportunityDetail  = this.idDetail;
     this.itemEdit.DateCreated = new Date();
+    this.itemEdit.OpportunityDetailSumaryProperties = new Array<OpportunityDetailSumaryProperty>();
+    
   }
+
+  addEntity() {
+    this.initEntity();
+    this.isEditing = true;
+  }
+
+  
 
 afterLoadAll(itms: OpportunityDetailSumary[]) {
       if( itms !== undefined && itms.length > 0 && itms[0].OpportunityDetailSumaryProperties !== undefined 
         && itms[0].OpportunityDetailSumaryProperties.length > 0) {
-        let cols = new Array<ITdDataTableColumn>();
+        this._pcolumns = new Array<ITdDataTableColumn>();
         itms[0].OpportunityDetailSumaryProperties.forEach( (t: OpportunityDetailSumaryProperty) => {
-          cols.push( (<ITdDataTableColumn> { name: 'prop' +  t.IdProperty,  label: t.Property.Name, tooltip: '' }));
+          this._pcolumns.push( (<ITdDataTableColumn> { name: 'prop' +  t.IdProperty,  label: t.Property.Name, tooltip: '', IdProperty: t.IdProperty }));
         });
 
         itms.forEach( (t: OpportunityDetailSumary) => {
@@ -94,13 +104,13 @@ afterLoadAll(itms: OpportunityDetailSumary[]) {
           });
         });
 
-        cols.push( (<ITdDataTableColumn> { name: 'Quantity' ,  label: '{{QUANTITY | translate }}', tooltip: '' }));
-        cols.push( (<ITdDataTableColumn> { name: 'Price' ,  label: 'Price', tooltip: '', numeric: true, format: CURRENCY_FORMAT }));
-        cols.push( (<ITdDataTableColumn> { name: 'Amount' ,  label: 'Amount', tooltip: '', numeric: true, format: CURRENCY_FORMAT }));
-        cols.push( (<ITdDataTableColumn> { name: 'Total' ,  label: 'Total', tooltip: '', numeric: true, format: CURRENCY_FORMAT }));
-        cols.push( (<ITdDataTableColumn> { name: 'Comment' ,  label: 'Comment', tooltip: '' }));
-        cols.push( (<ITdDataTableColumn> { name: 'tActions' ,  label: '.', tooltip: '' }));
-        this._columns.next(cols);
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Quantity' ,  label: 'Quantity', tooltip: '', draw: true }));
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Price' ,  label: 'Price', tooltip: '', numeric: true, format: CURRENCY_FORMAT, draw: true }));
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Amount' ,  label: 'Amount', tooltip: '', numeric: true, format: CURRENCY_FORMAT, draw: true }));
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Total' ,  label: 'Total', tooltip: '', numeric: true, format: CURRENCY_FORMAT, draw: true }));
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Comment' ,  label: 'Comment', tooltip: '', draw: true }));
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'tActions' ,  label: '.', tooltip: '', draw: true }));
+        this._columns.next(this._pcolumns);
       }
       this._curService._entList.next(itms);
 }
@@ -109,5 +119,7 @@ afterLoadAll(itms: OpportunityDetailSumary[]) {
     super.afterLoadItem(itm);
     this.itemEdit = itm;
   }
+
+
 
 }

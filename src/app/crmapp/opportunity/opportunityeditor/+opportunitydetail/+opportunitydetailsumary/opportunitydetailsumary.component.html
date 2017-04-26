@@ -1,15 +1,25 @@
+
+<section *ngIf="isEditing">
 <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
   <section *ngIf="isEditing">
     <section layout="column" flex="100" layout-margin>
+        <ng-template *ngFor="let pc of (pcolumns | async)"  >
+              <md-input-container flex="50">
+                <input mdInput [placeholder]="pc.label"  disabled value="Google">
+              </md-input-container>
+        </ng-template>
 
     </section>
   </section>
 </form>
+</section>
 
 
 <md-card flex >
 
 <md-card-content>
+
+  <section flex *ngIf="!isEditing">
   <td-data-table flex [columns]="pcolumns | async"  [data]="entList | async" [sortable]="false">
     <ng-template *ngFor="let pc of (pcolumns | async)" [tdDataTableTemplate]="pc.name" let-value="value" let-row="row"  let-column="column">
         <span flex>{{value}} </span> 
@@ -23,9 +33,10 @@
     </ng-template>
 
   </td-data-table>
+  </section>
 </md-card-content>
   <md-card-actions>
-    <button md-button color="accent" class="text-upper">Action</button>
-    <button md-button class="text-upper">Cancel</button>
+    <button md-button  color="accent" class="text-upper" (click)="addEntity()"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
+    <button md-button class="text-upper" (click)="cancelEdit()">Cancel</button>
   </md-card-actions>
 </md-card>

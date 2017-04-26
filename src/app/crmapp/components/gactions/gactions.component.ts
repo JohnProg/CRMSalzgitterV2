@@ -24,6 +24,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   private editItemEvent: Subscription;
   private setEditEvent: Subscription;
   private cancelEditEvent: Subscription;
+  private deleteEditEvent: Subscription;
 
   private screenSizeChangeEvent: Subscription;
   private updateTitleEvent: Subscription;
@@ -97,6 +98,11 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
         this.setEdit();
       });
 
+    this.deleteEditEvent = this._actions.deleteEditEvent
+      .subscribe((e: any) => {
+        this.deleteItem(e);
+      });
+
 
     this.afterInit();
   }
@@ -117,6 +123,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     if (this.cancelEditEvent !== undefined) { this.cancelEditEvent.unsubscribe(); }
     if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
+    if (this.deleteEditEvent !== undefined) { this.deleteEditEvent.unsubscribe(); }
   }
 
 

@@ -91,7 +91,9 @@
     }
   },
   "OPPORTUNITY": {
-       "EDITOPPORTUNITY": "Editar oportunidad {{value}}"
+       "EDITOPPORTUNITY": "Editar oportunidad {{value}}",
+       "ADDPROPERTY": "Agegar Propiedad",
+       "ADDSUMARY": "Agregar"
   },
     "NAME": "Nombre",
     "DESCRIPTION": "Description",   

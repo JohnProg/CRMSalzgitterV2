@@ -100,4 +100,12 @@ export class OpportunitydetailComponent extends BaseComponent {
     this._actions.updateTitle('Edit ' + itm.ItemDescription + ' for opportunity ' + this.idOpp.toString());
   }
 
+
+  confirmDelete(item:  OpportunityDetail) {
+    debugger
+    this.itemEdit = item;
+    this._actions.deleteItem();
+  }
+
+
 }

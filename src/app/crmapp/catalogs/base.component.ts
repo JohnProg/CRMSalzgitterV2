@@ -30,6 +30,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private addEvent;
   private searchEvent;
+  private deleteEvent;
   private deleteConfEvent;
   private saveEvent;
   private editItemEvent;
@@ -165,6 +166,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cancelEdit();
     } );
 
+
+
       // Service events
     this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
     this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
@@ -299,6 +302,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   confirmDelete(item:  TCRMEntity) {
+    
     this.itemEdit = item;
     this._actions.deleteItemEvent.emit(item.Description);
   }

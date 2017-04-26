@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { CatalogService } from '../../../services/catalog.service';
 import { Title }     from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
-
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
@@ -30,9 +30,12 @@ export class ProductindexComponent extends BaseComponent  {
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
     public _ngZone: NgZone,
-    private _router: Router) {
-    super(_curService, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone);
-    this.catalogName = 'Product';
+    private _router: Router,
+public _http: Http, 
+public _tableService: TdDataTableService) {
+super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
+        
+        this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
   }
 
