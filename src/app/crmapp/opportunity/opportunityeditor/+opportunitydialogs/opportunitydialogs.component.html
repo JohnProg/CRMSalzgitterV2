@@ -25,7 +25,10 @@
         </ng-template>
 
       </td-data-table>
-
+      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize | async" [total]="totalItems"
+   (change)="change($event)"
+        >
+      </td-paging-bar>
     </section>
 
 

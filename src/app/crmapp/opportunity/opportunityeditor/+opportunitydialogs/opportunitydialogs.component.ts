@@ -47,6 +47,8 @@ export class OpportunitydialogsComponent extends BaseComponent {
     public _tableService: TdDataTableService) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
     this.catalogName = 'Opp Dialogs';
+    this.autoLoad = false;
+
   }
 
  ngOnInitClass() {
@@ -55,15 +57,17 @@ export class OpportunitydialogsComponent extends BaseComponent {
   }
 
  initData() {
-    let pparams = new URLSearchParams();
-    pparams.set('idopp', this.idOpp.toString());
-
-    this._curService.loadCustomAll('OpportunityDialog/searchByOpp', pparams);
-
-    this.initEntity();
-
+    super.initData();
+    this.loadData();
   }
 
+  loadData() {
+    let pparams = new URLSearchParams();
+    pparams.set('idopp', this.idOpp.toString());
+    this._curService.loadCustomAll('OpportunityDialog/searchByOpp', pparams);
+  }
+  
+  
   afterViewInit(): void {
     this._actions.updateTitle('Dialogs for opportunity ' + this.idOpp.toString());
   }
@@ -78,4 +82,10 @@ export class OpportunitydialogsComponent extends BaseComponent {
   initEntity() {
     this.itemEdit = new  OpportunityDialog();
   }
+
+    afterLoadAll(itms: OpportunityDialog[]) {
+      
+         this.reloadPaged();       
+
+    }
 }

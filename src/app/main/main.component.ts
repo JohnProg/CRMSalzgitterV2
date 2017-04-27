@@ -68,12 +68,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         debugger
     });
 
-    this._http.get(this._confs.appBase + 'data/data.json')
-    .map((response) => response.json()).subscribe((result) => {
-      this._routeList.next(result);
-    }, (error) => {
-        debugger
-    });
+
   }
 
   

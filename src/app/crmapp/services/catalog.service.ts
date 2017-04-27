@@ -147,6 +147,7 @@ export class CatalogService {
       });
   }
 
+
   loadCustomAllObs( url: string,  cparams: URLSearchParams, customHandle: boolean = false) {
     return this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
       .map((response) => response.json());

@@ -107,6 +107,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     if( this.handleScreenChange === true) {
+      debugger
       this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: IPageChangeEvent) => {
           this.sreenChange(e);
       });
@@ -114,6 +115,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.__pageSize = this.pageSize.subscribe( (p: number) => {
+      
           this.currentPageSize = p;
           this.reloadPaged();
     });
@@ -209,11 +211,14 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
     if (this.afterLoadAllEvent !== undefined) { this.afterLoadAllEvent.unsubscribe(); }
+
+    if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
     if( this.handleScreenChange === true) {
         this._pageSize.unsubscribe();
         this.__pageSize.unsubscribe();
         if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     }
+
     this.onDestroy();
   }
 
@@ -233,15 +238,19 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initData() {
     if (this.autoLoad === true) {
-        this._curService.loadAll(this.getPageParams(''));
+        this.loadData();
     }
-
-    this.initEntity();
     this._totalItems = this._curService.totalItems.subscribe((total: number) => {
+      debugger
       this.totalItems = total;
       //this.isLoading = false;
     });
+  this.initEntity();
 
+  }
+
+  loadData() {
+        this._curService.loadAll(this.getPageParams(''));
   }
 
   initEntity() {

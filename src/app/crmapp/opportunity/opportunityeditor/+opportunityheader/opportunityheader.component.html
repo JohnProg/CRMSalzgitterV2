@@ -9,16 +9,10 @@
           <section  flex-gt-sm="30" >
             <crm-select #idStatus name="idStatus" selDisabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
           </section>             
-        </div>
+        </div>      
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex class="">
-            <textarea mdInput flex #projectName name="projectName" maxlength="500"  placeholder="PROJECTNAME" [(ngModel)]="itemEdit.ProjectName" ></textarea>
-                  <md-hint align="end">{{projectName.value.length}} / 500</md-hint>
-          </md-input-container>         
-        </div>         
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <md-input-container flex class="">
-            <textarea mdInput flex #oppNotes name="oppNotes" maxlength="500"  placeholder="OPPDESCRIPTION" [(ngModel)]="itemEdit.OppNotes" ></textarea>
+            <textarea mdInput flex #oppNotes name="oppNotes" maxlength="500"  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.OppNotes" ></textarea>
                   <md-hint align="end">{{oppNotes.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>         
