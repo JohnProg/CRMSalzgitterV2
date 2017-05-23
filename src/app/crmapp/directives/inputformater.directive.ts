@@ -1,5 +1,5 @@
 import { Directive, HostListener, ElementRef, OnInit } from "@angular/core";
-import { CRMCurrencyPipe } from "./crm-currency.pipe";
+import { CurrencyPipe } from '@angular/common';
 
 @Directive({ selector: "[crmCurrencyFormatter]" })
 export class CRMCurrencyFormatterDirective implements OnInit {
@@ -8,7 +8,7 @@ export class CRMCurrencyFormatterDirective implements OnInit {
 
   constructor(
     private elementRef: ElementRef,
-    private currencyPipe: CRMCurrencyPipe
+    private currencyPipe: CurrencyPipe
   ) {
     this.el = this.elementRef.nativeElement;
   }
@@ -20,7 +20,7 @@ export class CRMCurrencyFormatterDirective implements OnInit {
   @HostListener("focus", ["$event.target.value"])
   onFocus(value) {
       
-    this.el.value = this.currencyPipe.parse(value); // opossite of transform
+    this.el.value = value; //this.currencyPipe.(value); // opossite of transform
   }
 
   @HostListener("blur", ["$event.target.value"])

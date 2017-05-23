@@ -16,6 +16,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
 import { MdSnackBar } from '@angular/material';
 import { BaseComponent } from '../base.component';
 import { IncoTerm } from '../../model/allmodels';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'crm-incoterm',
@@ -35,9 +36,9 @@ public _actions: ActionsService,
 public _mediaService: TdMediaService,
 public _ngZone: NgZone, 
 public _http: Http, 
-public _tableService: TdDataTableService) {
-super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-    this.catalogName = 'IncoTerm';
+public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.catalogName = 'IncoTerm';
     this._curService.setAPI('IncoTerm/', this.catalogName);
   }
 

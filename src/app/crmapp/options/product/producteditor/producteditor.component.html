@@ -1,8 +1,8 @@
 <form #f="ngForm" #form flex (ngSubmit)="submitForm(form)">
-  <md-card>
 
+
+  <md-card>
     <md-card-content>
-      <br />
       <section layout-margin>
         <section layout-lt-sm="column" layout="row" flex="100">
 
@@ -25,23 +25,13 @@
         </section>
 
         <section layout-lt-sm="column" layout="row" flex>
-  
-  
-          <td-expansion-panel label="Properties" flex (expanded)="expandProperties()">
-              <crm-productproperty [idprop]="itemEdit.Id" ></crm-productproperty>
-            </td-expansion-panel>
 
 
+          <td-expansion-panel *ngIf="itemEdit.Id > 0" label="Properties" flex (expanded)="expandProperties()">
+            <crm-productproperty [idprop]="itemEdit.Id"></crm-productproperty>
+          </td-expansion-panel>
         </section>
       </section>
-
-
-
-
-      <a md-list-item md-ripple class="block relative" [routerLink]="'/options/products'">
-
-        Products
-      </a>
     </md-card-content>
   </md-card>
 </form>

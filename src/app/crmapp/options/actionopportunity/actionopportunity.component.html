@@ -1,0 +1,59 @@
+<md-card>
+  <md-card-content>
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+      <section *ngIf="isEditing">
+        <section  layout="column" flex="100" layout-margin>
+        <section  flex="100" >
+          <md-input-container>
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
+            <md-hint align="end">{{name.value.length}} / 150</md-hint>
+          </md-input-container>
+
+        </section>
+        <section  flex >
+          <crm-select #idStatus name="idStatus" required catalog="EstatusOpportunity" placeholder="Status Opp" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+        </section>    
+        <div layout-gt-sm="row" layout-lt-sm="column" flex layout-padding>
+          <span>Email to:    </span>
+          <md-radio-group #EMailTo name="EMailTo" [(ngModel)]="itemEdit.EMailTo">
+            <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
+            <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
+            <md-radio-button value="3">{{ 'BOTH' | translate}}</md-radio-button>
+          </md-radio-group>
+        </div>   
+          <div  flex   >
+            <crm-select #idTemplateEMail name="idTemplateEMail" required catalog="TemplateEmail" placeholder="Email Template" [(ngModel)]="itemEdit.IdTemplateEMail" ></crm-select>
+          </div>         
+        </section>   
+                
+      </section>
+    </form>
+
+
+    <section *ngIf="!isEditing">
+
+
+      <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+        <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row"  let-column="column">
+          <div layout="row">
+            <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+          </div>
+        </ng-template>
+        <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+          <div layout="row" flex="5">
+            <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+          </div>
+        </ng-template>
+
+      </td-data-table>
+      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+   (change)="change($event)"
+        >
+      </td-paging-bar>
+    </section>
+  </md-card-content>
+</md-card>
+
+     

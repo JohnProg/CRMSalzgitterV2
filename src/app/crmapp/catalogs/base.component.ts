@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-
+import { NgForm } from '@angular/forms';
 import { CatalogService, IPChangeEventSorted } from '../services/catalog.service';
 import { ConfigurationService } from '../services/configuration.service';
 import 'rxjs/add/operator/map';
@@ -13,11 +13,27 @@ import {
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
-
+import {TranslateService} from '@ngx-translate/core';
 
 
 import { TCRMEntity } from '../model/allmodels';
 import { ActionsService } from '../services/actions.services';
+
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+
+
+export const cCurrencyMask = createNumberMask({
+      allowDecimal: true
+    });
+
+  // Allow float greather o equal to 0
+export const cFloatPosMask = createNumberMask({
+      prefix: '',
+      suffix: '', // This will put the dollar sign at the end, with a space.
+      allowDecimal: true
+    });
+
+
 
 @Component({
   selector: 'base-component',
@@ -27,7 +43,7 @@ import { ActionsService } from '../services/actions.services';
 })
 export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-
+  
   private addEvent;
   private searchEvent;
   private deleteEvent;
@@ -36,19 +52,26 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private editItemEvent;
   private screenSizeChangeEvent: Subscription;
   private cancelEditEvent;
+  private sendEmailEvent: Subscription;
 
   private afterLoadEvent: Subscription;
   private afterCreateEvent: Subscription;
   private afterUpdateEvent: Subscription;
   private afterLoadAllEvent: Subscription;
   private afterDeleteEvent: Subscription;
+
+
+  @ViewChild('editform') form: NgForm;
+
   pageChange: Subscription;
   isEditing: boolean = false;
   singleEditor: boolean = false;
   setTitle: boolean = true;
   isSmallScreen: boolean = false;
 
-
+  currencyMask = cCurrencyMask;
+  floatPosMask = cFloatPosMask;
+  
   columns: ITdDataTableColumn[] = [
   ];
 
@@ -66,11 +89,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   searchTerm: string = '';
   fromRow: number = 1;
   currentPage: number = 0;
+  dataLoaded: boolean = false;
 
-  _pageSize: BehaviorSubject<number> = <BehaviorSubject<number>>new BehaviorSubject(this._confs.pageSize);
-  pageSize: Observable<number> = this._pageSize.asObservable();
-  __pageSize: Subscription;
-  currentPageSize: number = 5;
+  pageSize: number = 5;
 
   sortBy: string = 'Name';
   sortType: string = "ASC"
@@ -96,29 +117,21 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone,
     public _http: Http, 
-    public _tableService: TdDataTableService) {
+    public _tableService: TdDataTableService,
+    public translate: TranslateService
+    ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
                        _dialogService,_snackBarService, _tableService);
     this.addColumns();
     this.addActionColumn();
-    ;
-
   }
 
   ngOnInit() {
-    if( this.handleScreenChange === true) {
-      debugger
+    if ( this.handleScreenChange === true) {
       this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: IPageChangeEvent) => {
-          this.sreenChange(e);
+         // this.screenChange(e);
       });
-
     }
-
-    this.__pageSize = this.pageSize.subscribe( (p: number) => {
-      
-          this.currentPageSize = p;
-          this.reloadPaged();
-    });
     this.ngOnInitClass();
   }
 
@@ -129,9 +142,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngAfterViewInit(): void {
-    
     // broadcast to all listener observables when loading the page
-    //this._mediaService.broadcast();
+    this._mediaService.broadcast();
 
     this.saveEvent = this._actions.saveItemEvent.subscribe( (save) => {
        this.saveEntity();
@@ -171,8 +183,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cancelEdit();
     } );
 
-
-
       // Service events
     this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
     this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
@@ -180,17 +190,18 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
     this.afterDeleteEvent = this._curService.afterDeleteEmitter.subscribe(item => this.afterDelete(item));
 
-
-    
-    if(this.setTitle === true) {
+    if (this.setTitle === true) {
        this._actions.updateTitle(this.catalogName);
     }
     this._actions.showAdd(true);
     this._actions.showSearch(true);
     this._actions.showSave(false);
     this._actions.showCancel(false);
-
-
+    this._actions.showEmail(false);
+    this.sendEmailEvent = this._actions.sendEmailEvent
+    .subscribe((e: any) => {
+      this.sendEmail();
+    });
 
     this.afterViewInit();
   }
@@ -211,20 +222,18 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
     if (this.afterLoadAllEvent !== undefined) { this.afterLoadAllEvent.unsubscribe(); }
+    if (this.sendEmailEvent !== undefined) { this.sendEmailEvent.unsubscribe(); }
+
 
     if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
-    if( this.handleScreenChange === true) {
-        this._pageSize.unsubscribe();
-        this.__pageSize.unsubscribe();
+    if ( this.handleScreenChange === true) {
         if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     }
 
     this.onDestroy();
   }
 
-  onDestroy() {
-
-  }
+  onDestroy() {}
 
 
   addColumns() {
@@ -241,41 +250,51 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadData();
     }
     this._totalItems = this._curService.totalItems.subscribe((total: number) => {
-      debugger
       this.totalItems = total;
-      //this.isLoading = false;
     });
-  this.initEntity();
+    this.initEntity();
 
   }
 
   loadData() {
-        this._curService.loadAll(this.getPageParams(''));
+      if ( this.isLoading === false ) {
+
+        if ( this.dataLoaded === true ) {
+          this.reloadPaged();
+        } else {
+          this._curService.loadAll(this.getPageParams(''));
+          this.dataLoaded = true;
+        }
+      }
   }
 
   initEntity() {
     this.itemEdit = new  TCRMEntity();
   }
 
-  submitForm(form) {}
+
 
 
   editEntity(id: number) {
-
-   if(this.setTitle === true) {
-    this._actions.updateTitle('EDITCAT ' + this.catalogName);
-   }
-    //this.itemEdit = < TCRMEntity>this._curService.itemEdit;
+    if(this.setTitle === true) {
+      this.translate.get('EDITCAT', {value: this.catalogName}).subscribe( (str: string) => {
+        this._actions.updateTitle( str );
+      });
+    }
     this._curService.load(id);
   }
 
   addEntity() {
-    if(this.setTitle === true) {
-       this._actions.updateTitle('Add ' + this.catalogName);
+    if (this.setTitle === true) {
+
+     this.translate.get('ADDCAT', {value: this.catalogName}).subscribe( (str: string) => {
+        this._actions.updateTitle( str );
+      });
     }
     this.initEntity();
     this.itemEdit.Id = 0;
     this.isEditing = true;
+    this._actions.setEdit();
   }
 
   deleteEntity(id: number) {
@@ -289,13 +308,24 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isEditing = false;
   }
 
+  submitForm(form) {
+    if ( form.valid &&  this.beforeSave() === true) {
+      if (this.itemEdit.Id > 0) {
+        this._curService.update(this.itemEdit);
+      } else {
+        this._curService.create(this.itemEdit);
+      }
+    } else {
+      this._snackBarService.open('There are some errors, please review data ', 'Ok');
+    }
+  }
+
+  beforeSave(): boolean {
+    return true;
+  }
 
   saveEntity() {
-    if (this.itemEdit.Id > 0) {
-      this._curService.update(this.itemEdit);
-    } else {
-      this._curService.create(this.itemEdit);
-    }
+    this.form.ngSubmit.emit(this.form);
   }
 
   afterCreate(item: any) {
@@ -305,7 +335,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isEditing = false;
       this._actions.cancelEdit();
     }
-    this._curService.assignList(item.items);
+    //this._curService.assignList(item.items);
   }
 
   afterUpdate(item: any) {
@@ -315,23 +345,24 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isEditing = false;
         this._actions.cancelEdit();
     }
-    this._curService.assignList(item.items);
+    //this._curService.assignList(item.items);
   }
 
   afterDelete(item: any) {}
 
 
   change(event: IPChangeEventSorted): void {
-    if (event !== undefined) {
+    if (event !== undefined  ) {
       this.currentPage = event.page - 1;
-      this._pageSize.next(event.pageSize);
-      //this.reloadPaged();
+      this.pageSize = event.pageSize;
+      this._confs.pageSize = this.pageSize;
+      this.loadData();
     }
   }
 
   confirmDelete(item:  TCRMEntity) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(item.Description);
+    this._actions.deleteItemEvent.emit(item.Description || item.Name);
   }
 
   deleteConfirmed() {
@@ -342,7 +373,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getPageParams(sText: string) : IPChangeEventSorted {
     return {
-      page: this.currentPage, pageSize: this.currentPageSize, sortBy: this.sortBy,
+      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
       sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
     } as IPChangeEventSorted;
   }
@@ -370,10 +401,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   reloadPaged(sText: string = undefined) {
     if( this.isLoading === false && this.singleEditor === false) {
-      
       this.isLoading = true;
       let p = {
-        page: this.currentPage, pageSize: this.currentPageSize, sortBy: this.sortBy,
+        page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
         sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
       } as IPChangeEventSorted;
       this.addParams(p);
@@ -384,22 +414,37 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   addParams(p: IPChangeEventSorted) {}
 
   afterLoadItem(itm:  TCRMEntity) {
+    
      this.isEditing = true;
-     this._actions.setEditItem();
+     this.itemEdit = itm;
+     this._actions.setEdit();
   }
 
-  sreenChange(e: IPageChangeEvent) {
+  screenChange(e: IPageChangeEvent) {
     if (e !== undefined) {
-      if( e.pageSize !== this.currentPageSize ) {
-        this.isLoading = false;
-        this.currentPage = e.page - 1;
-        this._pageSize.next(e.pageSize);
+      if ( e.pageSize !== this.pageSize ) {
+
+        this.pageSize = e.pageSize;
       }
     }
 
   }
 
-  afterLoadAll(itms: TCRMEntity[]) {}
+  afterLoadAll(itms: TCRMEntity[]) {
+    this.isLoading = false;
 
+  }
+
+  sendEmail() {
+    
+  }
+
+
+  cleanMaskModel(val) {
+    let t = val.replace('$', '');
+    t = t.replace('%', '');
+    t = t.replace(',', '');
+    return t;
+  }
 
 }

@@ -16,7 +16,7 @@ import { Currency } from '../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../base.component';
-
+import {TranslateService} from '@ngx-translate/core';
 
 
 
@@ -42,8 +42,9 @@ export class CurrencyComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone, 
     public _http: Http, 
-    public _tableService: TdDataTableService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
+    public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
     this.catalogName = 'Currencies';
     this._curService.setAPI('Currency', this.catalogName);
   }

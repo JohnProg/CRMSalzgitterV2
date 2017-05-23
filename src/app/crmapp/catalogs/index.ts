@@ -1,6 +1,5 @@
-export  *  from './base.component';
+export * from './base.component';
 export * from './catalog.component';
-
 export * from './currency/currency.component';
 export * from './genericcatalogs/colonytype.component';
 export * from './genericcatalogs/department.component';
@@ -16,7 +15,9 @@ export * from './genericcatalogs/position.component';
 export * from './genericcatalogs/property.component';
 export * from './genericcatalogs/sector.component';
 export * from './genericcatalogs/tender.component';
+export * from './genericcatalogs/transactionflow.component';
 export * from './actionopp/actionopp.component';
 export * from './genericcatalogs/country.component';
 export * from './state/state.component';
 export * from './incoterm/incoterm.component';
+export * from './templateemail/templateemail.component';

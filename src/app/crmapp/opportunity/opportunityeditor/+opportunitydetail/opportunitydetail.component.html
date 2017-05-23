@@ -1,10 +1,10 @@
 
-    <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section *ngIf="isEditing">
         <section layout="column" flex="100" layout-margin>
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex >
-            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" [selDisabled]="allowProduct" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
+            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" [disabled]="allowProduct" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
         </div>
 
 
@@ -16,14 +16,14 @@
         </div>  
 
         <div layout-gt-sm="row" layout-lt-sm="column" layout-margin >
-          <md-input-container flex="35">
-            <input mdInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.ItemQuantity">
+          <md-input-container flex-gt-xs="35">
+            <input   mdInput [textMask]="{mask: floatPosMask}" #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.ItemQuantity" (ngModelChange)="itemEdit.ItemQuantity = cleanMaskModel($event)" />
           </md-input-container>
-          <md-input-container flex="35">
-            <input type="number" mdInput #ItemPrice name="ItemPrice" placeholder="{{'PRICE' | translate}}" [(ngModel)]="itemEdit.ItemPrice">
+          <md-input-container flex-gt-xs="35">
+            <input  mdInput [textMask]="{mask: currencyMask}"  #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" [(ngModel)]="itemEdit.ItemPrice" (ngModelChange)="itemEdit.ItemPrice = cleanMaskModel($event)"  />
           </md-input-container>
-          <md-input-container flex="30">
-            <input type="number" mdInput #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.ItemExtended" crmCurrencyFormatter>
+          <md-input-container flex-gt-xs="30">
+            <input  mdInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.ItemExtended" [textMask]="{mask: currencyMask}" (ngModelChange)="itemEdit.ItemExtended = cleanMaskModel($event)" />
           </md-input-container>          
         </div> 
 

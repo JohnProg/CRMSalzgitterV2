@@ -123,8 +123,23 @@
                 "routerlink": "tender",
                 "icon": "euro_symbol",
                 "displayName": "HOME.MENU.CATALOGS.TENDER.DISPLAYNAME"
+              }, 
+              {
+                "name": "transactionflow",
+                "tooltip": "HOME.MENU.CATALOGS.TRANSACTIONFLOW.TOOLTIP",
+                "active": "true",
+                "routerlink": "transactionflow",
+                "icon": "euro_symbol",
+                "displayName": "HOME.MENU.CATALOGS.TRANSACTIONFLOW.DISPLAYNAME"
+              },
+              {
+                "name": "templateemail",
+                "tooltip": "HOME.MENU.CATALOGS.TEMPLATEEMAIL.TOOLTIP",
+                "active": "true",
+                "routerlink": "templateemail",
+                "icon": "euro_symbol",
+                "displayName": "HOME.MENU.CATALOGS.TEMPLATEEMAIL.DISPLAYNAME"
               }
-
       ]
 
     },
@@ -148,7 +163,15 @@
             "routerlink": "company",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.OPTIONS.COMPANY.DISPLAYNAME"
-          }        
+          },     
+          {
+            "name": "actionopp",
+            "tooltip": "HOME.MENU.OPTIONS.ACTIONOPP.TOOLTIP",
+            "active": "true",
+            "routerlink": "actionopp",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.OPTIONS.ACTIONOPP.DISPLAYNAME"
+          }                
       ]
     },
 
@@ -164,7 +187,15 @@
             "routerlink": "opportunity",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.OPPORTUNITY.OPPORTUNITY.DISPLAYNAME"
-          }
+          },
+          {
+            "name": "index",
+            "tooltip": "HOME.MENU.QUOTATIONFROMSUPPLIER.TOOLTIP",
+            "active": "true",
+            "routerlink": "quotationfromsupplier",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.QUOTATIONFROMSUPPLIER.DISPLAYNAME"
+          }          
       ]
     }
   ]

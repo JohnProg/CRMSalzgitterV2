@@ -1,24 +1,26 @@
-      <form #f="ngForm" #form flex (ngSubmit)="submitForm(form)">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="35" >
-            <crm-select #idResponsible name="idResponsible" catalog="Responsible" placeholder="RESPONSIBLE" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
+            <crm-select #idResponsible name="idResponsible" required catalog="Responsible" placeholder="RESPONSIBLE" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
+
+
           </section>
           <section  flex-gt-sm="35" >
-            <crm-select #idCurrency name="idCurrency" catalog="Currency" placeholder="CURRENCY" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
+            <crm-select #idCurrency name="idCurrency" required catalog="Currency" placeholder="CURRENCY" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
           </section>    
           <section  flex-gt-sm="30" >
-            <crm-select #idStatus name="idStatus" selDisabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+            <crm-select #idStatus name="idStatus" disabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
           </section>             
         </div>      
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <md-input-container flex class="">
-            <textarea mdInput flex #oppNotes name="oppNotes" maxlength="500"  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.OppNotes" ></textarea>
-                  <md-hint align="end">{{oppNotes.value.length}} / 500</md-hint>
+        <div flex layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <md-input-container flex >
+            <textarea mdInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.OppNotes" ></textarea>
+             <md-hint flex align="end">{{oppNotes.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>         
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section  flex-gt-sm="35" >
-            <crm-select #idCustomer name="idCustomer" catalog="Customer" placeholder="CUSTOMER" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
+            <crm-select #idCustomer name="idCustomer" required catalog="Customer" placeholder="CUSTOMER" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
           </section>
           <section  flex-gt-sm="35" >
             <crm-select #idCustomerContact name="idCustomerContact" 
@@ -27,37 +29,39 @@
                          placeholder="CUSTOMERCONTACT" [(ngModel)]="itemEdit.IdCustomerContact" ></crm-select>
           </section>
           <section  flex-gt-sm="30" >
-            <crm-select #idContact name="idContact" catalog="Contact" placeholder="CONTACT" [(ngModel)]="itemEdit.IdContact" ></crm-select>
+            <crm-select #idContact name="idContact" required catalog="Contact" placeholder="CONTACT" [(ngModel)]="itemEdit.IdContact" ></crm-select>
           </section>          
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="35" >
-            <crm-select #idMarket name="idMarket" catalog="Market" placeholder="MARKET" [(ngModel)]="itemEdit.IdMarket" ></crm-select>
+            <crm-select #idMarket name="idMarket" required catalog="Market"  placeholder="MARKET" [(ngModel)]="itemEdit.IdMarket" ></crm-select>
           </section>
           <section  flex-gt-sm="35" >
-            <crm-select #idSector name="idSector" catalog="Sector" placeholder="SECTOR" [(ngModel)]="itemEdit.IdSector" ></crm-select>
+            <crm-select #idSector name="idSector" required catalog="Sector" placeholder="SECTOR" [(ngModel)]="itemEdit.IdSector" ></crm-select>
           </section>      
           <section  flex-gt-sm="30" >
-            <crm-select #idPort name="idPort" catalog="Port" placeholder="PORT" [(ngModel)]="itemEdit.IdPort" ></crm-select>
+            <crm-select #idPort name="idPort" required catalog="Port" placeholder="PORT" [(ngModel)]="itemEdit.IdPort" ></crm-select>
           </section>           
         </div>
 
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-
-          <section flex-gt-sm="35" >
-            <crm-select #idIncoTerm name="idIncoTerm" catalog="IncoTerm" placeholder="INCOTERM" [(ngModel)]="itemEdit.IdIncoTerm" ></crm-select>
+          <section flex-gt-sm="25" >
+            <crm-select #IdTransactionFlow name="IdTransactionFlow" required  catalog="TransactionFlow" placeholder="TRANSACTIONFLOW" [(ngModel)]="itemEdit.IdTransactionFlow" ></crm-select>
+          </section> 
+          <section flex-gt-sm="25" >
+            <crm-select #idIncoTerm name="idIncoTerm" required  catalog="IncoTerm" placeholder="INCOTERM" [(ngModel)]="itemEdit.IdIncoTerm" (change)="incoTermChange($event)" ></crm-select>
           </section>  
-          <section flex-gt-sm="35" >
-            <crm-select #IdLinerTerm name="IdLinerTerm" catalog="LinerTerm" placeholder="LINERTERM" [(ngModel)]="itemEdit.IdLinerTerms" ></crm-select>
+          <section flex-gt-sm="25" >
+            <crm-select #IdLinerTerm name="IdLinerTerm" required  catalog="LinerTerm" placeholder="LINERTERM" [(ngModel)]="itemEdit.IdLinerTerms" ></crm-select>
           </section>   
-          <section flex-gt-sm="30" >
-            <md-slide-toggle #asImporter name="asImporter" [(ngModel)]="itemEdit.AsImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
+          <section flex-gt-sm="25" >
+            <md-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.AsImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
           </section>                 
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding *ngIf="deliveryRequired">
           <md-input-container flex class="">
-            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.DeliveryLocation" ></textarea>
-                  <md-hint align="end">{{deliveryLocation.value.length}} / 500</md-hint>
+            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.DeliveryLocation" [required]="deliveryRequired" ></textarea>
+               
           </md-input-container>         
         </div>
        

@@ -1,42 +1,60 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import {
+  Input,
+  Directive,
+  HostListener,
+  ElementRef,
+  Renderer,
+  OnInit
+} from '@angular/core';
+import { NgModel } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
-const PADDING = "000000";
+@Directive({
+  selector: '[currencyInput]',
+  providers: [NgModel],
+  host: {
+    '(input)': 'onInputChange()'
+  }
+})
+export class CurrencyInputDirective  implements OnInit {
+  @Input() ngModel: number;
 
-@Pipe({ name: "CrmCurrency" })
-export class CRMCurrencyPipe implements PipeTransform {
+  private elem: HTMLInputElement;
 
-  private DECIMAL_SEPARATOR: string;
-  private THOUSANDS_SEPARATOR: string;
-
-  constructor() {
-    // TODO comes from configuration settings
-    this.DECIMAL_SEPARATOR = ".";
-    this.THOUSANDS_SEPARATOR = "'";
+  constructor(
+    private el: ElementRef,
+    private render: Renderer,
+    private currencyPipe: CurrencyPipe,
+    private model: NgModel,
+  ) {
+    this.elem = el.nativeElement;
   }
 
-  transform(value: number | string, fractionSize: number = 2): string {
-    let [ integer, fraction = "" ] = (value || "").toString()
-      .split(this.DECIMAL_SEPARATOR);
-
-    fraction = fractionSize > 0
-      ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
-      : "";
-
-    integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
-
-    return integer + fraction;
+  ngOnInit() {
+    debugger
+    this.elem.value = this.currencyPipe.transform(parseFloat(this.elem.value || '0'), 'USD', true);
   }
 
-  parse(value: string, fractionSize: number = 2): string {
-    let [ integer, fraction = "" ] = (value || "").split(this.DECIMAL_SEPARATOR);
+  ngAfterContentInit() {
 
-    integer = integer.replace(new RegExp(this.THOUSANDS_SEPARATOR, "g"), "");
+      this.model.valueChanges.subscribe(value => {
+        debugger
+        if(value) {
+          const parsed = parseFloat(value.replace('$', ""));
+          let c = new CurrencyPipe('en').transform(parsed, 'USD', true);
+          this.model.valueAccessor.writeValue(c);
+        }
+      })
+    }
 
-    fraction = parseInt(fraction, 10) > 0 && fractionSize > 0
-      ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
-      : "";
 
-    return integer + fraction;
+  @HostListener('focus', ['$event.target.value'])
+  onFocus(value: string) {
+    this.elem.value = value.replace(/\,/g, '');
   }
 
+  @HostListener('blur', ['$event.target.value'])
+  onBlur(value: string) {
+    this.elem.value = this.currencyPipe.transform(parseFloat(value), 'USD', true);
+  }
 }

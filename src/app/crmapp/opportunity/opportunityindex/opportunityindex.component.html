@@ -1,37 +1,26 @@
-<td-layout-nav logo="assets:logocrm">
-  <td-layout-manage-list #manageList 
-  [opened]="false" 
-  [mode]="'push'"
-    [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '257px' : '100%'">
+<td-layout-nav >
+    <div td-toolbar-content layout="row" layout-align="center center" flex>
 
-    <md-toolbar td-sidenav-content>
-      <span> {{ 'OPPORTUNITIES' | translate }} </span>
-    </md-toolbar>
-
-    <md-nav-list td-sidenav-content>
-      <span>{{ 'FILTERS' | translate }}  </span>
-    </md-nav-list>
-
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <a md-list-item md-ripple class="block relative" [routerLink]="'/opportunity'">
+      <span>
           {{ 'OPPORTUNITIESINDEX' | translate }}
-        </a>
+      </span>
+      <div flex></div>
       <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="{{ 'SEARCHHERE' | translate }}" (searchDebounce)="search($event)"
         flex>
       </td-search-box>
-
-      <td-paging-bar #pagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-        (change)="change($event)">
-        <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
-      </td-paging-bar>
-
       <button md-mini-fab class="md-mini md-primary" [routerLink]="['edit', 0]" aria-label="Add Item">
         <md-icon>add</md-icon>
       </button>
     </div>
 
     <md-card>
+
       <md-card-content>
+                <div flex></div>
+              <td-paging-bar #pagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+        (change)="change($event)">
+        <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+      </td-paging-bar>
         <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
           <ng-template tdDataTableTemplate="Id" let-value="value" let-row="row" let-column="column">
             <button md-button md-ripple class="block relative" [routerLink]="['edit', row.Id]">
@@ -59,5 +48,4 @@
     </md-card>
 
 
-  </td-layout-manage-list>
 </td-layout-nav>

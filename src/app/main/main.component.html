@@ -17,6 +17,9 @@
 
     <md-nav-list td-navigation-drawer-menu>
       <a md-list-item (click)="logout()"><md-icon>exit_to_app</md-icon>{{ 'HOME.SIGNOUT' | translate }}</a>
+      <a md-list-item (click)="signIn()"><md-icon>exit_to_app</md-icon>OneDrive</a>
+      <a md-list-item (click)="checkLogin()"><md-icon>exit_to_app</md-icon>Is Logged in</a>
+      <a md-list-item routerLink="/onedrive"><md-icon>exit_to_app</md-icon>OneDrive Response</a>
     </md-nav-list>
   </td-navigation-drawer>
   <router-outlet></router-outlet>

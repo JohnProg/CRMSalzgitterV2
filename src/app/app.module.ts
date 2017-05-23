@@ -21,6 +21,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 
 
+
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
@@ -37,7 +38,9 @@ import { CRMModule } from './crmapp/crm.module';
   declarations: [
     AppComponent,
     MainComponent,
-    DashboardComponent,  
+    DashboardComponent,
+
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { CRMModule } from './crmapp/crm.module';
     CovalentMarkdownModule,
     appRoutes,
     NgxChartsModule,
-    CRMModule
+    CRMModule,
+
   ], // modules needed to run this module
   providers: [
     appRoutingProviders,

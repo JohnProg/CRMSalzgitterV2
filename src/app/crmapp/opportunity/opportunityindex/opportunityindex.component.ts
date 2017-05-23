@@ -15,8 +15,9 @@ import { ConfigurationService } from '../../services/configuration.service';
 
 import { Product } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
-import { GeGetOpportunities } from '../../model/allmodels';
+import { GetOpportunities } from '../../model/allmodels';
 
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'crm-opportunityindex',
@@ -36,9 +37,9 @@ export class OpportunityindexComponent extends BaseComponent  {
     public _ngZone: NgZone,
     private _router: Router,
     public _http: Http, 
-    public _tableService: TdDataTableService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-
+    public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
     this.sortBy = 'Id';
     this.catalogName = 'Opportunity';
     this._curService.setAPI('Opportunity/', this.catalogName);
@@ -50,7 +51,7 @@ export class OpportunityindexComponent extends BaseComponent  {
 
 
   ngOnInitClass() {
-    this.entList = <Observable<GeGetOpportunities[]>>this._curService.entList;
+    this.entList = <Observable<GetOpportunities[]>>this._curService.entList;
     this.initData();
     //this.reloadPaged();
   }

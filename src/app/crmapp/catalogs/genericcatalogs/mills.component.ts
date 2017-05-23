@@ -13,7 +13,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
-
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'crm-mill',
@@ -33,13 +33,13 @@ public _actions: ActionsService,
 public _mediaService: TdMediaService,
 public _ngZone: NgZone, 
 public _http: Http, 
-public _tableService: TdDataTableService) {
-super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-    this.catalogName = 'Mill';
+public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.catalogName = 'Mill';
     this._curService.setAPI('Mill/', this.catalogName);
   }
 
-  ngOnInit() {
+  ngOnInitClass() {
     this.entList = <Observable<TCRMEntity[]>> this._curService.entList;
     this.initData();
 

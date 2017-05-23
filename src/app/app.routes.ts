@@ -3,57 +3,39 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentComponent,
+DocumentTypeComponent, FamilyComponent, LinerTermComponent, MarketComponent, MillComponent, OrganizationComponent,
+PaymentTermComponent, PortComponent, PositionComponent, PropertyComponent, SectorComponent, TenderComponent,
+ActionoppComponent, CountryComponent, TransactionflowComponent, StateComponent, IncotermComponent,
+TemplateemailComponent } from './crmapp/catalogs/index';
+
+import { OptionsComponent, ActionopportunityComponent, ProductComponent, ProductindexComponent,
+   ProducteditorComponent } from './crmapp/options/index';
+
+import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent,
+OpportunitydetailComponent, OpportunityheaderComponent, OpportunitydialogsComponent,
+OpportunitydocumentsComponent,  OpportunitydialogemailComponent } from './crmapp/opportunity/index';
+
+// Quotation to supplier
+
+import { QuotationfromsupplierComponent, QuotationfromsupplierindexComponent, 
+    QuotationfromsuppliereditorComponent, QuotationfromsupplierdialogemailComponent
+  
+ } from './crmapp/quotationfromsupplier/index';
 
 
-
-// catalogs
-import { CatalogComponent } from './crmapp/catalogs/catalog.component';
-import { OptionsComponent } from './crmapp/options/options.component';
-import { CurrencyComponent } from './crmapp/catalogs/currency/currency.component';
-import { ColonytypeComponent } from './crmapp/catalogs/genericcatalogs/colonytype.component';
-import { DepartmentComponent } from './crmapp/catalogs/genericcatalogs/department.component';
-import { DocumentTypeComponent } from './crmapp/catalogs/genericcatalogs/documenttype.component';
-import { FamilyComponent } from './crmapp/catalogs/genericcatalogs/family.component';
-import { LinerTermComponent } from './crmapp/catalogs/genericcatalogs/linerterm.component';
-import { MarketComponent } from './crmapp/catalogs/genericcatalogs/market.component';
-import { MillComponent } from './crmapp/catalogs/genericcatalogs/mills.component';
-import { OrganizationComponent } from './crmapp/catalogs/genericcatalogs/organization.component';
-import { PaymentTermComponent } from './crmapp/catalogs/genericcatalogs/paymentterm.component';
-import { PortComponent } from './crmapp/catalogs/genericcatalogs/port.component';
-import { PositionComponent } from './crmapp/catalogs/genericcatalogs/position.component';
-import { PropertyComponent } from './crmapp/catalogs/genericcatalogs/property.component';
-import { SectorComponent } from './crmapp/catalogs/genericcatalogs/sector.component';
-import { TenderComponent } from './crmapp/catalogs/genericcatalogs/tender.component';
-import { ActionoppComponent } from './crmapp/catalogs/actionopp/actionopp.component';
-import { CountryComponent } from './crmapp/catalogs/genericcatalogs/country.component';
-import { StateComponent } from './crmapp/catalogs/state/state.component';
-import { IncotermComponent } from './crmapp/catalogs/incoterm/incoterm.component';
-
-//options
-import { ProductComponent } from './crmapp/options/product/product.component';
-import { ProductindexComponent } from './crmapp/options/product/productindex/productindex.component';
-import { ProducteditorComponent } from './crmapp/options/product/producteditor/producteditor.component';
-//import { CompanyComponent } from './crmapp/options/company/company.component';
-import { OpportunityComponent } from './crmapp/opportunity/opportunity.component';
-import { OpportunityindexComponent } from './crmapp/opportunity/opportunityindex/opportunityindex.component';
-import { OpportunityeditorComponent } from './crmapp/opportunity/opportunityeditor/opportunityeditor.component';
-import { OpportunitydetailComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydetail/opportunitydetail.component';
-import { OpportunityheaderComponent } from './crmapp/opportunity/opportunityeditor/+opportunityheader/opportunityheader.component';
-import { OpportunitydialogsComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydialogs/opportunitydialogs.component';
-import { OpportunitydocumentsComponent } from './crmapp/opportunity/opportunityeditor/+opportunitydocuments/opportunitydocuments.component';
-
-
+import { OnedriveCallbackComponent } from './crmapp/onedriveapi/index';
 
 
 const routes: Routes = [
   //{ path: 'login', component: LoginComponent },
+
   {
-    path: '', component: MainComponent, children: [{
+    path: '', component: MainComponent, children: [
+      {
       component: DashboardComponent,
       path: '',
-    },
-
-
+     },
     {
       path: 'catalogs', component: CatalogComponent,
       children: [
@@ -76,13 +58,16 @@ const routes: Routes = [
         { path: 'country', component: CountryComponent },
         { path: 'state', component: StateComponent },
         { path: 'incoterm', component: IncotermComponent },
-
+        { path: 'transactionflow', component: TransactionflowComponent },
+        { path: 'templateemail', component: TemplateemailComponent },
+            
       ]
     },
     {
       path: 'options', component: OptionsComponent,
       children: [
         //{ path: 'company', component: CompanyComponent },
+        { path: 'actionopp', component: ActionopportunityComponent },
         {
           path: 'products',
           component: ProductComponent,
@@ -101,20 +86,44 @@ const routes: Routes = [
           path: '',
           component: OpportunityindexComponent
         },
-
         { path: 'edit/:id', component: OpportunityeditorComponent,
           children: [
             //{ path: '', component: OpportunityheaderComponent },
-            // { path: 'details/:id', component: OpportunitydetailComponent },
+            {
+              path: 'edit/:id', component: OpportunityeditorComponent,
+            }
             // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
             // { path: 'documents/:id', component: OpportunitydocumentsComponent },
           ]
         },
+        { path: 'sendemail/:id', component: OpportunitydialogemailComponent },
         { path: 'insert', component: OpportunityeditorComponent }
       ]
     },
+    {
+      path: 'quotationfromsupplier', component: QuotationfromsupplierComponent,
+      children: [
+        {
+          path: '',
+          component: QuotationfromsupplierindexComponent
+        },
+        { path: 'edit/:id', component: QuotationfromsuppliereditorComponent,
+          children: [
+            //{ path: '', component: OpportunityheaderComponent },
+            // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
+            // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+          ]
+        },
+        { path: 'sendemail/:id', component: QuotationfromsupplierdialogemailComponent },
+        { path: 'insert', component: QuotationfromsuppliereditorComponent }
+      ]
+    },    
      ]
   },
+  {
+      path: 'onedrive',
+      component: OnedriveCallbackComponent
+  }  
 ];
 
 export const appRoutingProviders: any[] = [

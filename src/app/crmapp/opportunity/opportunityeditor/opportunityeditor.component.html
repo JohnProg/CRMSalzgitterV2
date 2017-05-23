@@ -1,4 +1,4 @@
-<td-layout-nav logo="assets:logocrm">
+<td-layout-nav >
   <div td-toolbar-content layout="row" layout-align="center center" flex>
     <span>{{ 'HOME.MENU.OPPORTUNITY.DISPLAYNAME' | translate }}</span>
     <div flex></div>
@@ -6,7 +6,7 @@
   <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
     [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '150px' : '100%'">
     <md-toolbar td-sidenav-content>
-
+       <button md-button routerLink="/opportunity">Opp. Index</button>
     </md-toolbar>
     <md-nav-list td-sidenav-content>
       <a md-list-item md-ripple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">

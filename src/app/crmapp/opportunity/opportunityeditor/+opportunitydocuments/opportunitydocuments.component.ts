@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-
+import {TranslateService} from '@ngx-translate/core';
 
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
@@ -42,9 +42,9 @@ export class OpportunitydocumentsComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone,
     public _http: Http, 
-    public _tableService: TdDataTableService) {    
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-    this.catalogName = 'Opportunity Document';
+    public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.catalogName = 'Opportunity Document';
     this._curService.setAPI('OpportunityDocument/', this.catalogName);
   }
 

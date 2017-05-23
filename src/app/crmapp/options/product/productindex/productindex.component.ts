@@ -15,6 +15,8 @@ import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../../catalogs/base.component';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import {TranslateService} from '@ngx-translate/core';
+
 @Component({
   selector: 'crm-productindex',
   templateUrl: './productindex.component.html',
@@ -32,9 +34,9 @@ export class ProductindexComponent extends BaseComponent  {
     public _ngZone: NgZone,
     private _router: Router,
 public _http: Http, 
-public _tableService: TdDataTableService) {
-super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-        
+public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
         this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
   }
@@ -49,6 +51,12 @@ super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _med
   editEntity(id: number) {
 
     this._router.navigate(['options/products/edit/' + id]);
+  }
+
+
+  addEntity() {
+
+    this._router.navigate(['options/products/edit/' + 0]);
   }
 
 

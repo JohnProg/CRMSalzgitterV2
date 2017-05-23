@@ -23,6 +23,11 @@ export class ActionsService {
     public showCancelEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
     public showSideNavEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
 
+
+    public showEmailEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
+    public sendEmailEvent: EventEmitter<any>=new EventEmitter<any>();
+
+
     _screenSizeChangeEvent: BehaviorSubject<IPageChangeEvent> =  <BehaviorSubject<IPageChangeEvent>>new BehaviorSubject({ page: 0, pageSize: 13 }); 
     screenSizeChangeEvent: Observable<IPageChangeEvent> = this._screenSizeChangeEvent.asObservable();
 
@@ -30,9 +35,6 @@ export class ActionsService {
       this.addItemEvent.emit();
     }
 
-    public setEditItem() {
-      this.setEditEvent.emit();
-    }
 
     public saveItem() {
       this.saveItemEvent.emit();
@@ -51,6 +53,7 @@ export class ActionsService {
     }
 
     public setEdit() {
+
       this.setEditEvent.emit();
     }
 
@@ -76,6 +79,7 @@ export class ActionsService {
     }
 
     public showCancel(ashow: boolean) {
+      
       this.showCancelEvent.emit(ashow);
     }
 
@@ -88,6 +92,13 @@ export class ActionsService {
     }
 
 
+    public showEmail(show: boolean): void {
+      this.showEmailEvent.emit(show);
+    }
+
+    public sendEMail(): void {
+      this.sendEmailEvent.emit();
+    }
 
 
 }

@@ -34,6 +34,9 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   private showCancelEvent: Subscription;
   private showSideNavEvent: Subscription;
 
+  private showEmailEvent: Subscription;
+
+
 
   catalogTitle: string;
   deleteDescription: string;
@@ -43,7 +46,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   showSave: boolean = false;
   showSideNav: boolean = true;
   showCancelEdit: boolean = true;
-
+  showEMail: boolean = false;
   constructor(    public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
@@ -104,6 +107,12 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
       });
 
 
+
+
+    this.showEmailEvent = this._actions.showEmailEvent
+      .subscribe((e: boolean) => {
+        this.showEMail = e;
+      });
     this.afterInit();
   }
 
@@ -124,6 +133,8 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.cancelEditEvent !== undefined) { this.cancelEditEvent.unsubscribe(); }
     if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
     if (this.deleteItemEvent !== undefined) { this.deleteItemEvent.unsubscribe(); }
+    if (this.setEditEvent !== undefined) { this.setEditEvent.unsubscribe(); }
+
   }
 
 
@@ -141,6 +152,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private setEdit() {
+    
     this.showSave = true;
     this.showAdd = false;
     this.showSearch = false;
@@ -152,7 +164,6 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private deleteItem(deleteDesc: string): void {
-
     this._dialogService
       .openConfirm({ message: 'Are you sure you want to delete ' + deleteDesc + '?' })
       .afterClosed().subscribe((confirm: boolean) => {
@@ -161,7 +172,6 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
           this.deleteConfirmed();
         }
       });
-
   }
 
   private deleteConfirmed() {
@@ -184,4 +194,11 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   private screenSizeChange(e: any) {
 
   }
+
+  private sendEmail() {
+    this._actions.sendEMail();
+  }
+
+
+
 }

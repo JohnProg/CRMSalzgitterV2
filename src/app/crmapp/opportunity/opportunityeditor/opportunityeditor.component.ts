@@ -33,6 +33,7 @@ export class OpportunityeditorComponent extends CatalogComponent {
   idOpp: number = 0;
   scrId: number = 1;
 
+
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,

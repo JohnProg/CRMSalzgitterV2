@@ -15,6 +15,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'crm-colony-type',
@@ -34,9 +35,9 @@ export class ColonytypeComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone, 
     public _http: Http, 
-    public _tableService: TdDataTableService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-    this.catalogName = 'Colony Type';
+    public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);	    this.catalogName = 'Colony Type';
     this._curService.setAPI('ColonyType/', this.catalogName);
   }
 

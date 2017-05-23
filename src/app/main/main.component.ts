@@ -1,5 +1,5 @@
 import { Component, NgZone, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { ConfigurationService, ActionsService } from '../crmapp/services/index';
 import 'rxjs/add/operator/map';
@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 import {TranslateService} from '@ngx-translate/core';
-
+import { OneDriveAuth } from '../crmapp/onedriveapi/index';
 
 @Component({
   selector: 'crm-main',
@@ -39,7 +39,9 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
               private _loadingService: TdLoadingService, 
               private _mediaService: TdMediaService,
               private _ngZone: NgZone,
-              translate: TranslateService) {
+              private translate: TranslateService,
+              private _oauth: OneDriveAuth,
+              private _route: ActivatedRoute) {
         // this language will be used as a fallback when a translation isn't found in the current language
         translate.setDefaultLang('en');
 
@@ -47,6 +49,8 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         translate.use('en');
     this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
     this.routes = this._routeList.asObservable();
+
+
     }
 
   logout(): void {
@@ -96,9 +100,10 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       this._ngZone.run(() => {
         this.isSmallScreen = matches;
         if (matches === true) {
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 5, maxPage: 0 }) );
           this._confs.pageSize = 5;
           this._confs.currentPage = 0;
+          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 5, maxPage: 0 }) );
+
           // this.change(undefined);
         }
       });
@@ -109,9 +114,10 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isSmallScreen = matches;
 
         if (matches === true) {
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 8, maxPage: 0 }) );
           this._confs.pageSize = 8;
           this._confs.currentPage = 0;
+          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 8, maxPage: 0 }) );
+
           // this.change(undefined);
         }
 
@@ -123,9 +129,10 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isSmallScreen = matches;
 
         if (matches === true) {
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 13, maxPage: 0 }) );
           this._confs.pageSize = 10;
-          this._confs.currentPage = 0;
+          this._confs.currentPage = 0;          
+          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 13, maxPage: 0 }) );
+
           //this.change(undefined);
         }
 
@@ -137,13 +144,20 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       this._ngZone.run(() => {
         this.isSmallScreen = matches;
         if (matches === true) {
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 10, maxPage: 0 }) );
           this._confs.pageSize = 13;
-          this._confs.currentPage = 0;
+          this._confs.currentPage = 0;          
+          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 10, maxPage: 0 }) );
+
         }
       });
     });
+  }
 
+  signIn() {
+    this._oauth.login();
+  }
 
+  checkLogin() {
+    alert(this._oauth.token);
   }
 }

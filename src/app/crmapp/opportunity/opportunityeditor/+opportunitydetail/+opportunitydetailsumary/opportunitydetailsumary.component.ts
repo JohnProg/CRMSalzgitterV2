@@ -20,7 +20,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../../components/abstractvalueaccessor';
-
+import {TranslateService} from '@ngx-translate/core';
 
 
 
@@ -63,9 +63,9 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone, 
     public _http: Http, 
-    public _tableService: TdDataTableService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-    this.setTitle = false;
+    public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.setTitle = false;
     this._columns = <BehaviorSubject<ITdDataTableColumn[]>>new BehaviorSubject([]);
     this.pcolumns = this._columns.asObservable();
 
@@ -86,12 +86,14 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
   }
 
   initData() {
+    
     this.refreshItems();
     let pparams: TCRMEntity[] = new Array<TCRMEntity>();
     pparams.push( (<TCRMEntity>{ Name: 'idproduct', Description: this.idProduct.toString()}) );
     this._curService.loadCustomCatalogObs('ProductProperty/searchByProduct', pparams)
     .map((response) => response.json())
     .subscribe( (items: ProductProperty[]) => {
+      
          this._props = items;
          this.initDetails();
     });
@@ -101,10 +103,16 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
   refreshItems() {
     let oparams: URLSearchParams = new URLSearchParams();
     oparams.set('iddetail', this.idDetail.toString());
-    this._curService.loadCustomAll('OpportunityDetailSumary/searchByDetail', oparams, true);
+    this._curService.loadCustomAll('OpportunityDetailSumary/searchByDetail', oparams, 0,  true);
   }
   addColumns() {}
 
+
+  afterViewInit(): void {
+    this._actions.setEdit();
+  }
+
+    
   initEntity() {
     this.itemEdit = new OpportunityDetailSumary() ;
     this.itemEdit.IdOpportunityDetail  = this.idDetail;
@@ -208,14 +216,12 @@ afterLoadAll(itms: OpportunityDetailSumary[]) {
       this.isLoading = false;
 }
 
-  afterLoadItem(itm: OpportunityDetailSumary) {
-    super.afterLoadItem(itm);
-    this.itemEdit = itm;
-  }
+
 
 
   change(event: IPChangeEventSorted): void {
     if (event !== undefined) {
+      debugger
       this.currentPage = event.page - 1;
       this.reloadPaged();
       this.isLoading = false;

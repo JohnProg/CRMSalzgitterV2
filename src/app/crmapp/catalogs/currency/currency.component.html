@@ -2,7 +2,7 @@
 
   <md-card-content>
 
-    <form #f="ngForm" #form flex (ngSubmit)="submitForm(form.value)">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section *ngIf="isEditing">
 
         <div layout="column" layout-margin>

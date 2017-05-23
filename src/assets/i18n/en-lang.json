@@ -66,7 +66,15 @@
             "TENDER": {
                 "DISPLAYNAME": "Tenders",
                 "TOOLTIP": "Create edit Tenders"
-            }           
+            },            
+            "TRANSACTIONFLOW": {
+                "DISPLAYNAME": "Transaction Flow",
+                "TOOLTIP": "Create edit Transaction flow"
+            },
+            "TEMPLATEEMAIL": {
+                "DISPLAYNAME": "EMail Templates",
+                "TOOLTIP": "Create edit email templates"
+            }
         },
         "OPTIONS": {
             "DISPLAYNAME": "Options",
@@ -77,7 +85,11 @@
             "COMPANY": {
                 "TOOLTIP": "Create/Edit Company",
                 "DISPLAYNAME": "Company Information"
-            }            
+            },
+            "ACTIONOPP": {
+                "TOOLTIP": "Create/Edit Actions Opp",
+                "DISPLAYNAME": "Opportunity Actions"
+            }                       
         },
         "OPPORTUNITY": {
             "DISPLAYNAME": "Opportunities",
@@ -85,13 +97,22 @@
                 "TOOLTIP": "Create/Edit Opportunities",
                 "DISPLAYNAME": "Opportunity"
             }           
-        }
+        },
+        "QUOTATIONFROMSUPPLIER": {
+            "DISPLAYNAME": "Quotation from Suppliers",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Quotation from Suppliers",
+                "DISPLAYNAME": "Quotation from Supplier"
+            }           
+        }         
+       
     }
   },
   "OPPORTUNITY": {
        "EDITOPPORTUNITY": "Edit opportunity {{value}}",
        "ADDPROPERTY": "Add Property",
-       "ADDSUMARY": "Add Sumary"
+       "ADDSUMARY": "Add Sumary",
+       "DOCUMENTSDIALOG": "Documents Dialog"
   },  
   "NAME": "Nombre",
   "DESCRIPTION": "Description",
@@ -110,6 +131,7 @@
   "SEARCH": "Search",
   "SEARCHHERE": "Search here",
   "EDITCAT": "Edit {{value}}",
+  "ADDCAT": "Add {{value}}",
   "QUANTITY": "Quantity",
   "PRICE": "Price",
   "TOTAL": "Total",
@@ -130,6 +152,16 @@
   "LINERTERM": "Linerterm",
   "ASIMPORTER": "As importer",
   "DELIVERYLOCATION": "Delivery Location",
-  "CANCEL": "Cancel"
+  "CANCEL": "Cancel",
+  "NOTES": "Notes",
+  "CUSTCONTACT": "Customer Contact",
+  "INTERNALCONTACT": "Internal Contact",
+  "ACTIONOPP": "Action Opportunity",
+  "ADDOCUMENT": "Add document",
+  "DOCUMENTTYPE": "Document Type",
+  "TRANSACTIONFLOW": "Transaction flow",
+  "BOTH": "Both"
+
+
 
 }

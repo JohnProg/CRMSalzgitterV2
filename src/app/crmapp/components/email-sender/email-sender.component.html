@@ -1,0 +1,48 @@
+<td-layout-nav >
+
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <crm-gactions flex></crm-gactions>
+    </div>
+
+
+  <md-card>
+    <md-card-content>
+      <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+        <section>
+          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding  >
+            <md-select flex options="allContacts" placeholder="Sent to"  (change)="onContactChange($event.value)" >
+              <md-option class="selectable" *ngFor="let sto of allContacts" [value]="sto.EMail" [disabled]="!sto.IsActive || false">
+                {{ sto.Name }} < {{sto.EMail}} >
+              </md-option>
+            </md-select>
+          </div>
+          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding  >
+            <md-chip-list >
+              <md-chip *ngFor="let em of itemEdit.EMailTo; index as idx"  > {{em.Name}} <a (click)="deleteContact(idx)"><md-icon class="tc-red-700 md-caption">clear</md-icon></a> </md-chip>
+            </md-chip-list>
+          </div>
+          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+            <md-input-container flex>
+              <input mdInput placeholder="Subject" mdInput flex #EMailSubject name="EMailSubject" [(ngModel)]="itemEdit.EMailSubject">
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+              <ckeditor #EMailBody flex="100" placeholder="Body" name="EMailBody" [(ngModel)]="itemEdit.EMailBody"  debounce="500">
+              </ckeditor>
+          </div>
+
+          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+            <h1 class="md-title">Documents added</h1>
+            <md-list>
+              <md-list-item *ngFor="let doc of itemEdit.EmailAttachments" > <md-checkbox name="DocSelected" [(ngModel)]="doc.Selected"> {{doc.DocTypeName}} - {{doc.DocName}} </md-checkbox>  </md-list-item>
+            </md-list>
+
+          </div>
+
+        </section>
+      </form>
+
+    </md-card-content>
+  </md-card>
+
+</td-layout-nav>

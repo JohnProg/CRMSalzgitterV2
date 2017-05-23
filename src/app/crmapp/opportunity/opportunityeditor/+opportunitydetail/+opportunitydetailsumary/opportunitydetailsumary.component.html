@@ -60,7 +60,7 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar #dpagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize | async" [total]="totalItems" (change)="change($event)">
+      <td-paging-bar #dpagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
                 <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{dpagingBar.range}} <span hide-xs>of {{dpagingBar.total}}</span>
       </td-paging-bar>
     </section>

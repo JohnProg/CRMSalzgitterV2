@@ -14,7 +14,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
-
+import {TranslateService} from '@ngx-translate/core';
 
 
 
@@ -39,9 +39,9 @@ public _actions: ActionsService,
 public _mediaService: TdMediaService,
 public _ngZone: NgZone, 
 public _http: Http, 
-public _tableService: TdDataTableService) {
-super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-
+public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
 
      this.catalogName = 'Opp Action';
      this._curService.setAPI('ActionOpportunity/', this.catalogName);

@@ -1,14 +1,14 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActionsService } from '../../../services/actions.services';
+import { ActionsService } from '../../../../services/actions.services';
 
-import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
-import { ConfigurationService } from '../../../services/configuration.service';
-import { TCRMEntity, GetProductProperty, ProductProperty, ReturnSaveRequest } from '../../../model/allmodels';
+import { CatalogService, IPChangeEventSorted } from '../../../../services/catalog.service';
+import { ConfigurationService } from '../../../../services/configuration.service';
+import { TCRMEntity, getProductProperties_Result, ProductProperty, ReturnSaveRequest } from '../../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { BaseComponent } from '../../../catalogs/base.component';
+import { BaseComponent } from '../../../../catalogs/base.component';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -32,14 +32,14 @@ export class ProductpropertyComponent   {
 
   isEditProp: boolean = false;
 
-  _catList = <BehaviorSubject<GetProductProperty[]>>new BehaviorSubject([]);
+  _catList = <BehaviorSubject<getProductProperties_Result[]>>new BehaviorSubject([]);
 
-  propList: Observable<GetProductProperty[]>;
-  _props: GetProductProperty[] = new Array<GetProductProperty>();
-  dataStore: { properties: GetProductProperty[] };
+  propList: Observable<getProductProperties_Result[]>;
+  _props: getProductProperties_Result[] = new Array<getProductProperties_Result>();
+  dataStore: { properties: getProductProperties_Result[] };
 
   propEdit: ProductProperty;
-  itemEdit: GetProductProperty;
+  itemEdit: getProductProperties_Result;
   propColumns: ITdDataTableColumn[] = [
   ];
   catalogName: string;
@@ -95,7 +95,7 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
     this.itemEdit = new  ProductProperty();
   }
 
-  editProperty(item: GetProductProperty) {
+  editProperty(item: getProductProperties_Result) {
     this.itemEdit = item;
 
     this.propEdit = new ProductProperty();

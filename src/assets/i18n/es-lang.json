@@ -68,7 +68,15 @@
             "TENDER": {
                 "DISPLAYNAME": "Tenders",
                 "TOOLTIP": "Crear/Editar Tenders"
-            }               
+            },
+            "TRANSACTIONFLOW": {
+                "DISPLAYNAME": "Flujo de la transaccion",
+                "TOOLTIP": "Crear/Editar Flujos de transaccion"
+            },
+            "TEMPLATEEMAIL": {
+                "DISPLAYNAME": "Plantillas de Email",
+                "TOOLTIP": "Crear/Editar Plantillas de Email"
+            }                                     
         },
         "OPTIONS": {
             "DISPLAYNAME": "Opciones",
@@ -79,7 +87,11 @@
             "COMPANY": {
                 "TOOLTIP": "Crear/Editar  Compañias",
                 "DISPLAYNAME": "Informacion de la Compañia"
-            }            
+            },
+            "ACTIONOPP": {
+                "TOOLTIP": "Crear/Editar Acciones de Opp",
+                "DISPLAYNAME": "Acciones de las Oportunidades"
+            }                         
         },
         "OPPORTUNITY": {
             "DISPLAYNAME": "Oportunidades",
@@ -87,13 +99,21 @@
                 "TOOLTIP": "Crear/Editar Oportunidades",
                 "DISPLAYNAME": "Oportunidades"
             }           
-        }
+        },
+        "QUOTATIONFROMSUPPLIER": {
+            "DISPLAYNAME": "Cotizaciones del Proveedor",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Crear/Editar Cotizacion del Proveedor",
+                "DISPLAYNAME": "Cotizaciones del Proveedor"
+            }           
+        }           
     }
   },
   "OPPORTUNITY": {
        "EDITOPPORTUNITY": "Editar oportunidad {{value}}",
        "ADDPROPERTY": "Agegar Propiedad",
-       "ADDSUMARY": "Agregar detalle"
+       "ADDSUMARY": "Agregar detalle",
+       "DOCUMENTSDIALOG": "Documentos del Dialog"
   },
     "NAME": "Nombre",
     "DESCRIPTION": "Description",   
@@ -112,6 +132,7 @@
     "SEARCH": "Buscar",
     "SEARCHHERE": "Buscar aqui",
     "EDITCAT": "Editar {{value}}",
+    "ADDCAT": "Agregar {{value}}",
     "QUANTITY": "Cantidad",
     "PRICE": "Precio",
     "TOTAL": "Total",
@@ -132,5 +153,13 @@
     "LINERTERM": "Linerterm",
     "ASIMPORTER": "Como Importador?",
     "DELIVERYLOCATION": "Ubicacióm de entrega",
-    "CANCEL": "Cancelar"  
+    "CANCEL": "Cancelar",
+    "NOTES": "Notas",
+    "CUSTCONTACT": "Contacto del Cliente",
+    "INTERNALCONTACT": "Contacto Interno",
+    "ACTIONOPP": "Acción del Opp.",
+    "ADDOCUMENT": "Add document",
+    "DOCUMENTTYPE": "Tipo de documento",
+    "TRANSACTIONFLOW": "Flujo de transaccion",
+    "BOTH": "Ambos"
 }

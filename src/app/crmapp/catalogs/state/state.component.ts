@@ -14,7 +14,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 import { State } from '../../model/allmodels';
-
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'crm-state',
@@ -38,9 +38,10 @@ public _actions: ActionsService,
 public _mediaService: TdMediaService,
 public _ngZone: NgZone, 
 public _http: Http, 
-public _tableService: TdDataTableService) {
-super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
-
+public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+	
     this.autoLoad = false;
     this.catalogName = 'State';
     this._curService.setAPI('State/', this.catalogName);
@@ -76,7 +77,7 @@ super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _med
     }
 
       reloadPaged(sText: string = undefined) {
-        let p = { page: this.currentPage, pageSize: this.currentPageSize, sortBy : this.sortBy, sortType: this.sortType, 
+        let p = { page: this.currentPage, pageSize: this.pageSize, sortBy : this.sortBy, sortType: this.sortType, 
                   sText: undefined, maxPage: 0, total: 0, fromRow: 0, toRow: 0 } as IPChangeEventSorted;
 
         this._curService.getCustomPaged(p, 'GetPaged', [

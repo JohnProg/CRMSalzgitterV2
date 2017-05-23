@@ -20,3 +20,23 @@ td-layout-manage-list .mat-toolbar {
 .cbxClass {
     width: 100%;
 }
+
+
+ textarea.ng-valid[required], .ng-valid.required  {
+  border-bottom: 1px solid #42A948; /* green */
+}
+ textarea.ng-invalid:not(form)  {
+  border-bottom: 1px solid #a94442; /* red */
+}
+
+ md-select.ng-valid[required], .ng-valid.required  {
+  border-bottom: 1px solid #42A948; /* green */
+}
+ md-select.ng-invalid:not(form)  {
+  border-bottom: 1px solid #a94442; /* red */
+}
+
+
+.mat-input-container {
+    width: 100%;
+}

@@ -21,6 +21,10 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';
+import {TranslateService} from '@ngx-translate/core';
+
+
+
 
 
 @Component({
@@ -36,6 +40,7 @@ export class OpportunitydetailComponent extends BaseComponent {
   sortBy: string = 'ItemDescription';
   allowProduct: boolean = true;
   propSubscription: Subscription;
+
  constructor(public _router: Router, public _route: ActivatedRoute, 
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -45,21 +50,21 @@ export class OpportunitydetailComponent extends BaseComponent {
     public _mediaService: TdMediaService,
     public _ngZone: NgZone, 
     public _http: Http, 
-    public _tableService: TdDataTableService) {
-
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService);
+    public _tableService: TdDataTableService,
+    public translate: TranslateService) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService,
+          _ngZone, _http, _tableService, translate);
     this.catalogName = 'Opp Details';
     this._curService.setAPI('OpportunityDetail', this.catalogName);
     this.itemEdit = new OpportunityDetail();
+
   }
 
   ngOnInitClass() {
     this.entList = <Observable<OpportunityDetail[]>>this._curService.entList;
-
-
     this.initData();
-
   }
+
 
   initData() {
     let pparams = new URLSearchParams();
@@ -70,6 +75,7 @@ export class OpportunitydetailComponent extends BaseComponent {
 
   afterViewInit(): void {
     this._actions.updateTitle('Details for opportunity ' + this.idOpp.toString());
+
   }
 
   onDestroy() {
@@ -94,10 +100,8 @@ export class OpportunitydetailComponent extends BaseComponent {
 
 
   afterLoadItem(itm: OpportunityDetail) {
-
     super.afterLoadItem(itm);
-    this.itemEdit = itm;
-    this._actions.updateTitle('Edit ' + itm.ItemDescription + ' for opportunity ' + this.idOpp.toString());
+    this._actions.updateTitle('Edit item for Opp ' + this.idOpp.toString());
   }
 
 
@@ -115,7 +119,6 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
   hasSumary(h: boolean) {
-    debugger
     this.allowProduct = h;
   }
 }
