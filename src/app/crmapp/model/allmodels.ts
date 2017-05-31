@@ -24,15 +24,23 @@
 
 
 	export class ActionOpportunity extends TCRMEntity {
+		ActionOpportunityDocTypes: ActionOpportunityDocType[];
 		EMailTo: number;
 		EstatusOpportunity: EstatusOpportunity;
 		Id: number;
 		IdStatus: number;
-		IdTemplateEMail: number;
 		Name: string;
 		OpportunityDialogs: OpportunityDialog[];
 		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
 		ShowActionType: number;
+	}
+	export class ActionOpportunityDocType extends TCRMEntity {
+		ActionOpportunity: ActionOpportunity;
+		DocType: DocType;
+		Id: number;
+		IdActionOpportunity: number;
+		IdDocType: number;
+		IdTemplateEmail: number;
 		TemplateEMail: TemplateEMail;
 	}
 	export class AttachDocument extends TCRMEntity {
@@ -266,6 +274,15 @@
 		Id: number;
 		Name: string;
 	}
+	export class DocType extends TCRMEntity {
+		ActionOpportunityDocTypes: ActionOpportunityDocType[];
+		Description: string;
+		Id: number;
+		Name: string;
+		Opportunities: Opportunity[];
+		QuotationFromSuppliers: QuotationFromSupplier[];
+		QuotationToCustomers: QuotationToCustomer[];
+	}
 	export class DocumentType extends TCRMEntity {
 		Description: string;
 		Id: number;
@@ -325,7 +342,16 @@
 		IdString: string;
 		Name: string;
 	}
-	export class getAllContactsWithCustomers_Result extends TCRMEntity {
+	export class GetActionDoctType_Result  extends TCRMEntity {
+		DocTypeName: string;
+		EMailSubject: string;
+		Id: number;
+		IdActionOpportunity: number;
+		IdDocType: number;
+		IdTemplateEmail: number;
+		Name: string;
+	}
+	export class getAllContactsWithCustomers_Result  extends TCRMEntity {
 		ATipo: string;
 		EMail: string;
 		Id: number;
@@ -542,9 +568,12 @@
 		ASign: string;
 		AsImporter: boolean;
 		CurrencyName: string;
+		CustomerName: string;
 		DateReceived: Date;
+		DocTypeName: string;
 		Id: number;
 		IdCurrency: number;
+		IdDocType: number;
 		IdMill: number;
 		IdOpportunity: number;
 		IdPort: number;
@@ -584,6 +613,32 @@
 		ResponsibleName: string;
 		ToContact: number;
 	}
+	export class GetQuotationToCustomer_Result extends TCRMEntity {
+		ASign: string;
+		CurrencyName: string;
+		CustomerName: string;
+		DocTypeName: string;
+		Id: number;
+		IdCurrency: number;
+		IdDocType: number;
+		IdMill: number;
+		IdQuotationFromSupplier: number;
+		IdStatus: number;
+		IsEditable: boolean;
+		MillName: string;
+		SstatusName: string;
+	}
+	export class GetQuotationToCustomerDetails_Result extends TCRMEntity {
+		Id: number;
+		IdProduct: number;
+		IdQuotationToCustomer: number;
+		ItemDescription: string;
+		ItemPrice: number;
+		ItemQuantity: number;
+		ProductDescription: string;
+		ProductName: string;
+		SalePrice: number;
+	}	
 	export class getResponsible_Result extends TCRMEntity {
 		CellPhone: string;
 		EMail: string;
@@ -679,12 +734,14 @@
 		CustomerContact: CustomerContact;
 		DateCreated: Date;
 		DeliveryLocation: string;
+		DocType: DocType;
 		EstatusOpportunity: EstatusOpportunity;
 		Id: number;
 		IdContact: number;
 		IdCurrency: number;
 		IdCustomer: number;
 		IdCustomerContact: number;
+		IdDocType: number;
 		IdIncoTerm: number;
 		IdLinerTerms: number;
 		IdMarket: number;
@@ -716,34 +773,8 @@
 		IdProduct: number;
 		ItemDescription: string;
 		ItemExtended: number;
-		private _price: number;
-        private _itemQty: number;
-		get ItemPrice():number {
-			return this._price;
-		}
-
-		set ItemPrice(v: number) {
-			this._price = v;
-			this.recalculateTotal();
-		}
-        
-
-		get ItemQuantity(): number {
-			return this._itemQty;
-		}
-
-		set ItemQuantity(v: number) {
-			this._itemQty = v;
-			console.log('Actualizando itemExtended ' + v.toString());
-			
-			this.recalculateTotal();
-		}
-
-		recalculateTotal() {
-			debugger
-			this.ItemExtended = this._price * this._itemQty;
-		}
-
+		ItemPrice: number;
+		ItemQuantity: number;
 		Opportunity: Opportunity;
 		OpportunityDetailSumaries: OpportunityDetailSumary[];
 		Product: Product;
@@ -758,8 +789,6 @@
 		OpportunityDetailSumaryProperties: OpportunityDetailSumaryProperty[];
 		Price: number;
 		Quantity: number;
-
-
 	}
 	export class OpportunityDetailSumaryProperty extends TCRMEntity {
 		IsRequired: boolean;
@@ -897,10 +926,12 @@
 		Currency: Currency;
 		DateReceived: Date;
 		DeliveryLocation: string;
+		DocType: DocType;
 		EstatusOpportunity: EstatusOpportunity;
 		Id: number;
 		IdCountryOrigin: number;
 		IdCurrency: number;
+		IdDocType: number;
 		IdIncoTerm: number;
 		IdLinerTerm: number;
 		IdMill: number;
@@ -912,12 +943,14 @@
 		IncoTerm: IncoTerm;
 		LinerTerm: LinerTerm;
 		Mill: Mill;
+		OfferValidity: Date;
 		Opportunity: Opportunity;
 		Port: Port;
 		QuotationFromSupplierDetails: QuotationFromSupplierDetail[];
 		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
 		QuotationToCustomers: QuotationToCustomer[];
 		QuoteNotes: string;
+		ShipmentOffered: Date;
 		TransactionFlow: TransactionFlow;
 		User: User;
 	}
@@ -990,54 +1023,66 @@
 		QuotationFromSupplierDialog: QuotationFromSupplierDialog;
 	}
 	export class QuotationToCustomer extends TCRMEntity {
+	    AsImporter: boolean;
 		Country: Country;
 		Currency: Currency;
 		DateCreated: Date;
 		DateSend: Date;
+		DeliveryLocation: string;
+		DocType: DocType;
 		EstatusOpportunity: EstatusOpportunity;
 		Id: number;
 		IdCountry: number;
 		IdCurrency: number;
+		IdDocType: number;
 		IdIncoTerm: number;
 		IdLinerTerm: number;
 		IdMill: number;
+		IdPort: number;
 		IdQuotationFromSupplier: number;
 		IdStatus: number;
 		IdUser: number;
 		IncoTerm: IncoTerm;
 		LinerTerm: LinerTerm;
 		Mill: Mill;
+		OfferValidity: Date;
+		Port: Port;
 		QuotationFromSupplier: QuotationFromSupplier;
 		QuotationToCustomerDetails: QuotationToCustomerDetail[];
 		QuotationToCustomerDocuments: QuotationToCustomerDocument[];
+		QuoteNotes: string;
+		ShipmentOffered: Date;
 		User: User;
 	}
 	export class QuotationToCustomerDetail extends TCRMEntity {
+		ExpenseSMIM_Cost: number;
+		ExpenseSupplierSide_Cost: number;
 		Id: number;
 		IdProduct: number;
 		IdQuotationToCustomer: number;
+		ItemDescription: string;
+		ItemPrice: number;
+		ItemQuantity: number;
 		Product: Product;
-		QCCostPrice: number;
-		QCExpenseSMIM_Cost: number;
-		QCExpenseSupplierSide_Cost: number;
-		QCProductDesc: string;
-		QCProfit: number;
-		QCQuantity: number;
-		QCSalePrice: number;
-		QCSalesPriceBased: number;
+		Profit: number;
 		QuotationToCustomer: QuotationToCustomer;
 		QuotationToCustomerDetailSumaries: QuotationToCustomerDetailSumary[];
+		SalePrice: number;
+		SalesPriceBased: number;
 	}
 	export class QuotationToCustomerDetailSumary extends TCRMEntity {
+		Amount: number;
 		Comment: string;
 		DateCreated: Date;
 		Id: number;
 		IdQuotationToCustomerDetail: number;
-		QCQuantity: number;
+		Price: number;
+		Quantity: number;
 		QuotationToCustomerDetail: QuotationToCustomerDetail;
 		QuotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
 	}
 	export class QuotationToCustomerDetailSumaryProperty extends TCRMEntity {
+		IsRequired: boolean;
 		Id: number;
 		IdProperty: number;
 		IdQuotationToCustomerDetailSumary: number;
@@ -1164,7 +1209,7 @@
 		version: number;
 	}
 	export class TemplateEMail extends TCRMEntity {
-		ActionOpportunities: ActionOpportunity[];
+		ActionOpportunityDocTypes: ActionOpportunityDocType[];
 		DocumentTypes: DocumentType[];
 		EMailBody: string;
 		EMailSubject: string;

@@ -10,13 +10,14 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
     _value: any = '';
     catList: TCRMEntity[];
 
-    
+
     parentId: number = 0;
     @Input() placeholder: string;
     @Input() cwidth: number = 100;
     @Input() catalog: string = '';
     @Input() disabled: boolean = false;
     @Input() fieldDisplay: string = 'Name';
+    @Input() byType: string;
     parentCataSubscribe: any;
     @Input() parentCatalog : string = '';
     @Input() parentSelect: AbstractValueAccessor;
@@ -33,18 +34,23 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
   }
   
   ngAfterViewInit() {
-    if( this.parentSelect === undefined) {
+    
+    if( this.byType !== undefined) {
+       this.loadFromType();
+    } else if( this.parentSelect === undefined) {
        this._curService.loadCatalogObs( this.catalog , undefined,  undefined)
        .map((response) => response.json()).subscribe((data) => {
            Object.assign(this.catList, <TCRMEntity[]>data);
 
       }, (error) => {});
-    } else {
+    } else if(this.parentSelect !== undefined) {
       this.parentSelect.valueChange.subscribe((data: TCRMEntity) => {
         this.loadCustomData(data);
       });
     }
   }
+
+
   ngOnDestroy() {
      if( this.parentSelect !== undefined ) {
        this.parentSelect.valueChange.unsubscribe();
@@ -94,6 +100,16 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
           });
       }
     }
+
+    public loadFromType() {
+      
+       this.parentCataSubscribe = this._curService.loadCustomCatalogObs( this.catalog + this.byType, [] )
+        .map((response) => response.json()).subscribe((data) => {
+            this.catList = [];
+            Object.assign(this.catList, data);
+          });
+    }
+
 
     public getItemSelected(): TCRMEntity {
        return this.catList.filter( (item: TCRMEntity) => item.Id === this._value)[0];

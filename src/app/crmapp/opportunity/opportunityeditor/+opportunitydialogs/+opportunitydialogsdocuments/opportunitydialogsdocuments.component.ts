@@ -21,7 +21,7 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../../components/abstractvalueaccessor';
 
-import {  OpportunityService } from '../../../oppservice.service';
+import {  OpportunityService } from '../../../../services/oppservice.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -108,7 +108,7 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
         t = reader.result;
         tself.itemEdit.DocName = tself.files.name;
         tself.itemEdit.AData64 = t;
-        debugger
+        
         tself._curService.create(tself.itemEdit);
       };
       reader.readAsDataURL(this.files);
@@ -125,7 +125,6 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
   }
 
   afterUpdate(item: any) {
-    
     Object.assign(this.itemEdit, item.item);
     this.isEditing = false;
   }

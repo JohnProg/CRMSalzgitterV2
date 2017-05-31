@@ -1,3 +1,3 @@
 
 export * from './crm-currency.pipe';
-export * from './inputformater.directive';
+export * from './currencyformatter.directive';

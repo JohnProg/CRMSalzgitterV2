@@ -225,7 +225,7 @@ afterLoadAll(itms: QuotationFromSupplierDetailSumary[]) {
 
   change(event: IPChangeEventSorted): void {
     if (event !== undefined) {
-      debugger
+      
       this.currentPage = event.page - 1;
       this.reloadPaged();
       this.isLoading = false;

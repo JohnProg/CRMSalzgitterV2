@@ -6,7 +6,7 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import {  Opportunity, IncoTerm } from '../../../model/allmodels';
-import {  OpportunityService } from '../../oppservice.service';
+import {  OpportunityService } from '../../../services/oppservice.service';
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';

@@ -1,60 +1,45 @@
-import {
-  Input,
-  Directive,
-  HostListener,
-  ElementRef,
-  Renderer,
-  OnInit
-} from '@angular/core';
-import { NgModel } from '@angular/forms';
-import { CurrencyPipe } from '@angular/common';
+import { Pipe, PipeTransform } from "@angular/core";
 
-@Directive({
-  selector: '[currencyInput]',
-  providers: [NgModel],
-  host: {
-    '(input)': 'onInputChange()'
-  }
-})
-export class CurrencyInputDirective  implements OnInit {
-  @Input() ngModel: number;
+const PADDING = "000000";
 
-  private elem: HTMLInputElement;
+@Pipe({ name: "crmCurrency" })
+export class CRMCurrencyPipe implements PipeTransform {
 
-  constructor(
-    private el: ElementRef,
-    private render: Renderer,
-    private currencyPipe: CurrencyPipe,
-    private model: NgModel,
-  ) {
-    this.elem = el.nativeElement;
+  private DECIMAL_SEPARATOR: string;
+  private THOUSANDS_SEPARATOR: string;
+
+  constructor() {
+    // TODO comes from configuration settings
+    this.DECIMAL_SEPARATOR = ".";
+    this.THOUSANDS_SEPARATOR = "'";
   }
 
-  ngOnInit() {
-    debugger
-    this.elem.value = this.currencyPipe.transform(parseFloat(this.elem.value || '0'), 'USD', true);
-  }
-
-  ngAfterContentInit() {
-
-      this.model.valueChanges.subscribe(value => {
-        debugger
-        if(value) {
-          const parsed = parseFloat(value.replace('$', ""));
-          let c = new CurrencyPipe('en').transform(parsed, 'USD', true);
-          this.model.valueAccessor.writeValue(c);
-        }
-      })
+  transform(value: number | string, fractionSize: number = 2): string {
+    if(value === 0 || value === '0') {
+       value = '0.00';
     }
+    let [ integer, fraction = '' ] = (value || '').toString()
+      .split(this.DECIMAL_SEPARATOR);
 
+    fraction = fractionSize > 0
+      ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
+      : ".00";
 
-  @HostListener('focus', ['$event.target.value'])
-  onFocus(value: string) {
-    this.elem.value = value.replace(/\,/g, '');
+    integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, this.THOUSANDS_SEPARATOR);
+
+    return  integer + fraction;
   }
 
-  @HostListener('blur', ['$event.target.value'])
-  onBlur(value: string) {
-    this.elem.value = this.currencyPipe.transform(parseFloat(value), 'USD', true);
+  parse(value: string, fractionSize: number = 2): string {
+    let [ integer, fraction = ".00" ] = (value || "0.00").split(this.DECIMAL_SEPARATOR);
+
+    integer = integer.replace(new RegExp(this.THOUSANDS_SEPARATOR, "g"), "");
+
+    fraction = parseInt(fraction, 10) > 0 && fractionSize > 0
+      ? this.DECIMAL_SEPARATOR + (fraction + PADDING).substring(0, fractionSize)
+      : ".00";
+
+    return integer + fraction;
   }
+
 }

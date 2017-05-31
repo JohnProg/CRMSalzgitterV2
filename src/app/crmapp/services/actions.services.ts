@@ -2,6 +2,8 @@ import {Component, Injectable,Input,Output,EventEmitter} from '@angular/core'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { IPageChangeEvent } from '@covalent/core';
+import { User } from '../model/allmodels';
+
 
 @Injectable()
 export class ActionsService {
@@ -26,11 +28,21 @@ export class ActionsService {
 
     public showEmailEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
     public sendEmailEvent: EventEmitter<any>=new EventEmitter<any>();
+ 
 
 
     _screenSizeChangeEvent: BehaviorSubject<IPageChangeEvent> =  <BehaviorSubject<IPageChangeEvent>>new BehaviorSubject({ page: 0, pageSize: 13 }); 
     screenSizeChangeEvent: Observable<IPageChangeEvent> = this._screenSizeChangeEvent.asObservable();
 
+
+    public userInfoEvent: EventEmitter<User>=new EventEmitter<User>();
+    public userInfo: User = new User();
+
+
+    public setUserInfo(user: User) {
+      this.userInfo = user;
+      this.userInfoEvent.emit(user);
+    }
     public addItem() {
       this.addItemEvent.emit();
     }

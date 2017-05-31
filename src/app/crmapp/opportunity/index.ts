@@ -1,6 +1,6 @@
 
 
-export * from './oppservice.service';
+
 export * from './opportunity.component';
 export * from './opportunityindex/opportunityindex.component';
 export * from './opportunityeditor/opportunityeditor.component';

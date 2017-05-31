@@ -1,7 +1,7 @@
 import { Component, NgZone, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-import { ConfigurationService, ActionsService } from '../crmapp/services/index';
+import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder  } from '@angular/http';
+import { ConfigurationService, ActionsService, TokenService } from '../crmapp/services/index';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -9,6 +9,8 @@ import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } fro
 import { Subscription } from 'rxjs/Subscription';
 import {TranslateService} from '@ngx-translate/core';
 import { OneDriveAuth } from '../crmapp/onedriveapi/index';
+import { User } from '../crmapp/model/allmodels';
+
 
 @Component({
   selector: 'crm-main',
@@ -27,11 +29,11 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
   protected _querySubscriptionmd: Subscription;
   protected _querySubscriptionlg: Subscription;
   
-
   _routeList: BehaviorSubject<Object[]>;
 
   routes: Observable<Object[]>;
-
+  userName: string = 'test';
+  userEmail: string = 'test';
   constructor(private _router: Router, 
               private _http: Http,
               private _confs: ConfigurationService,
@@ -41,21 +43,24 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
               private _ngZone: NgZone,
               private translate: TranslateService,
               private _oauth: OneDriveAuth,
-              private _route: ActivatedRoute) {
+              private _route: ActivatedRoute, 
+              private _token: TokenService) {
         // this language will be used as a fallback when a translation isn't found in the current language
-        translate.setDefaultLang('en');
-
-         // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use('en');
-    this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
-    this.routes = this._routeList.asObservable();
-
+      translate.setDefaultLang('en');
+      // the lang to use, if the lang isn't available, it will use the current loader to get them
+      translate.use('en');
+      this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
+      this.routes = this._routeList.asObservable();
+      this._actions.userInfoEvent.subscribe((user: User) => {
+        this.userName = user.LastName;
+        this.userEmail = user.FirstName;
+      });
 
     }
 
   logout(): void {
+    this._token.signout();
     this._router.navigate(['/login']);
-
   }
 
 
@@ -65,17 +70,19 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   ngAfterViewInit() {
-    this._http.get(this._confs.appBase + 'data/crm-menu.json')
+
+    let h : Headers = new Headers();
+    h.append('Access-Control-Allow-Origin', this._confs.root);
+    this._http.get(this._confs.appBase + 'data/crm-menu.json', { headers: h })
     .map((response) => response.json()).subscribe((result) => {
       this._routeList.next(result);
     }, (error) => {
         debugger
     });
-
-
   }
 
-  
+
+
     ngOnDestroy() {
 
     if (this._querySubscriptionxs !== undefined) { this._querySubscriptionxs.unsubscribe(); }

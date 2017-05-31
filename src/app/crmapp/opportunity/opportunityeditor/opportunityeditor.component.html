@@ -4,7 +4,7 @@
     <div flex></div>
   </div>
   <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
-    [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '150px' : '100%'">
+    [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
     <md-toolbar td-sidenav-content>
        <button md-button routerLink="/opportunity">Opp. Index</button>
     </md-toolbar>
@@ -25,6 +25,14 @@
         <md-icon md-list-icon>insert_chart</md-icon>
         {{ "DOCUMENTS" | translate}}
       </a>
+      <a md-list-item md-ripple class="block relative" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
+        <md-icon md-list-icon>insert_chart</md-icon>
+        Quotation from Suppliers
+      </a> 
+      <a md-list-item md-ripple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
+        <md-icon md-list-icon>insert_chart</md-icon>
+        Quotation to Customer
+      </a>             
     </md-nav-list>
 
     <div td-toolbar-content layout="row" layout-align="start center" flex>
@@ -43,6 +51,9 @@
 
         <crm-opportunitydocuments [idOpp]="idOpp" *ngIf="scrId == 4 "></crm-opportunitydocuments>
 
+        <crm-quotationfromsupplierindexviewer [idOpp]="idOpp" *ngIf="scrId == 5 "></crm-quotationfromsupplierindexviewer>
+
+        <crm-quotationtocustomerindexviewer [idOpp]="idOpp" *ngIf="scrId == 6 "></crm-quotationtocustomerindexviewer>
 
       </md-card-content>
     </md-card>

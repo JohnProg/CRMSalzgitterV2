@@ -5,7 +5,7 @@
 
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex>
-          <crm-select flex #IdAction name="IdAction" catalog="ActionOpportunity" placeholder="{{ 'ACTIONOPP' | translate}}" [(ngModel)]="itemEdit.IdAction"></crm-select>
+          <crm-select flex #IdAction name="IdAction" catalog="ActionOpportunity/searchbytype?id=0&idtype=" byType="2" placeholder="{{ 'ACTIONOPP' | translate}}" [(ngModel)]="itemEdit.IdAction"></crm-select>
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" flex>
           <crm-select flex #IdResponsible name="IdResponsible" catalog="Responsible" placeholder="{{ 'RESPONSIBLE' | translate}}" [(ngModel)]="itemEdit.IdResponsible"></crm-select>

@@ -195,7 +195,23 @@
             "routerlink": "quotationfromsupplier",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.QUOTATIONFROMSUPPLIER.DISPLAYNAME"
-          }          
+          },
+          {
+            "name": "index",
+            "tooltip": "HOME.MENU.QUOTATIONTOCUSTOMER.TOOLTIP",
+            "active": "true",
+            "routerlink": "quotationtocustomer",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.QUOTATIONTOCUSTOMER.DISPLAYNAME"
+          },
+          {
+            "name": "index",
+            "tooltip": "Test one Drive",
+            "active": "true",
+            "routerlink": "testOneDrive",
+            "icon": "euro_symbol",
+            "displayName": "Test One Drive"
+          }                             
       ]
     }
   ]

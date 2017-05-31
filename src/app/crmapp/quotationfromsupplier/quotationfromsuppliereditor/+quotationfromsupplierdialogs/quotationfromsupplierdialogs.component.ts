@@ -6,7 +6,7 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
-import {  QuotationFromSupplierDialog, QuotationFromSupplier  } from '../../../model/allmodels';
+import {  QuotationFromSupplierDialog, QuotationFromSupplier, Opportunity  } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -23,6 +23,8 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
+import {  OpportunityService } from '../../../services/oppservice.service';
+
 
 @Component({
   selector: 'crm-quotationfromsupplierdialogs',
@@ -37,6 +39,7 @@ export class QuotationfromsupplierdialogsComponent extends BaseComponent {
  sortBy: string = 'ActionName';
  itemEdit: QuotationFromSupplierDialog;
  showEMail: boolean = false;
+ currentOpp: Opportunity;
   constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -46,11 +49,13 @@ export class QuotationfromsupplierdialogsComponent extends BaseComponent {
     public _ngZone: NgZone,
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService  ) {
+    public translate: TranslateService,
+    public _oppservice: OpportunityService  ) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
     this.catalogName = 'Quotation from Supplier Dialogs';
     this._curService.setAPI('QuotationFromSupplierDialog', this.catalogName);
     this.autoLoad = false;
+    this.currentOpp = _oppservice.currentOpp;
   }
 
  ngOnInitClass() {

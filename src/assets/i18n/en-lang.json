@@ -104,7 +104,14 @@
                 "TOOLTIP": "Create/Edit Quotation from Suppliers",
                 "DISPLAYNAME": "Quotation from Supplier"
             }           
-        }         
+        },
+        "QUOTATIONTOCUSTOMER": {
+            "DISPLAYNAME": "Quotation to Customer",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Quotation to Customer",
+                "DISPLAYNAME": "Quotation to Customer"
+            }           
+        }                  
        
     }
   },

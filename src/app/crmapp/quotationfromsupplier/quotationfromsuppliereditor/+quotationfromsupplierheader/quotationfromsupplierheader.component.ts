@@ -23,7 +23,7 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
-
+import {  OpportunityService } from '../../../services/oppservice.service';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
   opp: Opportunity;
   @ViewChild('idIncoTerm') incoTermSelect: AbstractValueAccessor;
   @ViewChild('idCountryOrigin') countryOrigin: AbstractValueAccessor;
-
+  onQuotationCreated: EventEmitter<QuotationFromSupplier> = new EventEmitter<QuotationFromSupplier>();
   deliveryRequired: boolean = false;
   dta: Date;
   constructor(public _router: Router, 
@@ -54,7 +54,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService
-    //,  public _oppservice: OpportunityService 
+    ,  public _oppservice: OpportunityService 
        ) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
 
@@ -81,6 +81,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
     this._actions.showCancel(false);
 
     if (this.idQuotation > 0) {
+      
       this.editEntity(this.idQuotation);
       this._actions.updateTitle('Edit Quotation ' + this.idQuotation.toString());
     } else {
@@ -101,6 +102,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
     this.itemEdit = item;
     this.setDeliverRequired();
     this.idOpp = item.IdOpportunity;
+    this.loadCurrentOpp(this.idOpp);
     this.countryOrigin.loadCustomDataFromId(item.IdMill);
     this._actions.showCancel(false);
   }
@@ -129,30 +131,62 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
 
   getFromOpp(event: any) {
     let t = event.target.value;
-    this._curService.loadItemObs('Opportunity', t) 
-    .map((response) => response.json())
-      .subscribe( (data: Opportunity) => {
-      this.opp = new Opportunity();
-      Object.assign(this.opp, data);
-
-      this.itemEdit.IdOpportunity = data.Id;
-      this.itemEdit.IdCurrency = data.IdCurrency;
-      this.itemEdit.IdPort = data.IdPort;
-      this.itemEdit.IdUser = data.IdUser;
-      this.itemEdit.IdIncoTerm = data.IdIncoTerm;
-      this.itemEdit.IdLinerTerm = data.IdLinerTerms;
-      this.itemEdit.DeliveryLocation = data.DeliveryLocation;
-      this.itemEdit.QuoteNotes = data.OppNotes;
-      this.itemEdit.AsImporter = data.AsImporter;
-      this.itemEdit.IdTransactionFlow = data.IdTransactionFlow;
-      this.itemEdit.IdStatus = 1;
-
-      this.idOpp = data.Id;
-      this.setDeliverRequired();
-    }, error => {
-      this._snackBarService.open('Opportunity does not exists', 'Ok');
-    });
+    this.loadFromOpp(t);
+  }
 
 
+
+
+
+  loadFromOpp(oid: number ) {
+    this._curService.loadItemObs('Opportunity', oid) 
+      .map((response) => response.json())
+        .subscribe( (data: Opportunity) => {
+        this.opp = new Opportunity();
+        Object.assign(this.opp, data);
+        this._oppservice.currentOpp = data;
+        this.itemEdit.IdOpportunity = data.Id;
+        this.itemEdit.IdCurrency = data.IdCurrency;
+        this.itemEdit.IdPort = data.IdPort;
+        this.itemEdit.IdUser = data.IdUser;
+        this.itemEdit.IdIncoTerm = data.IdIncoTerm;
+        this.itemEdit.IdLinerTerm = data.IdLinerTerms;
+        this.itemEdit.DeliveryLocation = data.DeliveryLocation;
+        this.itemEdit.QuoteNotes = data.OppNotes;
+        this.itemEdit.AsImporter = data.AsImporter;
+        this.itemEdit.IdTransactionFlow = data.IdTransactionFlow;
+        this.itemEdit.IdStatus = 1;
+
+        this.idOpp = data.Id;
+        this.setDeliverRequired();
+      }, error => {
+        this._snackBarService.open('Opportunity does not exists', 'Ok');
+      });
+
+  }
+
+  loadCurrentOpp(oid: number ) {
+    this._curService.loadItemObs('Opportunity', oid) 
+      .map((response) => response.json())
+        .subscribe( (data: Opportunity) => {
+        this.opp = new Opportunity();
+        Object.assign(this.opp, data);
+        this._oppservice.currentOpp = data;
+        this.idOpp = data.Id;
+      }, error => {
+        this._snackBarService.open('Opportunity does not exists', 'Ok');
+      });
+
+  }
+
+  goToOpp() {
+        this._router.navigate(['/opportunity/edit', this.idOpp]);
+  }
+
+
+  afterCreate(item: QuotationFromSupplier) {
+    super.afterCreate(item);
+    this.idQuotation = item.Id;
+    this.onQuotationCreated.emit(item);
   }
 }

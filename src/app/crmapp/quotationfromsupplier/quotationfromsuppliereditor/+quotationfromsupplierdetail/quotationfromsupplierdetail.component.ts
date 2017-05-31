@@ -84,7 +84,7 @@ export class QuotationfromsupplierdetailComponent extends BaseComponent {
     this.columns.push({ name: 'ItemDescription', label: 'Item Description' });
     this.columns.push({ name: 'ProductDescription', label: 'Product', tooltip: '' });
 
-    this.columns.push({ name: 'Quantity', label: 'Quantity' });
+    this.columns.push({ name: 'ItemQuantity', label: 'Quantity' });
     this.columns.push({ name: 'ItemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
     this.columns.push({ name: 'SalePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
   }

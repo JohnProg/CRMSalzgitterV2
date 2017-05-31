@@ -10,13 +10,19 @@
         
 
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section  flex-gt-sm="25" >
-            <md2-datepicker  #DateReceived name="DateReceived" requried="true" [(ngModel)]="itemEdit.DateReceived"></md2-datepicker>
+          <section  flex-gt-sm="20" >
+            <md2-datepicker  #DateReceived name="DateReceived" placeholder="Receiving Date" requried="true" [(ngModel)]="itemEdit.DateReceived"></md2-datepicker>
           </section>  
-          <section  flex-gt-sm="25" >
+          <section  flex-gt-sm="20" >
+            <md2-datepicker  #OfferValidity name="OfferValidity" placeholder="Offer validity" requried="true" [(ngModel)]="itemEdit.OfferValidity"></md2-datepicker>
+          </section>  
+          <section  flex-gt-sm="20" >
+            <md2-datepicker  #ShipmentOffered name="ShipmentOffered" placeholder="Shipment Offered" requried="true" [(ngModel)]="itemEdit.ShipmentOffered"></md2-datepicker>
+          </section>                   
+          <section  flex-gt-sm="20" >
             <crm-select #idCurrency name="idCurrency" required catalog="Currency" placeholder="CURRENCY" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
           </section>    
-          <section  flex-gt-sm="50" >
+          <section  flex-gt-sm="20" >
             <crm-select #idStatus name="idStatus" disabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
           </section>             
         </div>      

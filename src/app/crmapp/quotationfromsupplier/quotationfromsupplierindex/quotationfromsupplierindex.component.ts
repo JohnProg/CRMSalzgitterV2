@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
@@ -24,9 +24,9 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './quotationfromsupplierindex.component.html',
   styleUrls: ['./quotationfromsupplierindex.component.scss']
 })
-export class QuotationfromsupplierindexComponent extends BaseComponent  {
+export class QuotationfromsupplierindexComponent   {
 
-
+  @Input() idOpp: number = 0;
   constructor( public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -37,39 +37,16 @@ export class QuotationfromsupplierindexComponent extends BaseComponent  {
     private _router: Router,
     public _http: Http, 
     public _tableService: TdDataTableService,
+    public _route: ActivatedRoute,
     public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
-    this.sortBy = 'Id';
-    this.catalogName = 'Quotation from Supplier';
-    this._curService.setAPI('QuotationFromSupplier/', this.catalogName);
 
+    this._route.params.subscribe((params: { id: number }) => {
+      this.idOpp = params.id;
+    });
   }
 
+  search(t: string) {
 
-
-  ngOnInitClass() {
-    this.entList = <Observable<getQuotationFromSupplier_Result[]>>this._curService.entList;
-    this.initData();
-    //this.reloadPaged();
-  }
-
-  editEntity(id: number) {
-
-    this._router.navigate(['quotationfromsupplier/edit/' + id]);
-  }
-
-
-  addColumns() {
-
-    //super.addColumns();
-    this.columns.push({ name: 'Id', label: 'Quotation', tooltip: '' });
-    this.columns.push({ name: 'IdOpportunity', label: 'Opportunity' });
-    this.columns.push({ name: 'CurrencyName', label: 'Currency' });
-    this.columns.push({ name: 'MillName', label: 'Mill' });
-    this.columns.push({ name: 'PortName', label: 'Port' });
-    this.columns.push({ name: 'SstatusName', label: 'Status' });
-    this.columns.push({ name: 'DateReceived', label: 'Date' });
-    this.columns.push({ name: 'AsImporter', label: 'As Importer' });
   }
 
 }

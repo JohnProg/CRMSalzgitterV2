@@ -107,7 +107,7 @@ export class QuotationfromsupplierdialogsdocumentsComponent extends BaseComponen
         t = reader.result;
         tself.itemEdit.DocName = tself.files.name;
         tself.itemEdit.AData64 = t;
-        debugger
+        
         tself._curService.create(tself.itemEdit);
       };
       reader.readAsDataURL(this.files);

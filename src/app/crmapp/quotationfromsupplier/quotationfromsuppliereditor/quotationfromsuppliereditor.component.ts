@@ -20,7 +20,7 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { CatalogComponent } from '../../catalogs/catalog.component';
-
+import { QuotationfromsupplierheaderComponent } from './+quotationfromsupplierheader/quotationfromsupplierheader.component';
 
 @Component({
   selector: 'crm-quotationfromsuppliereditor',
@@ -31,8 +31,9 @@ import { CatalogComponent } from '../../catalogs/catalog.component';
 export class QuotationfromsuppliereditorComponent extends CatalogComponent {
 
   idQuotation: number = 0;
+  idOpp: number = 0;
   scrId: number = 1;
-
+  @ViewChild(QuotationfromsupplierheaderComponent) headercomp: QuotationfromsupplierheaderComponent;
 
   constructor(
     public _loadingService: TdLoadingService,
@@ -52,12 +53,68 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
 
 
   afterInit() {
-
+         this.bindOnQuoteCreated();
   }
 
 
   linkClick(scr: number ) : boolean {
     this.scrId = scr;
+
+    setTimeout( () => {
+       this.bindOnQuoteCreated();
+    }, 500);
     return true;
   }
+
+  bindOnQuoteCreated() {
+    
+    if( this.headercomp ) {
+      
+      this.headercomp.onQuotationCreated.subscribe( (itm: any) => {
+        
+            this.idQuotation = itm.Id;
+      } );
+    }
+  }
+
+  goToUpp() {
+    
+    this.headercomp.goToOpp();
+  }
 }
+
+
+
+
+@Component({
+  selector: 'crm-quotationfromsuppliereditorfromopp',
+  templateUrl: './quotationfromsuppliereditor.component.html',
+  styleUrls: ['./quotationfromsuppliereditor.component.scss'],
+  providers: [],
+})
+export class QuotationfromsuppliereditorFromOppComponent extends QuotationfromsuppliereditorComponent {
+
+
+  constructor(
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _mediaService: TdMediaService,
+    public _actions: ActionsService,
+    public _ngZone: NgZone,
+    public _router: Router, public _route: ActivatedRoute,
+    translate: TranslateService) {
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
+    this._route.params.subscribe((params: { id: number }) => {
+      this.idOpp = params.id;
+    });
+    this.idQuotation = 0;
+  }
+
+
+  afterInit() {
+    super.afterInit();
+    this.headercomp.loadFromOpp(this.idOpp);
+  }
+}
+

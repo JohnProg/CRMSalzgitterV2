@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-
-
+import * as moment from 'moment';
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 
 @Injectable()
 export class ConfigurationService {
@@ -11,7 +11,7 @@ export class ConfigurationService {
     public apiCsutomUrl: string = 'customapi/';
     public serverWithApiUrl = this.server + this.apiUrl;
     public serverWithApiCustomUrl = this.server + this.apiCsutomUrl;
-
+    public root = environment._root;
     public hideDelayToast: number = 2000;
 
     public pageSize: number = 5;
@@ -21,4 +21,35 @@ export class ConfigurationService {
 
 
 
+    public TOKEN_ENDPOINT: string = this.server + 'Token';
+    public tokenData: any;
+
+    public headerData: Headers;
+    public isValidToken(): boolean {
+
+        if( this.tokenData ) {
+            let d = moment(this.tokenData['.expires']);
+            let today = moment();
+            if (d > today) {
+                // logged in so return true
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+        return false;
+    }
+
+    public getHeaders() {
+       let h = new Headers();
+       h.append('Authorization', this.tokenData.token_type + ' ' + this.tokenData.access_token);
+       return h;
+    }
+
+    public getOriginHeaders() {
+       let h : Headers = new Headers();
+       h.append('Access-Control-Allow-Origin', this.root);
+       return h;
+    }
 }

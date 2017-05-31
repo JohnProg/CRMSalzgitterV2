@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
-import {  OpportunityService } from '../../oppservice.service';
+import {  OpportunityService } from '../../../services/oppservice.service';
 import {TranslateService} from '@ngx-translate/core';
 
 
@@ -126,7 +126,7 @@ export class OpportunitydialogsComponent extends BaseComponent {
   }
 
   afterUpdate(item: any) {
-    debugger
+    
   }
  
   cancelEdit() {

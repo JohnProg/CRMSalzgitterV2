@@ -37,13 +37,12 @@ public _http: Http,
 public _tableService: TdDataTableService,
     public translate: TranslateService) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
-        this.catalogName = 'Product';
+    this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
   }
 
   ngOnInitClass() {
     this.entList = <Observable<Product[]>>this._curService.entList;
-    
     this.initData();
     this.reloadPaged();
   }

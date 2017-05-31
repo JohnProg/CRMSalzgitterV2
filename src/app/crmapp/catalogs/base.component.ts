@@ -124,6 +124,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
                        _dialogService,_snackBarService, _tableService);
     this.addColumns();
     this.addActionColumn();
+    this.pageSize = this._confs.pageSize;
   }
 
   ngOnInit() {
@@ -401,7 +402,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   reloadPaged(sText: string = undefined) {
     if( this.isLoading === false && this.singleEditor === false) {
-      this.isLoading = true;
+      //this.isLoading = true;
       let p = {
         page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
         sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0

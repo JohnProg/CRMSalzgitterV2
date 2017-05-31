@@ -1,0 +1,68 @@
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding *ngIf="idParent == 0">
+          <section flex-gt-sm="35"  >
+            <md-input-container>
+              <input mdInput #idParent name="idParent" placeholder="Enter QFS base" (change)="getFromOpp($event)">
+            </md-input-container>
+          </section>
+        </div>
+
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
+        
+
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section  flex-gt-sm="20" >
+            <md2-datepicker  #DateSend name="DateSend" placeholder="Send Date" requried="true" [(ngModel)]="itemEdit.DateSend"></md2-datepicker>
+          </section>  
+          <section  flex-gt-sm="20" >
+            <md2-datepicker  #OfferValidity name="OfferValidity" placeholder="Offer validity" requried="true" [(ngModel)]="itemEdit.OfferValidity"></md2-datepicker>
+          </section>  
+          <section  flex-gt-sm="20" >
+            <md2-datepicker  #ShipmentOffered name="ShipmentOffered" placeholder="Shipment Offered" requried="true" [(ngModel)]="itemEdit.ShipmentOffered"></md2-datepicker>
+          </section>                   
+          <section  flex-gt-sm="20" >
+            <crm-select #idCurrency name="idCurrency" required catalog="Currency" placeholder="CURRENCY" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
+          </section>    
+          <section  flex-gt-sm="20" >
+            <crm-select #idStatus name="idStatus" disabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+          </section>             
+        </div>      
+        <div flex layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <md-input-container flex >
+            <textarea mdInput flex="100"  #QuoteNotes name="QuoteNotes" maxlength="500" required  placeholder="Quote Notes " [(ngModel)]="itemEdit.QuoteNotes" ></textarea>
+             <md-hint flex align="end">{{QuoteNotes.value.length}} / 500</md-hint>
+          </md-input-container>         
+        </div>         
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section  flex-gt-sm="35" >
+            <crm-select #idMill name="idMill" required catalog="Mill" placeholder="MILL" [(ngModel)]="itemEdit.IdMill" ></crm-select>
+          </section>   
+          <section  flex-gt-sm="35" >
+            <crm-select #IdCountry name="IdCountry" 
+                         parentCatalog="Mill/countriesByMill?idmill=" 
+                         [parentSelect]="idMill"
+                         placeholder="Country Origin" [(ngModel)]="itemEdit.IdCountry" ></crm-select>
+          </section>                    
+          <section  flex-gt-sm="30" >
+            <crm-select #idPort name="idPort" required catalog="Port" placeholder="PORT" [(ngModel)]="itemEdit.IdPort" ></crm-select>
+          </section>           
+        </div>
+
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section flex-gt-sm="25" >
+            <crm-select #idIncoTerm name="idIncoTerm" required  catalog="IncoTerm" placeholder="INCOTERM" [(ngModel)]="itemEdit.IdIncoTerm" (change)="incoTermChange($event)" ></crm-select>
+          </section>  
+          <section flex-gt-sm="25" >
+            <crm-select #IdLinerTerm name="IdLinerTerm" required  catalog="LinerTerm" placeholder="LINERTERM" [(ngModel)]="itemEdit.IdLinerTerm" ></crm-select>
+          </section>   
+          <section flex-gt-sm="25" >
+            <md-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.AsImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
+          </section>                 
+        </div>
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding *ngIf="deliveryRequired">
+          <md-input-container flex class="">
+            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.DeliveryLocation" [required]="deliveryRequired" ></textarea>
+               
+          </md-input-container>         
+        </div>
+       
+      </form>

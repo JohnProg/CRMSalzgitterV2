@@ -17,6 +17,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../catalogs/base.component';
 import {TranslateService} from '@ngx-translate/core';
+import { ActionopportunitytemplateemailComponent } from './+actionopportunitytemplateemail/actionopportunitytemplateemail.component';
 
 
 
@@ -27,6 +28,8 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class ActionopportunityComponent extends BaseComponent  {
 
+
+  @ViewChild(ActionopportunitytemplateemailComponent) _templates: ActionopportunitytemplateemailComponent;
   constructor( public _curService: CatalogService, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -46,6 +49,13 @@ export class ActionopportunityComponent extends BaseComponent  {
     this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
     this.columns.push({ name: 'EMailTo', label: 'EMailTo' });
   }
+
+  expandProperties() {
+
+    this._templates.loadTemplates();
+
+  }
+
 
 
 }

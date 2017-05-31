@@ -119,7 +119,7 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
 
   saveProp(item) {
 
-    if (item.Id == 0) {
+    if (item.Id === 0) {
       this._curService.customPost('Product/SaveProperty', item)
         .map((response) => response.json()).subscribe((data) => {
           this.isEditProp = false;

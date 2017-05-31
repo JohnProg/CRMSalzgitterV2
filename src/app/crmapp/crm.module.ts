@@ -23,7 +23,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 
 // services 
-import { ActionsService, CatalogService, ConfigurationService } from './services/index';
+import { OpportunityService, ActionsService, CatalogService, 
+  ConfigurationService, TokenService } from './services/index';
 
 
 //catalogs
@@ -41,7 +42,7 @@ import {
   OptionsComponent, CompanyComponent, 
   // Products
   ProductComponent, ProducteditorComponent, ProductpropertyComponent,
-  ProductindexComponent, ActionopportunityComponent } from './options/index';
+  ProductindexComponent, ActionopportunityComponent, ActionopportunitytemplateemailComponent } from './options/index';
 
 
 
@@ -51,33 +52,53 @@ import { CRMSelectComponent, GenericActionsComponent, CrmselectchildComponent, E
 
 // Directives
 
-import { CurrencyInputDirective, CRMCurrencyFormatterDirective } from './directives/index';
+import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/index';
 
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
         OpportunityheaderComponent, OpportunitydialogsComponent, 
         OpportunitydocumentsComponent, OpportunitydetailsumaryComponent,
-      OpportunityService, OpportunityDialogsDocumentsComponent, OpportunitydialogemailComponent
+       OpportunityDialogsDocumentsComponent, OpportunitydialogemailComponent
         } from './opportunity/index';
 
 // Quotation to supplier
 
 import { QuotationfromsupplierComponent, QuotationfromsupplierindexComponent,
+  QuotationfromsupplierindexviewerComponent,
 QuotationfromsuppliereditorComponent, QuotationfromsupplierheaderComponent,
 QuotationfromsupplierdetailComponent, QuotationfromsupplierdetailsumaryComponent,
 QuotationfromsupplierdialogsComponent, QuotationfromsupplierdialogsdocumentsComponent,
-QuotationfromsupplierdialogemailComponent } from './quotationfromsupplier/index';
+QuotationfromsupplierdialogemailComponent,
+QuotationfromsuppliereditorFromOppComponent } from './quotationfromsupplier/index';
+
+//Quotation to Customer
+import { QuotationtocustomerComponent, QuotationtocustomerindexComponent,
+QuotationtocustomerindexviewerComponent, QuotationtocustomereditorComponent,
+QuotationtocustomereditorheaderComponent, QuotationtocustomereditorFromQFSComponent,
+QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryComponent
+ } from './quotationtocustomer/index';
 
 
 // OneDrive
 import { ONEDRIVE_PROVIDERS } from './onedriveapi/index';
 import { OnedriveCallbackComponent } from './onedriveapi/onedrive-callback/onedrive-callback.component';
 
+// Login
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './_guards/auth.guard';
+
+
 import * as moment from 'moment';
 
+import { TestonedriveComponent } from './testonedrive/testonedrive.component';
+
+import { AuthHelper } from './authHelper/authHelper';
 
 @NgModule({
   declarations: [
+    TestonedriveComponent,
+
+    
     BaseComponent,
     CurrencyComponent,
     ColonytypeComponent,
@@ -98,6 +119,7 @@ import * as moment from 'moment';
     CountryComponent,
     StateComponent,
 
+
     IncotermComponent,
     CatalogComponent,
     TransactionflowComponent,
@@ -107,6 +129,7 @@ import * as moment from 'moment';
     OptionsComponent,
     CompanyComponent,
     ActionopportunityComponent,
+    ActionopportunitytemplateemailComponent,
       //Products
     ProductComponent, 
     ProducteditorComponent,
@@ -131,6 +154,7 @@ import * as moment from 'moment';
    // Quotation to supplier
    QuotationfromsupplierComponent,
    QuotationfromsupplierindexComponent,
+   QuotationfromsupplierindexviewerComponent,
    QuotationfromsuppliereditorComponent,
    QuotationfromsupplierheaderComponent,
    QuotationfromsupplierdetailComponent,
@@ -138,18 +162,30 @@ import * as moment from 'moment';
    QuotationfromsupplierdialogsComponent,
    QuotationfromsupplierdialogsdocumentsComponent,
    QuotationfromsupplierdialogemailComponent,
+   QuotationfromsuppliereditorFromOppComponent,
 
-   
+   // Quotation to Customer
+   QuotationtocustomerComponent,
+   QuotationtocustomerindexComponent,
+   QuotationtocustomerindexviewerComponent,
+   QuotationtocustomereditorComponent,
+   QuotationtocustomereditorheaderComponent,
+   QuotationtocustomereditorFromQFSComponent,
+   QuotationtocustomereditordetailComponent,
+   QuotationtocustomerdetailsumaryComponent,
 // Components
   // Cbx Components
     CRMSelectComponent, CrmselectchildComponent,
     GenericActionsComponent, EmailSenderComponent,
 
     // Directives
-    CurrencyInputDirective, CRMCurrencyFormatterDirective,
+    CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
 // OneDrive
     OnedriveCallbackComponent,
+
+    // Login
+    LoginComponent,
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserModule,
@@ -172,9 +208,9 @@ import * as moment from 'moment';
   providers: [
     appRoutingProviders,
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
-    CurrencyInputDirective, CRMCurrencyFormatterDirective,
-    OpportunityService,
-    ONEDRIVE_PROVIDERS,
+    CRMCurrencyPipe, CRMCurrencyFormatterDirective,
+    OpportunityService, TokenService,
+    ONEDRIVE_PROVIDERS, AuthGuard, AuthHelper,
 
 
   ], // additional providers needed for this module

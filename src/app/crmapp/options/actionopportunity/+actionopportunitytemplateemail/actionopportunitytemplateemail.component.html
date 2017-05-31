@@ -1,0 +1,50 @@
+<section layout="row">
+  <section flex="95"></section>
+  <section flex="5">
+    <button md-mini-fab class="md-mini md-primary" (click)="addProperty()" aria-label="Add Property" *ngIf="!isEdit">
+        <md-icon>add</md-icon>
+      </button>
+
+  </section>
+</section>
+
+<section flex *ngIf="!isEdit">
+            <ng-template tdLoading="items.load">
+  <td-data-table [data]="emailList | async " [columns]="propColumns">
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <div layout="row" flex="5">
+
+        <button md-icon-button (click)="deleteProperty(row)">
+            <md-icon>delete</md-icon>
+          </button>
+      </div>
+    </ng-template>
+
+  </td-data-table>
+          </ng-template>  
+</section>
+
+<form #fprop="ngForm" flex (ngSubmit)="submitProperty(fprop.value)">
+  <section flex layout="row">
+    <section flex="25"></section>
+    <section *ngIf="isEdit" flex="50">
+      <section layout="column" flex="100" layout-margin>
+          <crm-select #IdDocType name="IdDocType" [fieldDisplay]="NameDescription" catalog="DocType" placeholder="Select Document Type" [(ngModel)]="emailEdit.IdDocType"></crm-select>
+      </section>
+      <section layout="column" flex="100" layout-margin>
+          <crm-select #IdTemplateEmail name="IdTemplateEmail" [fieldDisplay]="NameDescription" catalog="TemplateEmail" placeholder="Select Email Template" [(ngModel)]="emailEdit.IdTemplateEmail"></crm-select>
+      </section>      
+      <div layout="row" flex layout-align="end center">
+        <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEditProp()" aria-label="Cancel">
+                   <md-icon>highlight_off</md-icon>
+                    </button>
+        <button md-button type="button" class="md-icon-button md-primary" (click)="saveProp(emailEdit)" [disabled]="!fprop.valid"
+          aria-label="Save Property">
+                   <md-icon>save</md-icon>
+          </button>
+
+      </div>
+    </section>
+    <section flex="25"></section>
+  </section>
+</form>

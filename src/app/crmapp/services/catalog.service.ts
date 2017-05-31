@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+import { Response, Http, Headers, RequestOptions, URLSearchParams, QueryEncoder } from '@angular/http';
 import { RESTService, HttpInterceptorService } from '@covalent/http';
 
 import { Observable } from 'rxjs/Observable';
@@ -17,9 +17,9 @@ import {
 import { MdSnackBar } from '@angular/material';
 
 export interface IPChangeEventSorted extends IPageChangeEvent {
-  sortBy: string,
-  sortType: string,
-  sText: string
+  sortBy: string;
+  sortType: string;
+  sText: string;
 }
 
 export const NUMBER_FORMAT: any = (v: number) => v;
@@ -30,16 +30,16 @@ export const DATE_FORMAT: any = (v: number ) =>  v !== undefined ? v.toLocaleStr
 @Injectable()
 export class CRMRestService extends RESTService<TCRMEntity>  {
 
+  _headers: Headers = new Headers();
   constructor(private _http: Http, private _confs: ConfigurationService) {
     super(_http, {
       baseUrl: _confs.serverWithApiUrl,
       path: '',
       //headers: new Headers(),
-      dynamicHeaders: () => new Headers(),
+      dynamicHeaders: () => { 
+        return this._confs.getHeaders(); },
       transform: (res: Response): any => res.json(),
     });
-
-
   }
 
   public setPath(dpath: string) {
@@ -61,6 +61,7 @@ export class CRMRestService extends RESTService<TCRMEntity>  {
 export class CatalogService {
 
   private headers: Headers;
+  private options: RequestOptions;
   private dataStore: {
     entities: TCRMEntity[]
   };
@@ -85,15 +86,16 @@ export class CatalogService {
   afterLoadAllEvent: EventEmitter<TCRMEntity[]> = new EventEmitter<TCRMEntity[]>();
   _rest: CRMRestService;
 
-  constructor(public _http: Http, public _confs: ConfigurationService,
+  constructor(public _http: Http, 
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     private _tableService: TdDataTableService
   ) {
-    this.headers = new Headers();
-    this.headers.append('Accept', '');
-    this.headers.append('Content-Type', 'application/json');
+
+    this.headers = this._confs.getHeaders();
+    this.options = new RequestOptions({ headers: this.headers });
 
     this.dataStore = { entities: [] };
     this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
@@ -108,6 +110,7 @@ export class CatalogService {
 
   setAPI(tapi: string, cName: string) {
     this.capi = tapi;
+    
     this._rest.setPath(this.capi);
     this.fullapi = this._confs.serverWithApiUrl + this.capi;
     this.catalogName = cName;
@@ -118,21 +121,23 @@ export class CatalogService {
   }
 
   loadAll(cparams: IPChangeEventSorted, customHandle: boolean = false) {
+    this._loadingService.register('items.load');
     this._rest.query().subscribe((datas: TCRMEntity[]) => {
       this.dataStore.entities = datas;
       let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
       this._entList.next(t);
       this.changeTotal(this.dataStore.entities.length);
       this.afterLoadAllEvent.next(this.dataStore.entities);
+      this._loadingService.resolve('items.load');
     }, (error: Error) => {
-      this._loadingService.resolve('users.list');
+      this._loadingService.resolve('items.load');
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     });
   }
 
 
   loadCustomAll( url: string,  cparams: URLSearchParams, pageSize: number = 0, customHandle: boolean = false) {
-    this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
+    this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams, headers: this.headers })
       .map((response) => response.json()).subscribe((result) => {
         this.dataStore.entities = result;
         
@@ -157,7 +162,7 @@ export class CatalogService {
 
 
   loadCustomAllObs( url: string,  cparams: URLSearchParams, customHandle: boolean = false) {
-    return this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams })
+    return this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams, headers: this.headers })
       .map((response) => response.json());
   }
 
@@ -166,7 +171,7 @@ export class CatalogService {
     cparams.forEach( (element) => {
       pparams.set(element.Name, element.Description);
     });
-    return this._http.get(this.fullapi + pfunc, { search: pparams })
+    return this._http.get(this.fullapi + pfunc, { search: pparams, headers: this.headers })
       .map( (response) => response.json());
   }
 
@@ -215,7 +220,7 @@ export class CatalogService {
       });
     }
 
-    return this._http.get(this._confs.serverWithApiCustomUrl + action, { search: pparams })
+    return this._http.get(this._confs.serverWithApiCustomUrl + action, { search: pparams, headers: this.headers })
       .map((response) => response.json()).subscribe((result) => {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);
@@ -241,7 +246,7 @@ export class CatalogService {
 
   loadFromUrl(url: string) {
     // return this._http.get( this.fullapi + id).map(response => response.json());
-     this._http.get(this._confs.serverWithApiCustomUrl + url)
+     this._http.get(this._confs.serverWithApiCustomUrl + url, this.options)
       .map((response) => response.json())
       .subscribe( (data: TCRMEntity) => {
       Object.assign(this.itemEdit, data);
@@ -289,10 +294,10 @@ export class CatalogService {
     // }
 
 
-    this._http.post(this.apiCustom + url, JSON.stringify(fileToUpload), {headers: hd})
+    this._http.post(this.apiCustom + url, JSON.stringify(fileToUpload), this.options)
       .map((response) => response.json())
       .subscribe( (data: ReturnSaveRequest) => {
-        debugger
+        
         if(customHandle === false ) {
           this.dataStore.entities.push(data.Data);
           this._entList.next(Object.assign({}, this.dataStore).entities);
@@ -361,7 +366,7 @@ export class CatalogService {
         pparams.set(element.Name, element.Description);
       });
     }
-    this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams })
+    this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams, headers: this.headers })
       .map((response) => response.json()).subscribe((data) => {
         Object.assign(catList, <TCRMEntity[]>data);
       }, (error) => {
@@ -378,7 +383,7 @@ export class CatalogService {
         pparams.set(element.Name, element.Description);
       });
     }
-    this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams })
+    this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams, headers: this.headers })
       .map((response) => response.json()).subscribe((data) => {
         Object.assign(catList, <TCRMEntity[]>data);
       }, (error) => {
@@ -396,7 +401,7 @@ export class CatalogService {
         pparams.set(element.Name, element.Description);
       });
     }
-    return this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams });
+    return this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams, headers: this.headers });
   }
 
   loadCustomCatalogObs(catalog: string, cparams: TCRMEntity[]) : any {
@@ -408,7 +413,8 @@ export class CatalogService {
         pparams.set(element.Name, element.Description);
       });
     }
-    return this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams });
+    
+    return this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams, headers: this.headers });
   }
 
   afterLoadEmmiterEvent(itm: TCRMEntity) {
@@ -420,7 +426,7 @@ export class CatalogService {
   }
 
   public customUpdate(url: string, cparams: any) {
-    return this._http.put(this.apiCustom  + url, cparams);
+    return this._http.put(this.apiCustom  + url, cparams, this.options);
   }
 
   public customDelete(url: string, cparams: any) {
@@ -428,12 +434,21 @@ export class CatalogService {
   }
  
   public customPost(url: string, cparams: any) {
-    return this._http.post(this.apiCustom  + url, cparams);
+    return this._http.post(this.apiCustom  + url, cparams, this.options);
+  }
+
+
+  public catalogPost(url: string, cparams: any) {
+    return this._http.post(this._confs.serverWithApiUrl  + url, cparams, this.options);
+  }
+
+  public catalogDelete(url: string, cparams: any) {
+    return this._http.delete(this._confs.serverWithApiUrl  + url, this.options);
   }
 
 
   loadItemObs(catalog: string, id: number) : any {
-    return this._http.get(this._confs.serverWithApiUrl + catalog + '/' + id.toString());
+    return this._http.get(this._confs.serverWithApiUrl + catalog + '/' + id.toString(), this.options);
   }
 
 

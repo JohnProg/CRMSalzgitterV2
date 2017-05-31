@@ -106,7 +106,14 @@
                 "TOOLTIP": "Crear/Editar Cotizacion del Proveedor",
                 "DISPLAYNAME": "Cotizaciones del Proveedor"
             }           
-        }           
+        },
+        "QUOTATIONTOCUSTOMER": {
+            "DISPLAYNAME": "Quotation to Customer",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Quotation to Customer",
+                "DISPLAYNAME": "Quotation to Customer"
+            }           
+        }                   
     }
   },
   "OPPORTUNITY": {

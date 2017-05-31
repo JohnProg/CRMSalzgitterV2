@@ -20,6 +20,7 @@
     <section *ngIf="!isEditing">
 
 
+ <ng-template tdLoading="items.load">
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row"  let-column="column">
           <div layout="row">
@@ -40,6 +41,7 @@
    (change)="change($event)"
         >
       </td-paging-bar>
+            </ng-template>  
     </section>
   </md-card-content>
 </md-card>
