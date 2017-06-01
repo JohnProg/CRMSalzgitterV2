@@ -12,7 +12,8 @@ import { RequestInterceptor } from '../config/interceptors/request.interceptor';
 import { routedComponents, AppRoutingModule } from './app-routing.module';
 
 import { CRMModule } from './crmapp/crm.module';
-import { SharedModule } from './shared/shared.module';
+
+import { Md2Module }  from 'md2';
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
@@ -27,22 +28,19 @@ const httpInterceptorProviders: Type<any>[] = [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    SharedModule,
+    CRMModule,
     CovalentHttpModule.forRoot({
       interceptors: [{
         interceptor: RequestInterceptor, paths: ['**'],
       }],
     }),
-    CovalentHighlightModule,
-    CovalentMarkdownModule,
-    CRMModule,
-
+    Md2Module.forRoot(),
   ], // modules needed to run this module
   providers: [
     httpInterceptorProviders,
     Title,
   ], // additional providers needed for this module
   entryComponents: [ ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
 })
 export class AppModule {}

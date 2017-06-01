@@ -8,7 +8,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 import {TranslateService} from '@ngx-translate/core';
-import { OneDriveAuth } from '../crmapp/onedriveapi/index';
 import { User } from '../crmapp/model/allmodels';
 
 
@@ -42,7 +41,6 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
               private _mediaService: TdMediaService,
               private _ngZone: NgZone,
               private translate: TranslateService,
-              private _oauth: OneDriveAuth,
               private _route: ActivatedRoute, 
               private _token: TokenService) {
         // this language will be used as a fallback when a translation isn't found in the current language
@@ -160,11 +158,5 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
-  signIn() {
-    this._oauth.login();
-  }
 
-  checkLogin() {
-    alert(this._oauth.token);
-  }
 }

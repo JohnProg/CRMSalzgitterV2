@@ -203,15 +203,7 @@
             "routerlink": "quotationtocustomer",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.QUOTATIONTOCUSTOMER.DISPLAYNAME"
-          },
-          {
-            "name": "index",
-            "tooltip": "Test one Drive",
-            "active": "true",
-            "routerlink": "testOneDrive",
-            "icon": "euro_symbol",
-            "displayName": "Test One Drive"
-          }                             
+          }                          
       ]
     }
   ]

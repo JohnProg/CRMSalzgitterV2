@@ -1,28 +1,14 @@
 import { NgModule, Type } from '@angular/core';
-import { RequestInterceptor } from '../../config/interceptors/request.interceptor';
-import { BrowserModule, Title }  from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CovalentHttpModule, IHttpInterceptor } from '@covalent/http';
-import { CovalentHighlightModule } from '@covalent/highlight';
-import { CovalentMarkdownModule } from '@covalent/markdown';
-
-
-const httpInterceptorProviders: Type<any>[] = [
-  RequestInterceptor,
-];
-
+import { Routes, RouterModule } from '@angular/router';
 
 import { CurrencyPipe } from '@angular/common';
-
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { CKEditorModule } from 'ng2-ckeditor';
-
 import { Md2Module }  from 'md2';
-
 import { TextMaskModule } from 'angular2-text-mask';
-
 import { SharedModule } from '../shared/shared.module';
+
 // services 
 import { OpportunityService, ActionsService, CatalogService, 
   ConfigurationService, TokenService } from './services/index';
@@ -79,11 +65,6 @@ QuotationtocustomereditorheaderComponent, QuotationtocustomereditorFromQFSCompon
 QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryComponent
  } from './quotationtocustomer/index';
 
-
-// OneDrive
-import { ONEDRIVE_PROVIDERS } from './onedriveapi/index';
-import { OnedriveCallbackComponent } from './onedriveapi/onedrive-callback/onedrive-callback.component';
-
 // Login
 
 import { AuthGuard } from './_guards/auth.guard';
@@ -91,15 +72,12 @@ import { AuthGuard } from './_guards/auth.guard';
 
 import * as moment from 'moment';
 
-import { TestonedriveComponent } from './testonedrive/testonedrive.component';
-
 import { AuthHelper } from './authHelper/authHelper';
 
 @NgModule({
   declarations: [
-    TestonedriveComponent,
-
     
+
     BaseComponent,
     CurrencyComponent,
     ColonytypeComponent,
@@ -182,36 +160,30 @@ import { AuthHelper } from './authHelper/authHelper';
     // Directives
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
-// OneDrive
-    OnedriveCallbackComponent,
 
 
   ], // directives, components, and pipes owned by this NgModule
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    SharedModule,
     TranslateModule,
-     CovalentHttpModule.forRoot({
-      interceptors: [{
-        interceptor: RequestInterceptor, paths: ['**'],
-      }],
-    }),
-    CovalentHighlightModule,
-    CovalentMarkdownModule,
+    SharedModule,
+    RouterModule,
     CKEditorModule,
-    Md2Module.forRoot(),
+    Md2Module,
     TextMaskModule,
   ], // modules needed to run this module
   exports: [
        SharedModule,
+       Md2Module,
+       CKEditorModule,
+       Md2Module,
        TranslateModule,
+       TextMaskModule,
   ],
   providers: [
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
-    ONEDRIVE_PROVIDERS, AuthGuard, AuthHelper,
+    AuthGuard, AuthHelper,
 
 
   ], // additional providers needed for this module

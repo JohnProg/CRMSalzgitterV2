@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, NgZone, OnInit, OnDestroy  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigurationService } from '../crmapp/services/configuration.service';
-import { OneDriveAuth } from '../crmapp/onedriveapi/index';
 import { TdMediaService, TdLoadingService, TdDigitsPipe  } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -22,8 +21,7 @@ export class DashboardComponent implements AfterViewInit  {
 
   constructor(private _titleService: Title,
           private _router: Router,
-        private _route: ActivatedRoute,
-        private _oauth: OneDriveAuth  ) {
+        private _route: ActivatedRoute ) {
 
   }
 

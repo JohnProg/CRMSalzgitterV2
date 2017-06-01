@@ -35,10 +35,7 @@ import { QuotationtocustomerComponent,
  } from './crmapp/quotationtocustomer/index';
 
 
-import { OnedriveCallbackComponent } from './crmapp/onedriveapi/index';
 import { LoginComponent } from './crmapp/login/login.component';
-
-import { TestonedriveComponent } from './crmapp/testonedrive/testonedrive.component';
 
 
 const routes: Routes = [
@@ -53,9 +50,7 @@ const routes: Routes = [
           component: DashboardComponent,
           path: '',
         },
-        {
-          path: 'testOneDrive', component: TestonedriveComponent
-        },
+
         {
           path: 'catalogs', component: CatalogComponent,
           children: [
@@ -183,11 +178,7 @@ const routes: Routes = [
           ]
         },
      ]
-  },
-  {
-      path: 'onedriveCallback',
-      component: OnedriveCallbackComponent
-  }  
+  }
 ];
 
 
@@ -201,5 +192,6 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routedComponents: any[] = [
-    MainComponent, LoginComponent, DashboardComponent,
+    MainComponent, LoginComponent,
+    DashboardComponent, 
 ];

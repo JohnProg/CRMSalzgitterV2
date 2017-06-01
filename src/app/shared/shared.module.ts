@@ -6,20 +6,20 @@ import {
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
   CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
   CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-  CovalentCommonModule, CovalentDialogsModule,
+  CovalentCommonModule, CovalentDialogsModule, CovalentExpansionPanelModule,
+  CovalentFileModule, CovalentChipsModule,
 } from '@covalent/core';
+
+
 import {
   MdButtonModule, MdCardModule, MdIconModule,
   MdListModule, MdMenuModule, MdTooltipModule,
   MdSlideToggleModule, MdInputModule, MdCheckboxModule,
   MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-  MdTabsModule, MdSelectModule, MdRadioModule,
+  MdTabsModule, MdSelectModule, MdRadioModule, MdChipsModule,
 } from '@angular/material';
 
 import { NgxChartsModule, } from '@swimlane/ngx-charts';
-
-//CRM APP Module
-import { CRMModule } from '../crmapp/crm.module';
 
 const FLEX_LAYOUT_MODULES: any[] = [
   FlexLayoutModule,
@@ -34,14 +34,15 @@ const MATERIAL_MODULES: any[] = [
   MdListModule, MdMenuModule, MdTooltipModule,
   MdSlideToggleModule, MdInputModule, MdCheckboxModule,
   MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-  MdTabsModule, MdSelectModule, MdRadioModule,
+  MdTabsModule, MdSelectModule, MdRadioModule, MdChipsModule,
 ];
 
 const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
   CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
   CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-  CovalentCommonModule, CovalentDialogsModule,
+  CovalentCommonModule, CovalentDialogsModule, 
+  CovalentExpansionPanelModule, CovalentFileModule, CovalentChipsModule,
 ];
 
 const CHART_MODULES: any[] = [
@@ -56,7 +57,7 @@ const CHART_MODULES: any[] = [
     COVALENT_MODULES,
     CHART_MODULES,
     FLEX_LAYOUT_MODULES,
-
+    
   ],
   declarations: [
 
@@ -67,6 +68,7 @@ const CHART_MODULES: any[] = [
     COVALENT_MODULES,
     CHART_MODULES,
     FLEX_LAYOUT_MODULES,
+    
   ]
 })
 export class SharedModule { }
