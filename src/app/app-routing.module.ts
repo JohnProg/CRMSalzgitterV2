@@ -4,10 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-
 import { AuthGuard } from './crmapp/_guards/auth.guard';
-
-
 
 import { CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentComponent,
 DocumentTypeComponent, FamilyComponent, LinerTermComponent, MarketComponent, MillComponent, OrganizationComponent,
@@ -204,30 +201,5 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routedComponents: any[] = [
-    MainComponent, LoginComponent,
-
-    CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentComponent,
-    DocumentTypeComponent, FamilyComponent, LinerTermComponent, MarketComponent, MillComponent, OrganizationComponent,
-    PaymentTermComponent, PortComponent, PositionComponent, PropertyComponent, SectorComponent, TenderComponent,
-    ActionoppComponent, CountryComponent, TransactionflowComponent, StateComponent, IncotermComponent,
-    TemplateemailComponent,
-
-    OptionsComponent, ActionopportunityComponent, ProductComponent, ProductindexComponent,
-    ProducteditorComponent,
-    
-    OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent,
-    OpportunitydetailComponent, OpportunityheaderComponent, OpportunitydialogsComponent,
-    OpportunitydocumentsComponent,  OpportunitydialogemailComponent,
-
-
-    QuotationfromsupplierComponent, QuotationfromsupplierindexComponent, 
-    QuotationfromsuppliereditorComponent, QuotationfromsupplierdialogemailComponent,
-    QuotationfromsuppliereditorFromOppComponent,
-
-    QuotationtocustomerComponent,
-    QuotationtocustomerindexComponent, QuotationtocustomereditorComponent,
-    QuotationtocustomereditorFromQFSComponent,
-
-
-    OnedriveCallbackComponent, 
+    MainComponent, LoginComponent, DashboardComponent,
 ];

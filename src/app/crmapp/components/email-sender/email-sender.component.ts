@@ -17,7 +17,7 @@ import { MdSnackBar } from '@angular/material';
 import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
 import {  EMailTemplate, AttachDocument, TCRMEntity, GenericList } from '../../model/allmodels';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -33,7 +33,6 @@ export class EmailSenderComponent extends BaseComponent {
   idDialog: number = 0;
   allContacts: TCRMEntity[];
   optionsModel: number[];
-  myOptions: IMultiSelectOption[];
   mainField: string;
   baseApi: string;
 constructor(
@@ -61,12 +60,6 @@ constructor(
 
   ngOnInitClass() {
     super.ngOnInitClass();
-    this.myOptions = [
-            { id: 1, name: 'Option 1' },
-            { id: 2, name: 'Option 2' },
-        ];
-    //this.entList = <Observable<EMailTemplate[]>>this._curService.entList;
-
     this._curService.setAPI(this.baseApi + '/', this.catalogName);
     this.loadUrl = this.baseApi + '/getEMailData?iddialog=';
   }

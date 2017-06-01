@@ -1,27 +1,28 @@
 import { NgModule, Type } from '@angular/core';
+import { RequestInterceptor } from '../../config/interceptors/request.interceptor';
 import { BrowserModule, Title }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { appRoutes, appRoutingProviders } from '../app.routes';
-import { CovalentCoreModule } from '@covalent/core';
 import { CovalentHttpModule, IHttpInterceptor } from '@covalent/http';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CovalentMarkdownModule } from '@covalent/markdown';
+
+
+const httpInterceptorProviders: Type<any>[] = [
+  RequestInterceptor,
+];
+
+
 import { CurrencyPipe } from '@angular/common';
 
-import { RequestInterceptor } from '../../config/interceptors/request.interceptor';
-
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
-import {HttpModule, Http} from '@angular/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { CKEditorModule } from 'ng2-ckeditor';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+
 import { Md2Module }  from 'md2';
 
 import { TextMaskModule } from 'angular2-text-mask';
 
-
+import { SharedModule } from '../shared/shared.module';
 // services 
 import { OpportunityService, ActionsService, CatalogService, 
   ConfigurationService, TokenService } from './services/index';
@@ -84,7 +85,7 @@ import { ONEDRIVE_PROVIDERS } from './onedriveapi/index';
 import { OnedriveCallbackComponent } from './onedriveapi/onedrive-callback/onedrive-callback.component';
 
 // Login
-import { LoginComponent } from './login/login.component';
+
 import { AuthGuard } from './_guards/auth.guard';
 
 
@@ -184,29 +185,29 @@ import { AuthHelper } from './authHelper/authHelper';
 // OneDrive
     OnedriveCallbackComponent,
 
-    // Login
-    LoginComponent,
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    CovalentCoreModule,
-    CovalentHttpModule,
-
+    SharedModule,
+    TranslateModule,
+     CovalentHttpModule.forRoot({
+      interceptors: [{
+        interceptor: RequestInterceptor, paths: ['**'],
+      }],
+    }),
     CovalentHighlightModule,
     CovalentMarkdownModule,
-    NgxChartsModule,
-    TranslateModule,
-    appRoutes,
     CKEditorModule,
     Md2Module.forRoot(),
     TextMaskModule,
   ], // modules needed to run this module
   exports: [
+       SharedModule,
        TranslateModule,
   ],
   providers: [
-    appRoutingProviders,
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,

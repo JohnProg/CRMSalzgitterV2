@@ -13,12 +13,13 @@ import {
   MdListModule, MdMenuModule, MdTooltipModule,
   MdSlideToggleModule, MdInputModule, MdCheckboxModule,
   MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-  MdTabsModule, MdSelectModule,
+  MdTabsModule, MdSelectModule, MdRadioModule,
 } from '@angular/material';
+
 import { NgxChartsModule, } from '@swimlane/ngx-charts';
 
 //CRM APP Module
-import { CRMModule } from './crmapp/crm.module';
+import { CRMModule } from '../crmapp/crm.module';
 
 const FLEX_LAYOUT_MODULES: any[] = [
   FlexLayoutModule,
@@ -33,7 +34,7 @@ const MATERIAL_MODULES: any[] = [
   MdListModule, MdMenuModule, MdTooltipModule,
   MdSlideToggleModule, MdInputModule, MdCheckboxModule,
   MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-  MdTabsModule, MdSelectModule,
+  MdTabsModule, MdSelectModule, MdRadioModule,
 ];
 
 const COVALENT_MODULES: any[] = [
@@ -55,7 +56,7 @@ const CHART_MODULES: any[] = [
     COVALENT_MODULES,
     CHART_MODULES,
     FLEX_LAYOUT_MODULES,
-    CRMModule,
+
   ],
   declarations: [
 

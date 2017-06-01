@@ -11,12 +11,12 @@ import { RequestInterceptor } from '../config/interceptors/request.interceptor';
 
 import { routedComponents, AppRoutingModule } from './app-routing.module';
 
+import { CRMModule } from './crmapp/crm.module';
 import { SharedModule } from './shared/shared.module';
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
-
 
 @NgModule({
   declarations: [
@@ -35,6 +35,8 @@ const httpInterceptorProviders: Type<any>[] = [
     }),
     CovalentHighlightModule,
     CovalentMarkdownModule,
+    CRMModule,
+
   ], // modules needed to run this module
   providers: [
     httpInterceptorProviders,

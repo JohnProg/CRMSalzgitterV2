@@ -31,13 +31,13 @@ export const DATE_FORMAT: any = (v: number ) =>  v !== undefined ? v.toLocaleStr
 export class CRMRestService extends RESTService<TCRMEntity>  {
 
   _headers: Headers = new Headers();
+  _path: string;
   constructor(private _http: Http, private _confs: ConfigurationService) {
     super(_http, {
       baseUrl: _confs.serverWithApiUrl,
-      path: '',
+      path:  '',
       //headers: new Headers(),
-      dynamicHeaders: () => { 
-        return this._confs.getHeaders(); },
+      dynamicHeaders: () => { return this._confs.getHeaders(); },
       transform: (res: Response): any => res.json(),
     });
   }
@@ -110,7 +110,6 @@ export class CatalogService {
 
   setAPI(tapi: string, cName: string) {
     this.capi = tapi;
-    
     this._rest.setPath(this.capi);
     this.fullapi = this._confs.serverWithApiUrl + this.capi;
     this.catalogName = cName;
