@@ -119,13 +119,13 @@ export class QuotationfromsupplierdialogsdocumentsComponent extends BaseComponen
 
   afterCreate(item: any) {
     
-    Object.assign(this.itemEdit, item.item);
+    Object.assign(this.itemEdit, item);
     this.isEditing = false;
   }
 
   afterUpdate(item: any) {
     
-    Object.assign(this.itemEdit, item.item);
+    Object.assign(this.itemEdit, item);
     this.isEditing = false;
   }
 

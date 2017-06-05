@@ -1,0 +1,69 @@
+<md-card flex>
+  <md-card-title>Documents </md-card-title>
+  <md-card-subtitle>
+    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> {{ 'ADDOCUMENT' | translate}} </button>
+  </md-card-subtitle>
+  <md-card-content>
+
+<section *ngIf="isEditing">
+   <form #editform="ngForm"  id="editform" flex novalidate>
+    <button  md-raised-button color="primary" (click)="submitForm(form)"  >{{ 'SAVE' | translate}} </button>
+    <button md-raised-button color="secondary" (click)="cancelEdit()" >{{ 'CANCEL' | translate}} </button>
+    <section layout="column" flex="100" layout-margin>
+      <div layout-gt-sm="row" layout-lt-sm="column" flex>
+        <crm-select flex #IdDocumentType name="IdDocumentType" catalog="DocumentType" placeholder="{{ 'DOCUMENTTYPE' | translate}}"
+          [(ngModel)]="itemEdit.IdDocumentType"></crm-select>
+      </div>
+      <div layout-gt-sm="row" layout-lt-sm="column" flex>
+        <md-input-container flex class="">
+          <textarea mdInput flex #DNotes name="DNotes" maxlength="150" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.DNotes"></textarea>
+          <md-hint align="end">{{DNotes.value.length}} / 150</md-hint>
+        </md-input-container>
+      </div>
+
+
+      <div layout-gt-sm="row" layout-lt-sm="column" flex>
+        <md-input-container tdFileDrop  (fileDrop)="files = $event" (click)="fileInput.inputElement.click()"
+          (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()" (keyup.backspace)="fileInput.clear()"
+          flex>
+          <input mdInput placeholder="select or drop file" [value]="files?.length ? (files?.length + ' file') : files?.name" [disabled]="disabled"
+            readonly/>
+        </md-input-container>
+        <button md-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
+          <md-icon>cancel</md-icon>
+        </button>
+        <td-file-input class="push-left-sm push-right-sm" #fileInput name="fileInput" [(ngModel)]="files"  >
+          <md-icon>folder</md-icon>
+          <span class="text-upper">Browse...</span>
+        </td-file-input>
+      </div>
+    </section>
+
+  </form>
+</section>
+
+    <section flex *ngIf="!isEditing">
+
+      <td-data-table flex [columns]="columns" [data]="entList | async" [sortable]="false">
+        <ng-template tdDataTableTemplate="DateUploaded" let-value="value" let-row="row" let-column="column">
+          <span> {{ value | date}} </span>
+        </ng-template>        
+        <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+          <div layout="row" flex="5">
+            <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+          <button md-icon-button (click)="downLoad( row)">
+            <md-icon>cloud_download</md-icon>
+          </button>          
+          </div>
+        </ng-template>
+
+      </td-data-table>
+      <td-paging-bar #dpagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+                <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{dpagingBar.range}} <span hide-xs>of {{dpagingBar.total}}</span>
+      </td-paging-bar>
+    </section>
+  </md-card-content>
+
+</md-card>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import * as moment from 'moment';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+import { User } from '../model/allmodels';
+
 
 @Injectable()
 export class ConfigurationService {
@@ -23,8 +25,9 @@ export class ConfigurationService {
 
     public TOKEN_ENDPOINT: string = this.server + 'Token';
     public tokenData: any;
-
+    public userInfo: User;
     public headerData: Headers;
+    
     public isValidToken(): boolean {
 
         if( this.tokenData ) {
@@ -40,6 +43,8 @@ export class ConfigurationService {
         }
         return false;
     }
+
+   
 
     public getHeaders() {
        let h = new Headers();

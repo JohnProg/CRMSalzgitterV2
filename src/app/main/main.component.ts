@@ -22,7 +22,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   isSmallScreen: boolean = false;
-
+  userSubscription: Subscription;
   protected _querySubscriptionxs: Subscription;
   protected _querySubscriptionsm: Subscription;
   protected _querySubscriptionmd: Subscription;
@@ -49,12 +49,9 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       translate.use('en');
       this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
       this.routes = this._routeList.asObservable();
-      this._actions.userInfoEvent.subscribe((user: User) => {
-        this.userName = user.LastName;
-        this.userEmail = user.FirstName;
-      });
 
-    }
+
+  }
 
   logout(): void {
     this._token.signout();
@@ -64,8 +61,21 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit() {
       this.watchScreen();
+      this.userSubscription = this._actions.userInfoEvent.subscribe((user: User) => {
+        this.userName = user.Name;
+        this.userEmail = user.EMail;
+      });
+      this.setUserInfo();
   }
 
+
+  setUserInfo() {
+    
+     if( this._confs.userInfo ) {
+        this.userName = this._confs.userInfo.Name;
+        this.userEmail = this._confs.userInfo.EMail;
+     }
+  }
 
   ngAfterViewInit() {
 
@@ -87,7 +97,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this._querySubscriptionsm !== undefined) { this._querySubscriptionsm.unsubscribe(); }
     if (this._querySubscriptionmd !== undefined) { this._querySubscriptionmd.unsubscribe(); }
     if (this._querySubscriptionlg !== undefined) { this._querySubscriptionlg.unsubscribe(); }
-
+    if (this.userSubscription !== undefined) { this.userSubscription.unsubscribe(); }
   }
 
 

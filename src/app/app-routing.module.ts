@@ -31,7 +31,7 @@ import { QuotationfromsupplierComponent, QuotationfromsupplierindexComponent,
 //Quotation to Customer
 import { QuotationtocustomerComponent,
   QuotationtocustomerindexComponent, QuotationtocustomereditorComponent,
-  QuotationtocustomereditorFromQFSComponent
+  QuotationtocustomereditorFromQFSComponent, QuotationtocustomerdialogemailComponent
  } from './crmapp/quotationtocustomer/index';
 
 
@@ -173,7 +173,7 @@ const routes: Routes = [
                 // { path: 'documents/:id', component: OpportunitydocumentsComponent },
               ]
             },        
-            { path: 'sendemail/:id', component: QuotationfromsupplierdialogemailComponent },
+            { path: 'sendemail/:id', component: QuotationtocustomerdialogemailComponent },
             { path: 'insert', component: QuotationfromsuppliereditorComponent }
           ]
         },

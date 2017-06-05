@@ -12,8 +12,10 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         //localStorage.removeItem('tokendata'); 
         let t = localStorage.getItem('tokendata');
+        let u = localStorage.getItem('userInfo');
         if( t ) {
             this._confs.tokenData = JSON.parse(t);
+            this._confs.userInfo = JSON.parse(u);
             if( this._confs.tokenData) {
                 let d = moment(this._confs.tokenData['.expires']);
                 let today = moment();

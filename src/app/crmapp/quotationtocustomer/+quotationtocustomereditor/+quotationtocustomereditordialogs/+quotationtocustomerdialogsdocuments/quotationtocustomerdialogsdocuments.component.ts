@@ -5,7 +5,7 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../../services/catalog.service';
 import { ConfigurationService } from '../../../../services/configuration.service';
-import {  Opportunity, TCRMEntity, OpportunityDocument } from '../../../../model/allmodels';
+import {   TCRMEntity, QuotationToCustomerDocument } from '../../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -21,19 +21,19 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../../components/abstractvalueaccessor';
 
-import {  OpportunityService } from '../../../../services/oppservice.service';
+
 import {TranslateService} from '@ngx-translate/core';
 
+
 @Component({
-  selector: 'crm-opportunitydialogsdocuments',
-  templateUrl: './opportunitydialogsdocuments.component.html',
-  styleUrls: ['./opportunitydialogsdocuments.component.scss']
+  selector: 'crm-quotationtocustomerdialogsdocuments',
+  templateUrl: './quotationtocustomerdialogsdocuments.component.html',
+  styleUrls: ['./quotationtocustomerdialogsdocuments.component.scss']
 })
-export class OpportunityDialogsDocumentsComponent extends BaseComponent {
+export class QuotationtocustomerdialogsdocumentsComponent extends BaseComponent {
 
   @Input() idDialog: number = 0;
-  itemEdit: OpportunityDocument;
-  currentOpp: Opportunity;
+  itemEdit: QuotationToCustomerDocument;
   files: any;
  constructor(public _router: Router, public _route: ActivatedRoute, 
     public _confs: ConfigurationService,
@@ -45,18 +45,17 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
     public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public _oppservice: OpportunityService, public translate: TranslateService ) {
+    public translate: TranslateService ) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
     this.setTitle = false;
-    this.currentOpp = this._oppservice.currentOpp;
     this.catalogName = 'Dialog Document';
-    this._curService.setAPI('OpportunityDocument', this.catalogName);
-    this.itemEdit = new OpportunityDocument();
+    this._curService.setAPI('QuotationToCustomerDocument', this.catalogName);
+    this.itemEdit = new QuotationToCustomerDocument();
     this.setTitle = false;
   }
 
   ngOnInitClass() {
-    this.entList = <Observable<OpportunityDocument[]>>this._curService.entList;
+    this.entList = <Observable<QuotationToCustomerDocument[]>>this._curService.entList;
     this.initData();
   }
 
@@ -73,8 +72,8 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
   refreshItems() {
     let pparams: URLSearchParams = new URLSearchParams();
     pparams.set('iddialog', this.idDialog.toString());
-    pparams.set('idopp', '0');
-    this._curService.loadCustomAll('OpportunityDocument/searchByOpp', pparams);
+    pparams.set('idquote', '0');
+    this._curService.loadCustomAll('QuotationToCustomerDocument/searchByQuote', pparams);
   }
 
   addColumns() {
@@ -86,12 +85,12 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
   }
 
   initEntity() {
-    this.itemEdit = new OpportunityDocument() ;
-    this.itemEdit.IdOpportunityDialog  = this.idDialog;
+    this.itemEdit = new QuotationToCustomerDocument() ;
+    this.itemEdit.IdQuotationToCustomerDialog  = this.idDialog;
   }
 
 
-  confirmDelete(item: OpportunityDocument) {
+  confirmDelete(item: QuotationToCustomerDocument) {
     this.itemEdit = item;
     this._actions.deleteItemEvent.emit(' Document');
   }
@@ -125,6 +124,7 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
   }
 
   afterUpdate(item: any) {
+    
     Object.assign(this.itemEdit, item);
     this.isEditing = false;
   }

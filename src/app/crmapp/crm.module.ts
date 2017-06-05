@@ -9,6 +9,7 @@ import { Md2Module }  from 'md2';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '../shared/shared.module';
 
+
 // services 
 import { OpportunityService, ActionsService, CatalogService, 
   ConfigurationService, TokenService } from './services/index';
@@ -62,7 +63,8 @@ QuotationfromsuppliereditorFromOppComponent } from './quotationfromsupplier/inde
 import { QuotationtocustomerComponent, QuotationtocustomerindexComponent,
 QuotationtocustomerindexviewerComponent, QuotationtocustomereditorComponent,
 QuotationtocustomereditorheaderComponent, QuotationtocustomereditorFromQFSComponent,
-QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryComponent
+QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryComponent,
+QuotationtocustomereditrdialogsComponent, QuotationtocustomerdialogemailComponent,
  } from './quotationtocustomer/index';
 
 // Login
@@ -152,6 +154,9 @@ import { AuthHelper } from './authHelper/authHelper';
    QuotationtocustomereditorFromQFSComponent,
    QuotationtocustomereditordetailComponent,
    QuotationtocustomerdetailsumaryComponent,
+   QuotationtocustomereditrdialogsComponent,
+   QuotationtocustomerdialogemailComponent,
+   QuotationtocustomerdialogsdocumentsComponent,
 // Components
   // Cbx Components
     CRMSelectComponent, CrmselectchildComponent,
@@ -183,7 +188,7 @@ import { AuthHelper } from './authHelper/authHelper';
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
-    AuthGuard, AuthHelper,
+    AuthGuard, AuthHelper
 
 
   ], // additional providers needed for this module

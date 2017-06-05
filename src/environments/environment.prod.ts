@@ -1,7 +1,8 @@
 export const environment: {production: boolean, server: string, appBase: string,
        _secret: string, _clientId: string, _scopes: Array<string>, 
        _redirectUrl: string,
-       _root: string} = {
+       _root: string,
+    GRAPH_RESOURCE: string} = {
   production: true,
   //server: 'http://localhost/CRMSalzgitter.Services/',
   //appBase: 'http://localhost/crmsalzgitterprod',
@@ -11,5 +12,6 @@ export const environment: {production: boolean, server: string, appBase: string,
   _clientId: '000000004C1D164D',
   _scopes:   [ 'wl.skydrive',  'wl.skydrive_update'],
   _redirectUrl: 'https://localhost:4200/auth/onedrive',
-  _root: 'https://crmsalzgittermx.com/testmaterial/'
+  _root: 'https://crmsalzgittermx.com/testmaterial/',
+  GRAPH_RESOURCE: 'https://graph.microsoft.com'
 };

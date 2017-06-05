@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from './configuration.service';
 import { ActionsService } from './actions.services';
-//import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class TokenService {
@@ -20,7 +20,8 @@ export class TokenService {
     options: RequestOptions;
     tokenData: any;
     constructor(private _http: Http,
-                private _confs: ConfigurationService) {
+                private _confs: ConfigurationService,
+                private _actions: ActionsService) {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
         //headers.append('Access-Control-Allow-Origin', '*');
@@ -51,11 +52,10 @@ export class TokenService {
 
     getUserInfo() {
 
-        return this._http.get(this._confs.serverWithApiUrl + 'Account/UserInfo',  { headers: this._confs.getHeaders() } )
+        return this._http.get(this._confs.serverWithApiCustomUrl + 'User/UserInfo',  { headers: this._confs.getHeaders() } )
         .map((res: Response) => res.json() )
-        .subscribe( (res: any) => {
-           debugger
-           
+        .subscribe( (user: any) => {
+           this._actions.setUserInfo(user);
          }, (error: any) => {
            debugger
          });
@@ -70,6 +70,7 @@ export class TokenService {
    signout(): void {
         this.redirectUrl = null;
         localStorage.removeItem('tokendata');  
+        localStorage.removeItem('userInfo');  
         // Revokes token.
         //this.revokeToken();
 
@@ -77,16 +78,7 @@ export class TokenService {
         //this.revokeRefreshToken();
     }
 
-    /** 
-     * Decodes token through JwtHelper. 
-     */  
-    // private decodeToken(): void {
-    //     if (this._confs.isValidToken()) {
-    //         let token: string = localStorage.getItem('id_token');
-    //         let jwtHelper: JwtHelper = new JwtHelper();
-    //         this.user = jwtHelper.decodeToken(token);
-    //     }
-    // }
+
 
     private encodeParams(params: any): string {
         let body: string = "";  

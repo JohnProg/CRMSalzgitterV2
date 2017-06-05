@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { IPageChangeEvent } from '@covalent/core';
 import { User } from '../model/allmodels';
-
+import { ConfigurationService } from './configuration.service';
 
 @Injectable()
 export class ActionsService {
@@ -36,11 +36,15 @@ export class ActionsService {
 
 
     public userInfoEvent: EventEmitter<User>=new EventEmitter<User>();
-    public userInfo: User = new User();
+    
 
 
+    constructor(private _confs : ConfigurationService) {
+
+    }
     public setUserInfo(user: User) {
-      this.userInfo = user;
+      this._confs.userInfo = user;
+      localStorage.setItem('userInfo', JSON.stringify(user));
       this.userInfoEvent.emit(user);
     }
     public addItem() {
