@@ -65,6 +65,7 @@ QuotationtocustomerindexviewerComponent, QuotationtocustomereditorComponent,
 QuotationtocustomereditorheaderComponent, QuotationtocustomereditorFromQFSComponent,
 QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryComponent,
 QuotationtocustomereditrdialogsComponent, QuotationtocustomerdialogemailComponent,
+QuotationtocustomerdialogsdocumentsComponent
  } from './quotationtocustomer/index';
 
 // Login

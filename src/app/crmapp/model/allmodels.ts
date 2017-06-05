@@ -32,6 +32,7 @@
 		Name: string;
 		OpportunityDialogs: OpportunityDialog[];
 		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
 		ShowActionType: number;
 	}
 	export class ActionOpportunityDocType extends TCRMEntity {
@@ -173,6 +174,7 @@
 		OpportunityDialogs: OpportunityDialog[];
 		Organization: Organization;
 		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
 	}
 	export class Country extends TCRMEntity {
 		Description: string;
@@ -237,6 +239,7 @@
 		OpportunityDialogs: OpportunityDialog[];
 		Position: Position;
 		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
 	}
 	export class CustomerDeliveryPoint extends TCRMEntity {
 		CDPContact: string;
@@ -306,6 +309,7 @@
 		IdDialog: number;
 		IdOpportunity: number;
 		IdQuotationFromSupplier: number;
+		IdQuotationToCustomer: number;
 		IdResponsible: number;
 		IsSent: boolean;
 		ListIdDocuments: number[];
@@ -638,7 +642,25 @@
 		ProductDescription: string;
 		ProductName: string;
 		SalePrice: number;
-	}	
+	}
+	export class GetQuotationToCustomerDialogDocumentIndex_Result extends TCRMEntity {
+		DateUploaded: Date;
+		DNotes: string;
+		DocName: string;
+		DocTypeName: string;
+		Id: number;
+		IdDocumentType: number;
+	}
+	export class GetQuotationToCustomerDialogIndex_Result extends TCRMEntity {
+		ActionName: string;
+		ContactName: string;
+		CustContactName: string;
+		DateDialog: Date;
+		Id: number;
+		IdQuotationToCustomer: number;
+		ResponsibleName: string;
+		ToContact: number;
+	}
 	export class getResponsible_Result extends TCRMEntity {
 		CellPhone: string;
 		EMail: string;
@@ -850,6 +872,7 @@
 		Name: string;
 		Opportunities: Opportunity[];
 		QuotationFromSuppliers: QuotationFromSupplier[];
+		QuotationToCustomers: QuotationToCustomer[];
 	}
 	export class Position extends TCRMEntity {
 		CustomerContacts: CustomerContact[];
@@ -924,6 +947,7 @@
 		AsImporter: boolean;
 		Country: Country;
 		Currency: Currency;
+		DateCreated: Date;
 		DateReceived: Date;
 		DeliveryLocation: string;
 		DocType: DocType;
@@ -1049,7 +1073,6 @@
 		Port: Port;
 		QuotationFromSupplier: QuotationFromSupplier;
 		QuotationToCustomerDetails: QuotationToCustomerDetail[];
-		QuotationToCustomerDocuments: QuotationToCustomerDocument[];
 		QuoteNotes: string;
 		ShipmentOffered: Date;
 		User: User;
@@ -1090,17 +1113,37 @@
 		PropertyValue: string;
 		QuotationToCustomerDetailSumary: QuotationToCustomerDetailSumary;
 	}
+	export class QuotationToCustomerDialog extends TCRMEntity {
+		ActionOpportunity: ActionOpportunity;
+		Contact: Contact;
+		CustomerContact: CustomerContact;
+		DateDialog: Date;
+		DateSend: Date;
+		DNotes: string;
+		EmailSended: boolean;
+		Id: number;
+		IdAction: number;
+		IdContact: number;
+		IdCustomerContact: number;
+		IdQuotationToCustomer: number;
+		IdResponsible: number;
+		QuotationToCustomerDocuments: QuotationToCustomerDocument[];
+		Responsible: Responsible;
+		Subject: string;
+		ToContact: number;
+	}
 	export class QuotationToCustomerDocument extends TCRMEntity {
+		AData64: string;
 		DateUploaded: Date;
+		DNotes: string;
 		DocId: string;
 		DocName: string;
 		DocumentType: DocumentType;
 		Id: number;
 		IdDocumentType: number;
-		IdQuotationToCustomer: number;
+		IdQuotationToCustomerDialog: number;
 		ParentFolder: string;
-		QDocNotes: string;
-		QuotationToCustomer: QuotationToCustomer;
+		QuotationToCustomerDialog: QuotationToCustomerDialog;
 	}
 	export class RailSpur extends TCRMEntity {
 		CarsPerDay: number;
@@ -1147,6 +1190,7 @@
 		OpportunityDialogs: OpportunityDialog[];
 		Position: Position;
 		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
 		ResponsibleTargets: ResponsibleTarget[];
 		RspPassword: string;
 		RspUserCredential: string;
@@ -1229,14 +1273,11 @@
 		QuotationFromSuppliers: QuotationFromSupplier[];
 	}
 	export class User extends TCRMEntity {
-		FirstName: string;
+		EMail: string;
 		Id: number;
 		IsActive: boolean;
 		IsAdmin: boolean;
-		LastName: string;
-		Opportunities: Opportunity[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		Name: string;
 		Responsibles: Responsible[];
 		UserName: string;
 		userPassword: string;
