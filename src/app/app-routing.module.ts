@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuard } from './crmapp/_guards/auth.guard';
 
-import { CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentComponent,
+import { BaseComponent, CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentComponent,
 DocumentTypeComponent, FamilyComponent, LinerTermComponent, MarketComponent, MillComponent, OrganizationComponent,
 PaymentTermComponent, PortComponent, PositionComponent, PropertyComponent, SectorComponent, TenderComponent,
 ActionoppComponent, CountryComponent, TransactionflowComponent, StateComponent, IncotermComponent,
@@ -16,8 +16,8 @@ import { OptionsComponent, ActionopportunityComponent, ProductComponent, Product
    ProducteditorComponent } from './crmapp/options/index';
 
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent,
-OpportunitydetailComponent, OpportunityheaderComponent, OpportunitydialogsComponent,
-OpportunitydocumentsComponent,  OpportunitydialogemailComponent } from './crmapp/opportunity/index';
+OpportunitydetailComponent, OpportunityheaderComponent, 
+ OpportunitydialogemailComponent } from './crmapp/opportunity/index';
 
 
 // Quotation to supplier
@@ -59,8 +59,9 @@ const routes: Routes = [
           path: 'catalogs', component: CatalogComponent,
           canActivate: [AuthGuard],
           children: [
+
             { path: 'currency', component: CurrencyComponent },
-            { path: 'colonytype', component: ColonytypeComponent },
+            { path: 'colonytype', component: CurrencyComponent }, //, data: { baseapi: 'ColonyType', catName: 'Colony Type' } },
             { path: 'department', component: DepartmentComponent },
             { path: 'documenttype', component: DocumentTypeComponent },
             { path: 'family', component: FamilyComponent },
@@ -116,8 +117,7 @@ const routes: Routes = [
                 {
                   path: 'edit/:id', component: OpportunityeditorComponent,
                 }
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },
             { path: 'sendemail/:id', component: OpportunitydialogemailComponent },
@@ -138,16 +138,12 @@ const routes: Routes = [
             },          
             { path: 'edit/:id', component: QuotationfromsuppliereditorComponent,
               children: [
-                //{ path: '', component: OpportunityheaderComponent },
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },
             { path: 'createfromopp/:id', component: QuotationfromsuppliereditorFromOppComponent,
               children: [
-                //{ path: '', component: OpportunityheaderComponent },
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },        
             { path: 'sendemail/:id', component: QuotationfromsupplierdialogemailComponent },
@@ -171,16 +167,12 @@ const routes: Routes = [
             },          
             { path: 'edit/:id', component: QuotationtocustomereditorComponent,
               children: [
-                //{ path: '', component: OpportunityheaderComponent },
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },
             { path: 'createfromquote/:id', component: QuotationtocustomereditorFromQFSComponent,
               children: [
-                //{ path: '', component: OpportunityheaderComponent },
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },        
             { path: 'sendemail/:id', component: QuotationtocustomerdialogemailComponent },
@@ -203,16 +195,12 @@ const routes: Routes = [
             },
             { path: 'edit/:id', component: PurchaseordereditorComponent,
               children: [
-                //{ path: '', component: OpportunityheaderComponent },
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },
             { path: 'createfromquote/:id', component: QuotationtocustomereditorFromQFSComponent,
               children: [
-                //{ path: '', component: OpportunityheaderComponent },
-                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
-                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+
               ]
             },        
             { path: 'sendemail/:id', component: QuotationtocustomerdialogemailComponent },

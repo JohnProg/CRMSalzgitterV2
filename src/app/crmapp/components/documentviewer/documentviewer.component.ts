@@ -1,38 +1,39 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import {TranslateService} from '@ngx-translate/core';
-
-import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
-import { ConfigurationService } from '../../../services/configuration.service';
-import {  OpportunityDocument  } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { BaseComponent } from '../../../catalogs/base.component';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
+
+
+import { ActionsService } from '../../services/actions.services';
+import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
+import { ConfigurationService } from '../../services/configuration.service';
+
+import { BaseComponent } from '../../catalogs/base.component';
+import {  BaseDocument  } from '../../model/allmodels';
 
 @Component({
-  selector: 'crm-opportunitydocuments',
-  templateUrl: './opportunitydocuments.component.html',
-  styleUrls: ['./opportunitydocuments.component.scss'],
-  providers: [],  
+  selector: 'crm-documentviewer',
+  templateUrl: './documentviewer.component.html',
+  styleUrls: ['./documentviewer.component.scss']
 })
-export class OpportunitydocumentsComponent extends BaseComponent {
+export class DocumentviewerComponent extends BaseComponent {
 
- @Input() idOpp: number = 0;
+ @Input() idParent: number = 0;
+ @Input() baseApi: string;
+
  sortBy: string = 'DocTypeName';
- itemEdit: OpportunityDocument;
+ itemEdit: BaseDocument;
 
   constructor(public _router: Router, public _route: ActivatedRoute, public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
@@ -44,35 +45,24 @@ export class OpportunitydocumentsComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.catalogName = 'Opportunity Document';
-    this._curService.setAPI('OpportunityDocument/', this.catalogName);
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, 
+          _mediaService, _ngZone, _http, _tableService, translate);
+    this.catalogName = 'Document List';
+
   }
 
  ngOnInitClass() {
-    this.entList = <Observable<OpportunityDocument[]>>this._curService.entList;
-
-    //this._route.params.subscribe((params: { id: number }) => {
-      
-      //this.idOpp = params.id;
-      this.initData();
-      // if ( this.idOpp > 0) {
-      //   this.editEntity( this.idOpp);
-      // } else {
-      //   this.addEntity();
-      // }
-
-    //});
-
+    this._curService.setAPI( this.baseApi + '/', this.catalogName);
+    this.entList = <Observable<BaseDocument[]>>this._curService.entList;
+    this.initData();
   }
 
  initData() {
     let pparams = new URLSearchParams();
-    pparams.set('idopp', this.idOpp.toString());
     pparams.set('iddialog', '0');
-    this._curService.loadCustomAll('OpportunityDocument/searchByOpp', pparams);
-
+    pparams.set('idparent', this.idParent.toString());
+    this._curService.loadCustomAll( this.baseApi + '/searchBy', pparams);
     this.initEntity();
-
   }
 
   addColumns() {
@@ -81,9 +71,10 @@ export class OpportunitydocumentsComponent extends BaseComponent {
      this.columns.push({ name: 'DocName', label: 'Document Name' });
   }
 
-
+  downLoad() {}
+  
   initEntity() {
-    this.itemEdit = new  OpportunityDocument();
+    this.itemEdit = new  BaseDocument();
   }
 
 }

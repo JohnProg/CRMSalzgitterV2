@@ -7,3 +7,4 @@ export * from './abstractvalueaccessor';
 export * from './editordetailsumary/editordetailsumary.component';
 export * from './editorbasedialog/editorbasedialog.component';
 export * from './editorbasedialog/editorbasedialogdocument/editorbasedialogdocument.component';
+export * from './documentviewer/documentviewer.component';

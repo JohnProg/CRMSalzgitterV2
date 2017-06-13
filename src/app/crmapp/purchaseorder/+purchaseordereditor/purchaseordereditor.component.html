@@ -50,6 +50,7 @@
         <crm-purchaseordereditorheader [idPurchase]="idPurchase"  *ngIf="scrId == 1"></crm-purchaseordereditorheader>
         <crm-purchaseordereditordetail [idPurchase]="idPurchase" *ngIf="scrId == 2 "></crm-purchaseordereditordetail>
 
+        <crm-documentviewer [idParent]="idPurchase" baseApi="PurchaseOrderDocument" *ngIf="scrId == 4 "></crm-documentviewer>
 
 
         <crm-editorbasedialog [idParent]="idPurchase" 
@@ -59,9 +60,6 @@
                 documentBaseApi="PurchaseOrderDocument"
                 documentParentField="IdPurchaseOrderDialog"
                 *ngIf="scrId == 3 "></crm-editorbasedialog>
-<!--
-        <crm-opportunitydocuments [idQuotation]="idQuotation" *ngIf="scrId == 4 "></crm-opportunitydocuments>-->
-
 
       </md-card-content>
     </md-card>

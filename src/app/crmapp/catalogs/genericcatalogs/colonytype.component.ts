@@ -37,7 +37,8 @@ export class ColonytypeComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);	    this.catalogName = 'Colony Type';
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);	    
+    this.catalogName = 'Colony Type';
     this._curService.setAPI('ColonyType/', this.catalogName);
   }
 

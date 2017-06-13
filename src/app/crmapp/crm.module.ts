@@ -39,9 +39,10 @@ import {
 // cbx Components
 
 import { CRMSelectComponent, GenericActionsComponent, 
-      CrmselectchildComponent, EmailSenderComponent,
-    EditordetailsumaryComponent, EditorbasedialogComponent,
-  EditorbasedialogdocumentComponent } from './components/index';
+  CrmselectchildComponent, EmailSenderComponent,
+  EditordetailsumaryComponent, EditorbasedialogComponent,
+  EditorbasedialogdocumentComponent,
+  DocumentviewerComponent } from './components/index';
 
 // Directives
 
@@ -50,7 +51,7 @@ import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/ind
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
         OpportunityheaderComponent,  
-        OpportunitydocumentsComponent, OpportunitydetailsumaryComponent,
+        OpportunitydetailsumaryComponent,
         OpportunitydialogemailComponent
         } from './opportunity/index';
 
@@ -142,7 +143,6 @@ import { AuthHelper } from './authHelper/authHelper';
     //CrmselectchildComponent,
     OpportunitydetailComponent,
     OpportunityheaderComponent,
-    OpportunitydocumentsComponent,
     OpportunitydetailsumaryComponent,
     OpportunitydialogemailComponent,
 
@@ -186,9 +186,9 @@ import { AuthHelper } from './authHelper/authHelper';
     EditordetailsumaryComponent,
     EditorbasedialogComponent,  
     EditorbasedialogdocumentComponent,
+    DocumentviewerComponent,
     // Directives
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
-
 
 
   ], // directives, components, and pipes owned by this NgModule

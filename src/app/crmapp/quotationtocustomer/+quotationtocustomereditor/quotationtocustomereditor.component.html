@@ -43,6 +43,9 @@
 
         <crm-quotationtocustomereditordetail [idQuotation]="idQuotation" *ngIf="scrId == 2 "></crm-quotationtocustomereditordetail>
 
+        <crm-documentviewer [idParent]="idQuotation" baseApi="QuotationToCustomerDocument" *ngIf="scrId == 4 "></crm-documentviewer>
+
+
         <crm-editorbasedialog [idParent]="idQuotation" 
                 [baseApi]="'QuotationToCustomerDialog'"
                 parentField="IdQuotationToCustomer"
@@ -50,8 +53,6 @@
                 documentBaseApi="QuotationToCustomerDocument"
                 documentParentField="IdQuotationToCustomerDialog"
                 *ngIf="scrId == 3 "></crm-editorbasedialog>
-<!--
-        <crm-opportunitydocuments [idQuotation]="idQuotation" *ngIf="scrId == 4 "></crm-opportunitydocuments>-->
 
 
       </md-card-content>

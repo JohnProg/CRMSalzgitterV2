@@ -14,7 +14,7 @@ import {
 } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
-
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 import { TCRMEntity } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
@@ -135,6 +135,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
          // this.screenChange(e);
       });
     }
+
+    //this.catalogName = 'Colony Type';
+    //this._curService.setAPI('ColonyType/', this.catalogName);
     this.ngOnInitClass();
   }
 

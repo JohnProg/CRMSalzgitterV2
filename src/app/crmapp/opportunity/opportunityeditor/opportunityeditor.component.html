@@ -55,7 +55,7 @@
                 documentParentField="IdOpportunityDialog"
                 *ngIf="scrId == 3 "></crm-editorbasedialog>
 
-        <crm-opportunitydocuments [idOpp]="idOpp" *ngIf="scrId == 4 "></crm-opportunitydocuments>
+        <crm-documentviewer [idParent]="idOpp" baseApi="OpportunityDocument" *ngIf="scrId == 4 "></crm-documentviewer>
 
         <crm-quotationfromsupplierindexviewer [idOpp]="idOpp" *ngIf="scrId == 5 "></crm-quotationfromsupplierindexviewer>
 

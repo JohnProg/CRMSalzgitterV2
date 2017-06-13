@@ -7,7 +7,8 @@ export const environment: {production: boolean, server: string, appBase: string,
        _secret: string, _clientId: string, _scopes: Array<string>, 
        _redirectUrl: string,
       _root: string,
-    GRAPH_RESOURCE: string} = {
+    GRAPH_RESOURCE: string,
+    baseHref: string} = {
   production: false,
   appBase: 'http://localhost:4200/',
   //server: 'https://crmsalzgittermx.com/testservices/',
@@ -17,5 +18,7 @@ export const environment: {production: boolean, server: string, appBase: string,
   _scopes:   [ 'wl.skydrive',  'wl.skydrive_update'],
   _redirectUrl: 'http://localhost:4200/onedrive',
   _root: 'http://localhost:4200/',
-  GRAPH_RESOURCE: 'https://graph.microsoft.com'
+  GRAPH_RESOURCE: 'https://graph.microsoft.com',
+  baseHref: '/'
+
 };
