@@ -47,7 +47,14 @@
 
         <crm-quotationfromsupplierdetail [idQuotation]="idQuotation" *ngIf="scrId == 2 "></crm-quotationfromsupplierdetail>
 
-        <crm-quotationfromsupplierdialogs [idQuotation]="idQuotation" *ngIf="scrId == 3 "></crm-quotationfromsupplierdialogs>
+
+        <crm-editorbasedialog [idParent]="idQuotation" 
+                [baseApi]="'QuotationFromSupplierDialog'"
+                parentField="IdQuotationFromSupplier"
+
+                documentBaseApi="QuotationFromSupplierDocument"
+                documentParentField="IdQuotationFromSupplierDialog"
+                *ngIf="scrId == 3 "></crm-editorbasedialog>
 <!--
         <crm-opportunitydocuments [idQuotation]="idQuotation" *ngIf="scrId == 4 "></crm-opportunitydocuments>-->
 

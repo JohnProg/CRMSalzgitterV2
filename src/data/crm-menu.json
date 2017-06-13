@@ -139,7 +139,15 @@
                 "routerlink": "templateemail",
                 "icon": "euro_symbol",
                 "displayName": "HOME.MENU.CATALOGS.TEMPLATEEMAIL.DISPLAYNAME"
-              }
+              },
+              {
+                "name": "typeopportunity",
+                "tooltip": "HOME.MENU.CATALOGS.TYPEOPPORTUNITY.TOOLTIP",
+                "active": "true",
+                "routerlink": "typeopportunity",
+                "icon": "euro_symbol",
+                "displayName": "HOME.MENU.CATALOGS.TYPEOPPORTUNITY.DISPLAYNAME"
+              }              
       ]
 
     },
@@ -203,7 +211,15 @@
             "routerlink": "quotationtocustomer",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.QUOTATIONTOCUSTOMER.DISPLAYNAME"
-          }                          
+          },
+          {
+            "name": "index",
+            "tooltip": "HOME.MENU.PURCHASEORDER.TOOLTIP",
+            "active": "true",
+            "routerlink": "purchaseorder",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.PURCHASEORDER.DISPLAYNAME"
+          }                                
       ]
     }
   ]

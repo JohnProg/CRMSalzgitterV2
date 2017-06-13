@@ -20,6 +20,8 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { CatalogComponent } from '../../catalogs/catalog.component';
+
+import { QuotationFromSupplier } from '../../model/index';
 import { QuotationfromsupplierheaderComponent } from './+quotationfromsupplierheader/quotationfromsupplierheader.component';
 
 @Component({
@@ -51,34 +53,17 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
     });
   }
 
-
-  afterInit() {
-         this.bindOnQuoteCreated();
-  }
-
-
   linkClick(scr: number ) : boolean {
     this.scrId = scr;
-
-    setTimeout( () => {
-       this.bindOnQuoteCreated();
-    }, 500);
     return true;
   }
 
-  bindOnQuoteCreated() {
-    
-    if( this.headercomp ) {
-      
-      this.headercomp.onQuotationCreated.subscribe( (itm: any) => {
-        
-            this.idQuotation = itm.Id;
-      } );
-    }
+  doOnItemCreated(itm: QuotationFromSupplier) {
+    this.idQuotation = itm.Id;
   }
 
+
   goToUpp() {
-    
     this.headercomp.goToOpp();
   }
 }

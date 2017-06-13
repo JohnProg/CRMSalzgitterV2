@@ -28,7 +28,7 @@ export class CRMCurrencyFormatterDirective implements OnInit {
 
   @HostListener("blur", ["$event.target.value"])
   onBlur(value) {
-    let val = this.control.value === '' ? '0.00' : this.control.value.toString();
+    let val = ( this.control.value === '' || this.control.value === undefined) ? '0.00' : this.control.value.toString();
     let raw =  this.currencyPipe.parse(val);
     let formatted = this.currencyPipe.transform(raw);
     this.control.valueAccessor.writeValue(formatted);
@@ -37,12 +37,10 @@ export class CRMCurrencyFormatterDirective implements OnInit {
 
   @HostListener("ngModelChange", ["$event"])
   onInputChange(value) {
-    //this.el.value = this.currencyPipe.transform(value);
-
-    //let raw =  this.currencyPipe.parse(value);
-    //if (value !== raw) {
-       //this.control.viewToModelUpdate(raw);  
-    //}
+    debugger
+    //let v = this.currencyPipe.transform(value);
+    //this.el.value = v;
+    this.control.viewToModelUpdate(value);
   }
 
 }

@@ -64,5 +64,10 @@
                
           </md-input-container>         
         </div>
-       
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <section flex-gt-sm="25" >
+            <crm-select #IdTypeOpp name="IdTypeOpp" required  catalog="TypeOpportunity" placeholder="Type Opportunity" [(ngModel)]="itemEdit.IdTypeOpp" ></crm-select>
+          </section> 
+              
+        </div>         
       </form>

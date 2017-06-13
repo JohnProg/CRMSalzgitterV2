@@ -118,4 +118,5 @@ export class OpportunityheaderComponent extends BaseComponent {
       this.itemEdit.DeliveryLocation = undefined;
     }
   }
+
 }

@@ -76,7 +76,11 @@
             "TEMPLATEEMAIL": {
                 "DISPLAYNAME": "Plantillas de Email",
                 "TOOLTIP": "Crear/Editar Plantillas de Email"
-            }                                     
+            },
+            "TYPEOPPORTUNITY": {
+                "DISPLAYNAME": "Type Opportunity",
+                "TOOLTIP": "Create Edit Type Opportunity"
+            }                                                   
         },
         "OPTIONS": {
             "DISPLAYNAME": "Opciones",
@@ -113,7 +117,14 @@
                 "TOOLTIP": "Create/Edit Quotation to Customer",
                 "DISPLAYNAME": "Quotation to Customer"
             }           
-        }                   
+        },
+        "PURCHASEORDER": {
+            "DISPLAYNAME": "Purchase Order",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Purchase Orders",
+                "DISPLAYNAME": "Purchase Order"
+            }           
+        }                          
     }
   },
   "OPPORTUNITY": {

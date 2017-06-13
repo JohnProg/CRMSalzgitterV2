@@ -16,7 +16,8 @@ import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 
 
-import { TCRMEntity } from '../model/allmodels';
+import { TCRMEntity } from '../model/index';
+import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
@@ -36,7 +37,7 @@ export const cFloatPosMask = createNumberMask({
 
 
 @Component({
-  selector: 'base-component',
+  selector: 'crm-component',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
   providers: [],
@@ -60,7 +61,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private afterLoadAllEvent: Subscription;
   private afterDeleteEvent: Subscription;
 
-
+  onItemCreated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   @ViewChild('editform') form: NgForm;
 
   pageChange: Subscription;
@@ -106,7 +107,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
   autoLoad: boolean = true;
   isLoading: boolean = false;
-
+  objId: string;
    _curService: CatalogService;
   handleScreenChange: boolean = true;
   constructor( public _confs: ConfigurationService,
@@ -125,6 +126,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.addColumns();
     this.addActionColumn();
     this.pageSize = this._confs.pageSize;
+    this.objId = this._actions.newGuid();
   }
 
   ngOnInit() {
@@ -168,9 +170,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       );
 
     this.deleteConfEvent = this._actions.deleteItemConfirmedEvent
-      .subscribe((res) => {
-
-        this.deleteConfirmed();
+      .subscribe((res: string) => {
+        this.deleteConfirmed(res);
       },
       err => console.log(err),   //removed dot
       () => console.log('recived data') //removed dot
@@ -207,7 +208,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.afterViewInit();
   }
 
-
   afterViewInit() {}
 
   ngOnDestroy() {
@@ -224,6 +224,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
     if (this.afterLoadAllEvent !== undefined) { this.afterLoadAllEvent.unsubscribe(); }
     if (this.sendEmailEvent !== undefined) { this.sendEmailEvent.unsubscribe(); }
+    if (this.afterDeleteEvent !== undefined) { this.afterDeleteEvent.unsubscribe(); }
+
 
 
     if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
@@ -282,6 +284,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this._actions.updateTitle( str );
       });
     }
+    
     this._curService.load(id);
   }
 
@@ -335,7 +338,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this._actions.cancelEditEvent.emit();
       this.isEditing = false;
       this._actions.cancelEdit();
+
     }
+     this.onItemCreated.emit(item);
     //this._curService.assignList(item.items);
   }
 
@@ -363,12 +368,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   confirmDelete(item:  TCRMEntity) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(item.Description || item.Name);
+    this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: item.Description || item.Name, objId: this.objId }) );
   }
 
-  deleteConfirmed() {
-
-    this.deleteEntity(this.itemEdit.Id);
+  deleteConfirmed(res: string) {
+    if( res === this.objId) {
+      this.deleteEntity(this.itemEdit.Id);
+    }
   }
 
 
@@ -415,7 +421,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   addParams(p: IPChangeEventSorted) {}
 
   afterLoadItem(itm:  TCRMEntity) {
-    
      this.isEditing = true;
      this.itemEdit = itm;
      this._actions.setEdit();

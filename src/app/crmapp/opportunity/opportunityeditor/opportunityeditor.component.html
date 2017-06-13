@@ -47,7 +47,13 @@
 
         <crm-opportunitydetail [idOpp]="idOpp" *ngIf="scrId == 2 "></crm-opportunitydetail>
 
-        <crm-opportunitydialogs [idOpp]="idOpp" *ngIf="scrId == 3 "></crm-opportunitydialogs>
+        <crm-editorbasedialog [idParent]="idOpp" 
+                [baseApi]="'OpportunityDialog'"
+                parentField="IdOpportunityDialog"
+
+                documentBaseApi="OpportunityDocument"
+                documentParentField="IdOpportunityDialog"
+                *ngIf="scrId == 3 "></crm-editorbasedialog>
 
         <crm-opportunitydocuments [idOpp]="idOpp" *ngIf="scrId == 4 "></crm-opportunitydocuments>
 

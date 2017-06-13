@@ -172,6 +172,7 @@ export class QuotationtocustomerdetailsumaryComponent extends BaseComponent {
  }
 
   afterCreate(itms: QuotationToCustomerDetailSumary[]) {
+    
     this.afterLoadAll(itms);
   }
 
@@ -233,7 +234,7 @@ afterLoadAll(itms: QuotationToCustomerDetailSumary[]) {
 
   confirmDelete(item: QuotationToCustomerDetailSumary) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(' this Sumary');
+    this._actions.deleteItemEvent.emit( { title: ' this Sumary', objId: this.objId });
   }
 
 

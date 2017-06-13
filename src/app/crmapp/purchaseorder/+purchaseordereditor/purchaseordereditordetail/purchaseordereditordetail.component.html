@@ -1,0 +1,64 @@
+
+
+      <section *ngIf="isEditing">
+<form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+        <section layout="column" flex="100" layout-margin>
+
+        <div layout-gt-sm="row" layout-lt-sm="column" flex >
+            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" [disabled]="allowProduct" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
+        </div>
+
+
+        <div layout-gt-sm="row" layout-lt-sm="column" >
+          <md-input-container flex class="">
+            <textarea mdInput flex #ItemDescription name="ItemDescription" maxlength="500"  placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.ItemDescription" ></textarea>
+                  <md-hint align="end">{{ItemDescription.value.length}} / 150</md-hint>
+          </md-input-container>         
+        </div>  
+
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-margin >
+          <md-input-container flex-gt-xs="25">
+            <input mdInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.ItemQuantity" currencyMask [options]="{ prefix: ''}" >
+          </md-input-container>
+          <md-input-container class="md-icon-float" flex-gt-xs="25">
+            <input  mdInput #ItemPrice name="ItemPrice" placeholder="Cost Price" [(ngModel)]="itemEdit.ItemPrice" currencyMask >
+          </md-input-container>
+          <md-input-container class="md-icon-float" flex-gt-xs="25">
+            <input  mdInput  #SalePrice name="SalePrice" placeholder="Sale Price" [(ngModel)]="itemEdit.SalePrice"  currencyMask  >
+          </md-input-container>  
+          <md-input-container class="md-icon-float" flex-gt-xs="25">
+            <input  mdInput   #Extended name="Extended" placeholder="Extended Price" [(ngModel)]="itemEdit.Extended"  currencyMask  >
+          </md-input-container>          
+        </div> 
+
+        </section>
+    </form>
+        <crm-purchaseordereditordetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.Id" [idProduct]="itemEdit.IdProduct" *ngIf="isEditing && itemEdit.Id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.Quantity" [price]="itemEdit.SalePrice" ></crm-purchaseordereditordetailsumary>
+      </section>
+
+
+
+  <section *ngIf="!isEditing">
+
+
+      <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+        <ng-template tdDataTableTemplate="ItemDescription"  let-value="value" let-row="row"  let-column="column">
+          <div layout="row" flex>
+            <button md-button  (click)="editEntity(row.Id)">{{value}}</button>
+          </div>
+        </ng-template>
+
+        <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+          <div layout="row" flex="5">
+
+            <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+          </div>
+        </ng-template>
+
+      </td-data-table>
+
+    </section>
+
+

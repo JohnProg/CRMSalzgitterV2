@@ -1,0 +1,68 @@
+<md-card flex>
+  <md-card-title>Purchase Order Sumary Detail</md-card-title>
+  <md-card-subtitle>
+    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing">Add Sumary </button>
+    <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
+    <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save </button>
+  </md-card-subtitle>
+  <md-card-content>
+
+    <section *ngIf="isEditing" flex>
+      <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
+
+        <section layout="row" flex="100" layout-margin>
+          <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">
+            <md-input-container>
+              <input mdInput flex [name]="pc.NameDescription" maxlength="500" [placeholder]="pc.Property.Name" [required]="pc.IsRequired"
+                [(ngModel)]="pc.PropertyValue">
+              <md-hint align="end"> 500</md-hint>
+            </md-input-container>
+          </div>
+
+        </section>
+        <section layout="row" flex="100" layout-margin>
+          <md-input-container  flex-gt-xs="30">
+            <input  mdInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.Quantity" currencyMask  [options]="{ prefix: ''}">
+          </md-input-container>
+          <md-input-container class="md-icon-float" flex-gt-xs="30">
+            <input  mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.Price" currencyMask>
+          </md-input-container>
+          <md-input-container class="md-icon-float" flex-gt-xs="35">
+            <input  mdInput #Amount disabled name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.Amount"  currencyMask>
+          </md-input-container>
+
+        </section>
+
+        <div layout-gt-sm="row" layout-lt-sm="column">
+          <md-input-container flex class="">
+            <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.Comment"></textarea>
+            <md-hint align="end">{{Comment.value.length}} / 250</md-hint>
+          </md-input-container>
+        </div>
+
+      </form>
+    </section>
+
+
+    <section flex *ngIf="!isEditing">
+
+      <td-data-table flex [columns]="pcolumns | async" [data]="entList | async" [sortable]="false">
+        <ng-template *ngFor="let pc of (pcolumns | async)" [tdDataTableTemplate]="pc.name" let-value="value" let-row="row" let-column="column">
+          <span flex>{{value}} </span>
+        </ng-template>
+        <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+          <div layout="row" flex="5">
+            <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+          </div>
+        </ng-template>
+
+      </td-data-table>
+      <td-paging-bar #dpagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+                <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{dpagingBar.range}} <span hide-xs>of {{dpagingBar.total}}</span>
+      </td-paging-bar>
+    </section>
+  </md-card-content>
+
+</md-card>

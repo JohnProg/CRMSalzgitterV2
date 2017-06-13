@@ -10,7 +10,7 @@ import { CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentCom
 DocumentTypeComponent, FamilyComponent, LinerTermComponent, MarketComponent, MillComponent, OrganizationComponent,
 PaymentTermComponent, PortComponent, PositionComponent, PropertyComponent, SectorComponent, TenderComponent,
 ActionoppComponent, CountryComponent, TransactionflowComponent, StateComponent, IncotermComponent,
-TemplateemailComponent } from './crmapp/catalogs/index';
+TemplateemailComponent, TypeOpportunityComponent } from './crmapp/catalogs/index';
 
 import { OptionsComponent, ActionopportunityComponent, ProductComponent, ProductindexComponent,
    ProducteditorComponent } from './crmapp/options/index';
@@ -34,6 +34,11 @@ import { QuotationtocustomerComponent,
   QuotationtocustomereditorFromQFSComponent, QuotationtocustomerdialogemailComponent
  } from './crmapp/quotationtocustomer/index';
 
+// Purchase Order
+import {
+   PurchaseorderComponent, PurchaseorderindexComponent,
+   PurchaseordereditorComponent
+} from './crmapp/purchaseorder/index';
 
 import { LoginComponent } from './crmapp/login/login.component';
 
@@ -50,9 +55,9 @@ const routes: Routes = [
           component: DashboardComponent,
           path: '',
         },
-
         {
           path: 'catalogs', component: CatalogComponent,
+          canActivate: [AuthGuard],
           children: [
             { path: 'currency', component: CurrencyComponent },
             { path: 'colonytype', component: ColonytypeComponent },
@@ -75,11 +80,13 @@ const routes: Routes = [
             { path: 'incoterm', component: IncotermComponent },
             { path: 'transactionflow', component: TransactionflowComponent },
             { path: 'templateemail', component: TemplateemailComponent },
-                
+            { path: 'typeopportunity', component: TypeOpportunityComponent },
+
           ]
         },
         {
           path: 'options', component: OptionsComponent,
+          canActivate: [AuthGuard],
           children: [
             //{ path: 'company', component: CompanyComponent },
             { path: 'actionopp', component: ActionopportunityComponent },
@@ -96,6 +103,7 @@ const routes: Routes = [
         },
         {
           path: 'opportunity', component: OpportunityComponent,
+          canActivate: [AuthGuard],
           children: [
             {
               path: '',
@@ -118,6 +126,7 @@ const routes: Routes = [
         },
         {
           path: 'quotationfromsupplier', component: QuotationfromsupplierComponent,
+          canActivate: [AuthGuard],
           children: [
             {
               path: '',
@@ -150,6 +159,7 @@ const routes: Routes = [
         //Quotation to Customer
         {
           path: 'quotationtocustomer', component: QuotationtocustomerComponent,
+          canActivate: [AuthGuard],
           children: [
             {
               path: '',
@@ -177,8 +187,41 @@ const routes: Routes = [
             { path: 'insert', component: QuotationfromsuppliereditorComponent }
           ]
         },
+
+  //Purchase Order
+        {
+          path: 'purchaseorder', component: PurchaseorderComponent,
+          canActivate: [AuthGuard],          
+          children: [
+            {
+              path: '',
+              component: PurchaseorderindexComponent,
+            },
+            {
+              path: 'from/:id/:bytype',
+              component: PurchaseorderindexComponent,
+            },
+            { path: 'edit/:id', component: PurchaseordereditorComponent,
+              children: [
+                //{ path: '', component: OpportunityheaderComponent },
+                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
+                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+              ]
+            },
+            { path: 'createfromquote/:id', component: QuotationtocustomereditorFromQFSComponent,
+              children: [
+                //{ path: '', component: OpportunityheaderComponent },
+                // { path: 'dialogs/:id', component: OpportunitydialogsComponent },
+                // { path: 'documents/:id', component: OpportunitydocumentsComponent },
+              ]
+            },        
+            { path: 'sendemail/:id', component: QuotationtocustomerdialogemailComponent },
+            { path: 'insert', component: QuotationfromsuppliereditorComponent }
+          ]
+        }        
      ]
-  }
+   }
+  
 ];
 
 

@@ -100,7 +100,7 @@ export class QuotationtocustomereditordetailComponent extends BaseComponent {
 
   confirmDelete(item:  QuotationToCustomerDetail) {
     this.itemEdit = item;
-    this._actions.deleteItem(item.ItemDescription);
+    this._actions.deleteItem({ title: item.ItemDescription, objId: this.objId});
   }
 
   afterCreate(item: QuotationToCustomerDetail) {

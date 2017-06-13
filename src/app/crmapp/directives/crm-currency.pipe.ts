@@ -18,7 +18,7 @@ export class CRMCurrencyPipe implements PipeTransform {
     if(value === 0 || value === '0') {
        value = '0.00';
     }
-    let [ integer, fraction = '' ] = (value || '').toString()
+    let [ integer, fraction = '' ] = (value || '0').toString()
       .split(this.DECIMAL_SEPARATOR);
 
     fraction = fractionSize > 0

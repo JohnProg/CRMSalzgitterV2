@@ -20,7 +20,8 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { CatalogComponent } from '../../catalogs/catalog.component';
-
+import { Opportunity } from '../../model/index';
+import { OpportunityheaderComponent } from './+opportunityheader/opportunityheader.component';
 
 @Component({
   selector: 'crm-opportunityeditor',
@@ -32,7 +33,7 @@ export class OpportunityeditorComponent extends CatalogComponent {
 
   idOpp: number = 0;
   scrId: number = 1;
-
+  @ViewChild(OpportunityheaderComponent) headercomp: OpportunityheaderComponent;
 
   constructor(
     public _loadingService: TdLoadingService,
@@ -50,11 +51,9 @@ export class OpportunityeditorComponent extends CatalogComponent {
     });
   }
 
-
-  afterInit() {
-
+  doOnItemCreated(itm: Opportunity) {
+    this.idOpp = itm.Id;
   }
-
 
   linkClick(scr: number ) : boolean {
     this.scrId = scr;

@@ -8,6 +8,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { Md2Module }  from 'md2';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '../shared/shared.module';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+
 
 
 // services 
@@ -21,7 +23,7 @@ DepartmentComponent, DocumentTypeComponent, FamilyComponent, LinerTermComponent,
 MarketComponent, MillComponent, OrganizationComponent, PaymentTermComponent,
 PortComponent, PositionComponent, PropertyComponent, SectorComponent,
 TenderComponent, ActionoppComponent, CountryComponent, StateComponent, IncotermComponent,
-TransactionflowComponent,  TemplateemailComponent
+TransactionflowComponent,  TemplateemailComponent, TypeOpportunityComponent
  } from './catalogs/index';
 
 
@@ -36,7 +38,10 @@ import {
 
 // cbx Components
 
-import { CRMSelectComponent, GenericActionsComponent, CrmselectchildComponent, EmailSenderComponent } from './components/index';
+import { CRMSelectComponent, GenericActionsComponent, 
+      CrmselectchildComponent, EmailSenderComponent,
+    EditordetailsumaryComponent, EditorbasedialogComponent,
+  EditorbasedialogdocumentComponent } from './components/index';
 
 // Directives
 
@@ -44,9 +49,9 @@ import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/ind
 
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
-        OpportunityheaderComponent, OpportunitydialogsComponent, 
+        OpportunityheaderComponent,  
         OpportunitydocumentsComponent, OpportunitydetailsumaryComponent,
-       OpportunityDialogsDocumentsComponent, OpportunitydialogemailComponent
+        OpportunitydialogemailComponent
         } from './opportunity/index';
 
 // Quotation to supplier
@@ -55,7 +60,6 @@ import { QuotationfromsupplierComponent, QuotationfromsupplierindexComponent,
   QuotationfromsupplierindexviewerComponent,
 QuotationfromsuppliereditorComponent, QuotationfromsupplierheaderComponent,
 QuotationfromsupplierdetailComponent, QuotationfromsupplierdetailsumaryComponent,
-QuotationfromsupplierdialogsComponent, QuotationfromsupplierdialogsdocumentsComponent,
 QuotationfromsupplierdialogemailComponent,
 QuotationfromsuppliereditorFromOppComponent } from './quotationfromsupplier/index';
 
@@ -64,13 +68,24 @@ import { QuotationtocustomerComponent, QuotationtocustomerindexComponent,
 QuotationtocustomerindexviewerComponent, QuotationtocustomereditorComponent,
 QuotationtocustomereditorheaderComponent, QuotationtocustomereditorFromQFSComponent,
 QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryComponent,
-QuotationtocustomereditrdialogsComponent, QuotationtocustomerdialogemailComponent,
-QuotationtocustomerdialogsdocumentsComponent
+ QuotationtocustomerdialogemailComponent
  } from './quotationtocustomer/index';
 
-// Login
 
+
+//Purchase Order
+import { PurchaseorderComponent,
+   PurchaseorderindexComponent,
+   PurchaseorderindexviewerComponent,
+   PurchaseordereditorComponent, PurchaseordereditorheaderComponent,
+   PurchaseordereditordetailComponent,
+   PurchaseordereditordetailsumaryComponent,
+
+   } from './purchaseorder/index';
+
+// Login
 import { AuthGuard } from './_guards/auth.guard';
+
 
 
 import * as moment from 'moment';
@@ -79,7 +94,7 @@ import { AuthHelper } from './authHelper/authHelper';
 
 @NgModule({
   declarations: [
-    
+
 
     BaseComponent,
     CurrencyComponent,
@@ -100,7 +115,7 @@ import { AuthHelper } from './authHelper/authHelper';
     ActionoppComponent, 
     CountryComponent,
     StateComponent,
-
+    TypeOpportunityComponent,
 
     IncotermComponent,
     CatalogComponent,
@@ -127,10 +142,8 @@ import { AuthHelper } from './authHelper/authHelper';
     //CrmselectchildComponent,
     OpportunitydetailComponent,
     OpportunityheaderComponent,
-    OpportunitydialogsComponent,
     OpportunitydocumentsComponent,
     OpportunitydetailsumaryComponent,
-    OpportunityDialogsDocumentsComponent,
     OpportunitydialogemailComponent,
 
    // Quotation to supplier
@@ -141,8 +154,6 @@ import { AuthHelper } from './authHelper/authHelper';
    QuotationfromsupplierheaderComponent,
    QuotationfromsupplierdetailComponent,
    QuotationfromsupplierdetailsumaryComponent,
-   QuotationfromsupplierdialogsComponent,
-   QuotationfromsupplierdialogsdocumentsComponent,
    QuotationfromsupplierdialogemailComponent,
    QuotationfromsuppliereditorFromOppComponent,
 
@@ -155,14 +166,26 @@ import { AuthHelper } from './authHelper/authHelper';
    QuotationtocustomereditorFromQFSComponent,
    QuotationtocustomereditordetailComponent,
    QuotationtocustomerdetailsumaryComponent,
-   QuotationtocustomereditrdialogsComponent,
    QuotationtocustomerdialogemailComponent,
-   QuotationtocustomerdialogsdocumentsComponent,
+
+
+
+   //Purchase Order
+   PurchaseorderComponent,
+   PurchaseorderindexComponent,
+   PurchaseorderindexviewerComponent,
+   PurchaseordereditorComponent, 
+   PurchaseordereditorheaderComponent,
+   PurchaseordereditordetailComponent,
+   PurchaseordereditordetailsumaryComponent,
+
 // Components
   // Cbx Components
     CRMSelectComponent, CrmselectchildComponent,
     GenericActionsComponent, EmailSenderComponent,
-
+    EditordetailsumaryComponent,
+    EditorbasedialogComponent,  
+    EditorbasedialogdocumentComponent,
     // Directives
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
@@ -176,6 +199,7 @@ import { AuthHelper } from './authHelper/authHelper';
     CKEditorModule,
     Md2Module,
     TextMaskModule,
+    CurrencyMaskModule,
   ], // modules needed to run this module
   exports: [
        SharedModule,
@@ -184,6 +208,7 @@ import { AuthHelper } from './authHelper/authHelper';
        Md2Module,
        TranslateModule,
        TextMaskModule,
+
   ],
   providers: [
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,

@@ -1,0 +1,83 @@
+<section *ngIf="!showEMail">
+
+    <section *ngIf="isEditing">
+        <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+      <section layout="column" flex="100" layout-margin>
+
+
+        <div layout-gt-sm="row" layout-lt-sm="column" flex>
+          <crm-select flex #IdAction name="IdAction" catalog="ActionOpportunity/searchbytype?id=0&idtype=" byType="2" placeholder="{{ 'ACTIONOPP' | translate}}" [(ngModel)]="itemEdit.IdAction"></crm-select>
+        </div>
+        <div layout-gt-sm="row" layout-lt-sm="column" flex>
+          <crm-select flex #IdResponsible name="IdResponsible" catalog="Responsible" placeholder="{{ 'RESPONSIBLE' | translate}}" [(ngModel)]="itemEdit.IdResponsible"></crm-select>
+        </div>
+
+        <div layout-gt-sm="row" layout-lt-sm="column" flex>
+          <md-radio-group #ToContact name="ToContact" [(ngModel)]="itemEdit.ToContact">
+            <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
+            <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
+          </md-radio-group>
+        </div>
+        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.ToContact == 1">
+          <crm-select flex #IdContact name="IdContact" [required]="itemEdit.ToContact === 1" catalog="Contact" placeholder="{{ 'CONTACT' | translate}}"
+            [(ngModel)]="itemEdit.IdContact"></crm-select>
+        </div>
+        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.ToContact == 2">
+          <crm-select flex #IdCustomerContact name="IdCustomerContact" [required]="itemEdit.ToContact === 2" [catalog]="'CustomerContact?idcust=' + currentOpp.IdCustomer"
+            placeholder="{{ 'CUSTCONTACT' | translate}}" [(ngModel)]="itemEdit.IdCustomerContact"></crm-select>
+        </div>
+
+
+        <div layout-gt-sm="row" layout-lt-sm="column">
+          <md-input-container flex class="">
+            <textarea mdInput flex #DNotes name="DNotes" maxlength="500" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.DNotes"></textarea>
+            <md-hint align="end">{{DNotes.value.length}} / 500</md-hint>
+          </md-input-container>
+        </div>
+      </section>
+  </form>
+
+      <crm-editorbasedialogdocument 
+              [idDialog]="itemEdit.Id" 
+              [baseApi]="documentBaseApi"
+              [parentField]="documentParentField"
+              *ngIf="itemEdit.Id > 0"></crm-editorbasedialogdocument>
+    </section>
+
+
+
+
+  <section *ngIf="!isEditing">
+
+    <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+      <ng-template tdDataTableTemplate="ActionName" let-value="value" let-row="row" let-column="column">
+        <div layout="row">
+          <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+        </div>
+      </ng-template>
+      <ng-template tdDataTableTemplate="Contact" let-value="value" let-row="row" let-column="column">
+        <div layout="row">
+          {{ row.ToContact == 1 ? row.ContactName : row.CustContactName}}
+        </div>
+      </ng-template>
+
+      <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+        <div layout="row" flex="5">
+
+          <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+        </div>
+      </ng-template>
+
+    </td-data-table>
+    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+      (change)="change($event)">
+    </td-paging-bar>
+  </section>
+
+</section>
+
+
+
+

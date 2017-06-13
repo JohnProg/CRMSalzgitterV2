@@ -40,7 +40,6 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
   opp: QuotationFromSupplier;
   @ViewChild('idIncoTerm') incoTermSelect: AbstractValueAccessor;
   @ViewChild('IdCountry') countryOrigin: AbstractValueAccessor;
-  onQuotationCreated: EventEmitter<QuotationToCustomer> = new EventEmitter<QuotationToCustomer>();
   deliveryRequired: boolean = false;
   dta: Date;
   constructor(public _router: Router, 
@@ -161,6 +160,9 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
         this.itemEdit.ShipmentOffered = data.ShipmentOffered;
         this.itemEdit.IdMill = data.IdMill;
         this.itemEdit.IdCountry = data.IdCountryOrigin;
+        this.itemEdit.ShipmentOffered = data.ShipmentOffered;
+        this.itemEdit.DateCreated = data.DateCreated;
+        this.itemEdit.IdTypeOpp = data.IdTypeOpp;
         this.countryOrigin.loadCustomDataFromId(this.itemEdit.IdMill);
         this.idParent = data.Id;
         this.setDeliverRequired();
@@ -192,6 +194,5 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
   afterCreate(item: QuotationToCustomer) {
     super.afterCreate(item);
     this.idQuotation = item.Id;
-    this.onQuotationCreated.emit(item);
   }
 }

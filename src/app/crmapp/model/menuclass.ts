@@ -7,3 +7,5 @@ export class MenuClass {
        icon: string;
        displayName: string;
 }
+
+

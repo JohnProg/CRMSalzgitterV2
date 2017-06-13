@@ -8,8 +8,5 @@ export * from './opportunityeditor/+opportunitydetail/opportunitydetail.componen
 export * from './opportunityeditor/+opportunityheader/opportunityheader.component';
 export * from './opportunityeditor/+opportunitydocuments/opportunitydocuments.component';
 export * from './opportunityeditor/+opportunitydetail/+opportunitydetailsumary/opportunitydetailsumary.component';
-
-export * from './opportunityeditor/+opportunitydialogs/opportunitydialogs.component';
-export * from './opportunityeditor/+opportunitydialogs/+opportunitydialogsdocuments/opportunitydialogsdocuments.component';
 export * from './+opportunitydialogemail/opportunitydialogemail.component';
 

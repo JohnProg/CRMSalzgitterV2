@@ -16,6 +16,7 @@ export * from './genericcatalogs/property.component';
 export * from './genericcatalogs/sector.component';
 export * from './genericcatalogs/tender.component';
 export * from './genericcatalogs/transactionflow.component';
+export * from './genericcatalogs/typeopportunity.component';
 export * from './actionopp/actionopp.component';
 export * from './genericcatalogs/country.component';
 export * from './state/state.component';

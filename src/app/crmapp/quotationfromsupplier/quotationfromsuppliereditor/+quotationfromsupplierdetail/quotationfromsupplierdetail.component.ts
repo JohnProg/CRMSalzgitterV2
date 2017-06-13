@@ -104,7 +104,7 @@ export class QuotationfromsupplierdetailComponent extends BaseComponent {
 
   confirmDelete(item:  QuotationFromSupplierDetail) {
     this.itemEdit = item;
-    this._actions.deleteItem(item.ItemDescription);
+    this._actions.deleteItem({ title: item.ItemDescription, objId: this.objId});
   }
 
   afterCreate(item: QuotationFromSupplierDetail) {

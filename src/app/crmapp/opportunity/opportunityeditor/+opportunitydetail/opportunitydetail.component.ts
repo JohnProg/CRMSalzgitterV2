@@ -22,7 +22,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';
 import {TranslateService} from '@ngx-translate/core';
-
+import { IDeleteEventModel } from '../../../model/deleteeventmodel';
 
 
 
@@ -107,7 +107,7 @@ export class OpportunitydetailComponent extends BaseComponent {
 
   confirmDelete(item:  OpportunityDetail) {
     this.itemEdit = item;
-    this._actions.deleteItem(item.ItemDescription);
+    this._actions.deleteItem( { title: item.ItemDescription, objId: this.objId });
   }
 
   afterCreate(item: OpportunityDetail) {
@@ -119,6 +119,6 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
   hasSumary(h: boolean) {
-    this.allowProduct = h;
+    this.allowProduct = h || this.itemEdit.Id === 0;
   }
 }

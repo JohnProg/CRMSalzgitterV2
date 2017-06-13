@@ -92,7 +92,7 @@ export class QuotationtocustomerdialogsdocumentsComponent extends BaseComponent 
 
   confirmDelete(item: QuotationToCustomerDocument) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(' Document');
+    this._actions.deleteItemEvent.emit( { title: ' Document', objId: this.objId });
   }
 
   submitForm(form) {

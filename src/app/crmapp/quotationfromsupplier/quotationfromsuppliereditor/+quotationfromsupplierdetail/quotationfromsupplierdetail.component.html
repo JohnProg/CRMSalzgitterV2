@@ -1,6 +1,7 @@
 
-      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+
       <section *ngIf="isEditing">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
         <section layout="column" flex="100" layout-margin>
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex >
@@ -30,10 +31,10 @@
         </div> 
 
         </section>
-
+    </form>
         <crm-quotationfromsupplierdetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.Id" [idProduct]="itemEdit.IdProduct" *ngIf="isEditing && itemEdit.Id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.Quantity" [price]="itemEdit.SalePrice" ></crm-quotationfromsupplierdetailsumary>
       </section>
-    </form>
+
 
 
   <section *ngIf="!isEditing">

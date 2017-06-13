@@ -8,7 +8,7 @@ import {
 import { MdSnackBar } from '@angular/material';
 import { ActionsService } from '../../services/actions.services';
 import { Subscription } from 'rxjs/Subscription';
-
+import { IDeleteEventModel } from '../../model/deleteeventmodel';
 @Component({
   selector: 'crm-gactions',
   templateUrl: './gactions.component.html',
@@ -102,7 +102,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
       });
 
     this.deleteItemEvent = this._actions.deleteItemEvent
-      .subscribe((e: string) => {
+      .subscribe((e: IDeleteEventModel) => {
         this.deleteItem(e);
       });
 
@@ -163,19 +163,19 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     this._actions.search(atext);
   }
 
-  private deleteItem(deleteDesc: string): void {
+  private deleteItem(e: IDeleteEventModel): void {
     this._dialogService
-      .openConfirm({ message: 'Are you sure you want to delete ' + deleteDesc + '?' })
+      .openConfirm({ message: 'Are you sure you want to delete ' + e.title + '?' })
       .afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
           this._loadingService.register('users.list');
-          this.deleteConfirmed();
+          this.deleteConfirmed(e.objId);
         }
       });
   }
 
-  private deleteConfirmed() {
-    this._actions.deleteItemConfirmedEvent.emit();
+  private deleteConfirmed( c: string) {
+    this._actions.deleteItemConfirmedEvent.emit(c);
   }
 
   private cancelEdit() {

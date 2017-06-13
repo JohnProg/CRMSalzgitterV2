@@ -74,7 +74,11 @@
             "TEMPLATEEMAIL": {
                 "DISPLAYNAME": "EMail Templates",
                 "TOOLTIP": "Create edit email templates"
-            }
+            },
+            "TYPEOPPORTUNITY": {
+                "DISPLAYNAME": "Type Opportunity",
+                "TOOLTIP": "Create Edit Type Opportunity"
+            }           
         },
         "OPTIONS": {
             "DISPLAYNAME": "Options",
@@ -111,7 +115,14 @@
                 "TOOLTIP": "Create/Edit Quotation to Customer",
                 "DISPLAYNAME": "Quotation to Customer"
             }           
-        }                  
+        },
+        "PURCHASEORDER": {
+            "DISPLAYNAME": "Purchase Order",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Purchase Orders",
+                "DISPLAYNAME": "Purchase Order"
+            }           
+        }                           
        
     }
   },

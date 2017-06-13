@@ -1,10 +1,11 @@
 
-      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+
       <section *ngIf="isEditing">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>        
         <section layout="column" flex="100" layout-margin>
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex >
-            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" [disabled]="allowProduct" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
+            <crm-select flex #IdProduct name="IdProduct"  catalog="Product" [disabled]="!allowProduct" placeholder="{{ 'PRODUCT' | translate}}" [(ngModel)]="itemEdit.IdProduct" ></crm-select>
         </div>
 
 
@@ -32,10 +33,10 @@
         </div> 
 
         </section>
-
+    </form>
         <crm-opportunitydetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.Id" [idProduct]="itemEdit.IdProduct" *ngIf="isEditing && itemEdit.Id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.ItemQuantity" [price]="itemEdit.ItemPrice" ></crm-opportunitydetailsumary>
       </section>
-    </form>
+
 
 
   <section *ngIf="!isEditing">

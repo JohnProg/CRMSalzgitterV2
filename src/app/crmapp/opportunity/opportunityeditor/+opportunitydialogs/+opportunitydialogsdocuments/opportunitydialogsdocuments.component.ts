@@ -93,7 +93,7 @@ export class OpportunityDialogsDocumentsComponent extends BaseComponent {
 
   confirmDelete(item: OpportunityDocument) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(' Document');
+    this._actions.deleteItemEvent.emit(  { title: 'Document', objId: this.objId });
   }
 
   submitForm(form) {

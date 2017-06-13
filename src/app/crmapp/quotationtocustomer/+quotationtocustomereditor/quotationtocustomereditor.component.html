@@ -43,7 +43,13 @@
 
         <crm-quotationtocustomereditordetail [idQuotation]="idQuotation" *ngIf="scrId == 2 "></crm-quotationtocustomereditordetail>
 
-        <crm-quotationtocustomereditordialogs [idQuotation]="idQuotation" *ngIf="scrId == 3 "></crm-quotationtocustomereditordialogs>
+        <crm-editorbasedialog [idParent]="idQuotation" 
+                [baseApi]="'QuotationToCustomerDialog'"
+                parentField="IdQuotationToCustomer"
+
+                documentBaseApi="QuotationToCustomerDocument"
+                documentParentField="IdQuotationToCustomerDialog"
+                *ngIf="scrId == 3 "></crm-editorbasedialog>
 <!--
         <crm-opportunitydocuments [idQuotation]="idQuotation" *ngIf="scrId == 4 "></crm-opportunitydocuments>-->
 

@@ -446,9 +446,12 @@ export class CatalogService {
   }
 
 
+
   loadItemObs(catalog: string, id: number) : any {
     return this._http.get(this._confs.serverWithApiUrl + catalog + '/' + id.toString(), this.options);
   }
+
+
 
 
 }

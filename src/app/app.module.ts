@@ -17,6 +17,7 @@ import { CRMModule } from './crmapp/crm.module';
 
 import { Md2Module }  from 'md2';
 
+
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
@@ -29,8 +30,7 @@ export function HttpLoaderFactory(http: Http) {
   declarations: [
     AppComponent,
     routedComponents,
-    
-    
+
 
   ], // directives, components, and pipes owned by this NgModule
   imports: [

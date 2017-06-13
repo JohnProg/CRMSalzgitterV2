@@ -103,7 +103,7 @@ export class QuotationtocustomereditrdialogsComponent extends BaseComponent {
 
   confirmDelete(item: any) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(item.ActionName + ' to contact ' + ( item.ContactName || item.CustContactName));
+    this._actions.deleteItemEvent.emit( {title: item.ActionName + ' to contact ' + ( item.ContactName || item.CustContactName), objId: this.objId });
   }
 
   afterLoadItem(itm: QuotationToCustomerDialog) {

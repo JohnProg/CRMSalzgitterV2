@@ -20,6 +20,8 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { CatalogComponent } from '../../catalogs/catalog.component';
+
+import { QuotationToCustomer } from '../../model/index';
 import { QuotationtocustomereditorheaderComponent } from './+quotationtocustomereditorheader/quotationtocustomereditorheader.component';
 
 @Component({
@@ -51,26 +53,16 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
   }
 
 
-  afterInit() {
-     this.bindOnQuoteCreated();
-  }
-
 
   linkClick(scr: number ) : boolean {
     this.scrId = scr;
-
-    setTimeout( () => {
-       this.bindOnQuoteCreated();
-    }, 500);
     return true;
   }
 
-  bindOnQuoteCreated() {
-    if( this.headercomp ) {
-      this.headercomp.onQuotationCreated.subscribe( (itm: any) => {
-            this.idQuotation = itm.Id;
-      } );
-    }
+
+
+  doOnItemCreated(itm: QuotationToCustomer) {
+    this.idQuotation = itm.Id;
   }
 
   goToUpp() {
@@ -105,6 +97,7 @@ export class QuotationtocustomereditorFromQFSComponent extends Quotationtocustom
     });
     this.idQuotation = 0;
   }
+
 
 
   afterInit() {

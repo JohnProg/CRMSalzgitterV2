@@ -13,8 +13,8 @@ import { CurrencyComponent } from './currency/currency.component';
 
 import { MenuClass } from '../model/menuclass';
 import { Subscription } from 'rxjs/Subscription';
-
-
+import { BaseComponent } from './base.component';
+import { TCRMEntity } from '../model/index';
 
 @Component({
   selector: 'crm-catalog',
@@ -22,9 +22,10 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./catalog.component.scss'],
   providers: [  ]
 })
-export class CatalogComponent implements AfterViewInit {
+export class CatalogComponent implements AfterViewInit, OnDestroy {
 
-  
+  @ViewChild(BaseComponent) headercomp: BaseComponent;
+  afterCreateItem: Subscription;
   catalogs: MenuClass[] = [
   ];
 
@@ -41,6 +42,22 @@ export class CatalogComponent implements AfterViewInit {
   }
 
   afterInit() {
+       this.bindOnItemCreated();
+  }
+
+
+  ngOnDestroy() {
+     if (this.afterCreateItem !== undefined) { this.afterCreateItem.unsubscribe(); }
 
   }
+  bindOnItemCreated() {
+
+      if( this.headercomp ) {
+        this.afterCreateItem = this.headercomp.onItemCreated.subscribe( (itm: TCRMEntity) => {
+                this.doOnItemCreated(itm);
+          } );
+      }
+  }
+
+  doOnItemCreated(itm: TCRMEntity) { }
 }

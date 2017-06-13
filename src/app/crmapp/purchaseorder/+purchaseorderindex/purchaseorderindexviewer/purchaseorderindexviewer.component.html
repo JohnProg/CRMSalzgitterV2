@@ -1,0 +1,30 @@
+<div flex>
+
+</div>
+<td-paging-bar #pagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+  (change)="change($event)">
+  <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+</td-paging-bar>
+<td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+  <ng-template tdDataTableTemplate="Id" let-value="value" let-row="row" let-column="column">
+    <button md-button md-ripple class="block relative" [routerLink]="['edit', row.Id]" *ngIf="idQFS == 0 || idQFS == undefined">
+              {{value}}
+            </button>
+    <button md-button md-ripple class="block relative" [routerLink]="['/purchaseorder/edit', row.Id]" *ngIf="idQFS > 0">
+              {{value}}
+            </button>
+  </ng-template>
+
+  <ng-template tdDataTableTemplate="DateReceived" let-value="value" let-row="row" let-column="column">
+    <span>{{value | date:"yyyy.MM.dd" }}</span> 
+  </ng-template>
+  <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+    <div layout="row" flex="5">
+
+      <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+    </div>
+  </ng-template>
+
+</td-data-table>

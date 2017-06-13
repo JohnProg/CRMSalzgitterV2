@@ -5,6 +5,4 @@ export * from './quotationfromsuppliereditor/quotationfromsuppliereditor.compone
 export * from './quotationfromsuppliereditor/+quotationfromsupplierheader/quotationfromsupplierheader.component';
 export * from './quotationfromsuppliereditor/+quotationfromsupplierdetail/quotationfromsupplierdetail.component';
 export * from './quotationfromsuppliereditor/+quotationfromsupplierdetail/+quotationfromsupplierdetailsumary/quotationfromsupplierdetailsumary.component';
-export * from './quotationfromsuppliereditor/+quotationfromsupplierdialogs/quotationfromsupplierdialogs.component';
-export * from './quotationfromsuppliereditor/+quotationfromsupplierdialogs/+quotationfromsupplierdialogsdocuments/quotationfromsupplierdialogsdocuments.component';
 export * from './+quotationfromsupplierdialogemail/quotationfromsupplierdialogemail.component';

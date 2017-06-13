@@ -39,7 +39,6 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
   opp: Opportunity;
   @ViewChild('idIncoTerm') incoTermSelect: AbstractValueAccessor;
   @ViewChild('idCountryOrigin') countryOrigin: AbstractValueAccessor;
-  onQuotationCreated: EventEmitter<QuotationFromSupplier> = new EventEmitter<QuotationFromSupplier>();
   deliveryRequired: boolean = false;
   dta: Date;
   constructor(public _router: Router, 
@@ -156,7 +155,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
         this.itemEdit.AsImporter = data.AsImporter;
         this.itemEdit.IdTransactionFlow = data.IdTransactionFlow;
         this.itemEdit.IdStatus = 1;
-
+        this.itemEdit.IdTypeOpp = data.IdTypeOpp;
         this.idOpp = data.Id;
         this.setDeliverRequired();
       }, error => {
@@ -184,9 +183,9 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
   }
 
 
+
   afterCreate(item: QuotationFromSupplier) {
     super.afterCreate(item);
     this.idQuotation = item.Id;
-    this.onQuotationCreated.emit(item);
   }
 }

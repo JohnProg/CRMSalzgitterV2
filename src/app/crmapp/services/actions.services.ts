@@ -2,7 +2,8 @@ import {Component, Injectable,Input,Output,EventEmitter} from '@angular/core'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { IPageChangeEvent } from '@covalent/core';
-import { User } from '../model/allmodels';
+import { User } from '../model/index';
+import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ConfigurationService } from './configuration.service';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class ActionsService {
     public addItemEvent: EventEmitter<any>=new EventEmitter();
     public editItemEvent: EventEmitter<any>=new EventEmitter();
     public saveItemEvent: EventEmitter<any> =new EventEmitter();
-    public deleteItemEvent: EventEmitter<string> =new EventEmitter();
+    public deleteItemEvent: EventEmitter<IDeleteEventModel> = new EventEmitter();
     public deleteItemConfirmedEvent: EventEmitter<any>=new EventEmitter();
     public cancelEditEvent: EventEmitter<any>=new EventEmitter();
     public setEditEvent: EventEmitter<any>=new EventEmitter();
@@ -42,6 +43,14 @@ export class ActionsService {
     constructor(private _confs : ConfigurationService) {
 
     }
+
+    newGuid() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+          return v.toString(16);
+      });
+    }
+
     public setUserInfo(user: User) {
       this._confs.userInfo = user;
       localStorage.setItem('userInfo', JSON.stringify(user));
@@ -56,8 +65,8 @@ export class ActionsService {
       this.saveItemEvent.emit();
     }
 
-    public deleteItem(name: string) {
-      this.deleteItemEvent.emit(name);
+    public deleteItem(e: IDeleteEventModel) {
+      this.deleteItemEvent.emit(e);
     }
 
     public deleteItemConfirmed() {

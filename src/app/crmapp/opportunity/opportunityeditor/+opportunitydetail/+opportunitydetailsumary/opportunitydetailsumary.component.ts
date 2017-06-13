@@ -169,7 +169,9 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
  }
 
   afterCreate(itms: OpportunityDetailSumary[]) {
+
     this.afterLoadAll(itms);
+    this.isEditing = false;
   }
 
   afterUpdate(itms: OpportunityDetailSumary[]) {
@@ -230,7 +232,7 @@ afterLoadAll(itms: OpportunityDetailSumary[]) {
 
   confirmDelete(item:  OpportunityDetailSumary) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(' this Sumary');
+    this._actions.deleteItemEvent.emit( { title: ' this Sumary', objId: this.objId });
   }
 
 
