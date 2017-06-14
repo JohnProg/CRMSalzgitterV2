@@ -35,22 +35,24 @@ export class EmailSenderComponent extends BaseComponent {
   optionsModel: number[];
   mainField: string;
   baseApi: string;
-constructor(
-          public _confs: ConfigurationService,
-          public _loadingService: TdLoadingService,
-          public _dialogService: TdDialogService,
-          public _snackBarService: MdSnackBar,
-          public _actions: ActionsService,
-          public _mediaService: TdMediaService,
-          public _ngZone: NgZone, 
-          public _http: Http, 
-          public _tableService: TdDataTableService,
-           public translate: TranslateService,
-          public _router: Router, public _route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+ constructor(
+    public _confs: ConfigurationService,
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _actions: ActionsService,
+    public _mediaService: TdMediaService,
+    public _ngZone: NgZone, 
+    public _http: Http, 
+    public _tableService: TdDataTableService,
+    public translate: TranslateService,
+    public route: ActivatedRoute,
+    public _router: Router) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
     this.autoLoad = false;
     this.singleEditor = true;
-    this._route.params.subscribe((params: { id: number }) => {
+    this.route.params.subscribe((params: { id: number }) => {
       this.idDialog = params.id;
     });
 
@@ -108,7 +110,7 @@ constructor(
 
 
   cancelEdit(): void {
-     this._router.navigate([ '../../edit', this.itemEdit[this.mainField]], { relativeTo: this._route });
+     this._router.navigate([ '../../edit', this.itemEdit[this.mainField]], { relativeTo: this.route });
   }
 
 

@@ -40,7 +40,7 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   itemEdit: BaseDocument;
   
   files: any;
- constructor(public _router: Router, public _route: ActivatedRoute, 
+ constructor(
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -50,8 +50,10 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
     public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
     this.setTitle = false;
     this.catalogName = 'Dialog Document';
   }

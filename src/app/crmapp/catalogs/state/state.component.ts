@@ -15,6 +15,9 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
 import { MdSnackBar } from '@angular/material';
 import { State } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
+
+
 
 @Component({
   selector: 'crm-state',
@@ -29,18 +32,19 @@ export class StateComponent extends BaseComponent {
    enableAdd: boolean = false;
    itemEdit: State;
  
-constructor(
-public _confs: ConfigurationService,
-public _loadingService: TdLoadingService,
-public _dialogService: TdDialogService,
-public _snackBarService: MdSnackBar,
-public _actions: ActionsService,
-public _mediaService: TdMediaService,
-public _ngZone: NgZone, 
-public _http: Http, 
-public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+ constructor(
+    public _confs: ConfigurationService,
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _actions: ActionsService,
+    public _mediaService: TdMediaService,
+    public _ngZone: NgZone, 
+    public _http: Http, 
+    public _tableService: TdDataTableService,
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
 	
     this.autoLoad = false;
     this.catalogName = 'State';

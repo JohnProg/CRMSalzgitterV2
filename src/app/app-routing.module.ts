@@ -6,11 +6,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuard } from './crmapp/_guards/auth.guard';
 
-import { BaseComponent, CatalogComponent, CurrencyComponent, ColonytypeComponent, DepartmentComponent,
-DocumentTypeComponent, FamilyComponent, LinerTermComponent, MarketComponent, MillComponent, OrganizationComponent,
-PaymentTermComponent, PortComponent, PositionComponent, PropertyComponent, SectorComponent, TenderComponent,
-ActionoppComponent, CountryComponent, TransactionflowComponent, StateComponent, IncotermComponent,
-TemplateemailComponent, TypeOpportunityComponent } from './crmapp/catalogs/index';
+import { BaseComponent, CatalogComponent, CurrencyComponent, 
+ActionoppComponent,  StateComponent, IncotermComponent,
+TemplateemailComponent } from './crmapp/catalogs/index';
 
 import { OptionsComponent, ActionopportunityComponent, ProductComponent, ProductindexComponent,
    ProducteditorComponent } from './crmapp/options/index';
@@ -60,28 +58,29 @@ const routes: Routes = [
           canActivate: [AuthGuard],
           children: [
 
+
             { path: 'currency', component: CurrencyComponent },
-            { path: 'colonytype', component: CurrencyComponent }, //, data: { baseapi: 'ColonyType', catName: 'Colony Type' } },
-            { path: 'department', component: DepartmentComponent },
-            { path: 'documenttype', component: DocumentTypeComponent },
-            { path: 'family', component: FamilyComponent },
-            { path: 'linerterm', component: LinerTermComponent },
-            { path: 'market', component: MarketComponent },
-            { path: 'mill', component: MillComponent },
-            { path: 'organization', component: OrganizationComponent },
-            { path: 'paymentterm', component: PaymentTermComponent },
-            { path: 'port', component: PortComponent },
-            { path: 'position', component: PositionComponent },
-            { path: 'property', component: PropertyComponent },
-            { path: 'sector', component: SectorComponent },
-            { path: 'tender', component: TenderComponent },
+            { path: 'colonytype', component: BaseComponent, data: { baseapi: 'ColonyType', catName: 'Colony Type' } },
+            { path: 'department', component: BaseComponent, data: { baseapi: 'Department', catName: 'Department' } },
+            { path: 'documenttype', component: BaseComponent, data: { baseapi: 'DocumentType', catName: 'Document Type' } },
+            { path: 'family', component: BaseComponent, data: { baseapi: 'Family', catName: 'Families' } },
+            { path: 'linerterm', component: BaseComponent, data: { baseapi: 'LinerTerm', catName: 'Liner Term' } },
+            { path: 'market', component: BaseComponent, data: { baseapi: 'Market', catName: 'Market' } },
+            { path: 'mill', component: BaseComponent, data: { baseapi: 'Mill', catName: 'Mill' } },
+            { path: 'organization', component: BaseComponent, data: { baseapi: 'Organization', catName: 'Organization' } },
+            { path: 'paymentterm', component: BaseComponent, data: { baseapi: 'PaymentTerm', catName: 'Payment Term' } },
+            { path: 'port', component: BaseComponent, data: { baseapi: 'Port', catName: 'Port' } },
+            { path: 'position', component: BaseComponent, data: { baseapi: 'Position', catName: 'Position' } },
+            { path: 'property', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties' } },
+            { path: 'sector', component: BaseComponent, data: { baseapi: 'Sector', catName: 'Sector' } },
+            { path: 'tender', component: BaseComponent, data: { baseapi: 'Tender', catName: 'Tender' } },
             { path: 'actionopp', component: ActionoppComponent },
-            { path: 'country', component: CountryComponent },
+            { path: 'country', component: BaseComponent, data: { baseapi: 'Country', catName: 'Country' } },
             { path: 'state', component: StateComponent },
             { path: 'incoterm', component: IncotermComponent },
-            { path: 'transactionflow', component: TransactionflowComponent },
+            { path: 'transactionflow', component: BaseComponent, data: { baseapi: 'TransactionFlow', catName: 'Transaction Flow' } },
             { path: 'templateemail', component: TemplateemailComponent },
-            { path: 'typeopportunity', component: TypeOpportunityComponent },
+            { path: 'typeopportunity', component: BaseComponent, data: { baseapi: 'TypeOpportunity', catName: 'Type Opportunity' } },
 
           ]
         },

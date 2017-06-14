@@ -36,6 +36,7 @@ export const cFloatPosMask = createNumberMask({
 
 
 
+
 @Component({
   selector: 'crm-component',
   templateUrl: './base.component.html',
@@ -119,7 +120,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _ngZone: NgZone,
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public route: ActivatedRoute
     ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
                        _dialogService,_snackBarService, _tableService);
@@ -130,6 +132,17 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    if( this.route.snapshot.data['baseapi'] !== undefined ) {
+      let baseapi = this.route.snapshot.data['baseapi'];
+      this._curService.setAPI(baseapi + '/', this.catalogName);
+    }
+    if( this.route.snapshot.data['catName'] !== undefined) {
+       let catName = this.route.snapshot.data['catName'];
+       this.catalogName = catName;
+    }
+
+
     if ( this.handleScreenChange === true) {
       this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: IPageChangeEvent) => {
          // this.screenChange(e);

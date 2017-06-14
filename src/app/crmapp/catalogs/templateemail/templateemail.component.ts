@@ -15,6 +15,9 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
+
+
 @Component({
   selector: 'crm-templateemail',
   templateUrl: './templateemail.component.html',
@@ -22,18 +25,21 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class TemplateemailComponent extends BaseComponent {
 
-  constructor(
-public _confs: ConfigurationService,
-public _loadingService: TdLoadingService,
-public _dialogService: TdDialogService,
-public _snackBarService: MdSnackBar,
-public _actions: ActionsService,
-public _mediaService: TdMediaService,
-public _ngZone: NgZone, 
-public _http: Http, 
-public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    
+ constructor(
+    public _confs: ConfigurationService,
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _actions: ActionsService,
+    public _mediaService: TdMediaService,
+    public _ngZone: NgZone, 
+    public _http: Http, 
+    public _tableService: TdDataTableService,
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
+
     this.catalogName = 'Template Email';
     this._curService.setAPI('TemplateEmail/', this.catalogName);
   }

@@ -28,18 +28,21 @@ import {TranslateService} from '@ngx-translate/core';
 export class OpportunityindexComponent extends BaseComponent  {
 
 
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
+  constructor( 
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    private _router: Router,
+    public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    public translate: TranslateService,
+    public route: ActivatedRoute,
+    public _router: Router) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
     this.sortBy = 'Id';
     this.catalogName = 'Opportunity';
     this._curService.setAPI('Opportunity/', this.catalogName);

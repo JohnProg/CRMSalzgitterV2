@@ -54,8 +54,8 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
 
 
 
-  constructor(public _router: Router, public _route: ActivatedRoute, 
-    public _confs: ConfigurationService,
+  constructor(public _router: Router,
+      public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
@@ -64,8 +64,12 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.setTitle = false;
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
+
+    this.setTitle = false;
     this._columns = <BehaviorSubject<ITdDataTableColumn[]>>new BehaviorSubject([]);
     this.pcolumns = this._columns.asObservable();
 

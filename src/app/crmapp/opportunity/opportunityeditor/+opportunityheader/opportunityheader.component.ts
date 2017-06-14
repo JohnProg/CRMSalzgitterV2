@@ -42,19 +42,20 @@ export class OpportunityheaderComponent extends BaseComponent {
   deliveryRequired: boolean = false;
 
   constructor(public _router: Router, 
-    public _route: ActivatedRoute,
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
+    public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
+    public route: ActivatedRoute,
     public _oppservice: OpportunityService    ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
 
     this.itemEdit = new Opportunity();
     this.catalogName = 'Opportunity';

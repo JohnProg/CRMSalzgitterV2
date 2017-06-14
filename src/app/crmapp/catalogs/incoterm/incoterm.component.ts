@@ -17,6 +17,9 @@ import { MdSnackBar } from '@angular/material';
 import { BaseComponent } from '../base.component';
 import { IncoTerm } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
+
+
 
 @Component({
   selector: 'crm-incoterm',
@@ -27,18 +30,22 @@ import {TranslateService} from '@ngx-translate/core';
 export class IncotermComponent extends BaseComponent {
 
   itemEdit: IncoTerm;
+
  constructor(
-public _confs: ConfigurationService,
-public _loadingService: TdLoadingService,
-public _dialogService: TdDialogService,
-public _snackBarService: MdSnackBar,
-public _actions: ActionsService,
-public _mediaService: TdMediaService,
-public _ngZone: NgZone, 
-public _http: Http, 
-public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.catalogName = 'IncoTerm';
+    public _confs: ConfigurationService,
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _actions: ActionsService,
+    public _mediaService: TdMediaService,
+    public _ngZone: NgZone, 
+    public _http: Http, 
+    public _tableService: TdDataTableService,
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
+    this.catalogName = 'IncoTerm';
     this._curService.setAPI('IncoTerm/', this.catalogName);
   }
 

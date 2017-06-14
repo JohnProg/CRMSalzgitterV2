@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../catalogs/base.component';
 import {TranslateService} from '@ngx-translate/core';
 import { ActionopportunitytemplateemailComponent } from './+actionopportunitytemplateemail/actionopportunitytemplateemail.component';
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 
 
@@ -30,17 +31,23 @@ export class ActionopportunityComponent extends BaseComponent  {
 
 
   @ViewChild(ActionopportunitytemplateemailComponent) _templates: ActionopportunitytemplateemailComponent;
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
+
+
+ constructor(
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
+    public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
+
     this.catalogName = 'Action Opportunities';
     this._curService.setAPI('ActionOpportunity/', this.catalogName);
   }

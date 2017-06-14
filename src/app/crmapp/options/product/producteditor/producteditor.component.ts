@@ -36,17 +36,19 @@ export class ProducteditorComponent extends BaseComponent {
 @ViewChild(ProductpropertyComponent) _props: ProductpropertyComponent;
 
 
-  constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
+  constructor(public _router: Router,  
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
+    public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
 
     this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
@@ -63,7 +65,7 @@ export class ProducteditorComponent extends BaseComponent {
   }
 
   afterViewInit(): void {
-      this._route.params.subscribe((params: { id: number }) => {
+      this.route.params.subscribe((params: { id: number }) => {
       let itemId: number = params.id;
       if (itemId > 0) {
         this.editEntity(itemId);
@@ -91,7 +93,7 @@ export class ProducteditorComponent extends BaseComponent {
   }
 
   cancelEdit(): void {
-    this._router.navigate([ '../../'], { relativeTo: this._route });
+    this._router.navigate([ '../../'], { relativeTo: this.route });
   }
 
 }

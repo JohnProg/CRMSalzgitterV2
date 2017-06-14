@@ -18,12 +18,9 @@ import { OpportunityService, ActionsService, CatalogService,
 
 
 //catalogs
-import { BaseComponent, CatalogComponent, CurrencyComponent, ColonytypeComponent,
-DepartmentComponent, DocumentTypeComponent, FamilyComponent, LinerTermComponent,
-MarketComponent, MillComponent, OrganizationComponent, PaymentTermComponent,
-PortComponent, PositionComponent, PropertyComponent, SectorComponent,
-TenderComponent, ActionoppComponent, CountryComponent, StateComponent, IncotermComponent,
-TransactionflowComponent,  TemplateemailComponent, TypeOpportunityComponent
+import { BaseComponent, CatalogComponent, CurrencyComponent,  
+  ActionoppComponent, StateComponent, IncotermComponent,
+  TemplateemailComponent
  } from './catalogs/index';
 
 
@@ -99,28 +96,10 @@ import { AuthHelper } from './authHelper/authHelper';
 
     BaseComponent,
     CurrencyComponent,
-    ColonytypeComponent,
-    DepartmentComponent,
-    DocumentTypeComponent,
-    FamilyComponent,
-    LinerTermComponent,
-    MarketComponent,
-    MillComponent,
-    OrganizationComponent,
-    PaymentTermComponent,
-    PortComponent,
-    PositionComponent, 
-    PropertyComponent, 
-    SectorComponent, 
-    TenderComponent, 
     ActionoppComponent, 
-    CountryComponent,
     StateComponent,
-    TypeOpportunityComponent,
-
     IncotermComponent,
     CatalogComponent,
-    TransactionflowComponent,
     TemplateemailComponent,
 
     //Options

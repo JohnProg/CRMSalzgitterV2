@@ -14,6 +14,7 @@ import { MdSnackBar } from '@angular/material';
 import {  Company } from '../../model/allmodels';
 import { CRMSelectComponent } from '../../components/crmselect/crmselect.component';
 import {TranslateService} from '@ngx-translate/core';
+import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 @Component({
   selector: 'crm-company',
@@ -28,16 +29,21 @@ export class CompanyComponent extends BaseComponent {
   zipCode: string = "";
   @ViewChild('colony') colony: CRMSelectComponent;
 
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
+ constructor(
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone,    public _http: Http, 
+    public _ngZone: NgZone, 
+    public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    this.catalogName = 'Company';
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+
+    this.catalogName = 'Company';
     this._curService.setAPI('Company/', this.catalogName);
   }
 

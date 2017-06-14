@@ -35,19 +35,19 @@ export class DocumentviewerComponent extends BaseComponent {
  sortBy: string = 'DocTypeName';
  itemEdit: BaseDocument;
 
-  constructor(public _router: Router, public _route: ActivatedRoute, public _confs: ConfigurationService,
+ constructor(
+    public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
+    public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, 
-          _mediaService, _ngZone, _http, _tableService, translate);
-    this.catalogName = 'Document List';
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
 
   }
 
