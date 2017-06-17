@@ -93,12 +93,7 @@ import * as moment from 'moment';
 
 import { AuthHelper } from './authHelper/authHelper';
 
-// Create the client as outlined above
-const client: ApolloClient = new ApolloClient();
-
-export function provideClient(): ApolloClient {
-  return client;
-}
+import { provideClient, client, GraphService } from './graphql/index';
 
 @NgModule({
   declarations: [
@@ -205,6 +200,7 @@ export function provideClient(): ApolloClient {
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
     AuthGuard, AuthHelper,
+    GraphService,
 
 
   ], // additional providers needed for this module

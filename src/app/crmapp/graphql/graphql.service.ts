@@ -6,7 +6,7 @@ import { RESTService, HttpInterceptorService } from '@covalent/http';
 
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { ConfigurationService } from './configuration.service';
+import { ConfigurationService } from '../services/configuration.service';
 import {  TCRMEntity, ReturnSaveRequest } from '../model/allmodels';
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -18,20 +18,24 @@ import {
 import { MdSnackBar } from '@angular/material';
 
 import { environment } from '../../../environments/environment';
-import { ApolloClient, createNetworkInterface } from 'apollo-client';
-
-
-// by default, this client will send queries to `/graphql` (relative to the URL of your app)
-const client: ApolloClient = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: environment.server + 'graph',
-  }),
-});
+import { provideClient, client } from './apolo.client';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { ColonyTypeQuery, ColonyTypeQueryResponse } from './queries/index';
 
 
 @Injectable()
 export class GraphService   {
 
+  colonyType: any;
+   constructor(private apollo: Apollo) {}
 
-
+     public loadColonyType() {
+           this.apollo.watchQuery<ColonyTypeQueryResponse>({
+              query: ColonyTypeQuery
+            }).subscribe(({data}) => {
+debugger
+              this.colonyType = data.colonytype;
+            });
+     }
 }

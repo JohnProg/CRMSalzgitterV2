@@ -18,7 +18,7 @@ import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../base.component';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
-
+import { GraphService } from '../../graphql/index';
 
 @Component({
   selector: 'crm-currency',
@@ -44,7 +44,8 @@ export class CurrencyComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
+    public route: ActivatedRoute,
+    public _graph: GraphService) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
     this.catalogName = 'Currencies';
     this._curService.setAPI('Currency', this.catalogName);
@@ -58,7 +59,8 @@ export class CurrencyComponent extends BaseComponent {
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
 
-
+    debugger
+    this._graph.loadColonyType();
   }
 
 
