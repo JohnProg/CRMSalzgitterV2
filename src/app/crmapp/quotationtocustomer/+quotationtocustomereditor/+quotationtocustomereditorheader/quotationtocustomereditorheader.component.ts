@@ -56,7 +56,7 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
     public translate: TranslateService
     ,  public _oppservice: OpportunityService 
        ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);
 
     this.itemEdit = new QuotationToCustomer();
     this.catalogName = 'Quotation to Customer';

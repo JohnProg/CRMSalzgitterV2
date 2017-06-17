@@ -44,11 +44,12 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
     public _snackBarService: MdSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
+    public _ngZone: NgZone,
+    public _http: Http,
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
     this.catalogName = 'Purchase Order';
     this._curService.setAPI('PurchaseOrderDetail', this.catalogName);
     this.itemEdit = new PurchaseOrderDetail();

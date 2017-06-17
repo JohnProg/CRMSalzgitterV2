@@ -43,7 +43,7 @@ constructor(
           public translate: TranslateService,
           public _router: Router, public _route: ActivatedRoute ) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions,
-        _mediaService, _ngZone, _http, _tableService,translate,  _router, _route);
+        _mediaService, _ngZone, _http, _tableService,translate,  _route, _router);
     this.catalogName = 'Quotation to Customer Dialog';
     this.mainField = 'IdQuotationToCustomer';
     this.baseApi = 'QuotationToCustomerDialog';

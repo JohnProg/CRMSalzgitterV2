@@ -53,9 +53,10 @@ export class QuotationfromsupplierheaderComponent  extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService
-    ,  public _oppservice: OpportunityService 
+    ,  public _oppservice: OpportunityService,
+    public route: ActivatedRoute
        ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
 
     this.itemEdit = new QuotationFromSupplier();
     this.catalogName = 'Quotation from Supplier';

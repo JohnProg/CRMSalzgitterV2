@@ -66,7 +66,7 @@ export class QuotationtocustomerdetailsumaryComponent extends BaseComponent {
     public _tableService: TdDataTableService,
     public translate: TranslateService) {
     super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, 
-    _http, _tableService, translate);
+    _http, _tableService, translate, _route);
 
     this.setTitle = false;
     this._columns = <BehaviorSubject<ITdDataTableColumn[]>>new BehaviorSubject([]);

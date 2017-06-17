@@ -39,7 +39,7 @@ export class QuotationfromsupplierindexviewerComponent  extends BaseComponent  {
     public _tableService: TdDataTableService,
     public _route: ActivatedRoute,
     public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);
     this.sortBy = 'Id';
     this.catalogName = 'Quotation from Supplier';
     this._curService.setAPI('QuotationFromSupplier/', this.catalogName);

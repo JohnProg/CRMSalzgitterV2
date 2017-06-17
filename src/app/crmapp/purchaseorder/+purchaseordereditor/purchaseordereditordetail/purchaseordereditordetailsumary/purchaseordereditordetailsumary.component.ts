@@ -23,6 +23,8 @@ import {TranslateService} from '@ngx-translate/core';
 import { PurchaseOrderDetailSumary, PurchaseOrderDetailSumaryProperty, 
      Property, TCRMEntity, ProductProperty } from '../../../../model/allmodels';
 
+
+
 @Component({
   selector: 'crm-purchaseordereditordetailsumary',
   templateUrl: './purchaseordereditordetailsumary.component.html',
@@ -43,9 +45,9 @@ export class PurchaseordereditordetailsumaryComponent extends Editordetailsumary
     public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _router, _route, _confs, _loadingService, _dialogService, _snackBarService,
-         _actions, _mediaService, _ngZone, _http, _tableService, translate);
+    public translate: TranslateService,
+    public route: ActivatedRoute) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
 
     this.catalogName = 'Purchase Order Details Sumary';
     this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName);

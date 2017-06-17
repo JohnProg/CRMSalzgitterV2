@@ -48,7 +48,7 @@ export class QuotationtocustomereditordetailComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate);    
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);    
     this.catalogName = 'Quotation Details';
     this._curService.setAPI('QuotationToCustomerDetail', this.catalogName);
     this.itemEdit = new QuotationToCustomerDetail();

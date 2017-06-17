@@ -10,6 +10,9 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '../shared/shared.module';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
+import { ApolloClient } from 'apollo-client';
+import { ApolloModule } from 'apollo-angular';
+
 
 
 // services 
@@ -89,6 +92,13 @@ import { AuthGuard } from './_guards/auth.guard';
 import * as moment from 'moment';
 
 import { AuthHelper } from './authHelper/authHelper';
+
+// Create the client as outlined above
+const client: ApolloClient = new ApolloClient();
+
+export function provideClient(): ApolloClient {
+  return client;
+}
 
 @NgModule({
   declarations: [
@@ -179,6 +189,7 @@ import { AuthHelper } from './authHelper/authHelper';
     Md2Module,
     TextMaskModule,
     CurrencyMaskModule,
+    ApolloModule.forRoot(provideClient),
   ], // modules needed to run this module
   exports: [
        SharedModule,
@@ -193,7 +204,7 @@ import { AuthHelper } from './authHelper/authHelper';
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
-    AuthGuard, AuthHelper
+    AuthGuard, AuthHelper,
 
 
   ], // additional providers needed for this module
