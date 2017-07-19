@@ -3,8 +3,8 @@
     <span>{{ 'HOME.MENU.OPPORTUNITY.DISPLAYNAME' | translate }}</span>
     <div flex></div>
   </div>
-  <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
-    [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
+  <td-layout-manage-list #manageList opened="true" mode="side"
+    sidenavWidth="180px">
     <md-toolbar td-sidenav-content>
        <button md-button routerLink="/opportunity">Opp. Index</button>
     </md-toolbar>
@@ -43,19 +43,23 @@
     <md-card>
       <md-card-content>
 
-        <crm-opportunityheader [idOpp]="idOpp" *ngIf="scrId == 1"></crm-opportunityheader>
+        <crm-opportunityheader [idDoc]="idOpp" *ngIf="scrId == 1"></crm-opportunityheader>
 
         <crm-opportunitydetail [idOpp]="idOpp" *ngIf="scrId == 2 "></crm-opportunitydetail>
 
         <crm-editorbasedialog [idParent]="idOpp" 
                 [baseApi]="'OpportunityDialog'"
-                parentField="IdOpportunityDialog"
+                parentField="idOpportunity"
 
                 documentBaseApi="OpportunityDocument"
-                documentParentField="IdOpportunityDialog"
-                *ngIf="scrId == 3 "></crm-editorbasedialog>
+                documentParentField="idOpportunityDialog"
+                *ngIf="scrId == 3 "
+                catName="Opportunity dialog "
+                [idCustomer]="idCustomer"></crm-editorbasedialog>
 
-        <crm-documentviewer [idParent]="idOpp" baseApi="OpportunityDocument" *ngIf="scrId == 4 "></crm-documentviewer>
+        <crm-documentviewer [idParent]="idOpp" baseApi="OpportunityDocument" 
+        *ngIf="scrId == 4 "
+        catName="Opportunity Document "></crm-documentviewer>
 
         <crm-quotationfromsupplierindexviewer [idOpp]="idOpp" *ngIf="scrId == 5 "></crm-quotationfromsupplierindexviewer>
 

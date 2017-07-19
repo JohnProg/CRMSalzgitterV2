@@ -47,7 +47,7 @@
     <md-card>
       <md-card-content>
 
-        <crm-purchaseordereditorheader [idPurchase]="idPurchase"  *ngIf="scrId == 1"></crm-purchaseordereditorheader>
+        <crm-purchaseordereditorheader [idDoc]="idPurchase"  *ngIf="scrId == 1"></crm-purchaseordereditorheader>
         <crm-purchaseordereditordetail [idPurchase]="idPurchase" *ngIf="scrId == 2 "></crm-purchaseordereditordetail>
 
         <crm-documentviewer [idParent]="idPurchase" baseApi="PurchaseOrderDocument" *ngIf="scrId == 4 "></crm-documentviewer>
@@ -55,11 +55,14 @@
 
         <crm-editorbasedialog [idParent]="idPurchase" 
                 [baseApi]="'PurchaseOrderDialog'"
-                parentField="IdPurchaseOrder"
+                parentField="idPurchaseOrder"
 
                 documentBaseApi="PurchaseOrderDocument"
-                documentParentField="IdPurchaseOrderDialog"
-                *ngIf="scrId == 3 "></crm-editorbasedialog>
+                documentParentField="idPurchaseOrderDialog"
+                *ngIf="scrId == 3 "
+                catName="PO Dialogs"
+                [idCustomer]="idCustomer"                
+                ></crm-editorbasedialog>
 
       </md-card-content>
     </md-card>

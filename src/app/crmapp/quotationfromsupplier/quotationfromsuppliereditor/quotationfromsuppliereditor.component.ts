@@ -33,8 +33,10 @@ import { QuotationfromsupplierheaderComponent } from './+quotationfromsupplierhe
 export class QuotationfromsuppliereditorComponent extends CatalogComponent {
 
   idQuotation: number = 0;
+  qts: QuotationFromSupplier;
   idOpp: number = 0;
-  scrId: number = 1;
+  idCustomer: number;
+
   @ViewChild(QuotationfromsupplierheaderComponent) headercomp: QuotationfromsupplierheaderComponent;
 
   constructor(
@@ -54,17 +56,27 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
   }
 
   linkClick(scr: number ) : boolean {
+    if( this.headercomp !== undefined){
+      this.idCustomer = this.headercomp.itemEdit.idCustomer;
+    }
     this.scrId = scr;
     return true;
   }
 
   doOnItemCreated(itm: QuotationFromSupplier) {
-    this.idQuotation = itm.Id;
+    this.idQuotation = itm.id;
+    this.idOpp = itm.idOpportunity;
+    this.idCustomer = itm.idCustomer;
   }
 
 
   goToUpp() {
     this.headercomp.goToOpp();
+  }
+
+  onItemLoaded(itm: QuotationFromSupplier) {
+    this.qts = itm;
+    this.idCustomer = this.qts.idCustomer;
   }
 }
 

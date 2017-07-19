@@ -25,7 +25,15 @@ import {TranslateService} from '@ngx-translate/core';
 import { IDeleteEventModel } from '../../../model/deleteeventmodel';
 
 
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
+
+const productQl = gql`
+  query {
+    products { id name description }
+  }
+`;
 
 @Component({
   selector: 'crm-opportunitydetail',
@@ -37,7 +45,7 @@ export class OpportunitydetailComponent extends BaseComponent {
 
   @Input() idOpp: number = 0;
   itemEdit: OpportunityDetail;
-  sortBy: string = 'ItemDescription';
+  sortBy: string = 'itemDescription';
   allowProduct: boolean = true;
   propSubscription: Subscription;
 
@@ -52,13 +60,27 @@ export class OpportunitydetailComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.catalogName = 'Opp Details';
     this._curService.setAPI('OpportunityDetail', this.catalogName);
     this.itemEdit = new OpportunityDetail();
 
+  }
+
+  loadCatalogs() {
+    this._curService.loadQl(productQl, undefined)
+      .subscribe(({data}) => {
+        this.catProduct = data['products'];
+
+      }, (error: Error) => {
+        this._loadingService.resolve('');
+        debugger
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      }
+      );   
   }
 
   ngOnInitClass() {
@@ -84,31 +106,31 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
   addColumns() {
-    this.columns.push({ name: 'ItemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'ProductDescription', label: 'Product', tooltip: '' });
+    this.columns.push({ name: 'itemDescription', label: 'Item Description' });
+    this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
 
-    this.columns.push({ name: 'ItemQuantity', label: 'Quantity' });
-    this.columns.push({ name: 'ItemPrice', label: 'Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'ItemExtended', label: 'Extended', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
+    this.columns.push({ name: 'itemPrice', label: 'Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'itemExtended', label: 'Extended', numeric: true, format: CURRENCY_FORMAT, sortable: false });
   }
 
   initEntity() {
     this.itemEdit = new OpportunityDetail() ;
-    this.itemEdit.IdOpportunity  = this.idOpp;
-    this.itemEdit.DateAdded = new Date();
-    this.itemEdit.IdProduct = 0;
+    this.itemEdit.idOpportunity  = this.idOpp;
+    this.itemEdit.dateAdded = new Date();
+    this.itemEdit.idProduct = 0;
   }
 
 
   afterLoadItem(itm: OpportunityDetail) {
     super.afterLoadItem(itm);
-    this._actions.updateTitle('Edit item for Opp ' + this.idOpp.toString());
+    this._actions.updateTitle('Edit item ' + this.idOpp.toString());
   }
 
 
   confirmDelete(item:  OpportunityDetail) {
     this.itemEdit = item;
-    this._actions.deleteItem( { title: item.ItemDescription, objId: this.objId });
+    this._actions.deleteItem( { title: item.itemDescription, objId: this.objId });
   }
 
   afterCreate(item: OpportunityDetail) {
@@ -120,6 +142,6 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
   hasSumary(h: boolean) {
-    this.allowProduct = h || this.itemEdit.Id === 0;
+    this.allowProduct = h || this.itemEdit.id === 0;
   }
 }

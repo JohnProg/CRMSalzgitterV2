@@ -21,7 +21,8 @@ import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 export const cCurrencyMask = createNumberMask({
       allowDecimal: true
@@ -35,7 +36,19 @@ export const cFloatPosMask = createNumberMask({
     });
 
 
+const findCustContactQl = gql`
+  query 
+        findCustoerContacts($custid: Int!) {
+            findCustomerContacts(custid: $custid) { id name isActive  } 
+        }
+`;
 
+const findCountryByMill = gql`
+  query 
+        findCountryByMill($idmill: Int!) {
+            findCountryByMill(idmill: $idmill) { id name description  } 
+        }
+`;
 
 @Component({
   selector: 'crm-component',
@@ -45,7 +58,7 @@ export const cFloatPosMask = createNumberMask({
 })
 export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  
+  gQuery: any;
   private addEvent;
   private searchEvent;
   private deleteEvent;
@@ -63,6 +76,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private afterDeleteEvent: Subscription;
 
   onItemCreated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  onItemLoaded: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   @ViewChild('editform') form: NgForm;
 
   pageChange: Subscription;
@@ -95,22 +109,44 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pageSize: number = 5;
 
-  sortBy: string = 'Name';
+  sortBy: string = 'name';
   sortType: string = "ASC"
   sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
 
   pagesArray: number[] = [5, 8, 10, 13, 20, 50, 100];
 
   emailTo: TCRMEntity[] =  [
-    <TCRMEntity>{ Id: 1, Name: 'Internal' },
-    <TCRMEntity>{ Id: 2, Name: 'Customer' },
-    <TCRMEntity>{ Id: 3, Name: 'Both' }
+    <TCRMEntity>{ id: 1, name: 'Internal' },
+    <TCRMEntity>{ id: 2, name: 'Customer' },
+    <TCRMEntity>{ id: 3, name: 'Both' }
   ];
   autoLoad: boolean = true;
   isLoading: boolean = false;
   objId: string;
    _curService: CatalogService;
   handleScreenChange: boolean = true;
+
+
+  catDocType: TCRMEntity[];
+  catStatus: TCRMEntity[];
+  catResponsible: TCRMEntity[];
+  catCustomer: TCRMEntity[];
+  catCustomerContact: TCRMEntity[];
+  catCurrencies: TCRMEntity[];
+  catContact: TCRMEntity[];
+  catUser: TCRMEntity[];
+  catPort: TCRMEntity[];
+  catIncoTerm: TCRMEntity[];
+  catLinerTerm: TCRMEntity[];
+  catMarket: TCRMEntity[];
+  catSector: TCRMEntity[];
+  catTransactionFlow: TCRMEntity[];
+  catTypeOpp: TCRMEntity[];
+  catMill: TCRMEntity[];
+  catCountry: TCRMEntity[];
+
+  catProduct: TCRMEntity[];
+  catActionsOpp: TCRMEntity[];
   constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -121,10 +157,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public apollo: Apollo
     ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
-                       _dialogService,_snackBarService, _tableService);
+                       _dialogService,_snackBarService, _tableService, apollo);
     this.addColumns();
     this.addActionColumn();
     this.pageSize = this._confs.pageSize;
@@ -152,6 +189,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     //this.catalogName = 'Colony Type';
     //this._curService.setAPI('ColonyType/', this.catalogName);
     this.ngOnInitClass();
+    this.loadCatalogs();
   }
 
   ngOnInitClass() {
@@ -159,7 +197,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initData();
   }
 
+  loadCatalogs() {
 
+  }
   ngAfterViewInit(): void {
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
@@ -256,8 +296,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   addColumns() {
-    this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
-    this.columns.push({ name: 'Description', label: 'Description' });
+    this.columns.push({ name: 'name', label: 'Name', tooltip: '' });
+    this.columns.push({ name: 'description', label: 'Description' });
   }
 
   addActionColumn() {
@@ -312,7 +352,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
     this.initEntity();
-    this.itemEdit.Id = 0;
+    this.itemEdit.id = 0;
     this.isEditing = true;
     this._actions.setEdit();
   }
@@ -330,7 +370,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitForm(form) {
     if ( form.valid &&  this.beforeSave() === true) {
-      if (this.itemEdit.Id > 0) {
+      if (this.itemEdit.id > 0) {
         this._curService.update(this.itemEdit);
       } else {
         this._curService.create(this.itemEdit);
@@ -366,6 +406,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if( this.singleEditor === false) {
         this.isEditing = false;
         this._actions.cancelEdit();
+        
     }
     //this._curService.assignList(item.items);
   }
@@ -384,12 +425,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   confirmDelete(item:  TCRMEntity) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: item.Description || item.Name, objId: this.objId }) );
+    this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: item.description || item.name, objId: this.objId }) );
   }
 
   deleteConfirmed(res: string) {
     if( res === this.objId) {
-      this.deleteEntity(this.itemEdit.Id);
+      this.deleteEntity(this.itemEdit.id);
     }
   }
 
@@ -440,6 +481,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
      this.isEditing = true;
      this.itemEdit = itm;
      this._actions.setEdit();
+     this.onItemLoaded.emit(itm);
   }
 
   screenChange(e: IPageChangeEvent) {
@@ -459,6 +501,30 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sendEmail() {
     
+  }
+
+  loadCustomerContact(idcust: number) {
+   this._curService.loadQl(findCustContactQl, { custid: idcust })
+    .subscribe(({data}) => {
+      this.catCustomerContact = data['findCustomerContacts'];
+    }, (error: Error) => {
+      this._loadingService.resolve('');
+      debugger
+      this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+    }
+    );
+  }
+
+  loadCountryOrigin(idmill: number) {
+   this._curService.loadQl(findCountryByMill, { idmill: idmill })
+    .subscribe(({data}) => {
+      this.catCountry = data['findCountryByMill'];
+    }, (error: Error) => {
+      this._loadingService.resolve('');
+      debugger
+      this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+    }
+    );
   }
 
 

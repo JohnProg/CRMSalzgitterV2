@@ -18,6 +18,9 @@ import { BaseComponent } from '../../../catalogs/base.component';
 import { getQuotationFromSupplier_Result } from '../../../model/allmodels';
 
 import {TranslateService} from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-quotationfromsupplierindexviewer',
@@ -37,13 +40,15 @@ export class QuotationfromsupplierindexviewerComponent  extends BaseComponent  {
     private _router: Router,
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public _route: ActivatedRoute,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);
-    this.sortBy = 'Id';
+    public translate: TranslateService,
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
+    this.sortBy = 'id';
     this.catalogName = 'Quotation from Supplier';
     this._curService.setAPI('QuotationFromSupplier/', this.catalogName);
-    this._route.params.subscribe((params: { id: number }) => {
+    this.route.params.subscribe((params: { id: number }) => {
       this.idOpp = params.id;
     });
   }
@@ -85,17 +90,17 @@ export class QuotationfromsupplierindexviewerComponent  extends BaseComponent  {
   addColumns() {
 
     //super.addColumns();
-    this.columns.push({ name: 'Id', label: 'Quotation', tooltip: '' });
+    this.columns.push({ name: 'id', label: 'Quotation', tooltip: '' });
     if( this.idOpp === undefined || this.idOpp === 0 ) {
-      this.columns.push({ name: 'CustomerName', label: 'Customer' });
+      this.columns.push({ name: 'customerName', label: 'Customer' });
     }
-    this.columns.push({ name: 'IdOpportunity', label: 'Opportunity' });
-    this.columns.push({ name: 'CurrencyName', label: 'Currency' });
-    this.columns.push({ name: 'MillName', label: 'Mill' });
-    this.columns.push({ name: 'PortName', label: 'Port' });
-    this.columns.push({ name: 'SstatusName', label: 'Status' });
-    this.columns.push({ name: 'DateReceived', label: 'Date' });
-    this.columns.push({ name: 'AsImporter', label: 'As Importer' });
+    this.columns.push({ name: 'idOpportunity', label: 'Opportunity' });
+    this.columns.push({ name: 'currencyName', label: 'Currency' });
+    //this.columns.push({ name: 'millName', label: 'Mill' });
+    //this.columns.push({ name: 'portName', label: 'Port' });
+    this.columns.push({ name: 'sstatusName', label: 'Status' });
+    this.columns.push({ name: 'dateReceived', label: 'Date' });
+    this.columns.push({ name: 'asImporter', label: 'As Importer' });
   }
 
 }

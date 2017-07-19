@@ -22,7 +22,8 @@ import { AbstractValueAccessor, EditordetailsumaryComponent } from '../../../../
 import {TranslateService} from '@ngx-translate/core';
 import { PurchaseOrderDetailSumary, PurchaseOrderDetailSumaryProperty, 
      Property, TCRMEntity, ProductProperty } from '../../../../model/allmodels';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 @Component({
@@ -46,9 +47,10 @@ export class PurchaseordereditordetailsumaryComponent extends Editordetailsumary
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.catalogName = 'Purchase Order Details Sumary';
     this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName);
     this.refreshItemUrl = 'PurchaseOrderDetailSumary/searchByDetail';
@@ -61,24 +63,24 @@ export class PurchaseordereditordetailsumaryComponent extends Editordetailsumary
   initEntity() {
     
     this.itemEdit = new PurchaseOrderDetailSumary() ;
-    this.itemEdit.IdPurchaseOrderDetail  = this.idDetail;
-    this.itemEdit.IdDetail = this.idDetail;
-    this.itemEdit.DateCreated = new Date();
-    this.itemEdit.Price = this.price;
-    this.itemEdit.Quantity = this.maxQty;
+    this.itemEdit.idPurchaseOrderDetail  = this.idDetail;
+    this.itemEdit.idDetail = this.idDetail;
+    this.itemEdit.dateCreated = new Date();
+    this.itemEdit.price = this.price;
+    this.itemEdit.quantity = this.maxQty;
     this.initDetails();
   }
 
 
  prepareToSave() {
     this.pdetails.forEach( (t: PurchaseOrderDetailSumaryProperty[]) => {
-      this.itemEdit.PurchaseOrderDetailSumaryProperties = new Array<PurchaseOrderDetailSumaryProperty>();
+      this.itemEdit.purchaseOrderDetailSumaryProperties = new Array<PurchaseOrderDetailSumaryProperty>();
       t.forEach( (o: PurchaseOrderDetailSumaryProperty ) => {
             let p: PurchaseOrderDetailSumaryProperty = new PurchaseOrderDetailSumaryProperty();
-            p.IdPurchaseOrderDetailSumary = o.IdPurchaseOrderDetailSumary;
-            p.IdProperty = o.IdProperty;
-            p.PropertyValue = o.PropertyValue;
-            this.itemEdit.PurchaseOrderDetailSumaryProperties.push(p);
+            p.idPurchaseOrderDetailSumary = o.idPurchaseOrderDetailSumary;
+            p.idProperty = o.idProperty;
+            p.propertyValue = o.propertyValue;
+            this.itemEdit.purchaseOrderDetailSumaryProperties.push(p);
       });
     });
  }

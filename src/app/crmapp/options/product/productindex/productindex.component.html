@@ -5,9 +5,9 @@
     <td-data-table  [data]="entList | async" [columns]="columns" [sortable]="true" 
            [sortBy]="sortBy" [sortOrder]="sortOrder"
            (sortChange)="getSorted($event)">
-      <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
        <button md-button
-        md-ripple class="block relative" [routerLink]="['../edit', row.Id]">
+        md-ripple class="block relative" [routerLink]="['../edit', row.id]">
         {{value}}
       </button>
        

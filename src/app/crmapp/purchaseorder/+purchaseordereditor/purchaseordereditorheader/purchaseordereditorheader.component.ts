@@ -11,7 +11,7 @@ import { QuotationToCustomer, PurchaseOrder, IncoTerm,
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { BaseComponent } from '../../../catalogs/base.component';
+import { BaseOppComponent } from '../../../catalogs/index';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -24,22 +24,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
 import {  OpportunityService } from '../../../services/oppservice.service';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-purchaseordereditorheader',
   templateUrl: './purchaseordereditorheader.component.html',
   styleUrls: ['./purchaseordereditorheader.component.scss']
 })
-export class PurchaseordereditorheaderComponent extends BaseComponent {
+export class PurchaseordereditorheaderComponent extends BaseOppComponent {
 
-  @Input() idPurchase: number = 0;
   idParent: number = 0;
   itemEdit: PurchaseOrder;
-  @ViewChild('idIncoTerm') incoTermSelect: AbstractValueAccessor;
-  @ViewChild('IdCountry') countryOrigin: AbstractValueAccessor;
-  @ViewChild('idCustomerContact') custContactSelect: AbstractValueAccessor;  
-  deliveryRequired: boolean = false;
   dta: Date;
   constructor(public _router: Router, 
     public _route: ActivatedRoute,
@@ -55,9 +51,9 @@ export class PurchaseordereditorheaderComponent extends BaseComponent {
     public translate: TranslateService,
     public _oppservice: OpportunityService,
     public route: ActivatedRoute,
-       ) {
-        super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.itemEdit = new PurchaseOrder();
     this.catalogName = 'Purchase Order';
     this.autoLoad = false;
@@ -71,59 +67,16 @@ export class PurchaseordereditorheaderComponent extends BaseComponent {
     this.entList = <Observable<PurchaseOrder[]>>this._curService.entList;
   }
 
-  afterViewInit(): void {
-    this._actions.showAdd(false);
-    this._actions.showSearch(false);
-    this._actions.showSave(true);
-    this._actions.showCancel(false);
-
-    if (this.idPurchase > 0) {
-      this.editEntity(this.idPurchase);
-
-    } else {
-      this._actions.updateTitle('Create Purchase Order ');
-      this.addEntity();
-    }
-
-  }
 
   initEntity() {
     this.itemEdit = new  PurchaseOrder();
-    this.itemEdit.IdStatus = 1;
+    this.itemEdit.idStatus = 1;
   }
 
   afterLoadItem(item: PurchaseOrder) {
     super.afterLoadItem(item);
-    this.itemEdit = item;
-    this.setDeliverRequired();
-    this.idParent = item.IdQuotationToCustomer;
-    this.countryOrigin.loadCustomDataFromId(item.IdMill);
-    this.custContactSelect.loadCustomDataFromId(item.IdCustomer);
-    this._actions.showCancel(false);
-    this.onItemCreated.emit(item);
-    this._actions.updateTitle('Edit Purchase Order ' + this.idPurchase.toString());
-  }
-
-  setDeliverRequired() {
-    setTimeout(() => {
-        let req =  (<IncoTerm>this.incoTermSelect.getItemSelected()).DeliveryRequired;
-        this.setDeliveryRequired(req);
-    }, 500);
-  }
-  afterSave(item: PurchaseOrder) {}
-
-
-  onCustomerChange(event: any) {}
-
-  incoTermChange(item: IncoTerm) {
-    this.setDeliveryRequired(item.DeliveryRequired);
-  }
-
-  setDeliveryRequired(isreq: boolean) {
-    this.deliveryRequired = isreq;
-    if ( this.deliveryRequired === false ) {
-      this.itemEdit.DeliveryLocation = undefined;
-    }
+    this.idParent = item.idQuotationToCustomer;
+    this.loadCountryOrigin(item.idMill);
   }
 
   getFromOpp(event: any) {
@@ -137,10 +90,10 @@ export class PurchaseordereditorheaderComponent extends BaseComponent {
 
     let p: TCRMEntity[] = new Array<TCRMEntity>();
     let p1 = new TCRMEntity();
-    p1.Name = 'idquote'; p1.Description = oid.toString();
+    p1.name = 'idquote'; p1.description = oid.toString();
 
     let p2 = new TCRMEntity();
-    p2.Name = 'twith'; p2.Description = '';
+    p2.name = 'twith'; p2.description = '';
    
     p.push(p1);
     p.push(p2);
@@ -150,38 +103,40 @@ export class PurchaseordereditorheaderComponent extends BaseComponent {
 
 
         this._oppservice.currentFields = data;
-        this.itemEdit.IdOpportunity = data.IdOpportunity;
-        this.itemEdit.IdQuotationFromSupplier = data.IdQuotationFromSupplier;
-        this.itemEdit.IdQuotationToCustomer = data.IdQuotationToCustomer;
-        this.itemEdit.IdDocType = data.IdDocType;
-        this.itemEdit.IdStatus = data.IdStatus;
-        this.itemEdit.IdResponsible = data.IdResponsible;
-        this.itemEdit.IdCustomer = data.IdCustomer;
-        this.itemEdit.IdCustomerContact = data.IdCustomerContact;
-        this.itemEdit.IdCurrency = data.IdCurrency;
-        this.itemEdit.IdContact = data.IdContact;
-        this.itemEdit.IdUser = data.IdUser;
-        this.itemEdit.IdPort = data.IdPort;
-        this.itemEdit.IdIncoTerm = data.IdIncoTerm;
-        this.itemEdit.IdLinerTerm = data.IdLinerTerm;
-        this.itemEdit.IsActive = true;
-        this.itemEdit.IdMarket = data.IdMarket;
-        this.itemEdit.IdSector = data.IdSector;
-        this.itemEdit.DeliveryLocation = data.DeliveryLocation;
-        this.itemEdit.OppNotes = data.OppNotes;
-        this.itemEdit.AsImporter = data.AsImporter;
-        this.itemEdit.IdTransactionFlow = data.IdTransactionFlow;
-        this.itemEdit.IdTypeOpp = data.IdTypeOpp;
-        this.itemEdit.IdMill = data.IdMill;
-        this.itemEdit.IdCountryOrigin = data.IdCountryOrigin;
-        this.itemEdit.OfferValidity = data.OfferValidity;
-        this.itemEdit.ShipmentOffered = data.ShipmentOffered;
-        this.countryOrigin.loadCustomDataFromId(this.itemEdit.IdMill);
-        this.idParent = data.IdQuotationToCustomer;
-        this.setDeliverRequired();
+        this.itemEdit.idOpportunity = data.idOpportunity;
+        this.itemEdit.idQuotationFromSupplier = data.idQuotationFromSupplier;
+        this.itemEdit.idQuotationToCustomer = data.idQuotationToCustomer;
+        this.itemEdit.idDocType = data.idDocType;
+        this.itemEdit.idStatus = data.idStatus;
+        this.itemEdit.idResponsible = data.idResponsible;
+        this.itemEdit.idCustomer = data.idCustomer;
+        this.itemEdit.idCustomerContact = data.idCustomerContact;
+        this.itemEdit.idCurrency = data.idCurrency;
+        this.itemEdit.idContact = data.idContact;
+        this.itemEdit.idUser = data.idUser;
+        this.itemEdit.idPort = data.idPort;
+        this.itemEdit.idIncoTerm = data.idIncoTerm;
+        this.itemEdit.idLinerTerm = data.idLinerTerm;
+        this.itemEdit.isActive = true;
+        this.itemEdit.idMarket = data.idMarket;
+        this.itemEdit.idSector = data.idSector;
+        this.itemEdit.deliveryLocation = data.deliveryLocation;
+        this.itemEdit.oppNotes = data.oppNotes;
+        this.itemEdit.asImporter = data.asImporter;
+        this.itemEdit.idTransactionFlow = data.idTransactionFlow;
+        this.itemEdit.idTypeOpp = data.idTypeOpp;
+        this.itemEdit.idMill = data.idMill;
+        this.itemEdit.idCountryOrigin = data.idCountryOrigin;
+        this.itemEdit.offerValidity = data.offerValidity;
+        this.itemEdit.shipmentOffered = data.shipmentOffered;
+        this.itemEdit.creditDays = data.creditDays;
+        this.itemEdit.interestRate = data.interestRate;
+        //this.countryOrigin.loadCustomDataFromId(this.itemEdit.idMill);
+        this.idParent = data.idQuotationToCustomer;
       }, error => {
         this._snackBarService.open('Purchase Order does not exists', 'Ok');
       });
+
 
 
   }
@@ -193,7 +148,7 @@ export class PurchaseordereditorheaderComponent extends BaseComponent {
   //       this.opp = new QuotationFromSupplier();
   //       Object.assign(this.opp, data);
   //       this._oppservice.currentQFS = data;
-  //       this.idParent = data.Id;
+  //       this.idParent = data.id;
   //     }, error => {
   //       this._snackBarService.open('Opportunity does not exists', 'Ok');
   //     });
@@ -205,9 +160,5 @@ export class PurchaseordereditorheaderComponent extends BaseComponent {
   }
 
 
-  afterCreate(item: PurchaseOrder) {
-    super.afterCreate(item);
-    this.idPurchase = item.Id;
-  }
 }
 

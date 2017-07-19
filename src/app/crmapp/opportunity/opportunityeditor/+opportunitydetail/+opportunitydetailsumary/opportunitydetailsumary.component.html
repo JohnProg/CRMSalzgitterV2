@@ -13,8 +13,8 @@
         <section layout="row" flex="100" layout-margin>
           <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">
             <md-input-container>
-              <input mdInput flex [name]="pc.NameDescription" maxlength="500" [placeholder]="pc.Property.Name" [required]="pc.IsRequired"
-                [(ngModel)]="pc.PropertyValue">
+              <input mdInput flex [id]="pc.nameDescription" [name]="pc.nameDescription" maxlength="500" [placeholder]="pc.property.name" [required]="pc.isRequired"
+                [(ngModel)]="pc.propertyValue">
               <md-hint align="end"> 500</md-hint>
             </md-input-container>
           </div>
@@ -23,20 +23,20 @@
         <section layout="row" flex="100" layout-margin>
 
           <md-input-container flex="30">
-            <input type="number" mdInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.Quantity">
+            <input  mdInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}" >
           </md-input-container>
           <md-input-container flex="30">
-            <input type="number" mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.Price">
+            <input  mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.price" currencyMask>
           </md-input-container>
           <md-input-container flex="35">
-            <input type="number" mdInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [value]="itemEdit.Quantity * itemEdit.Price">
+            <input  mdInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount" currencyMask>
           </md-input-container>
 
         </section>
 
         <div layout-gt-sm="row" layout-lt-sm="column">
           <md-input-container flex class="">
-            <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.Comment"></textarea>
+            <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.comment"></textarea>
             <md-hint align="end">{{Comment.value.length}} / 250</md-hint>
           </md-input-container>
         </div>

@@ -19,6 +19,9 @@ import { Subscription } from 'rxjs/Subscription';
 import {  EMailTemplate, AttachDocument, TCRMEntity, GenericList } from '../../model/allmodels';
 
 import {TranslateService} from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-email-sender',
@@ -46,10 +49,12 @@ export class EmailSenderComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
+    public _router: Router,
     public route: ActivatedRoute,
-    public _router: Router) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
+ 
     this.autoLoad = false;
     this.singleEditor = true;
     this.route.params.subscribe((params: { id: number }) => {
@@ -105,7 +110,7 @@ export class EmailSenderComponent extends BaseComponent {
     
     this.allContacts = Array<TCRMEntity>();
 
-    this._curService.loadCustomCatalog(this.baseApi + '/getAllContacts?idcustomer=' + this.itemEdit.IdCustomer, this.allContacts, undefined);
+    this._curService.loadCustomCatalog(this.baseApi + '/getAllContacts?idcustomer=' + this.itemEdit.idCustomer, this.allContacts, undefined);
   }
 
 
@@ -122,22 +127,22 @@ export class EmailSenderComponent extends BaseComponent {
 
   onContactChange(name: string) {
 
-    let d = this.itemEdit.EMailTo.filter( (t: any) => {
-      return t.Description === name;
+    let d = this.itemEdit.eMailTo.filter( (t: any) => {
+      return t.description === name;
     })[0];
     if( d === undefined) {
       let a = this.allContacts.filter( (t: any) => {
         return t.EMail === name;
       })[0];
       let c: GenericList = new GenericList();
-      c.Name = a.Name;
-      c.Description = a['EMail'];
-      this.itemEdit.EMailTo.push(c);
+      c.name = a.name;
+      c.description = a['EMail'];
+      this.itemEdit.eMailTo.push(c);
     }
   }
 
   deleteContact(idex: any) {
-     this.itemEdit.EMailTo.splice(idex, 1);
+     this.itemEdit.eMailTo.splice(idex, 1);
 
   }
 }

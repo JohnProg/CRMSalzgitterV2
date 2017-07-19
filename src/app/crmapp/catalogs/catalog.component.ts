@@ -25,7 +25,10 @@ import { TCRMEntity } from '../model/index';
 export class CatalogComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(BaseComponent) headercomp: BaseComponent;
+  scrId: number = 1;
   afterCreateItem: Subscription;
+  afterItemLoaded: Subscription;
+  idCustomer: number;
   catalogs: MenuClass[] = [
   ];
 
@@ -48,7 +51,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
      if (this.afterCreateItem !== undefined) { this.afterCreateItem.unsubscribe(); }
-
+     if (this.afterItemLoaded !== undefined) { this.afterItemLoaded.unsubscribe(); }
   }
   bindOnItemCreated() {
 
@@ -56,8 +59,18 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
         this.afterCreateItem = this.headercomp.onItemCreated.subscribe( (itm: TCRMEntity) => {
                 this.doOnItemCreated(itm);
           } );
+        this.afterItemLoaded = this.headercomp.onItemLoaded.subscribe( (itm: TCRMEntity) => {
+              this.onItemLoaded(itm);
+        });
       }
   }
 
+  bindOnItemLoaded() {
+     
+
+  }
+
   doOnItemCreated(itm: TCRMEntity) { }
+
+  onItemLoaded(itm: TCRMEntity) {}
 }

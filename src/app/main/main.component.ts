@@ -62,8 +62,8 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnInit() {
       this.watchScreen();
       this.userSubscription = this._actions.userInfoEvent.subscribe((user: User) => {
-        this.userName = user.Name;
-        this.userEmail = user.EMail;
+        this.userName = user.name;
+        this.userEmail = user.eMail;
       });
       this.setUserInfo();
   }
@@ -72,8 +72,8 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
   setUserInfo() {
     
      if( this._confs.userInfo ) {
-        this.userName = this._confs.userInfo.Name;
-        this.userEmail = this._confs.userInfo.EMail;
+        this.userName = this._confs.userInfo.name;
+        this.userEmail = this._confs.userInfo.eMail;
      }
   }
 

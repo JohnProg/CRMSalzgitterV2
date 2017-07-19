@@ -16,7 +16,8 @@ import { MdSnackBar } from '@angular/material';
 import { State } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 @Component({
@@ -43,9 +44,10 @@ export class StateComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-	
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.autoLoad = false;
     this.catalogName = 'State';
     this._curService.setAPI('State/', this.catalogName);
@@ -66,8 +68,8 @@ export class StateComponent extends BaseComponent {
 
     addEntity() {
       this.itemEdit = new State();
-      this.itemEdit.Id = 0;
-      (<State>this.itemEdit).IdCountry = this.idCountry;
+      this.itemEdit.id = 0;
+      (<State>this.itemEdit).idCountry = this.idCountry;
     }
 
     onCountrySelected(event: any) {
@@ -85,7 +87,7 @@ export class StateComponent extends BaseComponent {
                   sText: undefined, maxPage: 0, total: 0, fromRow: 0, toRow: 0 } as IPChangeEventSorted;
 
         this._curService.getCustomPaged(p, 'GetPaged', [
-          { Name: 'idCountry', Description: this.idCountry.toString() }
+          { name: 'idCountry', description: this.idCountry.toString() }
         ] as State[] );
       }
 

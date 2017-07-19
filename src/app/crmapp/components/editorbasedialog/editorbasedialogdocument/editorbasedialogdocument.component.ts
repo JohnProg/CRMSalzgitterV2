@@ -23,7 +23,8 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
 
 import {  BaseDocument } from '../../../model/index';
 import {TranslateService} from '@ngx-translate/core';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-editorbasedialogdocument',
@@ -51,9 +52,10 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.setTitle = false;
     this.catalogName = 'Dialog Document';
   }
@@ -82,10 +84,10 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   }
 
   addColumns() {
-    this.columns.push({ name: 'DocTypeName', label: 'Doc. Type', tooltip: '' });
-    this.columns.push({ name: 'DateUploaded', label: 'Date', numeric: false,  sortable: false });
-    this.columns.push({ name: 'DocName', label: 'Doc. Name' });
-    this.columns.push({ name: 'DNotes', label: 'Notes' });
+    this.columns.push({ name: 'docTypeName', label: 'Doc. Type', tooltip: '' });
+    this.columns.push({ name: 'dateUploaded', label: 'Date', numeric: false,  sortable: false });
+    this.columns.push({ name: 'docName', label: 'Doc. Name' });
+    this.columns.push({ name: 'dNotes', label: 'Notes' });
   }
 
   initEntity() {
@@ -108,8 +110,8 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
       let tself = this;
       reader.onloadend = function () {
         t = reader.result;
-        tself.itemEdit.DocName = tself.files.name;
-        tself.itemEdit.AData64 = t;
+        tself.itemEdit.docName = tself.files.name;
+        tself.itemEdit.aData64 = t;
         tself._curService.create(tself.itemEdit);
       };
       reader.readAsDataURL(this.files);

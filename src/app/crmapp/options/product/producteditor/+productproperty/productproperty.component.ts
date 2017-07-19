@@ -53,10 +53,10 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
     public _ngZone: NgZone) {
     this.dataStore = { properties: [] };
 
-    this.propColumns.push({ name: 'POrder', label: 'Order', tooltip: '' });
-    this.propColumns.push({ name: 'Name', label: 'Name', tooltip: '' });
-    this.propColumns.push({ name: 'Description', label: 'Description' });
-    this.propColumns.push({ name: 'IsRequired', label: 'Required' });
+    this.propColumns.push({ name: 'pOrder', label: 'Order', tooltip: '' });
+    this.propColumns.push({ name: 'name', label: 'Name', tooltip: '' });
+    this.propColumns.push({ name: 'description', label: 'Description' });
+    this.propColumns.push({ name: 'isRequired', label: 'Required' });
     this.propColumns.push({ name: 'tActions', label: '' });
     this.propEdit = new ProductProperty();
     this.catalogName = 'Product Properties';
@@ -69,13 +69,13 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
       this.propList = this._catList.asObservable();
       let cparams: TCRMEntity[] = new Array<TCRMEntity>();
       let p: TCRMEntity = new TCRMEntity();
-      p.Name = 'prodId';
-      p.Description = this.idprop.toString();
+      p.name = 'prodId';
+      p.description = this.idprop.toString();
       cparams.push(p);
 
       let prop: TCRMEntity = new TCRMEntity();
-      prop.Name = 'idprop';
-      prop.Description = '0';
+      prop.name = 'idprop';
+      prop.description = '0';
       cparams.push(prop);
 
 
@@ -99,17 +99,17 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
     this.itemEdit = item;
 
     this.propEdit = new ProductProperty();
-    this.propEdit.IdProduct = this.idprop;
-    this.propEdit.IdProperty = item.IdProperty;
-    this.propEdit.Id = item.Id;
-    this.propEdit.POrder = item.POrder;
+    this.propEdit.idProduct = this.idprop;
+    this.propEdit.idProperty = item.idProperty;
+    this.propEdit.id = item.id;
+    this.propEdit.pOrder = item.pOrder;
     this.isEditProp = true;
   }
 
   addProperty() {
     this.propEdit = new ProductProperty();
-    this.propEdit.Id = 0;
-    this.propEdit.IdProduct = this.idprop;
+    this.propEdit.id = 0;
+    this.propEdit.idProduct = this.idprop;
     this.isEditProp = true;
   }
 
@@ -119,7 +119,7 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
 
   saveProp(item) {
 
-    if (item.Id === 0) {
+    if (item.id === 0) {
       this._curService.customPost('Product/SaveProperty', item)
         .map((response) => response.json()).subscribe((data) => {
           this.isEditProp = false;
@@ -135,7 +135,7 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
         .map((response) => response.json()).subscribe((data ) => {
           this.isEditProp = false;
           this.dataStore.properties.forEach((t, i) => {
-              if (t.Id === data.Data.Id) { this.dataStore.properties[i] = data.Data; }
+              if (t.id === data.Data.id) { this.dataStore.properties[i] = data.Data; }
             });
           this._catList.next(Object.assign({}, this.dataStore).properties);
           this._snackBarService.open(data.Message, 'Ok');
@@ -149,11 +149,11 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
   deleteProperty(item: TCRMEntity) {
 
     let cparams: TCRMEntity[] = [];
-    this._curService.customDelete('Product/DeleteProperty?idprop=' + item.Id.toString(), cparams)
+    this._curService.customDelete('Product/DeleteProperty?idprop=' + item.id.toString(), cparams)
       .map((response) => response.text()).subscribe((data) => {
 
         this._snackBarService.open(data, 'Ok');
-        let index = this.dataStore.properties.findIndex((o) => o.Id === item.Id);
+        let index = this.dataStore.properties.findIndex((o) => o.id === item.id);
         this.dataStore.properties.splice(index, 1);
         this._catList.next(Object.assign({}, this.dataStore).properties);
 

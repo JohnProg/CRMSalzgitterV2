@@ -23,6 +23,8 @@ import {TranslateService} from '@ngx-translate/core';
 
 import { TCRMEntity, Property, ProductProperty, 
       EditorDetailSumary, EditorDetailSumaryProperty } from '../../model/allmodels';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 @Component({
@@ -47,7 +49,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
 
    _props: ProductProperty[] = new Array<ProductProperty>();
   itemEdit: EditorDetailSumary;
-  sortBy: string = 'ItemDescription';
+  sortBy: string = 'itemDescription';
 
   refreshItemUrl: string;
   sumProperties: string;
@@ -62,9 +64,10 @@ export class EditordetailsumaryComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
 
     this.setTitle = false;
     this._columns = <BehaviorSubject<ITdDataTableColumn[]>>new BehaviorSubject([]);
@@ -84,7 +87,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
     
     this.refreshItems();
     let pparams: TCRMEntity[] = new Array<TCRMEntity>();
-    pparams.push( (<TCRMEntity>{ Name: 'idproduct', Description: this.idProduct.toString()}) );
+    pparams.push( (<TCRMEntity>{ name: 'idproduct', description: this.idProduct.toString()}) );
     this._curService.loadCustomCatalogObs('ProductProperty/searchByProduct', pparams)
     .map((response) => response.json())
     .subscribe( (items: ProductProperty[]) => {
@@ -121,13 +124,13 @@ export class EditordetailsumaryComponent extends BaseComponent {
       
       this._props.forEach((c: ProductProperty) => {
         let p: EditorDetailSumaryProperty = new EditorDetailSumaryProperty();
-        p.IdParent = this.itemEdit.Id;
-        p.IdProperty = c.IdProperty;
-        p.PropertyValue = '';
-        p.IsRequired = c.IsRequired;
-        p.Property = new Property();
-        p.NameDescription = 'prop' + c.IdProperty;
-        Object.assign(p.Property, c.Property);
+        p.idParent = this.itemEdit.id;
+        p.idProperty = c.idProperty;
+        p.propertyValue = '';
+        p.isRequired = c.isRequired;
+        p.property = new Property();
+        p.nameDescription = 'prop' + c.idProperty;
+        Object.assign(p.property, c.property);
         pdet.push(p);
       });
 
@@ -145,7 +148,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
 
  saveEntity() {
     this.prepareToSave();
-    if (this.itemEdit.Id > 0) {
+    if (this.itemEdit.id > 0) {
       this._curService.update(this.itemEdit, true);
     } else {
       this._curService.create(this.itemEdit, true);
@@ -174,23 +177,23 @@ export class EditordetailsumaryComponent extends BaseComponent {
         this._pcolumns = new Array<ITdDataTableColumn>();
         this._pcolumns.push( (<ITdDataTableColumn> { name: 'tActions' ,  label: '' }));
         itms[0][this.sumProperties].forEach( (t: EditorDetailSumaryProperty) => {
-          this._pcolumns.push( (<ITdDataTableColumn> { name: 'prop' +  t.IdProperty,
-               label: t.Property.Name, tooltip: '', IdProperty: t.IdProperty }));
+          this._pcolumns.push( (<ITdDataTableColumn> { name: 'prop' +  t.idProperty,
+               label: t.property.name, tooltip: '', idProperty: t.idProperty }));
         });
 
         itms.forEach( (t: EditorDetailSumary) => {
           t[this.sumProperties].forEach( (p: EditorDetailSumaryProperty) => {
-              t['prop' + p.IdProperty] = p.PropertyValue;
+              t['prop' + p.idProperty] = p.propertyValue;
           });
         });
 
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Quantity' ,  label: 'Quantity', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'quantity' ,  label: 'Quantity', tooltip: '',
          numeric: true, format: NUMBER_FORMAT, draw: true  }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Price' ,  label: 'Price', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'price' ,  label: 'Price', tooltip: '',
          numeric: true, format: CURRENCY_FORMAT, draw: true }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Amount' ,  label: 'Amount', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'amount' ,  label: 'Amount', tooltip: '',
          numeric: true, format: CURRENCY_FORMAT, draw: true }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Comment' ,  label: 'Comment', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'comment' ,  label: 'Comment', tooltip: '',
          draw: true }));
         this._columns.next(this._pcolumns);
       }

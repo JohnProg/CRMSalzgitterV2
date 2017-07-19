@@ -19,6 +19,12 @@ import { BaseComponent } from '../base.component';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
+import { QueryResponse } from '../../model/queries/index';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+
+
 
 @Component({
   selector: 'crm-currency',
@@ -44,8 +50,9 @@ export class CurrencyComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
     this.catalogName = 'Currencies';
     this._curService.setAPI('Currency', this.catalogName);
   }
@@ -57,15 +64,13 @@ export class CurrencyComponent extends BaseComponent {
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
-
-
   }
 
 
 
   addColumns() {
     super.addColumns();
-    this.columns.push({ name: 'ASign', label: 'Currency symbol' });
+    this.columns.push({ name: 'aSign', label: 'Currency symbol' });
   }
 
 
@@ -73,19 +78,13 @@ export class CurrencyComponent extends BaseComponent {
     this._actions.updateTitle('Edit ' + this.catalogName);
     this.itemEdit = <Currency>this._curService.itemEdit;
     this._curService.load(id);
-  }
 
-  addEntity() {
-
-    this._actions.updateTitle('Add ' + this.catalogName);
-    this.itemEdit = new Currency();
-    this.itemEdit.Id = 0;
+    //this._curService.loadQl( gCurrency, { ssid: id }, 'currency' );
 
   }
 
 
 
 
-
-
+  
 }

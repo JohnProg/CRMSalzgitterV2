@@ -22,7 +22,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseOrderDialog  } from '../../model/allmodels';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
+
+const catQl = gql`
+  query 
+  findActionOppByType($typeid: Int!, $idaction: Int!) {
+    findActionOppByType(idtypedoc: $typeid, idactionopp: $idaction ) { id name  }
+    responsibles { id name isActive }
+    contacts { id name isActive }
+  }
+`;
 
 @Component({
   selector: 'crm-editorbasedialog',
@@ -36,12 +47,12 @@ export class EditorbasedialogComponent extends BaseComponent {
     @Input() idParent: number = 0;
     @Input() baseApi: string;
     @Input() parentField: string;
-
+    @Input() catName: string;
     @Input() documentBaseApi: string;
     @Input() documentParentField: string;
+    @Input() idCustomer: number;
 
-
-    sortBy: string = 'ActionName';
+    sortBy: string = 'actionName';
     itemEdit: BaseOrderDialog;
     showEMail: boolean = false;
     searchByUrl: string;
@@ -56,13 +67,17 @@ export class EditorbasedialogComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
+    public _router: Router,
     public route: ActivatedRoute,
-    public _router: Router) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.autoLoad = false;
+    
   }
 
  ngOnInitClass() {
+    this.catalogName = this.catName;
     this._curService.setAPI(this.baseApi, this.catalogName);
     this.entList = <Observable<BaseOrderDialog[]>>this._curService.entList;
     this.initData();
@@ -95,31 +110,34 @@ export class EditorbasedialogComponent extends BaseComponent {
   initEntity() {
     this.itemEdit = new  BaseOrderDialog();
     this.itemEdit[this.parentField] = this.idParent;
-    this.itemEdit.EmailSended = false;
+    this.itemEdit.emailSended = false;
   }
 
   afterViewInit(): void {
-    this._actions.updateTitle('Dialogs for ' + this.catalogName + ' ' + this.idParent.toString());
+    this._actions.updateTitle( this.catalogName + ' ' + this.idParent.toString());
   }
 
   addColumns() {
-     this.columns.push({ name: 'ActionName', label: 'Action' });
-     this.columns.push({ name: 'Contact', label: 'Contact', tooltip: '' });
-     this.columns.push({ name: 'ResponsibleName', label: 'Responsible' });
+     this.columns.push({ name: 'actionName', label: 'Action' });
+     this.columns.push({ name: 'contactName', label: 'Contact', tooltip: '' });
+     this.columns.push({ name: 'custContactName', label: 'Cust. Contact', tooltip: '' });
+     this.columns.push({ name: 'responsibleName', label: 'Responsible' });
   }
 
 
 
   confirmDelete(item: any) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit( {title: item.ActionName + ' to contact ' + ( item.ContactName || item.CustContactName), objId: this.objId });
+    this._actions.deleteItemEvent.emit( {title: item.actionName + ' to contact ' + ( item.contactName || item.custContactName), objId: this.objId });
   }
 
   afterLoadItem(itm: BaseOrderDialog) {
     super.afterLoadItem(itm);
+    
+    this.loadCustomerContact(this.idCustomer);
     setTimeout(() => {
     this._actions.showEmail(true);
-    }, 1000);
+    }, 500);
   }
  
  cancelEdit() {
@@ -131,11 +149,11 @@ export class EditorbasedialogComponent extends BaseComponent {
  }
 
   afterCreate(item: any) {
-    this.itemEdit.Id = item.Id;
-    this.itemEdit.DateDialog = item.DateDialog;
+    this.itemEdit.id = item.id;
+    this.itemEdit.dateDialog = item.dateDialog;
     setTimeout(() => {
-    this._actions.showEmail(true);
-    }, 1000);
+       this._actions.showEmail(true);
+    }, 500);
   }
 
   afterUpdate(item: any) {
@@ -144,6 +162,22 @@ export class EditorbasedialogComponent extends BaseComponent {
  
   sendEmail() {
     this.showEMail = true;
-    this._router.navigate([ '../../sendemail', this.itemEdit.Id], { relativeTo: this.route });
+    this._router.navigate([ '../../sendemail', this.itemEdit.id], { relativeTo: this.route });
   }
+
+  loadCatalogs() {
+    this._curService.loadQl(catQl, { typeid: 2, idaction: 0 })
+      .subscribe(({data}) => {
+        this.catResponsible = data['responsibles'];
+        this.catActionsOpp = data['findActionOppByType'];
+        this.catContact = data['contacts'];
+      }, (error: Error) => {
+        this._loadingService.resolve('');
+        debugger
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      }
+      );   
+  }
+
+
 }

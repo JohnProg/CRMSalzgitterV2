@@ -6,31 +6,45 @@
 
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex>
-          <crm-select flex #IdAction name="IdAction" catalog="ActionOpportunity/searchbytype?id=0&idtype=" byType="2" placeholder="{{ 'ACTIONOPP' | translate}}" [(ngModel)]="itemEdit.IdAction"></crm-select>
+            <md-select class="cbxClass" #idAction name="idAction" flex required="true"   placeholder="Action" [(ngModel)]="itemEdit.idAction"  >
+                  <md-option *ngFor="let i of catActionsOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>             
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" flex>
-          <crm-select flex #IdResponsible name="IdResponsible" catalog="Responsible" placeholder="{{ 'RESPONSIBLE' | translate}}" [(ngModel)]="itemEdit.IdResponsible"></crm-select>
+            <md-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"   placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+                  <md-option *ngFor="let i of catResponsible" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>             
         </div>
 
         <div layout-gt-sm="row" layout-lt-sm="column" flex>
-          <md-radio-group #ToContact name="ToContact" [(ngModel)]="itemEdit.ToContact">
+          <md-radio-group #ToContact name="ToContact" [(ngModel)]="itemEdit.toContact">
             <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
             <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
           </md-radio-group>
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.ToContact == 1">
-          <crm-select flex #IdContact name="IdContact" [required]="itemEdit.ToContact === 1" catalog="Contact" placeholder="{{ 'CONTACT' | translate}}"
-            [(ngModel)]="itemEdit.IdContact"></crm-select>
+        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.toContact == 1">
+            <md-select class="cbxClass" #idContact name="idContact" flex [required]="itemEdit.toContact === 1"   placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
+                  <md-option *ngFor="let i of catContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>            
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.ToContact == 2">
-          <crm-select flex #IdCustomerContact name="IdCustomerContact" [required]="itemEdit.ToContact === 2" [catalog]="'CustomerContact?idcust=' + currentOpp.IdCustomer"
-            placeholder="{{ 'CUSTCONTACT' | translate}}" [(ngModel)]="itemEdit.IdCustomerContact"></crm-select>
+        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.toContact == 2">
+            <md-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex [required]="itemEdit.toContact === 2"   placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
+                  <md-option *ngFor="let i of catCustomerContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>             
         </div>
 
 
         <div layout-gt-sm="row" layout-lt-sm="column">
           <md-input-container flex class="">
-            <textarea mdInput flex #DNotes name="DNotes" maxlength="500" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.DNotes"></textarea>
+            <textarea mdInput flex #DNotes name="DNotes" maxlength="500" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
             <md-hint align="end">{{DNotes.value.length}} / 500</md-hint>
           </md-input-container>
         </div>
@@ -38,10 +52,10 @@
   </form>
 
       <crm-editorbasedialogdocument 
-              [idDialog]="itemEdit.Id" 
+              [idDialog]="itemEdit.id" 
               [baseApi]="documentBaseApi"
               [parentField]="documentParentField"
-              *ngIf="itemEdit.Id > 0"></crm-editorbasedialogdocument>
+              *ngIf="itemEdit.id > 0"></crm-editorbasedialogdocument>
     </section>
 
 
@@ -50,12 +64,12 @@
   <section *ngIf="!isEditing">
 
     <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-      <ng-template tdDataTableTemplate="ActionName" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="actionName" let-value="value" let-row="row" let-column="column">
         <div layout="row">
-          <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+          <button md-button (click)="editEntity(row.id)">{{value}}</button>
         </div>
       </ng-template>
-      <ng-template tdDataTableTemplate="Contact" let-value="value" let-row="row" let-column="column">
+      <ng-template tdDataTableTemplate="contact" let-value="value" let-row="row" let-column="column">
         <div layout="row">
           {{ row.ToContact == 1 ? row.ContactName : row.CustContactName}}
         </div>

@@ -19,7 +19,8 @@ import { getQuotationFromSupplier_Result } from '../../model/allmodels';
 
 import {TranslateService} from '@ngx-translate/core';
 import { EnumDocType } from '../../constants/index';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-purchaseorderindex',

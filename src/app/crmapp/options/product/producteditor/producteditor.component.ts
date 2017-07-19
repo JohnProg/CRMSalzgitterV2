@@ -21,7 +21,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductpropertyComponent } from '../producteditor/+productproperty/productproperty.component';
 
 import {TranslateService} from '@ngx-translate/core';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-producteditor',
@@ -47,9 +48,11 @@ export class ProducteditorComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
+ 
     this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
     this.singleEditor = true;

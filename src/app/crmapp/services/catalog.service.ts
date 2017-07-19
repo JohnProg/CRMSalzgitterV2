@@ -6,7 +6,7 @@ import { RESTService, HttpInterceptorService } from '@covalent/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { ConfigurationService } from './configuration.service';
-import {  TCRMEntity, ReturnSaveRequest } from '../model/allmodels';
+
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {
@@ -15,6 +15,11 @@ import {
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
+
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import {  TCRMEntity, ReturnSaveRequest, QueryResponse } from '../model/index';
 
 export interface IPChangeEventSorted extends IPageChangeEvent {
   sortBy: string;
@@ -91,7 +96,8 @@ export class CatalogService {
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MdSnackBar,
-    private _tableService: TdDataTableService
+    public _tableService: TdDataTableService,
+    public apollo: Apollo
   ) {
 
     this.headers = this._confs.getHeaders();
@@ -120,16 +126,16 @@ export class CatalogService {
   }
 
   loadAll(cparams: IPChangeEventSorted, customHandle: boolean = false) {
-    this._loadingService.register('items.load');
+    this._loadingService.register('');
     this._rest.query().subscribe((datas: TCRMEntity[]) => {
       this.dataStore.entities = datas;
       let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
       this._entList.next(t);
       this.changeTotal(this.dataStore.entities.length);
       this.afterLoadAllEvent.next(this.dataStore.entities);
-      this._loadingService.resolve('items.load');
+      this._loadingService.resolve('');
     }, (error: Error) => {
-      this._loadingService.resolve('items.load');
+      this._loadingService.resolve('');
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     });
   }
@@ -168,7 +174,7 @@ export class CatalogService {
   customQuery(pfunc: string, cparams: TCRMEntity[]) {
     let pparams = new URLSearchParams();
     cparams.forEach( (element) => {
-      pparams.set(element.Name, element.Description);
+      pparams.set(element.name, element.description);
     });
     return this._http.get(this.fullapi + pfunc, { search: pparams, headers: this.headers })
       .map( (response) => response.json());
@@ -178,7 +184,7 @@ export class CatalogService {
     let pparams = new URLSearchParams();
     pparams.set('page', p.page.toString());
     pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy === undefined) { p.sortBy = 'Name'; }
+    if (p.sortBy === undefined) { p.sortBy = 'name'; }
     if (p.sortType === undefined) { p.sortType = 'ASC'; }
     pparams.set('sortBy', p.sortBy);
     pparams.set('sortType', p.sortType);
@@ -193,7 +199,7 @@ export class CatalogService {
     let pparams = new URLSearchParams();
     pparams.set('page', p.page.toString());
     pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy === undefined) { p.sortBy = 'Name'; }
+    if (p.sortBy === undefined) { p.sortBy = 'name'; }
     if (p.sortType === undefined) { p.sortType = 'ASC'; }
     pparams.set('sortBy', p.sortBy);
     pparams.set('sortType', p.sortType);
@@ -208,14 +214,14 @@ export class CatalogService {
     pparams.set('page', p.page.toString());
     pparams.set('pageSize', p.pageSize.toString());
 
-    if (p.sortBy === undefined) { p.sortBy = "Name";}
+    if (p.sortBy === undefined) { p.sortBy = "name";}
     if (p.sortType === undefined) { p.sortType = "ASC"; }
     pparams.set("sortBy", p.sortBy);
     pparams.set("sortType", p.sortType);
     pparams.set("sText", p.sText);
     if( cparams != undefined) {
       cparams.forEach( (element) => {
-        pparams.set(element.Name, element.Description);
+        pparams.set(element.name, element.description);
       });
     }
 
@@ -262,13 +268,13 @@ export class CatalogService {
       .map((response) => response.json())
       .subscribe( (data: ReturnSaveRequest) => {
         if(customHandle === false ) {
-          this.dataStore.entities.push(data.Data);
+          this.dataStore.entities.push(data.data);
           this._entList.next(Object.assign({}, this.dataStore).entities);
-          this.afterCreateEmitter.emit(  data.Data);
-          this.itemEdit.Id = data.Data.Id;
-          this._snackBarService.open( this.catalogName + ' ' + data.Message, 'Ok');
+          this.afterCreateEmitter.emit(  data.data);
+          this.itemEdit.id = data.data.id;
+          this._snackBarService.open( this.catalogName + ' ' + data.message, 'Ok');
         } else {
-           this.dataStore.entities.push(data.Data);
+           this.dataStore.entities.push(data.data);
            this.afterCreateEmitter.emit( this.dataStore.entities);
         }
       }, (error) => {
@@ -298,13 +304,13 @@ export class CatalogService {
       .subscribe( (data: ReturnSaveRequest) => {
         
         if(customHandle === false ) {
-          this.dataStore.entities.push(data.Data);
+          this.dataStore.entities.push(data.data);
           this._entList.next(Object.assign({}, this.dataStore).entities);
-          this.afterCreateEmitter.emit(  data.Data);
-          this.itemEdit.Id = data.Data.Id;
-          this._snackBarService.open( this.catalogName + ' ' + data.Message, 'Ok');
+          this.afterCreateEmitter.emit(  data.data);
+          this.itemEdit.id = data.data.id;
+          this._snackBarService.open( this.catalogName + ' ' + data.message, 'Ok');
         } else {
-           this.dataStore.entities.push(data.Data);
+           this.dataStore.entities.push(data.data);
            this.afterCreateEmitter.emit( this.dataStore.entities);
         }
       }, (error) => {
@@ -318,19 +324,21 @@ export class CatalogService {
 
   update(entity: any, customHandle: boolean = false) {
 
-    this._rest.update(entity.Id, entity)
+    this._rest.update(entity.id, entity)
    // .map((response) => response.json())
       .subscribe( (data: ReturnSaveRequest) => {
         this.dataStore.entities.forEach((t, i) => {
-          if (t.Id === data.Data.Id) { this.dataStore.entities[i] = data.Data; }
+          if (t.id === data.data.id) {
+             this.dataStore.entities[i] = data.data;  
+          }
         });
         if( customHandle === false) {
           this._entList.next(Object.assign({}, this.dataStore).entities);
-          this.afterUpdateEmitter.emit(data.Data);
+          this.afterUpdateEmitter.emit(data.data);
         } else {
           this.afterUpdateEmitter.emit(this.dataStore.entities);
         }
-        this._snackBarService.open(this.catalogName + data.Message, 'Ok');
+        this._snackBarService.open(this.catalogName + data.message, 'Ok');
       }, (error) => {
         this._snackBarService.open(error.Message, 'Ok');
       });
@@ -343,7 +351,7 @@ export class CatalogService {
     this._rest.delete(entId).subscribe( (response) => {
 
       this.dataStore.entities.forEach((t, i) => {
-        if (t.Id === entId) { this.dataStore.entities.splice(i, 1); }
+        if (t.id === entId) { this.dataStore.entities.splice(i, 1); }
       });
 
       if( customHandle === false) {
@@ -362,7 +370,7 @@ export class CatalogService {
     let pparams = new URLSearchParams();
     if (cparams != undefined) {
       cparams.forEach((element) => {
-        pparams.set(element.Name, element.Description);
+        pparams.set(element.name, element.description);
       });
     }
     this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams, headers: this.headers })
@@ -379,7 +387,7 @@ export class CatalogService {
     let pparams = new URLSearchParams();
     if (cparams != undefined) {
       cparams.forEach((element) => {
-        pparams.set(element.Name, element.Description);
+        pparams.set(element.name, element.description);
       });
     }
     this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams, headers: this.headers })
@@ -397,7 +405,7 @@ export class CatalogService {
 
     if (cparams !== undefined) {
       cparams.forEach((element) => {
-        pparams.set(element.Name, element.Description);
+        pparams.set(element.name, element.description);
       });
     }
     return this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams, headers: this.headers });
@@ -409,7 +417,7 @@ export class CatalogService {
 
     if (cparams !== undefined) {
       cparams.forEach((element) => {
-        pparams.set(element.Name, element.Description);
+        pparams.set(element.name, element.description);
       });
     }
     
@@ -453,6 +461,56 @@ export class CatalogService {
 
 
 
+
+
+
+
+
+// GraphQL
+   gResponse: any;
+   getAllQl( query, gvars, pname, cparams: IPChangeEventSorted, customHandle: boolean = false ) {
+    
+    this.apollo.watchQuery<QueryResponse>({
+      query: query,
+      variables: gvars
+    }).subscribe(({data}) => {
+      
+      this.dataStore.entities = <Array<TCRMEntity>>data[pname];
+      let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
+      this._entList.next(t);
+      this.changeTotal(this.dataStore.entities.length);
+      this.afterLoadAllEvent.next(this.dataStore.entities);
+      this._loadingService.resolve('');
+    }, (error: Error) => {
+      this._loadingService.resolve('');
+      this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+    }
+    );
+
+   }
+
+  loadQl(query: any, gvars: any) { //, pname: string[],  catList: TCRMEntity[]) {
+    // return this._http.get( this.fullapi + id).map(response => response.json());
+
+    return this.apollo.watchQuery<QueryResponse>({
+      query: query,
+      variables: gvars
+    });
+    
+    // .subscribe(({data}) => {
+    //   let idx: number = 0;
+    //   pname.forEach(element => {
+    //      Object.assign(catList[idx], data[element]);  
+    //      idx++;
+    //   });
+    // }, (error: Error) => {
+    //   this._loadingService.resolve('');
+    //   debugger
+    //   this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+    // }
+    // );
+
+  }
 
 }
 

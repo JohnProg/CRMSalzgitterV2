@@ -38,6 +38,8 @@ export class PurchaseordereditorComponent extends CatalogComponent {
   byType: number = 0;
   scrId: number = 1;
   idPurchase: number = 0;
+  idCustomer: number;
+  po: PurchaseOrder;
   @ViewChild(PurchaseordereditorheaderComponent) headercomp: PurchaseordereditorheaderComponent;
 
   constructor(
@@ -58,16 +60,18 @@ export class PurchaseordereditorComponent extends CatalogComponent {
 
 
   doOnItemCreated(itm: PurchaseOrder) {
-    this.idPurchase = itm.Id;
-    this.idQTC = itm.IdQuotationToCustomer;
-    this.idQFS = itm.IdQuotationFromSupplier;
-    this.idOpp = itm.IdOpportunity;
+    this.idPurchase = itm.id;
+    this.idQTC = itm.idQuotationToCustomer;
+    this.idQFS = itm.idQuotationFromSupplier;
+    this.idOpp = itm.idOpportunity;
+    this.idCustomer = itm.idCustomer;
   }
 
   linkClick(scr: number ) : boolean {
     this.scrId = scr;
     return true;
   }
+
 
 
 
@@ -82,6 +86,11 @@ export class PurchaseordereditorComponent extends CatalogComponent {
 
   goToQFS() {
      this._router.navigate(['/quotationfromsupplier/edit', this.idQFS]);
+  }
+
+  onItemLoaded(itm: PurchaseOrder) {
+    this.po = itm;
+    this.idCustomer = itm.idCustomer;
   }
 }
 

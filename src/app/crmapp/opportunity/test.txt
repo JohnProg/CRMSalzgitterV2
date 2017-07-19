@@ -3,7 +3,7 @@
            (sortChange)="getSorted($event)">
       <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
        <button md-button
-        md-ripple class="block relative" [routerLink]="['../edit', row.Id]">
+        md-ripple class="block relative" [routerLink]="['../edit', row.id]">
         {{value}}
       </button>
        

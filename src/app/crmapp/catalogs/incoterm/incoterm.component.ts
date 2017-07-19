@@ -19,6 +19,8 @@ import { IncoTerm } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 @Component({
@@ -42,9 +44,10 @@ export class IncotermComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.catalogName = 'IncoTerm';
     this._curService.setAPI('IncoTerm/', this.catalogName);
   }
@@ -72,7 +75,7 @@ export class IncotermComponent extends BaseComponent {
 
     addEntity() {
       this.itemEdit = new IncoTerm();
-      this.itemEdit.Id = 0;
+      this.itemEdit.id = 0;
 
     }
 }

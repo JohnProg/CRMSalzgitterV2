@@ -20,7 +20,8 @@ import { BaseComponent } from '../../../catalogs/base.component';
 
 import {TranslateService} from '@ngx-translate/core';
 
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 @Component({
   selector: 'crm-purchaseorderindexviewer',
   templateUrl: './purchaseorderindexviewer.component.html',
@@ -43,14 +44,15 @@ export class PurchaseorderindexviewerComponent extends BaseComponent  {
     private _router: Router,
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public _route: ActivatedRoute,
-    public translate: TranslateService) {
-    
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);
-    this.sortBy = 'Id';
+    public translate: TranslateService,
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
+    this.sortBy = 'id';
     this.catalogName = 'Purchase Order';
     this._curService.setAPI('PurchaseOrder/', this.catalogName);
-    this._route.params.subscribe((params: { id: number, bytype: number }) => {
+    this.route.params.subscribe((params: { id: number, bytype: number }) => {
       this.byType = params.bytype;
       switch(params.bytype) {
         case EnumDocType.Opportunity:
@@ -105,15 +107,15 @@ export class PurchaseorderindexviewerComponent extends BaseComponent  {
   addColumns() {
 
     //super.addColumns();
-    this.columns.push({ name: 'Id', label: 'Quotation', tooltip: '' });
+    this.columns.push({ name: 'id', label: 'Quotation', tooltip: '' });
     if(( this.idQFS === undefined || this.idQFS === 0) && ( this.idOpp === undefined || this.idOpp === 0) ) {
-      this.columns.push({ name: 'CustomerName', label: 'Customer' });
+      this.columns.push({ name: 'customerName', label: 'Customer' });
     }
-    this.columns.push({ name: 'IdQuotationFromSupplier', label: 'QFS' });
-    this.columns.push({ name: 'CurrencyName', label: 'Currency' });
-    this.columns.push({ name: 'MillName', label: 'Mill' });
-    this.columns.push({ name: 'SstatusName', label: 'Status' });
-    this.columns.push({ name: 'DateReceived', label: 'Date' });
+    this.columns.push({ name: 'idQuotationToCustomer', label: 'QTC' });
+    this.columns.push({ name: 'currencyName', label: 'Currency' });
+    this.columns.push({ name: 'millName', label: 'Mill' });
+    this.columns.push({ name: 'sstatusName', label: 'Status' });
+    this.columns.push({ name: 'dateReceived', label: 'Date' });
   }
 
 }

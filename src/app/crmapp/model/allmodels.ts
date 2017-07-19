@@ -1,1439 +1,1449 @@
 ﻿    export interface IComplex { }
 
 	export class BaseEntity implements IComplex {
-		AccessToken: string;
-		AuthenticationToken: string;
-		CLASS_NAME: string;
-		ClientID: string;
-		CREATED_BY: string;
-		CREATED_ON: Date;
-		Description: string;
-		EmailType: string;
-		Id: number;
-		MACHINE_NAME: string;
-		Name: string;
-		NameDescription: string;
-		RecordStatus: number;
-		RedirectURL: string;
-		Selected: boolean;
-		WLJsPath: string;
-		IsActive: boolean;
+		accessToken: string;
+		authenticationToken: string;
+		cLASS_NAME: string;
+		clientID: string;
+		cREATED_BY: string;
+		cREATED_ON: Date;
+		description: string;
+		emailType: string;
+		id: number;
+		mACHINE_NAME: string;
+		name: string;
+		nameDescription: string;
+		recordStatus: number;
+		redirectURL: string;
+		selected: boolean;
+		wLJsPath: string;
+		isActive: boolean;
 	}
 	export class TCRMEntity extends BaseEntity {
 	}
 
 	export class EditorDetailSumary extends TCRMEntity {
-		Amount: number;
-		Comment: string;
-		DateCreated: Date;
-		Id: number;
-		IdDetail: number;
-		Price: number;
-		Quantity: number;
+		amount: number;
+		comment: string;
+		dateCreated: Date;
+		id: number;
+		idDetail: number;
+		price: number;
+		quantity: number;
 	}
 
 	export class EditorDetailSumaryProperty extends TCRMEntity {
-		IsRequired: boolean;
-		Id: number;
-		IdProperty: number;
-		Property: Property;
-		PropertyValue: string;
-		IdParent: number;
+		isRequired: boolean;
+		id: number;
+		idProperty: number;
+		property: Property;
+		propertyValue: string;
+		idParent: number;
 	}
 
 	export class BaseOrderDialog extends TCRMEntity {
-		ActionOpportunity: ActionOpportunity;
-		Contact: Contact;
-		CustomerContact: CustomerContact;
-		DateDialog: Date;
-		DateSend: Date;
-		DNotes: string;
-		EmailSended: boolean;
-		Id: number;
-		IdAction: number;
-		IdContact: number;
-		IdCustomerContact: number;
-		IdPurchaseOrder: number;
-		IdResponsible: number;
-		PurchaseOrder: PurchaseOrder;
-		PurchaseOrderDocuments: PurchaseOrderDocument[];
-		Responsible: Responsible;
-		Subject: string;
-		ToContact: number;
+		actionOpportunity: ActionOpportunity;
+		contact: Contact;
+		customerContact: CustomerContact;
+		dateDialog: Date;
+		dateSend: Date;
+		dNotes: string;
+		emailSended: boolean;
+		id: number;
+		idAction: number;
+		idContact: number;
+		idCustomerContact: number;
+		idPurchaseOrder: number;
+		idResponsible: number;
+		purchaseOrder: PurchaseOrder;
+		purchaseOrderDocuments: PurchaseOrderDocument[];
+		responsible: Responsible;
+		subject: string;
+		toContact: number;
 	}
 
 	export class BaseDocument extends TCRMEntity {
-		AData: number[];
-		AData64: string;
-		DateUploaded: Date;
-		DNotes: string;
-		DocId: string;
-		DocName: string;
-		DocumentType: DocumentType;
-		Id: number;
-		IdDocumentType: number;
-		IdParent: number;
-		ParentFolder: string;
+		aData: number[];
+		aData64: string;
+		dateUploaded: Date;
+		dNotes: string;
+		docId: string;
+		docName: string;
+		documentType: DocumentType;
+		id: number;
+		idDocumentType: number;
+		idParent: number;
+		parentFolder: string;
 	}
 
 
 	export class ActionOpportunity extends TCRMEntity {
-		ActionOpportunityDocTypes: ActionOpportunityDocType[];
-		EMailTo: number;
-		EstatusOpportunity: EstatusOpportunity;
-		Id: number;
-		IdStatus: number;
-		Name: string;
-		OpportunityDialogs: OpportunityDialog[];
-		PurchaseOrderDialogs: PurchaseOrderDialog[];
-		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
-		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
-		ShowActionType: number;
+		actionOpportunityDocTypes: ActionOpportunityDocType[];
+		eMailTo: number;
+		estatusOpportunity: EstatusOpportunity;
+		id: number;
+		idStatus: number;
+		name: string;
+		opportunityDialogs: OpportunityDialog[];
+		purchaseOrderDialogs: PurchaseOrderDialog[];
+		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		quotationToCustomerDialogs: QuotationToCustomerDialog[];
+		showActionType: number;
 	}
 	export class ActionOpportunityDocType extends TCRMEntity {
-		ActionOpportunity: ActionOpportunity;
-		DocType: DocType;
-		Id: number;
-		IdActionOpportunity: number;
-		IdDocType: number;
-		IdTemplateEmail: number;
-		TemplateEMail: TemplateEMail;
+		actionOpportunity: ActionOpportunity;
+		docType: DocType;
+		id: number;
+		idActionOpportunity: number;
+		idDocType: number;
+		idTemplateEmail: number;
+		templateEMail: TemplateEMail;
 	}
 	export class AttachDocument extends TCRMEntity {
-		DateUploaded: Date;
-		DNotes: string;
-		DocId: string;
-		DocName: string;
-		DocType: number;
-		DocTypeDescription: string;
-		DocTypeName: string;
-		DocumentType: DocumentType;
-		Id: number;
-		IdDocumentType: number;
-		IdParent: number;
-		ParentFolder: string;
+		dateUploaded: Date;
+		dNotes: string;
+		docId: string;
+		docName: string;
+		docType: number;
+		docTypeDescription: string;
+		docTypeName: string;
+		documentType: DocumentType;
+		id: number;
+		idDocumentType: number;
+		idParent: number;
+		parentFolder: string;
 	}
 	export class Bank extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class BreakStringIntoRows_Result extends TCRMEntity implements IComplex {
-		Column1: string;
+		column1: string;
 	}
 	export class Broker extends TCRMEntity {
-		AgentNumber: string;
-		Colony: Colony;
-		ContactName: string;
-		Customers: Customer[];
-		EMail: string;
-		Id: number;
-		IdColony: number;
-		Name: string;
-		Number: string;
-		PhoneUSA: string;
-		RFC: string;
-		Street: string;
+		agentNumber: string;
+		colony: Colony;
+		contactName: string;
+		customers: Customer[];
+		eMail: string;
+		id: number;
+		idColony: number;
+		name: string;
+		number: string;
+		phoneUSA: string;
+		rFC: string;
+		street: string;
 	}
 	export class Category extends TCRMEntity {
-		CategoryID: number;
-		CategoryLogs: CategoryLog[];
-		CategoryName: string;
+		categoryID: number;
+		categoryLogs: CategoryLog[];
+		categoryName: string;
 	}
 	export class CategoryLog extends TCRMEntity {
-		Category: Category;
-		CategoryID: number;
-		CategoryLogID: number;
-		Log: Log;
-		LogID: number;
+		category: Category;
+		categoryID: number;
+		categoryLogID: number;
+		log: Log;
+		logID: number;
 	}
 	export class City extends TCRMEntity {
-		Colonies: Colony[];
-		Description: string;
-		Id: number;
-		IdState: number;
-		Name: string;
-		State: State;
+		colonies: Colony[];
+		description: string;
+		id: number;
+		idState: number;
+		name: string;
+		state: State;
 	}
 	export class CollectionDataType extends TCRMEntity {
-		ApplyTax: boolean;
-		AsImporter: boolean;
-		CType: number;
-		Description: string;
-		Factor: number;
-		Id: number;
-		Name: string;
+		applyTax: boolean;
+		asImporter: boolean;
+		cType: number;
+		description: string;
+		factor: number;
+		id: number;
+		name: string;
 	}
 	export class CollectionImporterRelation extends TCRMEntity {
-		AsImporter: boolean;
-		CType: number;
-		Id: number;
-		IdCollectionDataType: number;
+		asImporter: boolean;
+		cType: number;
+		id: number;
+		idCollectionDataType: number;
 	}
 	export class Colony extends TCRMEntity {
-		Brokers: Broker[];
-		City: City;
-		ColonyType: ColonyType;
-		Companies: Company[];
-		CustomerDeliveryPoints: CustomerDeliveryPoint[];
-		Customers: Customer[];
-		Description: string;
-		Id: number;
-		IdCity: number;
-		IdColonyType: number;
-		Name: string;
-		RailSpurs: RailSpur[];
-		ZipCode: string;
+		brokers: Broker[];
+		city: City;
+		colonyType: ColonyType;
+		companies: Company[];
+		customerDeliveryPoints: CustomerDeliveryPoint[];
+		customers: Customer[];
+		description: string;
+		id: number;
+		idCity: number;
+		idColonyType: number;
+		name: string;
+		railSpurs: RailSpur[];
+		zipCode: string;
 	}
 	export class ColonyType extends TCRMEntity {
-		Colonies: Colony[];
-		Description: string;
-		Id: number;
-		Name: string;
+		colonies: Colony[];
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class Company extends TCRMEntity {
-		Colony: Colony;
-		CompanyName: string;
-		CompanyTargets: CompanyTarget[];
-		Fax: string;
-		Id: number;
-		IdColony: number;
-		LegalResponsible: string;
-		Logo: number[];
-		Number: string;
-		Phone: string;
-		Street: string;
-		TaxAmount: number;
+		colony: Colony;
+		companyName: string;
+		companyTargets: CompanyTarget[];
+		fax: string;
+		id: number;
+		idColony: number;
+		legalResponsible: string;
+		logo: number[];
+		number: string;
+		phone: string;
+		street: string;
+		taxAmount: number;
 		zipCode: string;
 	}
 	export class CompanyTarget extends TCRMEntity {
-		Company: Company;
-		Family: Family;
-		Id: number;
-		IdCompany: number;
-		IdFamily: number;
-		Target: number;
-		TargetYear: number;
+		company: Company;
+		family: Family;
+		id: number;
+		idCompany: number;
+		idFamily: number;
+		target: number;
+		targetYear: number;
 	}
 	export class Contact extends TCRMEntity {
-		CellPhone: string;
-		Department: Department;
-		EMail: string;
-		Id: number;
-		IdDepartment: number;
-		IdOrganization: number;
-		IsActive: boolean;
-		Name: string;
-		OfficePhone: string;
-		Opportunities: Opportunity[];
-		OpportunityDialogs: OpportunityDialog[];
-		Organization: Organization;
-		PurchaseOrderDialogs: PurchaseOrderDialog[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
-		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
+		cellPhone: string;
+		department: Department;
+		eMail: string;
+		id: number;
+		idDepartment: number;
+		idOrganization: number;
+		isActive: boolean;
+		name: string;
+		officePhone: string;
+		opportunities: Opportunity[];
+		opportunityDialogs: OpportunityDialog[];
+		organization: Organization;
+		purchaseOrderDialogs: PurchaseOrderDialog[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		quotationToCustomerDialogs: QuotationToCustomerDialog[];
 	}
 	export class Country extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Mills: Mill[];
-		Name: string;
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
-		States: State[];
-		Suppliers: Supplier[];
+		description: string;
+		id: number;
+		mills: Mill[];
+		name: string;
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
+		states: State[];
+		suppliers: Supplier[];
 	}
 	export class Currency extends TCRMEntity {
-		ASign: string;
-		Description: string;
-		ExchangeRates: ExchangeRate[];
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		aSign: string;
+		description: string;
+		exchangeRates: ExchangeRate[];
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class Customer extends TCRMEntity {
-		Brokers: Broker[];
-		Colony: Colony;
-		CustomerContacts: CustomerContact[];
-		CustomerDeliveryPoints: CustomerDeliveryPoint[];
-		CustomerDocuments: CustomerDocument[];
-		DaysCredit: number;
-		Id: number;
-		IdColony: number;
-		IdResponsible: number;
-		InterestRate: number;
-		LimitCreditGermany: number;
-		LimitCreditUSA: number;
-		Markets: Market[];
-		Name: string;
-		Number: string;
-		Opportunities: Opportunity[];
-		Phone: string;
-		ProductExtendeds: ProductExtended[];
-		Products: Product[];
-		PurchaseOrders: PurchaseOrder[];
-		RailSpurs: RailSpur[];
-		Responsible: Responsible;
-		RFC: string;
-		Sectors: Sector[];
-		Street: string;
+		brokers: Broker[];
+		colony: Colony;
+		customerContacts: CustomerContact[];
+		customerDeliveryPoints: CustomerDeliveryPoint[];
+		customerDocuments: CustomerDocument[];
+		daysCredit: number;
+		id: number;
+		idColony: number;
+		idResponsible: number;
+		interestRate: number;
+		limitCreditGermany: number;
+		limitCreditUSA: number;
+		markets: Market[];
+		name: string;
+		number: string;
+		opportunities: Opportunity[];
+		phone: string;
+		productExtendeds: ProductExtended[];
+		products: Product[];
+		purchaseOrders: PurchaseOrder[];
+		railSpurs: RailSpur[];
+		responsible: Responsible;
+		rFC: string;
+		sectors: Sector[];
+		street: string;
 	}
 	export class CustomerContact extends TCRMEntity {
-		CellPhone: string;
-		Customer: Customer;
+		cellPhone: string;
+		customer: Customer;
 		email: string;
-		Extension: string;
-		FechaNacimiento: Date;
-		Id: number;
-		IdCustomer: number;
-		IdPosition: number;
-		IsActive: boolean;
-		Name: string;
-		NickName: string;
-		OfficePhone: string;
-		Opportunities: Opportunity[];
-		OpportunityDialogs: OpportunityDialog[];
-		Position: Position;
-		PurchaseOrderDialogs: PurchaseOrderDialog[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
-		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
+		extension: string;
+		fechaNacimiento: Date;
+		id: number;
+		idCustomer: number;
+		idPosition: number;
+		isActive: boolean;
+		name: string;
+		nickName: string;
+		officePhone: string;
+		opportunities: Opportunity[];
+		opportunityDialogs: OpportunityDialog[];
+		position: Position;
+		purchaseOrderDialogs: PurchaseOrderDialog[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		quotationToCustomerDialogs: QuotationToCustomerDialog[];
 	}
 	export class CustomerDeliveryPoint extends TCRMEntity {
-		CDPContact: string;
-		CDPCP: string;
-		CDPName: string;
-		CDPStreet: string;
-		CDPTelephone: string;
-		Colony: Colony;
-		Customer: Customer;
-		DeliveryType: DeliveryType;
-		Id: number;
-		IdColony: number;
-		IdCustomer: number;
-		IdDeliveryType: number;
+		cDPContact: string;
+		cDPCP: string;
+		cDPName: string;
+		cDPStreet: string;
+		cDPTelephone: string;
+		colony: Colony;
+		customer: Customer;
+		deliveryType: DeliveryType;
+		id: number;
+		idColony: number;
+		idCustomer: number;
+		idDeliveryType: number;
 	}
 	export class CustomerDocument extends TCRMEntity {
-		Comment: string;
-		Customer: Customer;
-		DateUploaded: Date;
-		DocId: string;
-		DocName: string;
-		Id: number;
-		IdCustomer: number;
-		ParentFolder: string;
+		comment: string;
+		customer: Customer;
+		dateUploaded: Date;
+		docId: string;
+		docName: string;
+		id: number;
+		idCustomer: number;
+		parentFolder: string;
 	}
 	export class DeliveryType extends TCRMEntity {
-		CustomerDeliveryPoints: CustomerDeliveryPoint[];
-		Description: string;
-		Id: number;
-		Name: string;
+		customerDeliveryPoints: CustomerDeliveryPoint[];
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class Department extends TCRMEntity {
-		Contacts: Contact[];
-		Description: string;
-		Id: number;
-		Name: string;
+		contacts: Contact[];
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class DocType extends TCRMEntity {
-		ActionOpportunityDocTypes: ActionOpportunityDocType[];
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		actionOpportunityDocTypes: ActionOpportunityDocType[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class DocumentType extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		OpportunityDocuments: OpportunityDocument[];
-		PurchaseOrderDocuments: PurchaseOrderDocument[];
-		QuotationFromSupplierDocuments: QuotationFromSupplierDocument[];
-		QuotationToCustomerDocuments: QuotationToCustomerDocument[];
-		TemplateEMails: TemplateEMail[];
+		description: string;
+		id: number;
+		name: string;
+		opportunityDocuments: OpportunityDocument[];
+		purchaseOrderDocuments: PurchaseOrderDocument[];
+		quotationFromSupplierDocuments: QuotationFromSupplierDocument[];
+		quotationToCustomerDocuments: QuotationToCustomerDocument[];
+		templateEMails: TemplateEMail[];
 	}
 	export class EMailTemplate extends TCRMEntity {
-		CustContactMail: string;
-		CustContactSent: string;
-		DateSent: Date;
-		EmailAttachments: AttachDocument[];
-		EMailBCC: GenericList[];
-		EMailBody: string;
-		EMailCC: GenericList[];
-		EMailSubject: string;
-		EMailTo: GenericList[];
-		IdCustomer: number;
-		IdDialog: number;
-		IdOpportunity: number;
-		IdQuotationFromSupplier: number;
-		IdQuotationToCustomer: number;
-		IdResponsible: number;
-		IsSent: boolean;
-		ListIdDocuments: number[];
-		OneDriveDocs: string[];
-		OneDriveDocsName: string[];
+		custContactMail: string;
+		custContactSent: string;
+		dateSent: Date;
+		emailAttachments: AttachDocument[];
+		eMailBCC: GenericList[];
+		eMailBody: string;
+		eMailCC: GenericList[];
+		eMailSubject: string;
+		eMailTo: GenericList[];
+		idCustomer: number;
+		idDialog: number;
+		idOpportunity: number;
+		idPurchase: number;
+		idQuotationFromSupplier: number;
+		idQuotationToCustomer: number;
+		idResponsible: number;
+		isSent: boolean;
+		listIdDocuments: number[];
+		oneDriveDocs: string[];
+		oneDriveDocsName: string[];
 	}
 	export class EstatusOpportunity extends TCRMEntity {
-		ActionOpportunities: ActionOpportunity[];
-		Description: string;
-		Id: number;
-		IsEditable: boolean;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		actionOpportunities: ActionOpportunity[];
+		description: string;
+		id: number;
+		isEditable: boolean;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class ExchangeRate extends TCRMEntity {
-		Currency: Currency;
-		Id: number;
-		IdCurrency: number;
-		TDate: Date;
-		Value: number;
+		currency: Currency;
+		id: number;
+		idCurrency: number;
+		tDate: Date;
+		value: number;
 	}
 	export class Family extends TCRMEntity {
-		CompanyTargets: CompanyTarget[];
-		Description: string;
-		Id: number;
-		Name: string;
-		Products: Product[];
-		ResponsibleTargets: ResponsibleTarget[];
+		companyTargets: CompanyTarget[];
+		description: string;
+		id: number;
+		name: string;
+		products: Product[];
+		responsibleTargets: ResponsibleTarget[];
 	}
 	export class GenericList extends TCRMEntity {
-		Descripcion: string;
-		IdString: string;
-		Name: string;
+		descripcion: string;
+		idString: string;
+		name: string;
 	}
 	export class GetActionDoctType_Result  extends TCRMEntity {
-		DocTypeName: string;
-		EMailSubject: string;
-		Id: number;
-		IdActionOpportunity: number;
-		IdDocType: number;
-		IdTemplateEmail: number;
-		Name: string;
+		docTypeName: string;
+		eMailSubject: string;
+		id: number;
+		idActionOpportunity: number;
+		idDocType: number;
+		idTemplateEmail: number;
+		name: string;
 	}
-	export class getAllContactsWithCustomers_Result  extends TCRMEntity {
-		ATipo: string;
-		EMail: string;
-		Id: number;
-		IsActive: boolean;
-		Name: string;
+	export class getAllContactsWithCustomers_Result extends TCRMEntity {
+		aTipo: string;
+		eMail: string;
+		id: number;
+		isActive: boolean;
+		name: string;
 	}
 	export class getCitites_Result extends TCRMEntity {
-		CountryName: string;
-		Description: string;
-		FullName: string;
-		Id: number;
-		IdCountry: number;
-		IdState: number;
-		Name: string;
-		StateName: string;
+		countryName: string;
+		description: string;
+		fullName: string;
+		id: number;
+		idCountry: number;
+		idState: number;
+		name: string;
+		stateName: string;
 	}
-	export class getColonies_Result extends TCRMEntity {
-		CityName: string;
-		CountryName: string;
-		CTypeName: string;
-		Description: string;
-		Id: number;
-		IdCity: number;
-		IdColonyType: number;
-		IdCountry: number;
-		IdState: number;
-		Name: string;
-		StateName: string;
-		ZipCode: string;
+	export class getColonies_Result extends TCRMEntity{
+		cityName: string;
+		countryName: string;
+		cTypeName: string;
+		description: string;
+		id: number;
+		idCity: number;
+		idColonyType: number;
+		idCountry: number;
+		idState: number;
+		name: string;
+		stateName: string;
+		zipCode: string;
 	}
 	export class GetColoniesFromZipCode_Result extends TCRMEntity {
-		Description: string;
-		Id: number;
-		IdCity: number;
-		IdColonyType: number;
-		Name: string;
-		ZipCode: string;
+		description: string;
+		id: number;
+		idCity: number;
+		idColonyType: number;
+		name: string;
+		zipCode: string;
 	}
 	export class GetCompanyInfo_Result extends TCRMEntity {
-		Address1: string;
-		Address2: string;
-		CityDescription: string;
-		CityName: string;
-		ColonyDescription: string;
-		ColonyName: string;
-		ColonyType: string;
-		CompanyName: string;
-		CountryDescription: string;
-		CountryName: string;
-		Fax: string;
-		Id: number;
-		IdCity: number;
-		IdColony: number;
-		IdColonyType: number;
-		IdCountry: number;
-		IdState: number;
-		LegalResponsible: string;
-		Logo: number[];
-		Number: string;
-		Phone: string;
-		StateDescription: string;
-		StateName: string;
-		Street: string;
-		ZipCode: string;
+		address1: string;
+		address2: string;
+		cityDescription: string;
+		cityName: string;
+		colonyDescription: string;
+		colonyName: string;
+		colonyType: string;
+		companyName: string;
+		countryDescription: string;
+		countryName: string;
+		fax: string;
+		id: number;
+		idCity: number;
+		idColony: number;
+		idColonyType: number;
+		idCountry: number;
+		idState: number;
+		legalResponsible: string;
+		logo: number[];
+		number: string;
+		phone: string;
+		stateDescription: string;
+		stateName: string;
+		street: string;
+		zipCode: string;
 	}
 	export class getCountries_Result extends TCRMEntity {
-		Description: string;
-		FullName: string;
-		Id: number;
-		Name: string;
+		description: string;
+		fullName: string;
+		id: number;
+		name: string;
 	}
 	export class getCountriesFromIdMill_Result extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class getCustomerContactList_Result extends TCRMEntity {
 		email: string;
-		Id: number;
-		IdCustomer: number;
-		Name: string;
-		NickName: string;
+		id: number;
+		idCustomer: number;
+		name: string;
+		nickName: string;
 	}
 	export class GetCustomerDirectory_Result extends TCRMEntity {
-		Address: string;
-		City: string;
+		address: string;
+		city: string;
 		id: number;
-		LimitCreditGermany: number;
-		LimitCreditUSA: number;
-		Market: string;
-		Name: string;
-		Responsible: string;
-		Sector: string;
+		limitCreditGermany: number;
+		limitCreditUSA: number;
+		market: string;
+		name: string;
+		responsible: string;
+		sector: string;
 	}
 	export class GetCustomerProducts_Result extends TCRMEntity {
-		CustomerName: string;
-		FamilyName: string;
-		IdCustomer: number;
-		IdFamily: number;
-		IdProduct: number;
-		ProductName: string;
+		customerName: string;
+		familyName: string;
+		idCustomer: number;
+		idFamily: number;
+		idProduct: number;
+		productName: string;
 	}
 	export class getCustomers_Result extends TCRMEntity {
-		ColonyName: string;
-		DaysCredit: number;
-		Id: number;
-		IdColony: number;
-		IdResponsible: number;
-		InterestRate: number;
-		LimitCreditGermany: number;
-		LimitCreditUSA: number;
-		Name: string;
-		Number: string;
-		Phone: string;
-		ResponsibleName: string;
-		RFC: string;
-		Street: string;
+		colonyName: string;
+		daysCredit: number;
+		id: number;
+		idColony: number;
+		idResponsible: number;
+		interestRate: number;
+		limitCreditGermany: number;
+		limitCreditUSA: number;
+		name: string;
+		number: string;
+		phone: string;
+		responsibleName: string;
+		rFC: string;
+		street: string;
 	}
 	export class GetFieldForPurchaseOrder_Result extends TCRMEntity {
-		AsImporter: boolean;
-		DeliveryLocation: string;
-		IdContact: number;
-		IdCountryOrigin: number;
-		IdCurrency: number;
-		IdCustomer: number;
-		IdCustomerContact: number;
-		IdDocType: number;
-		IdIncoTerm: number;
-		IdLinerTerm: number;
-		IdMarket: number;
-		IdMill: number;
-		IdOpportunity: number;
-		IdPort: number;
-		IdQuotationFromSupplier: number;
-		IdQuotationToCustomer: number;
-		IdResponsible: number;
-		IdSector: number;
-		IdStatus: number;
-		IdTransactionFlow: number;
-		IdTypeOpp: number;
-		IdUser: number;
-		OfferValidity: Date;
-		OppNotes: string;
-		ShipmentOffered: Date;
+		asImporter: boolean;
+		creditDays: number;
+		deliveryLocation: string;
+		idContact: number;
+		idCountryOrigin: number;
+		idCurrency: number;
+		idCustomer: number;
+		idCustomerContact: number;
+		idDocType: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMarket: number;
+		idMill: number;
+		idOpportunity: number;
+		idPort: number;
+		idQuotationFromSupplier: number;
+		idQuotationToCustomer: number;
+		idResponsible: number;
+		idSector: number;
+		idStatus: number;
+		idTransactionFlow: number;
+		idTypeOpp: number;
+		idUser: number;
+		interestRate: number;
+		offerValidity: Date;
+		oppNotes: string;
+		shipmentOffered: Date;
 	}
 	export class getListIntFomXML_Result extends TCRMEntity {
 		id: number;
 	}
 	export class GetOppDetailsIndex_Result extends TCRMEntity {
-		DateAdded: Date;
-		FamilyDescription: string;
-		Id: number;
-		IdFamily: number;
-		IdOpportunity: number;
-		IdProduct: number;
-		ItemDescription: string;
-		ItemExtended: number;
-		ItemPrice: number;
-		ItemQuantity: number;
-		ProductDescription: string;
+		dateAdded: Date;
+		familyDescription: string;
+		id: number;
+		idFamily: number;
+		idOpportunity: number;
+		idProduct: number;
+		itemDescription: string;
+		itemExtended: number;
+		itemPrice: number;
+		itemQuantity: number;
+		productDescription: string;
 	}
-	export class GetOppDialogDocumentIndex_Result extends TCRMEntity {
-		DateUploaded: Date;
-		DNotes: string;
-		DocName: string;
-		DocTypeName: string;
-		Id: number;
-		IdDocumentType: number;
+	export class GetOppDialogDocumentIndex_Result  extends TCRMEntity {
+		dateUploaded: Date;
+		dNotes: string;
+		docName: string;
+		docTypeName: string;
+		id: number;
+		idDocumentType: number;
 	}
 	export class GetOppDialogIndex_Result extends TCRMEntity {
-		ActionName: string;
-		ContactName: string;
-		CustContactName: string;
-		DateDialog: Date;
-		Id: number;
-		IdOpportunity: number;
-		ResponsibleName: string;
-		ToContact: number;
+		actionName: string;
+		contactName: string;
+		custContactName: string;
+		dateDialog: Date;
+		id: number;
+		idOpportunity: number;
+		responsibleName: string;
+		toContact: number;
 	}
 	export class GetOpportunities extends TCRMEntity {
-		AsImporter: boolean;
-		CustomerName: string;
-		DateCreated: Date;
-		DaysUpdate: number;
-		Id: number;
-		IdCustomer: number;
-		IdStatus: number;
-		IdUser: number;
-		IsActive: boolean;
-		LastUpdated: Date;
-		PastDue: number;
-		ResponsibleName: string;
-		StatusName: string;
-		UserName: string;
+		asImporter: boolean;
+		customerName: string;
+		dateCreated: Date;
+		daysUpdate: number;
+		id: number;
+		idCustomer: number;
+		idStatus: number;
+		idUser: number;
+		isActive: boolean;
+		lastUpdated: Date;
+		oppNotes: string;
+		pastDue: number;
+		responsibleName: string;
+		statusName: string;
+		userName: string;
 	}
 	export class GetOpportunityDetails_Result extends TCRMEntity {
-		DateAdded: Date;
-		Id: number;
-		IdOpportunity: number;
-		IdProduct: number;
-		ItemDescription: string;
+		dateAdded: Date;
+		id: number;
+		idOpportunity: number;
+		idProduct: number;
+		itemDescription: string;
 		itemExtended: number;
-		ItemPrice: number;
-		ItemQuantity: number;
-		ProductDescription: string;
-		ProductName: string;
+		itemPrice: number;
+		itemQuantity: number;
+		productDescription: string;
+		productName: string;
 	}
 	export class getProductProperties_Result extends TCRMEntity {
-		Description: string;
-		Id: number;
-		IdProperty: number;
-		IsRequired: boolean;
-		Name: string;
-		POrder: number;
+		description: string;
+		id: number;
+		idProperty: number;
+		isRequired: boolean;
+		name: string;
+		pOrder: number;
 	}
 	export class getProducts_Result extends TCRMEntity {
-		Description: string;
-		FamilyDescription: string;
-		FamilyName: string;
-		Id: number;
-		IdFamily: number;
-		Name: string;
+		description: string;
+		familyDescription: string;
+		familyName: string;
+		id: number;
+		idFamily: number;
+		name: string;
 	}
 	export class GetProductsPaged extends TCRMEntity {
-		Description: string;
-		FamilyDescription: string;
-		FamilyName: string;
-		Id: number;
-		IdFamily: number;
-		Name: string;
+		description: string;
+		familyDescription: string;
+		familyName: string;
+		id: number;
+		idFamily: number;
+		name: string;
 	}
 	export class getProductsPaged_Result extends TCRMEntity {
-		Description: string;
-		FamilyDescription: string;
-		FamilyName: string;
-		Id: number;
-		IdFamily: number;
-		Name: string;
+		description: string;
+		familyDescription: string;
+		familyName: string;
+		id: number;
+		idFamily: number;
+		name: string;
 	}
 	export class GetPurchaseOrder_Result extends TCRMEntity {
-		ASign: string;
-		CurrencyName: string;
-		CustomerName: string;
-		DocTypeName: string;
-		Id: number;
-		IdCurrency: number;
-		IdDocType: number;
-		IdMill: number;
-		IdQuotationToCustomer: number;
-		IdStatus: number;
-		IsEditable: boolean;
-		MillName: string;
-		SMIM: string;
-		SstatusName: string;
+		aSign: string;
+		currencyName: string;
+		customerName: string;
+		docTypeName: string;
+		id: number;
+		idCurrency: number;
+		idDocType: number;
+		idMill: number;
+		idQuotationToCustomer: number;
+		idStatus: number;
+		isEditable: boolean;
+		millName: string;
+		sMIM: string;
+		sstatusName: string;
 	}
 	export class GetPurchaseOrderDetails_Result extends TCRMEntity {
-		Id: number;
-		IdProduct: number;
-		IdPurchaseOrder: number;
-		ItemDescription: string;
-		ItemPrice: number;
-		ItemQuantity: number;
-		ProductDescription: string;
-		ProductName: string;
-		SalePrice: number;
+		id: number;
+		idProduct: number;
+		idPurchaseOrder: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		productDescription: string;
+		productName: string;
+		salePrice: number;
 	}
 	export class GetPurchaseOrderDialogDocumentIndex_Result extends TCRMEntity {
-		DateUploaded: Date;
-		DNotes: string;
-		DocName: string;
-		DocTypeName: string;
-		Id: number;
-		IdDocumentType: number;
+		dateUploaded: Date;
+		dNotes: string;
+		docName: string;
+		docTypeName: string;
+		id: number;
+		idDocumentType: number;
 	}
 	export class GetPurchaseOrderDialogIndex_Result extends TCRMEntity {
-		ActionName: string;
-		ContactName: string;
-		CustContactName: string;
-		DateDialog: Date;
-		Id: number;
-		IdPurchaseOrder: number;
-		ResponsibleName: string;
-		ToContact: number;
+		actionName: string;
+		contactName: string;
+		custContactName: string;
+		dateDialog: Date;
+		id: number;
+		idPurchaseOrder: number;
+		responsibleName: string;
+		toContact: number;
 	}
-	export class getQuotationFromSupplier_Result extends TCRMEntity {
-		ASign: string;
-		AsImporter: boolean;
-		CurrencyName: string;
-		CustomerName: string;
-		DateReceived: Date;
-		DocTypeName: string;
-		Id: number;
-		IdCurrency: number;
-		IdDocType: number;
-		IdMill: number;
-		IdOpportunity: number;
-		IdPort: number;
-		IdStatus: number;
-		IsEditable: boolean;
-		MillName: string;
-		PortName: string;
-		SstatusName: string;
+	export class GetQFSFields_Result {
+			asImporter: boolean;
+			creditDays: number;
+			deliveryLocation: string;
+			idContact: number;
+			idCountryOrigin: number;
+			idCurrency: number;
+			idCustomer: number;
+			idCustomerContact: number;
+			idDocType: number;
+			idIncoTerm: number;
+			idLinerTerm: number;
+			idMarket: number;
+			idMill: number;
+			idOpportunity: number;
+			idPort: number;
+			idResponsible: number;
+			idSector: number;
+			idStatus: number;
+			idTransactionFlow: number;
+			idTypeOpp: number;
+			idUser: number;
+			interestRate: number;
+			offerValidity: Date;
+			oppNotes: string;
+			shipmentOffered: Date;
 	}	
-    export class GetQuotationFromSupplierDetails_Result extends TCRMEntity {
-		Extended: number;
-		Id: number;
-		IdProduct: number;
-		IdQuotationFromSupplier: number;
-		ItemDescription: string;
-		ItemPrice: number;
-		ItemQuantity: number;
-		ProductDescription: string;
-		ProductName: string;
-		SalePrice: number;
+	export class getQuotationFromSupplier_Result extends TCRMEntity {
+		aSign: string;
+		asImporter: boolean;
+		currencyName: string;
+		customerName: string;
+		dateReceived: Date;
+		docTypeName: string;
+		id: number;
+		idCurrency: number;
+		idDocType: number;
+		idMill: number;
+		idOpportunity: number;
+		idPort: number;
+		idStatus: number;
+		isEditable: boolean;
+		millName: string;
+		portName: string;
+		sstatusName: string;
+	}
+	export class GetQuotationFromSupplierDetails_Result extends TCRMEntity {
+		extended: number;
+		id: number;
+		idProduct: number;
+		idQuotationFromSupplier: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		productDescription: string;
+		productName: string;
+		salePrice: number;
 	}
 	export class GetQuotationFromSupplierDialogDocumentIndex_Result extends TCRMEntity {
-		DateUploaded: Date;
-		DNotes: string;
-		DocName: string;
-		DocTypeName: string;
-		Id: number;
-		IdDocumentType: number;
+		dateUploaded: Date;
+		dNotes: string;
+		docName: string;
+		docTypeName: string;
+		id: number;
+		idDocumentType: number;
 	}
 	export class GetQuotationFromSupplierDialogIndex_Result extends TCRMEntity {
-		ActionName: string;
-		ContactName: string;
-		CustContactName: string;
-		DateDialog: Date;
-		Id: number;
-		IdQuotationFromSupplier: number;
-		ResponsibleName: string;
-		ToContact: number;
+		actionName: string;
+		contactName: string;
+		custContactName: string;
+		dateDialog: Date;
+		id: number;
+		idQuotationFromSupplier: number;
+		responsibleName: string;
+		toContact: number;
 	}
 	export class GetQuotationToCustomer_Result extends TCRMEntity {
-		ASign: string;
-		CurrencyName: string;
-		CustomerName: string;
-		DocTypeName: string;
-		Id: number;
-		IdCurrency: number;
-		IdDocType: number;
-		IdMill: number;
-		IdQuotationFromSupplier: number;
-		IdStatus: number;
-		IsEditable: boolean;
-		MillName: string;
-		SstatusName: string;
+		aSign: string;
+		currencyName: string;
+		customerName: string;
+		docTypeName: string;
+		id: number;
+		idCurrency: number;
+		idDocType: number;
+		idMill: number;
+		idQuotationFromSupplier: number;
+		idStatus: number;
+		isEditable: boolean;
+		millName: string;
+		sstatusName: string;
 	}
 	export class GetQuotationToCustomerDetails_Result extends TCRMEntity {
-		Id: number;
-		IdProduct: number;
-		IdQuotationToCustomer: number;
-		ItemDescription: string;
-		ItemPrice: number;
-		ItemQuantity: number;
-		ProductDescription: string;
-		ProductName: string;
-		SalePrice: number;
+		id: number;
+		idProduct: number;
+		idQuotationToCustomer: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		productDescription: string;
+		productName: string;
+		salePrice: number;
 	}
 	export class GetQuotationToCustomerDialogDocumentIndex_Result extends TCRMEntity {
-		DateUploaded: Date;
-		DNotes: string;
-		DocName: string;
-		DocTypeName: string;
-		Id: number;
-		IdDocumentType: number;
+		dateUploaded: Date;
+		dNotes: string;
+		docName: string;
+		docTypeName: string;
+		id: number;
+		idDocumentType: number;
 	}
 	export class GetQuotationToCustomerDialogIndex_Result extends TCRMEntity {
-		ActionName: string;
-		ContactName: string;
-		CustContactName: string;
-		DateDialog: Date;
-		Id: number;
-		IdQuotationToCustomer: number;
-		ResponsibleName: string;
-		ToContact: number;
+		actionName: string;
+		contactName: string;
+		custContactName: string;
+		dateDialog: Date;
+		id: number;
+		idQuotationToCustomer: number;
+		responsibleName: string;
+		toContact: number;
 	}
 	export class getResponsible_Result extends TCRMEntity {
-		CellPhone: string;
-		EMail: string;
-		Id: number;
-		IdPosition: number;
-		IsActive: boolean;
-		Name: string;
-		OfficePhone: string;
-		PositionDescription: string;
+		cellPhone: string;
+		eMail: string;
+		id: number;
+		idPosition: number;
+		isActive: boolean;
+		name: string;
+		officePhone: string;
+		positionDescription: string;
 	}
 	export class getState_Result extends TCRMEntity {
-		CountryName: string;
-		Description: string;
-		FullName: string;
-		Id: number;
-		IdCountry: number;
-		Name: string;
+		countryName: string;
+		description: string;
+		fullName: string;
+		id: number;
+		idCountry: number;
+		name: string;
 	}
 	export class getUsers_Result extends TCRMEntity {
-		FirstName: string;
-		Id: number;
-		IsActive: boolean;
-		LastName: string;
-		UserName: string;
+		firstName: string;
+		id: number;
+		isActive: boolean;
+		lastName: string;
+		userName: string;
 		userPassword: string;
 		userPassword1: string;
 	}
-	export class IncoTerm extends TCRMEntity {
-		DeliveryRequired: boolean;
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+	export class IncoTerm  extends TCRMEntity {
+		deliveryRequired: boolean;
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class LinerTerm extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class Log extends TCRMEntity {
-		AppDomainName: string;
-		CategoryLogs: CategoryLog[];
-		EventId: number;
-		FormattedMessage: string;
-		LogId: number;
-		MachineName: string;
-		Message: string;
-		Priority: number;
-		ProcessID: string;
-		ProcessName: string;
-		Severity: string;
-		ThreadName: string;
-		Timestamp: Date;
-		Title: string;
-		Win32ThreadId: string;
+		appDomainName: string;
+		categoryLogs: CategoryLog[];
+		eventId: number;
+		formattedMessage: string;
+		logId: number;
+		machineName: string;
+		message: string;
+		priority: number;
+		processID: string;
+		processName: string;
+		severity: string;
+		threadName: string;
+		timestamp: Date;
+		title: string;
+		win32ThreadId: string;
 	}
 	export class Market extends TCRMEntity {
-		Customers: Customer[];
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
+		customers: Customer[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
 	}
 	export class MessageTemplate extends TCRMEntity {
-		Id: number;
-		MessageBody: string;
-		MessageSubject: string;
+		id: number;
+		messageBody: string;
+		messageSubject: string;
 	}
 	export class Mill extends TCRMEntity {
-		Countries: Country[];
-		Description: string;
-		Id: number;
-		Name: string;
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		countries: Country[];
+		description: string;
+		id: number;
+		name: string;
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class OEM extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		ProductExtendeds: ProductExtended[];
+		description: string;
+		id: number;
+		name: string;
+		productExtendeds: ProductExtended[];
 	}
 	export class Opportunity extends TCRMEntity {
-		AsImporter: boolean;
-		Comments: string;
-		Contact: Contact;
-		Currency: Currency;
-		Customer: Customer;
-		CustomerContact: CustomerContact;
-		DateCreated: Date;
-		DeliveryLocation: string;
-		DocType: DocType;
-		EstatusOpportunity: EstatusOpportunity;
-		Id: number;
-		IdContact: number;
-		IdCurrency: number;
-		IdCustomer: number;
-		IdCustomerContact: number;
-		IdDocType: number;
-		IdIncoTerm: number;
-		IdLinerTerms: number;
-		IdMarket: number;
-		IdPort: number;
-		IdResponsible: number;
-		IdSector: number;
-		IdStatus: number;
-		IdTransactionFlow: number;
-		IdTypeOpp: number;
-		IdUser: number;
-		IncoTerm: IncoTerm;
-		IsActive: boolean;
-		LastUpdated: Date;
-		LinerTerm: LinerTerm;
-		Market: Market;
-		OppNotes: string;
-		OpportunityDetails: OpportunityDetail[];
-		OpportunityDialogs: OpportunityDialog[];
-		Port: Port;
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		Responsible: Responsible;
-		Sector: Sector;
-		TransactionFlow: TransactionFlow;
-		TypeOpportunity: TypeOpportunity;
-		User: User;
+		asImporter: boolean;
+		comments: string;
+		contact: Contact;
+		creditDays: number;
+		currency: Currency;
+		customer: Customer;
+		customerContact: CustomerContact;
+		dateCreated: Date;
+		deliveryLocation: string;
+		docType: DocType;
+		estatusOpportunity: EstatusOpportunity;
+		id: number;
+		idContact: number;
+		idCurrency: number;
+		idCustomer: number;
+		idCustomerContact: number;
+		idDocType: number;
+		idIncoTerm: number;
+		idLinerTerms: number;
+		idMarket: number;
+		idPort: number;
+		idResponsible: number;
+		idSector: number;
+		idStatus: number;
+		idTransactionFlow: number;
+		idTypeOpp: number;
+		idUser: number;
+		incoTerm: IncoTerm;
+		interestRate: number;
+		isActive: boolean;
+		lastUpdated: Date;
+		linerTerm: LinerTerm;
+		market: Market;
+		oppNotes: string;
+		opportunityDetails: OpportunityDetail[];
+		opportunityDialogs: OpportunityDialog[];
+		port: Port;
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		responsible: Responsible;
+		sector: Sector;
+		transactionFlow: TransactionFlow;
+		typeOpportunity: TypeOpportunity;
+		user: User;
 	}
 	export class OpportunityDetail extends TCRMEntity {
-		DateAdded: Date;
-		Id: number;
-		IdOpportunity: number;
-		IdProduct: number;
-		ItemDescription: string;
-		ItemExtended: number;
-		ItemPrice: number;
-		ItemQuantity: number;
-		Opportunity: Opportunity;
-		OpportunityDetailSumaries: OpportunityDetailSumary[];
-		Product: Product;
+		dateAdded: Date;
+		id: number;
+		idOpportunity: number;
+		idProduct: number;
+		itemDescription: string;
+		itemExtended: number;
+		itemPrice: number;
+		itemQuantity: number;
+		opportunity: Opportunity;
+		opportunityDetailSumaries: OpportunityDetailSumary[];
+		product: Product;
 	}
 	export class OpportunityDetailSumary extends EditorDetailSumary {
-		IdOpportunityDetail: number;
-		OpportunityDetailSumaryProperties: OpportunityDetailSumaryProperty[];
+		idOpportunityDetail: number;
+		opportunityDetailSumaryProperties: OpportunityDetailSumaryProperty[];
 	}
 	export class OpportunityDetailSumaryProperty extends EditorDetailSumaryProperty {
-		IdOpportunityDetailSumary: number;
+		idOpportunityDetailSumary: number;
 	}
 	export class OpportunityDialog extends BaseOrderDialog {
-		IdOpportunity: number;
+		idOpportunity: number;
 	}
 	export class OpportunityDocument extends BaseDocument {
-		AData: number[];
-		AData64: string;
-		DateUploaded: Date;
-		DNotes: string;
-		DocId: string;
-		DocName: string;
-		DocumentType: DocumentType;
-		Id: number;
-		IdDocumentType: number;
-		IdOpportunityDialog: number;
-		OpportunityDialog: OpportunityDialog;
-		ParentFolder: string;
+		aData: number[];
+		aData64: string;
+		dateUploaded: Date;
+		dNotes: string;
+		docId: string;
+		docName: string;
+		documentType: DocumentType;
+		id: number;
+		idDocumentType: number;
+		idOpportunityDialog: number;
+		opportunityDialog: OpportunityDialog;
+		parentFolder: string;
 	}
 	export class Organization extends TCRMEntity {
-		Contacts: Contact[];
-		Description: string;
-		Id: number;
-		Name: string;
+		contacts: Contact[];
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class PaymentTerm extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class Port extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class Position extends TCRMEntity {
-		CustomerContacts: CustomerContact[];
-		Description: string;
-		Id: number;
-		Name: string;
-		Responsibles: Responsible[];
+		customerContacts: CustomerContact[];
+		description: string;
+		id: number;
+		name: string;
+		responsibles: Responsible[];
 	}
 	export class Product extends TCRMEntity {
-		CampaignTemplate: string;
-		CampaignTemplateSubject: string;
-		Customers: Customer[];
-		Description: string;
-		Family: Family;
-		Id: number;
-		IdFamily: number;
-		Name: string;
-		OpportunityDetails: OpportunityDetail[];
-		ProductExtendeds: ProductExtended[];
-		ProductProperties: ProductProperty[];
-		PurchaseOrderDetails: PurchaseOrderDetail[];
-		QuotationFromSupplierDetails: QuotationFromSupplierDetail[];
-		QuotationToCustomerDetails: QuotationToCustomerDetail[];
-		Suppliers: Supplier[];
+		campaignTemplate: string;
+		campaignTemplateSubject: string;
+		customers: Customer[];
+		description: string;
+		family: Family;
+		id: number;
+		idFamily: number;
+		name: string;
+		opportunityDetails: OpportunityDetail[];
+		productExtendeds: ProductExtended[];
+		productProperties: ProductProperty[];
+		purchaseOrderDetails: PurchaseOrderDetail[];
+		quotationFromSupplierDetails: QuotationFromSupplierDetail[];
+		quotationToCustomerDetails: QuotationToCustomerDetail[];
+		suppliers: Supplier[];
 	}
 	export class ProductExtended extends TCRMEntity {
-		BuyerName: string;
-		Customer: Customer;
-		CustomerName: string;
-		EAU: number;
-		Id: number;
-		IdCustomer: number;
-		IdOEM: number;
-		IdProduct: number;
-		OEM: OEM;
-		PartNumberBuyer: string;
-		PartNumberOEM: string;
-		Platform: string;
-		ProdDescription: string;
-		Product: Product;
-		ProductExtendedPrices: ProductExtendedPrice[];
-		Spec: number;
-		Thickness: number;
-		Width: number;
+		buyerName: string;
+		customer: Customer;
+		customerName: string;
+		eAU: number;
+		id: number;
+		idCustomer: number;
+		idOEM: number;
+		idProduct: number;
+		oEM: OEM;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
+		prodDescription: string;
+		product: Product;
+		productExtendedPrices: ProductExtendedPrice[];
+		spec: number;
+		thickness: number;
+		width: number;
 	}
 	export class ProductExtendedPrice extends TCRMEntity {
-		Id: number;
-		IdProductExtended: number;
-		Price: number;
-		ProductExtended: ProductExtended;
-		ValidFrom: Date;
-		ValidTo: Date;
+		id: number;
+		idProductExtended: number;
+		price: number;
+		productExtended: ProductExtended;
+		validFrom: Date;
+		validTo: Date;
 	}
 	export class ProductProperty extends TCRMEntity {
-		Id: number;
-		IdProduct: number;
-		IdProperty: number;
-		IsRequired: boolean;
-		POrder: number;
-		Product: Product;
-		Property: Property;
+		id: number;
+		idProduct: number;
+		idProperty: number;
+		isRequired: boolean;
+		pOrder: number;
+		product: Product;
+		property: Property;
 	}
 	export class Property extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		OpportunityDetailSumaryProperties: OpportunityDetailSumaryProperty[];
-		ProductProperties: ProductProperty[];
-		QuotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
-		QuotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
+		description: string;
+		id: number;
+		name: string;
+		opportunityDetailSumaryProperties: OpportunityDetailSumaryProperty[];
+		productProperties: ProductProperty[];
+		purchaseOrderDetailSumaryProperties: PurchaseOrderDetailSumaryProperty[];
+		quotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
+		quotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
 	}
 	export class PurchaseOrder extends TCRMEntity {
-		AsImporter: boolean;
-		BookingDate: Date;
-		Contact: Contact;
-		Country: Country;
-		Currency: Currency;
-		Customer: Customer;
-		CustomerContact: CustomerContact;
-		DateCreated: Date;
-		DeliveryLocation: string;
-		DocType: DocType;
-		EstatusOpportunity: EstatusOpportunity;
-		Id: number;
-		IdContact: number;
-		IdCountryOrigin: number;
-		IdCurrency: number;
-		IdCustomer: number;
-		IdCustomerContact: number;
-		IdDocType: number;
-		IdIncoTerm: number;
-		IdLinerTerm: number;
-		IdMarket: number;
-		IdMill: number;
-		IdOpportunity: number;
-		IdPort: number;
-		IdQuotationFromSupplier: number;
-		IdQuotationToCustomer: number;
-		IdResponsible: number;
-		IdSector: number;
-		IdStatus: number;
-		IdTransactionFlow: number;
-		IdTypeOpp: number;
-		IdUser: number;
-		IncoTerm: IncoTerm;
-		IsActive: boolean;
-		LastUpdated: Date;
-		LinerTerm: LinerTerm;
-		Market: Market;
-		Mill: Mill;
-		OfferValidity: Date;
-		OppNotes: string;
-		Opportunity: Opportunity;
-		Port: Port;
-		PurchaseOrderDetails: PurchaseOrderDetail[];
-		PurchaseOrderDialogs: PurchaseOrderDialog[];
-		QuotationFromSupplier: QuotationFromSupplier;
-		QuotationToCustomer: QuotationToCustomer;
-		Responsible: Responsible;
-		Sector: Sector;
-		ShipmentOffered: Date;
-		SMIM: string;
-		TransactionFlow: TransactionFlow;
-		TypeOpportunity: TypeOpportunity;
-		User: User;
-		PONumber: string;
-	    Comments: string;
+		asImporter: boolean;
+		bookingDate: Date;
+		comments: string;
+		contact: Contact;
+		country: Country;
+		creditDays: number;
+		currency: Currency;
+		customer: Customer;
+		customerContact: CustomerContact;
+		dateCreated: Date;
+		deliveryLocation: string;
+		docType: DocType;
+		estatusOpportunity: EstatusOpportunity;
+		id: number;
+		idContact: number;
+		idCountryOrigin: number;
+		idCurrency: number;
+		idCustomer: number;
+		idCustomerContact: number;
+		idDocType: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMarket: number;
+		idMill: number;
+		idOpportunity: number;
+		idPort: number;
+		idQuotationFromSupplier: number;
+		idQuotationToCustomer: number;
+		idResponsible: number;
+		idSector: number;
+		idStatus: number;
+		idTransactionFlow: number;
+		idTypeOpp: number;
+		idUser: number;
+		incoTerm: IncoTerm;
+		interestRate: number;
+		isActive: boolean;
+		lastUpdated: Date;
+		linerTerm: LinerTerm;
+		market: Market;
+		mill: Mill;
+		offerValidity: Date;
+		oppNotes: string;
+		opportunity: Opportunity;
+		pONumber: string;
+		port: Port;
+		purchaseOrderDetails: PurchaseOrderDetail[];
+		purchaseOrderDialogs: PurchaseOrderDialog[];
+		quotationFromSupplier: QuotationFromSupplier;
+		quotationToCustomer: QuotationToCustomer;
+		responsible: Responsible;
+		sector: Sector;
+		shipmentOffered: Date;
+		sMIM: string;
+		transactionFlow: TransactionFlow;
+		typeOpportunity: TypeOpportunity;
+		user: User;
 	}
 	export class PurchaseOrderDetail extends TCRMEntity {
-		DateAdded: Date;
-		
-		Id: number;
-		IdProduct: number;
-		IdPurchaseOrder: number;
-		ItemDescription: string;
-		ItemPrice: number;
-		Product: Product;
-		PurchaseOrder: PurchaseOrder;
-		PurchaseOrderDetailSumaries: PurchaseOrderDetailSumary[];
-
-		private _itemQuantity: number;
-		private _salePrice: number;
-		private _extended: number;
-		get ItemQuantity(): number {
-			return this._itemQuantity;
-		}
-
-		set ItemQuantity(value: number) {
-			this._itemQuantity = value;
-			this.setExtended();
-		}
-
-		get SalePrice(): number {
-			return this._salePrice;
-		}
-		set SalePrice(value: number) {
-			this._salePrice = value;
-            this.setExtended();
-		}
-
-		get Extended(): number {
-			return this._extended;
-		}
-		set Extended(value: number) {
-			debugger
-			this._extended = value;
-		}
-
-		setExtended() {
-			debugger
-			if( this._itemQuantity !== undefined && this._salePrice !== undefined) {
-				this.Extended = this._itemQuantity * this._salePrice;
-			}
-		}
+		dateAdded: Date;
+		extended: number;
+		id: number;
+		idProduct: number;
+		idPurchaseOrder: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		product: Product;
+		purchaseOrder: PurchaseOrder;
+		purchaseOrderDetailSumaries: PurchaseOrderDetailSumary[];
+		salePrice: number;
 	}
 	export class PurchaseOrderDetailSumary extends EditorDetailSumary {
-		Amount: number;
-		Comment: string;
-		DateCreated: Date;
-		Id: number;
-		IdPurchaseOrderDetail: number;
-		Price: number;
-		PurchaseOrderDetail: PurchaseOrderDetail;
-		PurchaseOrderDetailSumaryProperties: PurchaseOrderDetailSumaryProperty[];
-		Quantity: number;
+		amount: number;
+		comment: string;
+		dateCreated: Date;
+		id: number;
+		idPurchaseOrderDetail: number;
+		price: number;
+		purchaseOrderDetail: PurchaseOrderDetail;
+		purchaseOrderDetailSumaryProperties: PurchaseOrderDetailSumaryProperty[];
+		quantity: number;
 	}
 	export class PurchaseOrderDetailSumaryProperty extends EditorDetailSumaryProperty {
-		IdPurchaseOrderDetailSumary: number;
-		PurchaseOrderDetailSumary: PurchaseOrderDetailSumary;
+		idPurchaseOrderDetailSumary: number;
+		purchaseOrderDetailSumary: PurchaseOrderDetailSumary;
 	}
 	export class PurchaseOrderDialog extends BaseOrderDialog {
-		IdPurchaseOrder: number;
-		PurchaseOrder: PurchaseOrder;
-		PurchaseOrderDocuments: PurchaseOrderDocument[];
+		idPurchaseOrder: number;
+		purchaseOrder: PurchaseOrder;
+		purchaseOrderDocuments: PurchaseOrderDocument[];
 	}
 	export class PurchaseOrderDocument extends BaseDocument {
-		IdPurchaseOrderDialog: number;
+		idPurchaseOrderDialog: number;
 	}
 	export class QuotationFromSupplier extends TCRMEntity {
-		AsImporter: boolean;
-		Country: Country;
-		Currency: Currency;
-		DateCreated: Date;
-		DateReceived: Date;
-		DeliveryLocation: string;
-		DocType: DocType;
-		EstatusOpportunity: EstatusOpportunity;
-		Id: number;
-		IdCountryOrigin: number;
-		IdCurrency: number;
-		IdDocType: number;
-		IdIncoTerm: number;
-		IdLinerTerm: number;
-		IdMill: number;
-		IdOpportunity: number;
-		IdPort: number;
-		IdStatus: number;
-		IdTransactionFlow: number;
-		IdTypeOpp: number;
-		IdUser: number;
-		IncoTerm: IncoTerm;
-		LinerTerm: LinerTerm;
-		Mill: Mill;
-		OfferValidity: Date;
-		Opportunity: Opportunity;
-		Port: Port;
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSupplierDetails: QuotationFromSupplierDetail[];
-		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
-		QuotationToCustomers: QuotationToCustomer[];
-		QuoteNotes: string;
-		ShipmentOffered: Date;
-		TransactionFlow: TransactionFlow;
-		TypeOpportunity: TypeOpportunity;
-		User: User;
+		asImporter: boolean;
+		country: Country;
+		creditDays: number;
+		currency: Currency;
+		dateCreated: Date;
+		dateReceived: Date;
+		deliveryLocation: string;
+		docType: DocType;
+		estatusOpportunity: EstatusOpportunity;
+		id: number;
+		idCountryOrigin: number;
+		idCurrency: number;
+		idDocType: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMill: number;
+		idOpportunity: number;
+		idPort: number;
+		idStatus: number;
+		idTransactionFlow: number;
+		idTypeOpp: number;
+		idUser: number;
+		incoTerm: IncoTerm;
+		interestRate: number;
+		linerTerm: LinerTerm;
+		mill: Mill;
+		offerValidity: Date;
+		idCustomer: number;
+		opportunity: Opportunity;
+		port: Port;
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSupplierDetails: QuotationFromSupplierDetail[];
+		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		quotationToCustomers: QuotationToCustomer[];
+		quoteNotes: string;
+		shipmentOffered: Date;
+		transactionFlow: TransactionFlow;
+		typeOpportunity: TypeOpportunity;
+		user: User;
 	}
 	export class QuotationFromSupplierDetail extends TCRMEntity {
-		DateAdded: Date;
-		Extended: number;
-		Id: number;
-		IdProduct: number;
-		IdQuotationFromSupplier: number;
-		ItemDescription: string;
-		ItemPrice: number;
-		ItemQuantity: number;
-		Product: Product;
-		QuotationFromSupplier: QuotationFromSupplier;
-		QuotationFromSupplierDetailSumaries: QuotationFromSupplierDetailSumary[];
-		SalePrice: number;
+		dateAdded: Date;
+		extended: number;
+		id: number;
+		idProduct: number;
+		idQuotationFromSupplier: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		product: Product;
+		quotationFromSupplier: QuotationFromSupplier;
+		quotationFromSupplierDetailSumaries: QuotationFromSupplierDetailSumary[];
+		salePrice: number;
 	}
 	export class QuotationFromSupplierDetailSumary extends EditorDetailSumary {
-		Amount: number;
-		Comment: string;
-		DateCreated: Date;
-		Id: number;
-		IdQuotationFromSupplierDetail: number;
-		Price: number;
-		Quantity: number;
-		QuotationFromSupplierDetail: QuotationFromSupplierDetail;
-		QuotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
+		amount: number;
+		comment: string;
+		dateCreated: Date;
+		id: number;
+		idQuotationFromSupplierDetail: number;
+		price: number;
+		quantity: number;
+		quotationFromSupplierDetail: QuotationFromSupplierDetail;
+		quotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
 	}
 	export class QuotationFromSupplierDetailSumaryProperty extends EditorDetailSumaryProperty {
-		IdQuotationFromSupplierDetailSumary: number;
-		QuotationFromSupplierDetailSumary: QuotationFromSupplierDetailSumary;
+		idQuotationFromSupplierDetailSumary: number;
+		quotationFromSupplierDetailSumary: QuotationFromSupplierDetailSumary;
 	}
 	export class QuotationFromSupplierDialog extends BaseOrderDialog {
-		IdQuotationFromSupplier: number;
+		idQuotationFromSupplier: number;
 	}
 	export class QuotationFromSupplierDocument extends BaseDocument {
-		IdQuotationFromSupplierDialog: number;
+		idQuotationFromSupplierDialog: number;
 	}
 
 	export class QuotationToCustomer extends TCRMEntity {
-		AsImporter: boolean;
-		Country: Country;
-		Currency: Currency;
-		DateCreated: Date;
-		DateSend: Date;
-		DeliveryLocation: string;
-		DocType: DocType;
-		EstatusOpportunity: EstatusOpportunity;
-		Id: number;
-		IdCountry: number;
-		IdCurrency: number;
-		IdDocType: number;
-		IdIncoTerm: number;
-		IdLinerTerm: number;
-		IdMill: number;
-		IdPort: number;
-		IdQuotationFromSupplier: number;
-		IdStatus: number;
-		IdTypeOpp: number;
-		IdUser: number;
-		IncoTerm: IncoTerm;
-		LinerTerm: LinerTerm;
-		Mill: Mill;
-		OfferValidity: Date;
-		Port: Port;
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSupplier: QuotationFromSupplier;
-		QuotationToCustomerDetails: QuotationToCustomerDetail[];
-		QuoteNotes: string;
-		ShipmentOffered: Date;
-		TypeOpportunity: TypeOpportunity;
-		User: User;
+		asImporter: boolean;
+		country: Country;
+		creditDays: number;
+		currency: Currency;
+		dateCreated: Date;
+		dateSend: Date;
+		deliveryLocation: string;
+		docType: DocType;
+		estatusOpportunity: EstatusOpportunity;
+		id: number;
+		idCountry: number;
+		idCurrency: number;
+		idDocType: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMill: number;
+		idPort: number;
+		idQuotationFromSupplier: number;
+		idStatus: number;
+		idTypeOpp: number;
+		idUser: number;
+		incoTerm: IncoTerm;
+		interestRate: number;
+		linerTerm: LinerTerm;
+		mill: Mill;
+		offerValidity: Date;
+		idCustomer: number;
+		port: Port;
+
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSupplier: QuotationFromSupplier;
+		quotationToCustomerDetails: QuotationToCustomerDetail[];
+		quoteNotes: string;
+		shipmentOffered: Date;
+		typeOpportunity: TypeOpportunity;
+		user: User;
 	}
 	export class QuotationToCustomerDetail extends TCRMEntity {
-		ExpenseSMIM_Cost: number;
-		ExpenseSupplierSide_Cost: number;
-		Id: number;
-		IdProduct: number;
-		IdQuotationToCustomer: number;
-		ItemDescription: string;
-		ItemPrice: number;
-		ItemQuantity: number;
-		Product: Product;
-		Profit: number;
-		QuotationToCustomer: QuotationToCustomer;
-		QuotationToCustomerDetailSumaries: QuotationToCustomerDetailSumary[];
-		SalePrice: number;
-		SalesPriceBased: number;
+		expenseSMIM_Cost: number;
+		expenseSupplierSide_Cost: number;
+		id: number;
+		idProduct: number;
+		idQuotationToCustomer: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		product: Product;
+		profit: number;
+		quotationToCustomer: QuotationToCustomer;
+		quotationToCustomerDetailSumaries: QuotationToCustomerDetailSumary[];
+		salePrice: number;
+		salesPriceBased: number;
 	}
 	export class QuotationToCustomerDetailSumary extends EditorDetailSumary {
-		Amount: number;
-		Comment: string;
-		DateCreated: Date;
-		Id: number;
-		IdQuotationToCustomerDetail: number;
-		Price: number;
-		Quantity: number;
-		QuotationToCustomerDetail: QuotationToCustomerDetail;
-		QuotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
+		amount: number;
+		comment: string;
+		dateCreated: Date;
+		id: number;
+		idQuotationToCustomerDetail: number;
+		price: number;
+		quantity: number;
+		quotationToCustomerDetail: QuotationToCustomerDetail;
+		quotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
 	}
 	export class QuotationToCustomerDetailSumaryProperty extends EditorDetailSumaryProperty {
-		IdQuotationToCustomerDetailSumary: number;
-		QuotationToCustomerDetailSumary: QuotationToCustomerDetailSumary;
+		idQuotationToCustomerDetailSumary: number;
+		quotationToCustomerDetailSumary: QuotationToCustomerDetailSumary;
 	}
 	export class QuotationToCustomerDialog extends BaseOrderDialog {
-		IdQuotationToCustomer: number;
+		idQuotationToCustomer: number;
 	}
 	export class QuotationToCustomerDocument extends BaseDocument {
-		IdQuotationToCustomerDialog: number;
+		idQuotationToCustomerDialog: number;
 	}
 	export class RailSpur extends TCRMEntity {
-		CarsPerDay: number;
-		Colony: Colony;
-		Customers: Customer[];
-		Id: number;
-		IdColony: number;
-		IdRailSpurType: number;
-		IdRailway: number;
-		Name: string;
-		Number: string;
-		Phone: string;
-		RailSpur1: string;
-		RailSpurType: RailSpurType;
-		Railway: Railway;
-		RFC: string;
-		Station: string;
-		Street: string;
-		Zona: string;
+		carsPerDay: number;
+		colony: Colony;
+		customers: Customer[];
+		id: number;
+		idColony: number;
+		idRailSpurType: number;
+		idRailway: number;
+		name: string;
+		number: string;
+		phone: string;
+		railSpur1: string;
+		railSpurType: RailSpurType;
+		railway: Railway;
+		rFC: string;
+		station: string;
+		street: string;
+		zona: string;
 	}
 	export class RailSpurType extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		RailSpurs: RailSpur[];
+		description: string;
+		id: number;
+		name: string;
+		railSpurs: RailSpur[];
 	}
 	export class Railway extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		RailSpurs: RailSpur[];
+		description: string;
+		id: number;
+		name: string;
+		railSpurs: RailSpur[];
 	}
 	export class Responsible extends TCRMEntity {
-		CellPhone: string;
-		Customers: Customer[];
-		EMail: string;
-		Id: number;
-		IdPosition: number;
-		IdUser: number;
-		IsActive: boolean;
-		Name: string;
-		OfficePhone: string;
-		Opportunities: Opportunity[];
-		OpportunityDialogs: OpportunityDialog[];
-		Position: Position;
-		PurchaseOrderDialogs: PurchaseOrderDialog[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSupplierDialogs: QuotationFromSupplierDialog[];
-		QuotationToCustomerDialogs: QuotationToCustomerDialog[];
-		ResponsibleTargets: ResponsibleTarget[];
-		RspPassword: string;
-		RspUserCredential: string;
-		User: User;
+		cellPhone: string;
+		customers: Customer[];
+		eMail: string;
+		id: number;
+		idPosition: number;
+		idUser: number;
+		isActive: boolean;
+		name: string;
+		officePhone: string;
+		opportunities: Opportunity[];
+		opportunityDialogs: OpportunityDialog[];
+		position: Position;
+		purchaseOrderDialogs: PurchaseOrderDialog[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
+		quotationToCustomerDialogs: QuotationToCustomerDialog[];
+		responsibleTargets: ResponsibleTarget[];
+		rspPassword: string;
+		rspUserCredential: string;
+		user: User;
 	}
 	export class ResponsibleTarget extends TCRMEntity {
-		Family: Family;
-		Id: number;
-		IdFamily: number;
-		IdResponsible: number;
-		Responsible: Responsible;
-		ResponsibleTargetYear: number;
-		TargetQty: number;
+		family: Family;
+		id: number;
+		idFamily: number;
+		idResponsible: number;
+		responsible: Responsible;
+		responsibleTargetYear: number;
+		targetQty: number;
 	}
 	export class ReturnSaveRequest extends TCRMEntity {
-		Data: any;
-		Message: string;
+		data: any;
+		message: string;
 	}
 	export class Sector extends TCRMEntity {
-		Customers: Customer[];
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
+		customers: Customer[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
 	}
 	export class State extends TCRMEntity {
-		Cities: City[];
-		Country: Country;
-		Description: string;
-		Id: number;
-		IdCountry: number;
-		Name: string;
+		cities: City[];
+		country: Country;
+		description: string;
+		id: number;
+		idCountry: number;
+		name: string;
 	}
 	export class Supplier extends TCRMEntity {
-		Country: Country;
-		Id: number;
-		IdCountry: number;
-		IsActive: boolean;
-		Name: string;
-		Products: Product[];
-		ShortName: string;
-		SupplierContacts: SupplierContact[];
+		country: Country;
+		id: number;
+		idCountry: number;
+		isActive: boolean;
+		name: string;
+		products: Product[];
+		shortName: string;
+		supplierContacts: SupplierContact[];
 	}
 	export class SupplierContact extends TCRMEntity {
-		CellPhone: string;
-		Department: string;
-		EMail: string;
-		Id: number;
-		IdSupplier: number;
-		IsActive: boolean;
-		Name: string;
-		OfficePhone: string;
-		Supplier: Supplier;
+		cellPhone: string;
+		department: string;
+		eMail: string;
+		id: number;
+		idSupplier: number;
+		isActive: boolean;
+		name: string;
+		officePhone: string;
+		supplier: Supplier;
 	}
 	export class sysdiagram extends TCRMEntity {
 		definition: number[];
@@ -1443,47 +1453,47 @@
 		version: number;
 	}
 	export class TemplateEMail extends TCRMEntity {
-		ActionOpportunityDocTypes: ActionOpportunityDocType[];
-		DocumentTypes: DocumentType[];
-		EMailBody: string;
-		EMailSubject: string;
-		Id: number;
-		Name: string;
+		actionOpportunityDocTypes: ActionOpportunityDocType[];
+		documentTypes: DocumentType[];
+		eMailBody: string;
+		eMailSubject: string;
+		id: number;
+		name: string;
 	}
 	export class Tender extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
+		description: string;
+		id: number;
+		name: string;
 	}
 	export class TransactionFlow extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
 	}
 	export class TypeOpportunity extends TCRMEntity {
-		Description: string;
-		Id: number;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
+		description: string;
+		id: number;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
 	}
 	export class User extends TCRMEntity {
-		EMail: string;
-		Id: number;
-		IsActive: boolean;
-		IsAdmin: boolean;
-		Name: string;
-		Opportunities: Opportunity[];
-		PurchaseOrders: PurchaseOrder[];
-		QuotationFromSuppliers: QuotationFromSupplier[];
-		QuotationToCustomers: QuotationToCustomer[];
-		Responsibles: Responsible[];
-		UserName: string;
+		eMail: string;
+		id: number;
+		isActive: boolean;
+		isAdmin: boolean;
+		name: string;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
+		responsibles: Responsible[];
+		userName: string;
 		userPassword: string;
 	}
 

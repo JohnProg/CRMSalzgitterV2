@@ -19,7 +19,8 @@ import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
 import {  TCRMEntity } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-quotationtocustomerdialogemail',
@@ -41,9 +42,11 @@ constructor(
           public _http: Http, 
           public _tableService: TdDataTableService,
           public translate: TranslateService,
-          public _router: Router, public _route: ActivatedRoute ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions,
-        _mediaService, _ngZone, _http, _tableService,translate,  _route, _router);
+          public _router: Router, 
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _router, route, apollo);
+ 
     this.catalogName = 'Quotation to Customer Dialog';
     this.mainField = 'IdQuotationToCustomer';
     this.baseApi = 'QuotationToCustomerDialog';

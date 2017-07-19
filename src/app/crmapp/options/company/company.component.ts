@@ -15,6 +15,9 @@ import {  Company } from '../../model/allmodels';
 import { CRMSelectComponent } from '../../components/crmselect/crmselect.component';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-company',
@@ -40,9 +43,10 @@ export class CompanyComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.catalogName = 'Company';
     this._curService.setAPI('Company/', this.catalogName);
   }

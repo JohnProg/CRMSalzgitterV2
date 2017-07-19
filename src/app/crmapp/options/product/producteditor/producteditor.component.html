@@ -7,18 +7,18 @@
         <section layout-lt-sm="column" layout="row" flex="100">
 
           <section flex="40">
-            <crm-select #idFamily name="idFamily" catalog="Family" placeholder="Select family" [(ngModel)]="itemEdit.IdFamily"></crm-select>
+            <crm-select #idFamily name="idFamily" catalog="Family" placeholder="Select family" [(ngModel)]="itemEdit.idFamily"></crm-select>
           </section>
 
 
           <md-input-container flex="60">
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="Name" maxlength="150" />
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150" />
             <md-hint align="end">{{name.value.length}} / 150</md-hint>
           </md-input-container>
         </section>
         <section layout-lt-sm="column" layout="row" flex="100">
           <md-input-container flex>
-            <input mdInput #description name="description" [(ngModel)]="itemEdit.Description" required placeholder="Description" maxlength="150">
+            <input mdInput #description name="description" [(ngModel)]="itemEdit.description" required placeholder="Description" maxlength="150">
             <md-hint align="end">{{description.value.length}} / 150</md-hint>
           </md-input-container>
 
@@ -27,8 +27,8 @@
         <section layout-lt-sm="column" layout="row" flex>
 
 
-          <td-expansion-panel *ngIf="itemEdit.Id > 0" label="Properties" flex (expanded)="expandProperties()">
-            <crm-productproperty [idprop]="itemEdit.Id"></crm-productproperty>
+          <td-expansion-panel *ngIf="itemEdit.id > 0" label="Properties" flex (expanded)="expandProperties()">
+            <crm-productproperty [idprop]="itemEdit.id"></crm-productproperty>
           </td-expansion-panel>
         </section>
       </section>

@@ -29,10 +29,10 @@
     <section flex="25"></section>
     <section *ngIf="isEdit" flex="50">
       <section layout="column" flex="100" layout-margin>
-          <crm-select #IdDocType name="IdDocType" [fieldDisplay]="NameDescription" catalog="DocType" placeholder="Select Document Type" [(ngModel)]="emailEdit.IdDocType"></crm-select>
+          <crm-select #IdDocType name="IdDocType" [fieldDisplay]="NameDescription" catalog="DocType" placeholder="Select Document Type" [(ngModel)]="emailEdit.idDocType"></crm-select>
       </section>
       <section layout="column" flex="100" layout-margin>
-          <crm-select #IdTemplateEmail name="IdTemplateEmail" [fieldDisplay]="NameDescription" catalog="TemplateEmail" placeholder="Select Email Template" [(ngModel)]="emailEdit.IdTemplateEmail"></crm-select>
+          <crm-select #IdTemplateEmail name="IdTemplateEmail" [fieldDisplay]="NameDescription" catalog="TemplateEmail" placeholder="Select Email Template" [(ngModel)]="emailEdit.idTemplateEmail"></crm-select>
       </section>      
       <div layout="row" flex layout-align="end center">
         <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEditProp()" aria-label="Cancel">

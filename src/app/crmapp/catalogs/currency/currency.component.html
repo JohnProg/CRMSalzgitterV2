@@ -8,13 +8,13 @@
         <div layout="column" layout-margin>
 
           <md-input-container class="example-full-width">
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="Name" maxlength="150">
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150">
             <md-hint align="end">{{name.value.length}} / 150</md-hint>
           </md-input-container>
 
 
           <md-input-container class="example-full-width">
-            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.Description" required placeholder="Description"
+            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="Description"
               maxlength="150">
             <md-hint align="end">{{description.value.length}} / 150</md-hint>
           </md-input-container>
@@ -22,7 +22,7 @@
           <div flex="20">
 
             <md-input-container class="example-full-width">
-              <input mdInput #aSign name="aSign" [(ngModel)]="itemEdit.ASign" required placeholder="Sign" value="" maxlength="50">
+              <input mdInput #aSign name="aSign" [(ngModel)]="itemEdit.aSign" required placeholder="Sign" value="" maxlength="50">
               <md-hint align="end">{{aSign.value.length}} / 50</md-hint>
             </md-input-container>
 
@@ -35,9 +35,9 @@
     <section *ngIf="!isEditing">
  <ng-template tdLoading="items.load">
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
+        <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
           <div layout="row">
-            <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+            <button md-button (click)="editEntity(row.id)">{{value}}</button>
           </div>
         </ng-template>
 

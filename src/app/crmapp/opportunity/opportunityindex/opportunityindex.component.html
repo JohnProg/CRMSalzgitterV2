@@ -22,13 +22,13 @@
         <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
       </td-paging-bar>
         <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-          <ng-template tdDataTableTemplate="Id" let-value="value" let-row="row" let-column="column">
-            <button md-button md-ripple class="block relative" [routerLink]="['edit', row.Id]">
+          <ng-template tdDataTableTemplate="id" let-value="value" let-row="row" let-column="column">
+            <button md-button md-ripple class="block relative" [routerLink]="['edit', row.id]">
         {{value}}
       </button>
           </ng-template>
 
-          <ng-template tdDataTableTemplate="LastUpdated" let-value="value" let-row="row" let-column="column">
+          <ng-template tdDataTableTemplate="lastUpdated" let-value="value" let-row="row" let-column="column">
             <span>{{value | date }}</span>
           </ng-template>
 

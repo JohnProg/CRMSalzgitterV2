@@ -5,25 +5,25 @@
         <section  layout="column" flex="100" layout-margin>
         <section  flex="100" >
           <md-input-container>
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
             <md-hint align="end">{{name.value.length}} / 150</md-hint>
           </md-input-container>
 
         </section>
         <section  flex >
-          <crm-select #idStatus name="idStatus" required catalog="EstatusOpportunity" placeholder="Status Opp" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
+          <crm-select #idStatus name="idStatus" required catalog="EstatusOpportunity" placeholder="Status Opp" [(ngModel)]="itemEdit.idStatus" ></crm-select>
         </section>    
         <div layout-gt-sm="row" layout-lt-sm="column" flex layout-padding>
           <span>Email to:    </span>
-          <md-radio-group #EMailTo name="EMailTo" [(ngModel)]="itemEdit.EMailTo">
+          <md-radio-group #EMailTo name="EMailTo" [(ngModel)]="itemEdit.emailTo">
             <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
             <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
             <md-radio-button value="3">{{ 'BOTH' | translate}}</md-radio-button>
           </md-radio-group>
         </div>   
         <section layout-lt-sm="column" layout="row" flex>
-          <td-expansion-panel *ngIf="itemEdit.Id > 0" label="Email Templates" flex (expanded)="expandProperties()">
-            <crm-actionopportunitytemplateemail [idaction]="itemEdit.Id"></crm-actionopportunitytemplateemail>
+          <td-expansion-panel *ngIf="itemEdit.id > 0" label="Email Templates" flex (expanded)="expandProperties()">
+            <crm-actionopportunitytemplateemail [idaction]="itemEdit.id"></crm-actionopportunitytemplateemail>
           </td-expansion-panel>
         </section>
 
@@ -38,9 +38,9 @@
 
             <ng-template tdLoading="items.load">
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row"  let-column="column">
+        <ng-template tdDataTableTemplate="name" let-value="value" let-row="row"  let-column="column">
           <div layout="row">
-            <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+            <button md-button (click)="editEntity(row.id)">{{value}}</button>
           </div>
         </ng-template>
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">

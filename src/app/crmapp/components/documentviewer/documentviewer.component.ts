@@ -20,7 +20,10 @@ import { CatalogService, IPChangeEventSorted } from '../../services/catalog.serv
 import { ConfigurationService } from '../../services/configuration.service';
 
 import { BaseComponent } from '../../catalogs/base.component';
-import {  BaseDocument  } from '../../model/allmodels';
+import {  BaseDocument, IDeleteEventModel  } from '../../model/index';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-documentviewer',
@@ -31,8 +34,8 @@ export class DocumentviewerComponent extends BaseComponent {
 
  @Input() idParent: number = 0;
  @Input() baseApi: string;
-
- sortBy: string = 'DocTypeName';
+ @Input() catName: string = "Documents";
+ sortBy: string = 'docTypeName';
  itemEdit: BaseDocument;
 
  constructor(
@@ -46,12 +49,14 @@ export class DocumentviewerComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
   }
 
  ngOnInitClass() {
+    this.catalogName = this.catName;
     this._curService.setAPI( this.baseApi + '/', this.catalogName);
     this.entList = <Observable<BaseDocument[]>>this._curService.entList;
     this.initData();
@@ -66,15 +71,20 @@ export class DocumentviewerComponent extends BaseComponent {
   }
 
   addColumns() {
-     this.columns.push({ name: 'DocTypeName', label: 'Doc. Type' });
-     this.columns.push({ name: 'DateUploaded', label: 'Date Uploaded', tooltip: '' });
-     this.columns.push({ name: 'DocName', label: 'Document Name' });
+     this.columns.push({ name: 'docTypeName', label: 'Doc. Type' });
+     this.columns.push({ name: 'dateUploaded', label: 'Date Uploaded', tooltip: '' });
+     this.columns.push({ name: 'docName', label: 'Document Name' });
   }
 
   downLoad() {}
   
   initEntity() {
     this.itemEdit = new  BaseDocument();
+  }
+
+  confirmDelete(item:  BaseDocument) {
+    this.itemEdit = item;
+    this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: item.docName, objId: this.objId }) );
   }
 
 }

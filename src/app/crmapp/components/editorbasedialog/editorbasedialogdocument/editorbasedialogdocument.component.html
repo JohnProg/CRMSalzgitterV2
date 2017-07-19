@@ -12,11 +12,11 @@
     <section layout="column" flex="100" layout-margin>
       <div layout-gt-sm="row" layout-lt-sm="column" flex>
         <crm-select flex #IdDocumentType name="IdDocumentType" catalog="DocumentType" placeholder="Document Type"
-          [(ngModel)]="itemEdit.IdDocumentType"></crm-select>
+          [(ngModel)]="itemEdit.idDocumentType"></crm-select>
       </div>
       <div layout-gt-sm="row" layout-lt-sm="column" flex>
         <md-input-container flex class="">
-          <textarea mdInput flex #DNotes name="DNotes" maxlength="150" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.DNotes"></textarea>
+          <textarea mdInput flex #DNotes name="DNotes" maxlength="150" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
           <md-hint align="end">{{DNotes.value.length}} / 150</md-hint>
         </md-input-container>
       </div>
@@ -45,7 +45,7 @@
     <section flex *ngIf="!isEditing">
 
       <td-data-table flex [columns]="columns" [data]="entList | async" [sortable]="false">
-        <ng-template tdDataTableTemplate="DateUploaded" let-value="value" let-row="row" let-column="column">
+        <ng-template tdDataTableTemplate="dateUploaded" let-value="value" let-row="row" let-column="column">
           <span> {{ value | date}} </span>
         </ng-template>        
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">

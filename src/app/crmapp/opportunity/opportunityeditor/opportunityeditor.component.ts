@@ -22,6 +22,9 @@ import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { CatalogComponent } from '../../catalogs/catalog.component';
 import { Opportunity } from '../../model/index';
 import { OpportunityheaderComponent } from './+opportunityheader/opportunityheader.component';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-opportunityeditor',
@@ -32,7 +35,7 @@ import { OpportunityheaderComponent } from './+opportunityheader/opportunityhead
 export class OpportunityeditorComponent extends CatalogComponent {
 
   idOpp: number = 0;
-  scrId: number = 1;
+  opp: Opportunity;
   @ViewChild(OpportunityheaderComponent) headercomp: OpportunityheaderComponent;
 
   constructor(
@@ -52,11 +55,17 @@ export class OpportunityeditorComponent extends CatalogComponent {
   }
 
   doOnItemCreated(itm: Opportunity) {
-    this.idOpp = itm.Id;
+    this.idOpp = itm.id;
   }
 
   linkClick(scr: number ) : boolean {
     this.scrId = scr;
     return true;
+  }
+
+
+  onItemLoaded(itm: Opportunity) {
+    this.opp = itm;
+    this.idCustomer = this.opp.idCustomer;
   }
 }

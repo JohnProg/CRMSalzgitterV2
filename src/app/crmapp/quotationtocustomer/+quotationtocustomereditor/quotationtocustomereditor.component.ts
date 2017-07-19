@@ -24,6 +24,8 @@ import { CatalogComponent } from '../../catalogs/catalog.component';
 import { QuotationToCustomer } from '../../model/index';
 import { QuotationtocustomereditorheaderComponent } from './+quotationtocustomereditorheader/quotationtocustomereditorheader.component';
 
+
+
 @Component({
   selector: 'crm-quotationtocustomereditor',
   templateUrl: './quotationtocustomereditor.component.html',
@@ -32,8 +34,10 @@ import { QuotationtocustomereditorheaderComponent } from './+quotationtocustomer
 export class QuotationtocustomereditorComponent extends CatalogComponent {
 
   idQuotation: number = 0;
+  qts: QuotationToCustomer;
   idOpp: number = 0;
-  scrId: number = 1;
+  idCustomer: number;
+  
   @ViewChild(QuotationtocustomereditorheaderComponent) headercomp: QuotationtocustomereditorheaderComponent;
 
   constructor(
@@ -55,6 +59,9 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
 
 
   linkClick(scr: number ) : boolean {
+    if( this.headercomp !== undefined){
+      this.idCustomer = this.headercomp.itemEdit.idCustomer;
+    }
     this.scrId = scr;
     return true;
   }
@@ -62,11 +69,18 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
 
 
   doOnItemCreated(itm: QuotationToCustomer) {
-    this.idQuotation = itm.Id;
+    this.idQuotation = itm.id;
+    //this.idOpp = itm.idOpportunity;
+    this.idCustomer = itm.idCustomer;    
   }
 
   goToUpp() {
     this.headercomp.goToOpp();
+  }
+
+  onItemLoaded(itm: QuotationToCustomer) {
+    this.qts = itm;
+    this.idCustomer = this.qts.idCustomer;
   }
 }
 

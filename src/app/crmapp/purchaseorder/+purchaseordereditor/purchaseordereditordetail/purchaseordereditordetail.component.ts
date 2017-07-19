@@ -22,6 +22,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
 import { IDeleteEventModel } from '../../../model/deleteeventmodel';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+const productQl = gql`
+  query {
+    products { id name description }
+  }
+`;
+
 
 @Component({
   selector: 'crm-purchaseordereditordetail',
@@ -32,9 +41,10 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
 
   @Input() idPurchase: number = 0;
   itemEdit: PurchaseOrderDetail;
-  sortBy: string = 'ItemDescription';
+  sortBy: string = 'itemDescription';
   allowProduct: boolean = true;
   propSubscription: Subscription;
+
 
 
  constructor(public _router: Router, public _route: ActivatedRoute, 
@@ -48,12 +58,28 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
     public _http: Http,
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.catalogName = 'Purchase Order';
     this._curService.setAPI('PurchaseOrderDetail', this.catalogName);
     this.itemEdit = new PurchaseOrderDetail();
   }
+
+  loadCatalogs() {
+    this._curService.loadQl(productQl, undefined)
+      .subscribe(({data}) => {
+        this.catProduct = data['products'];
+
+      }, (error: Error) => {
+        this._loadingService.resolve('');
+        debugger
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      }
+      );   
+  }
+
 
   ngOnInitClass() {
     this.entList = <Observable<PurchaseOrderDetail[]>>this._curService.entList;
@@ -79,18 +105,18 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
   }
 
   addColumns() {
-    this.columns.push({ name: 'ItemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'ProductDescription', label: 'Product', tooltip: '' });
+    this.columns.push({ name: 'itemDescription', label: 'Item Description' });
+    this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
 
-    this.columns.push({ name: 'ItemQuantity', label: 'Quantity' });
-    this.columns.push({ name: 'ItemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'SalePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
+    this.columns.push({ name: 'itemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'salePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
   }
 
   initEntity() {
     this.itemEdit = new PurchaseOrderDetail() ;
-    this.itemEdit.IdPurchaseOrder  = this.idPurchase;
-    this.itemEdit.IdProduct = 0;
+    this.itemEdit.idPurchaseOrder  = this.idPurchase;
+    this.itemEdit.idProduct = 0;
   }
 
 
@@ -102,7 +128,7 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
 
   confirmDelete(item:  PurchaseOrderDetail) {
     this.itemEdit = item;
-    this._actions.deleteItem({ title: item.ItemDescription, objId: this.objId});
+    this._actions.deleteItem({ title: item.itemDescription, objId: this.objId});
   }
 
   afterCreate(item: PurchaseOrderDetail) {

@@ -16,7 +16,8 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
 import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 
@@ -43,8 +44,9 @@ export class ActionoppComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
 
      this.catalogName = 'Opp Action';
      this._curService.setAPI('ActionOpportunity/', this.catalogName);
@@ -73,7 +75,7 @@ export class ActionoppComponent extends BaseComponent {
 
     addEntity() {
       this.itemEdit = new ActionOpportunity();
-      this.itemEdit.Id = 0;
+      this.itemEdit.id = 0;
 
     }
 

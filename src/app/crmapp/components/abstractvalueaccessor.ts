@@ -65,7 +65,7 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
       if (v !== this._value) {
         this._value = v;
         this.onChange(v);
-        let c = this.catList.filter( (item: TCRMEntity) => item.Id === v)[0];
+        let c = this.catList.filter( (item: TCRMEntity) => item.id === v)[0];
         this.valueChange.emit(c);
       }
     }
@@ -83,7 +83,7 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
 
     public loadCustomData(pid : TCRMEntity) {
       if( this.parentCatalog !== undefined && this.parentCatalog !== '') {
-       this.parentCataSubscribe = this._curService.loadCustomCatalogObs( this.parentCatalog + pid.Id.toString() , undefined)
+       this.parentCataSubscribe = this._curService.loadCustomCatalogObs( this.parentCatalog + pid.id.toString() , undefined)
         .map((response) => response.json()).subscribe((data) => {
             this.catList = [];
             Object.assign(this.catList, data);
@@ -112,6 +112,6 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
 
 
     public getItemSelected(): TCRMEntity {
-       return this.catList.filter( (item: TCRMEntity) => item.Id === this._value)[0];
+       return this.catList.filter( (item: TCRMEntity) => item.id === this._value)[0];
     }
 }

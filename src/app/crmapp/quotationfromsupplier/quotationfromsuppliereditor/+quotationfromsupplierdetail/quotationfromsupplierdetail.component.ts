@@ -22,10 +22,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 //import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';
 import {TranslateService} from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
-
-
+const productQl = gql`
+  query {
+    products { id name description }
+  }
+`;
 
 @Component({
   selector: 'crm-quotationfromsupplierdetail',
@@ -36,12 +41,12 @@ export class QuotationfromsupplierdetailComponent extends BaseComponent {
 
   @Input() idQuotation: number = 0;
   itemEdit: QuotationFromSupplierDetail;
-  sortBy: string = 'ItemDescription';
+  sortBy: string = 'itemDescription';
   allowProduct: boolean = true;
   propSubscription: Subscription;
 
 
- constructor(public _router: Router, public _route: ActivatedRoute, 
+ constructor(public _router: Router, 
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -51,13 +56,31 @@ export class QuotationfromsupplierdetailComponent extends BaseComponent {
     public _ngZone: NgZone, 
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);    
+    public translate: TranslateService,
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
+ 
+
     this.catalogName = 'Quotation Details';
     this._curService.setAPI('QuotationFromSupplierDetail', this.catalogName);
     this.itemEdit = new QuotationFromSupplierDetail();
   }
 
+  loadCatalogs() {
+    this._curService.loadQl(productQl, undefined)
+      .subscribe(({data}) => {
+        this.catProduct = data['products'];
+
+      }, (error: Error) => {
+        this._loadingService.resolve('');
+        debugger
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      }
+      );   
+  }
+  
   ngOnInitClass() {
     this.entList = <Observable<QuotationFromSupplierDetail[]>>this._curService.entList;
     this.initData();
@@ -81,18 +104,18 @@ export class QuotationfromsupplierdetailComponent extends BaseComponent {
   }
 
   addColumns() {
-    this.columns.push({ name: 'ItemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'ProductDescription', label: 'Product', tooltip: '' });
+    this.columns.push({ name: 'itemDescription', label: 'Item Description' });
+    this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
 
-    this.columns.push({ name: 'ItemQuantity', label: 'Quantity' });
-    this.columns.push({ name: 'ItemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'SalePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
+    this.columns.push({ name: 'itemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'salePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
   }
 
   initEntity() {
     this.itemEdit = new QuotationFromSupplierDetail() ;
-    this.itemEdit.IdQuotationFromSupplier  = this.idQuotation;
-    this.itemEdit.IdProduct = 0;
+    this.itemEdit.idQuotationFromSupplier  = this.idQuotation;
+    this.itemEdit.idProduct = 0;
   }
 
 
@@ -104,7 +127,7 @@ export class QuotationfromsupplierdetailComponent extends BaseComponent {
 
   confirmDelete(item:  QuotationFromSupplierDetail) {
     this.itemEdit = item;
-    this._actions.deleteItem({ title: item.ItemDescription, objId: this.objId});
+    this._actions.deleteItem({ title: item.itemDescription, objId: this.objId});
   }
 
   afterCreate(item: QuotationFromSupplierDetail) {

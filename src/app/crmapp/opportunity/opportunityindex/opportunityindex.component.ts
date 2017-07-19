@@ -19,6 +19,10 @@ import { GetOpportunities } from '../../model/allmodels';
 
 import {TranslateService} from '@ngx-translate/core';
 
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+
 @Component({
   selector: 'crm-opportunityindex',
   templateUrl: './opportunityindex.component.html',
@@ -39,11 +43,12 @@ export class OpportunityindexComponent extends BaseComponent  {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
+    public _router: Router,
     public route: ActivatedRoute,
-    public _router: Router) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
-    this.sortBy = 'Id';
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
+    this.sortBy = 'id';
     this.catalogName = 'Opportunity';
     this._curService.setAPI('Opportunity/', this.catalogName);
 
@@ -73,12 +78,12 @@ export class OpportunityindexComponent extends BaseComponent  {
   addColumns() {
 
     //super.addColumns();
-    this.columns.push({ name: 'Id', label: 'Opportunity', tooltip: '' });
-    this.columns.push({ name: 'CustomerName', label: 'Customer Name' });
-    this.columns.push({ name: 'ProjectName', label: 'Project Name' });
-    this.columns.push({ name: 'AsImporter', label: 'IOR' });
-    this.columns.push({ name: 'StatusName', label: 'Status' });
-    this.columns.push({ name: 'LastUpdated', label: 'Last Update' });
+    this.columns.push({ name: 'id', label: 'Opportunity', tooltip: '' });
+    this.columns.push({ name: 'customerName', label: 'Customer Name' });
+    this.columns.push({ name: 'oppNotes', label: 'Project Name' });
+    this.columns.push({ name: 'asImporter', label: 'IOR' });
+    this.columns.push({ name: 'statusName', label: 'Status' });
+    this.columns.push({ name: 'lastUpdated', label: 'Last Update' });
 
   }
 

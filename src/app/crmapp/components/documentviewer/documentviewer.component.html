@@ -3,7 +3,7 @@
 
 
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <ng-template tdDataTableTemplate="DateUploaded" let-value="value" let-row="row"  let-column="column" >
+        <ng-template tdDataTableTemplate="dateUploaded" let-value="value" let-row="row"  let-column="column" >
           <div layout="row">
             {{ value | date}}
           </div>

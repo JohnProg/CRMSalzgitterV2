@@ -69,13 +69,13 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
       this.emailList = this._catList.asObservable();
       let cparams: TCRMEntity[] = new Array<TCRMEntity>();
       let p: TCRMEntity = new TCRMEntity();
-      p.Name = 'id';
-      p.Description = '0';
+      p.name = 'id';
+      p.description = '0';
       cparams.push(p);
 
       let prop: TCRMEntity = new TCRMEntity();
-      prop.Name = 'idaction';
-      prop.Description = this.idaction.toString();
+      prop.name = 'idaction';
+      prop.description = this.idaction.toString();
       cparams.push(prop);
       this._loadingService.register('items.load');
       this._curService.loadCustomCatalogObs('ActionOpportunityDocType/searchByAction', cparams)
@@ -97,17 +97,17 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
   editProperty(item: GetActionDoctType_Result) {
     this.itemEdit = item;
     this.emailEdit = new ActionOpportunityDocType();
-    this.emailEdit.IdActionOpportunity = this.idaction;
-    this.emailEdit.IdDocType = item.IdDocType;
-    this.emailEdit.Id = item.Id;
-    this.emailEdit.IdTemplateEmail = item.IdTemplateEmail;
+    this.emailEdit.idActionOpportunity = this.idaction;
+    this.emailEdit.idDocType = item.idDocType;
+    this.emailEdit.id = item.id;
+    this.emailEdit.idTemplateEmail = item.idTemplateEmail;
     this.isEdit = true;
   }
 
   addProperty() {
     this.emailEdit = new ActionOpportunityDocType();
-    this.emailEdit.Id = 0;
-    this.emailEdit.IdActionOpportunity = this.idaction;
+    this.emailEdit.id = 0;
+    this.emailEdit.idActionOpportunity = this.idaction;
     this.isEdit = true;
   }
 
@@ -120,9 +120,9 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
     this._curService.catalogPost('ActionOpportunityDocType', item)
         .map((response) => response.json()).subscribe((data ) => {
           this.isEdit = false;
-          if (item.Id > 0) {
+          if (item.id > 0) {
             this.dataStore.emails.forEach((t, i) => {
-                if (t.Id === data.Data.Id) { this.dataStore.emails[i] = data.Data; }
+                if (t.id === data.Data.id) { this.dataStore.emails[i] = data.Data; }
               });
           } else {
              this.dataStore.emails.push(data.Data);
@@ -139,11 +139,11 @@ constructor(public _router: Router, public _route: ActivatedRoute, public _curSe
   deleteProperty(item: TCRMEntity) {
     this._loadingService.register();
     let cparams: TCRMEntity[] = [];
-    this._curService.catalogDelete('ActionOpportunityDocType/' + item.Id.toString(), cparams)
+    this._curService.catalogDelete('ActionOpportunityDocType/' + item.id.toString(), cparams)
       .map((response) => response.text()).subscribe((data) => {
 
         this._snackBarService.open(data, 'Ok');
-        let index = this.dataStore.emails.findIndex((o) => o.Id === item.Id);
+        let index = this.dataStore.emails.findIndex((o) => o.id === item.id);
         this.dataStore.emails.splice(index, 1);
         this._catList.next(Object.assign({}, this.dataStore).emails);
         this._loadingService.resolve();

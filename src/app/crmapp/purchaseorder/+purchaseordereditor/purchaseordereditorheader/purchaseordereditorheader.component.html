@@ -6,95 +6,161 @@
           </section>
         </div>
 
+
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section flex-gt-sm="35" >
-            <crm-select #idResponsible name="idResponsible" required catalog="Responsible" placeholder="RESPONSIBLE" [(ngModel)]="itemEdit.IdResponsible" ></crm-select>
-
+          <section flex-gt-sm="25" >
+            <md-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+                  <md-option *ngFor="let i of catResponsible" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>
 
           </section>
-          <section  flex-gt-sm="35" >
-            <crm-select #idCurrency name="idCurrency" required catalog="Currency" placeholder="CURRENCY" [(ngModel)]="itemEdit.IdCurrency" ></crm-select>
+          <section  flex-gt-sm="25" >
+            <md-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
+                  <md-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>
           </section>    
-          <section  flex-gt-sm="30" >
-            <crm-select #idStatus name="idStatus" disabled="true" catalog="EstatusOpportunity" placeholder="STATUS" [(ngModel)]="itemEdit.IdStatus" ></crm-select>
-          </section>             
+          <section  flex-gt-sm="25" >
+            <md-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
+                  <md-option *ngFor="let i of catStatus" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select> 
+          </section>     
+
+          <section  flex-gt-sm="15" >
+            <md2-datepicker  #dateCreated name="dateCreated" placeholder="Date Created" disabled="true" [(ngModel)]="itemEdit.dateCreated"></md2-datepicker>
+          </section>                     
         </div>      
         <div flex layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex >
-            <textarea mdInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.OppNotes" ></textarea>
+            <textarea mdInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.oppNotes" ></textarea>
              <md-hint flex align="end">{{oppNotes.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>         
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section  flex-gt-sm="35" >
-            <crm-select #idCustomer name="idCustomer" required catalog="Customer" placeholder="CUSTOMER" [(ngModel)]="itemEdit.IdCustomer" (change)="onCustomerChange($event)"></crm-select>
+            <md-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
+                  <md-option *ngFor="let i of catCustomer" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>   
           </section>
           <section  flex-gt-sm="35" >
-            <crm-select #idCustomerContact name="idCustomerContact" 
-                         parentCatalog="Customer/contactsByCustomer?idCustomer=" 
-                         [parentSelect]="idCustomer"
-                         placeholder="CUSTOMERCONTACT" [(ngModel)]="itemEdit.IdCustomerContact" ></crm-select>
+            <md-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
+                  <md-option *ngFor="let i of catCustomerContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>  
           </section>
           <section  flex-gt-sm="30" >
-            <crm-select #idContact name="idContact" required catalog="Contact" placeholder="CONTACT" [(ngModel)]="itemEdit.IdContact" ></crm-select>
+            <md-select class="cbxClass" #idContact name="idContact" flex required="true"  placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
+                  <md-option *ngFor="let i of catContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>  
           </section>          
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="35" >
-            <crm-select #idMarket name="idMarket" required catalog="Market"  placeholder="MARKET" [(ngModel)]="itemEdit.IdMarket" ></crm-select>
+            <md-select class="cbxClass" #idMarket name="idMarket" flex required="true"  placeholder="Market" [(ngModel)]="itemEdit.idMarket"  >
+                  <md-option *ngFor="let i of catMarket" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select> 
           </section>
           <section  flex-gt-sm="35" >
-            <crm-select #idSector name="idSector" required catalog="Sector" placeholder="SECTOR" [(ngModel)]="itemEdit.IdSector" ></crm-select>
+            <md-select class="cbxClass" #idSector name="idSector" flex required="true"  placeholder="Sector" [(ngModel)]="itemEdit.idSector"  >
+                  <md-option *ngFor="let i of catSector" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>  
           </section>   
 
           <section  flex-gt-sm="30" >
-            <crm-select #idPort name="idPort" required catalog="Port" placeholder="PORT" [(ngModel)]="itemEdit.IdPort" ></crm-select>
+           <md-select class="cbxClass" #idPort name="idPort" flex required="true"  placeholder="Port" [(ngModel)]="itemEdit.idPort"  >
+                  <md-option *ngFor="let i of catPort" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>   
           </section>           
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section  flex-gt-sm="35" >
-            <crm-select #idMill name="idMill" required catalog="Mill" placeholder="MILL" [(ngModel)]="itemEdit.IdMill" ></crm-select>
+            <md-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)"  >
+                  <md-option *ngFor="let i of catMill" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select> 
           </section>   
           <section  flex-gt-sm="35" >
-            <crm-select #IdCountry name="IdCountry" 
-                         parentCatalog="Mill/countriesByMill?idmill=" 
-                         [parentSelect]="idMill"
-                         placeholder="Country Origin" [(ngModel)]="itemEdit.IdCountryOrigin" ></crm-select>
+            <md-select class="cbxClass" #idCountryOrigin name="idCountryOrigin" flex  placeholder="Country" [(ngModel)]="itemEdit.idCountryOrigin"   >
+                  <md-option *ngFor="let i of catCountry" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select> 
           </section>                    
           <section flex-gt-sm="30">
-            <crm-select #IdTypeOpp name="IdTypeOpp" required catalog="TypeOpportunity" placeholder="Type Opportunity" [(ngModel)]="itemEdit.IdTypeOpp"></crm-select>
+            <md-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
+                  <md-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>  
           </section>          
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="25" >
-            <crm-select #IdTransactionFlow name="IdTransactionFlow" required  catalog="TransactionFlow" placeholder="TRANSACTIONFLOW" [(ngModel)]="itemEdit.IdTransactionFlow" ></crm-select>
+            <md-select class="cbxClass" #idTransactionFlow name="idTransactionFlow" flex required="true"  placeholder="Transaction flow" [(ngModel)]="itemEdit.idTransactionFlow"  >
+                  <md-option *ngFor="let i of catTransactionFlow" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>  
           </section> 
           <section flex-gt-sm="25" >
-            <crm-select #idIncoTerm name="idIncoTerm" required  catalog="IncoTerm" placeholder="INCOTERM" [(ngModel)]="itemEdit.IdIncoTerm" (change)="incoTermChange($event)" ></crm-select>
+            <md-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
+                  <md-option *ngFor="let i of catIncoTerm" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>  
           </section>  
           <section flex-gt-sm="25" >
-            <crm-select #IdLinerTerm name="IdLinerTerm" required  catalog="LinerTerm" placeholder="LINERTERM" [(ngModel)]="itemEdit.IdLinerTerm" ></crm-select>
+           <md-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true"  placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerm"  >
+                  <md-option *ngFor="let i of catLinerTerm" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>    
           </section>   
           <section flex-gt-sm="25" >
-            <md-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.AsImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
+            <md-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.asImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
           </section>                 
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding *ngIf="deliveryRequired">
           <md-input-container flex class="">
-            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.DeliveryLocation" [required]="deliveryRequired" ></textarea>               
+            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.deliveryLocation" [required]="deliveryRequired" ></textarea>               
           </md-input-container>         
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section flex-gt-sm="50">
+          <section flex-gt-sm="30" >
+            <md-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
+                  <md-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.nameDescription || i.name}} 
+                  </md-option>
+            </md-select>   
+          </section>           
+
+          <section flex-gt-sm="35">
             <md-input-container>
-              <input mdInput #SMIM flex name="SMIM" [(ngModel)]="itemEdit.SMIM" required="true" placeholder="SMIM" maxlength="50">
+              <input mdInput #SMIM flex name="SMIM" [(ngModel)]="itemEdit.sMIM" required="true" placeholder="SMIM" maxlength="50">
               <md-hint align="end">{{SMIM.value.length}} / 50</md-hint>
             </md-input-container>
           </section>
-          <section flex-gt-sm="50">
+          <section flex-gt-sm="35">
             <md-input-container>
-              <input mdInput #PONumber flex name="PONumber" [(ngModel)]="itemEdit.PONumber" required="true" placeholder="PO Number" maxlength="150">
+              <input mdInput #PONumber flex name="PONumber" [(ngModel)]="itemEdit.pONumber" required="true" placeholder="PO Number" maxlength="150">
               <md-hint align="end">{{SMIM.value.length}} / 150</md-hint>
             </md-input-container>
           </section>
@@ -103,18 +169,18 @@
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section  flex-gt-sm="35" >
-            <md2-datepicker  #OfferValidity name="OfferValidity" placeholder="Offer validity" requried="true" [(ngModel)]="itemEdit.OfferValidity"></md2-datepicker>
+            <md2-datepicker  #OfferValidity name="OfferValidity" placeholder="Offer validity" required="true" [(ngModel)]="itemEdit.offerValidity"></md2-datepicker>
           </section>  
           <section  flex-gt-sm="35" >
-            <md2-datepicker  #ShipmentOffered name="ShipmentOffered" placeholder="Shipment Offered" requried="true" [(ngModel)]="itemEdit.ShipmentOffered"></md2-datepicker>
+            <md2-datepicker  #ShipmentOffered name="ShipmentOffered" placeholder="Shipment Offered" required="true" [(ngModel)]="itemEdit.shipmentOffered"></md2-datepicker>
           </section> 
         <section  flex-gt-sm="30" >
-            <md2-datepicker  #BookingDate name="BookingDate" placeholder="Booking Date" requried="true" [(ngModel)]="itemEdit.BookingDate"></md2-datepicker>
+            <md2-datepicker  #BookingDate name="BookingDate" placeholder="Booking Date" required="true" [(ngModel)]="itemEdit.bookingDate"></md2-datepicker>
           </section> 
         </div>        
         <div flex layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <md-input-container flex >
-            <textarea mdInput flex="100"  #Comments name="Comments" maxlength="500"   placeholder="Comments " [(ngModel)]="itemEdit.Comments" ></textarea>
+            <textarea mdInput flex="100"  #Comments name="Comments" maxlength="500"   placeholder="Comments " [(ngModel)]="itemEdit.comments" ></textarea>
              <md-hint flex align="end">{{Comments.value.length}} / 500</md-hint>
           </md-input-container>         
         </div>   

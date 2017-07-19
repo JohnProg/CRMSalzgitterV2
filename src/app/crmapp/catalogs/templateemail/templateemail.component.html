@@ -4,17 +4,17 @@
       <section *ngIf="isEditing">
         <section layout="column" flex="100" layout-margin>
           <md-input-container>
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.Name" required placeholder="{{ 'NAME' | translate}}" maxlength="100" />
+            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="100" />
             <md-hint align="end">{{name.value.length}} / 100</md-hint>
           </md-input-container>
           <md-input-container>
-            <input mdInput #EMailSubject flex name="EMailSubject" [(ngModel)]="itemEdit.EMailSubject" required placeholder="Email Subject"
+            <input mdInput #EMailSubject flex name="EMailSubject" [(ngModel)]="itemEdit.emailSubject" required placeholder="Email Subject"
               maxlength="250">
             <md-hint align="end">{{EMailSubject.value.length}} / 250</md-hint>
           </md-input-container>          
         </section>
           <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-              <ckeditor #EMailBody flex="100" placeholder="Body" name="EMailBody" [(ngModel)]="itemEdit.EMailBody"  debounce="500">
+              <ckeditor #EMailBody flex="100" placeholder="Body" name="EMailBody" [(ngModel)]="itemEdit.emailBody"  debounce="500">
               </ckeditor>
           </div>        
 
@@ -26,9 +26,9 @@
 
 
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row"  let-column="column">
+        <ng-template tdDataTableTemplate="name" let-value="value" let-row="row"  let-column="column">
           <div layout="row">
-            <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+            <button md-button (click)="editEntity(row.id)">{{value}}</button>
           </div>
         </ng-template>
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">

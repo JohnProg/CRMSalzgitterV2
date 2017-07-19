@@ -5,13 +5,13 @@ import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
-import { QuotationFromSupplier, QuotationToCustomer, IncoTerm } from '../../../model/allmodels';
+import { QuotationFromSupplier, QuotationToCustomer, IncoTerm, TCRMEntity, GetQFSFields_Result } from '../../../model/index';
 //import {  OpportunityService } from '../../oppservice.service';
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { BaseComponent } from '../../../catalogs/base.component';
+import { BaseOppComponent } from '../../../catalogs/index';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -24,7 +24,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
 import {  OpportunityService } from '../../../services/oppservice.service';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 @Component({
@@ -32,18 +33,15 @@ import {  OpportunityService } from '../../../services/oppservice.service';
   templateUrl: './quotationtocustomereditorheader.component.html',
   styleUrls: ['./quotationtocustomereditorheader.component.scss']
 })
-export class QuotationtocustomereditorheaderComponent extends BaseComponent {
+export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
 
-  @Input() idQuotation: number = 0;
+
   idParent: number = 0;
   itemEdit: QuotationToCustomer;
   opp: QuotationFromSupplier;
-  @ViewChild('idIncoTerm') incoTermSelect: AbstractValueAccessor;
-  @ViewChild('IdCountry') countryOrigin: AbstractValueAccessor;
-  deliveryRequired: boolean = false;
+
   dta: Date;
   constructor(public _router: Router, 
-    public _route: ActivatedRoute,
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -53,11 +51,12 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
     public _ngZone: NgZone,
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService
-    ,  public _oppservice: OpportunityService 
-       ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _route);
-
+    public translate: TranslateService,  
+    public _oppservice: OpportunityService,
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
     this.itemEdit = new QuotationToCustomer();
     this.catalogName = 'Quotation to Customer';
     this.autoLoad = false;
@@ -68,66 +67,26 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
 
 
   ngOnInitClass() {
-
     this.entList = <Observable<QuotationToCustomer[]>>this._curService.entList;
-
-
   }
 
-  afterViewInit(): void {
-    this._actions.showAdd(false);
-    this._actions.showSearch(false);
-    this._actions.showSave(true);
-    this._actions.showCancel(false);
 
-    if (this.idQuotation > 0) {
-      
-      this.editEntity(this.idQuotation);
-      this._actions.updateTitle('Edit Quotation ' + this.idQuotation.toString());
-    } else {
-      this._actions.updateTitle('Create Quotation ');
-      this.addEntity();
-    }
-
-  }
 
   initEntity() {
     this.itemEdit = new  QuotationToCustomer();
-    this.itemEdit.IdStatus = 1;
+    this.itemEdit.idStatus = 1;
   }
 
   afterLoadItem(item: QuotationToCustomer) {
 
     super.afterLoadItem(item);
-    this.itemEdit = item;
-    this.setDeliverRequired();
-    this.idParent = item.IdQuotationFromSupplier;
+    this.idParent = item.idQuotationFromSupplier;
     this.loadCurrentOpp(this.idParent);
-    this.countryOrigin.loadCustomDataFromId(item.IdMill);
-    this._actions.showCancel(false);
+    this.loadCountryOrigin(item.idMill);
+
   }
 
-  setDeliverRequired() {
-    setTimeout(() => {
-        let req =  (<IncoTerm>this.incoTermSelect.getItemSelected()).DeliveryRequired;
-        this.setDeliveryRequired(req);
-    }, 500);
-  }
-  afterSave(item: QuotationToCustomer) {}
 
-
-
-
-  incoTermChange(item: IncoTerm) {
-    this.setDeliveryRequired(item.DeliveryRequired);
-  }
-
-  setDeliveryRequired(isreq: boolean) {
-    this.deliveryRequired = isreq;
-    if ( this.deliveryRequired === false ) {
-      this.itemEdit.DeliveryLocation = undefined;
-    }
-  }
 
   getFromOpp(event: any) {
     let t = event.target.value;
@@ -135,53 +94,58 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
   }
 
 
-
-
-
   loadFromOpp(oid: number ) {
-    this._curService.loadItemObs('QuotationFromSupplier', oid) 
+    let pparams: TCRMEntity[] = new Array<TCRMEntity>();
+    pparams.push( (<TCRMEntity>{ name: 'idqfs', description: oid.toString() }) );
+
+
+    this._curService.loadCustomCatalogObs('QuotationToCustomer/getQFSFields', pparams) 
       .map((response) => response.json())
-        .subscribe( (data: QuotationFromSupplier) => {
+        .subscribe( (data: GetQFSFields_Result) => {
         
         this.opp = new QuotationFromSupplier();
         Object.assign(this.opp, data);
-        this._oppservice.currentQFS = data;
-        this.itemEdit.IdQuotationFromSupplier = data.Id;
-        this.itemEdit.IdCurrency = data.IdCurrency;
-        this.itemEdit.IdPort = data.IdPort;
-        this.itemEdit.IdUser = data.IdUser;
-        this.itemEdit.IdIncoTerm = data.IdIncoTerm;
-        this.itemEdit.IdLinerTerm = data.IdLinerTerm;
-        this.itemEdit.DeliveryLocation = data.DeliveryLocation;
-        this.itemEdit.QuoteNotes = data.QuoteNotes;
-        this.itemEdit.AsImporter = data.AsImporter;
-        this.itemEdit.IdStatus = 1;
-        this.itemEdit.OfferValidity = data.OfferValidity;
-        this.itemEdit.ShipmentOffered = data.ShipmentOffered;
-        this.itemEdit.IdMill = data.IdMill;
-        this.itemEdit.IdCountry = data.IdCountryOrigin;
-        this.itemEdit.ShipmentOffered = data.ShipmentOffered;
-        this.itemEdit.DateCreated = data.DateCreated;
-        this.itemEdit.IdTypeOpp = data.IdTypeOpp;
-        this.countryOrigin.loadCustomDataFromId(this.itemEdit.IdMill);
-        this.idParent = data.Id;
-        this.setDeliverRequired();
+        this.itemEdit.idQuotationFromSupplier = oid;
+        this.itemEdit.idCurrency = data.idCurrency;
+        this.itemEdit.idPort = data.idPort;
+        this.itemEdit.idUser = data.idUser;
+        this.itemEdit.idIncoTerm = data.idIncoTerm;
+        this.itemEdit.idLinerTerm = data.idLinerTerm;
+        this.itemEdit.deliveryLocation = data.deliveryLocation;
+        this.itemEdit.quoteNotes = data.oppNotes;
+        this.itemEdit.asImporter = data.asImporter;
+        this.itemEdit.idStatus = 1;
+        this.itemEdit.offerValidity = data.offerValidity;
+        this.itemEdit.shipmentOffered = data.shipmentOffered;
+        this.itemEdit.idMill = data.idMill;
+        this.itemEdit.idCountry = data.idCountryOrigin;
+        this.itemEdit.shipmentOffered = data.shipmentOffered;
+        //this.itemEdit.dateCreated = Date.now();
+        this.itemEdit.idTypeOpp = data.idTypeOpp;
+        this.itemEdit.idCustomer = data.idCustomer;
+        this.itemEdit.creditDays = data.creditDays;
+        this.itemEdit.interestRate = data.interestRate;        
+        this.idParent = oid;
       }, error => {
-        this._snackBarService.open('Quotation does not exists', 'Ok');
+        this._snackBarService.open('QFS does not exists', 'Ok');
       });
 
   }
 
   loadCurrentOpp(oid: number ) {
-    this._curService.loadItemObs('QuotationFromSupplier', oid) 
+    let pparams: TCRMEntity[] = new Array<TCRMEntity>();
+    pparams.push( (<TCRMEntity>{ name: 'idqfs', description: oid.toString() }) );
+
+
+    this._curService.loadCustomCatalogObs('QuotationToCustomer/getQFSFields', pparams) 
       .map((response) => response.json())
-        .subscribe( (data: QuotationFromSupplier) => {
-        this.opp = new QuotationFromSupplier();
-        Object.assign(this.opp, data);
-        this._oppservice.currentQFS = data;
-        this.idParent = data.Id;
+        .subscribe( (data: GetQFSFields_Result) => {
+          
+        this.idParent = oid;
+        this.itemEdit.idCustomer = data.idCustomer;
+        this.loadCustomerContact(data.idCustomer);
       }, error => {
-        this._snackBarService.open('Opportunity does not exists', 'Ok');
+        this._snackBarService.open('QFS does not exists', 'Ok');
       });
 
   }
@@ -190,9 +154,4 @@ export class QuotationtocustomereditorheaderComponent extends BaseComponent {
         this._router.navigate(['/quotationfromsupplier/edit', this.idParent]);
   }
 
-
-  afterCreate(item: QuotationToCustomer) {
-    super.afterCreate(item);
-    this.idQuotation = item.Id;
-  }
 }

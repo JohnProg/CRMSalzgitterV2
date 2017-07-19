@@ -1,7 +1,7 @@
 
  <md-select class="cbxClass" flex [required]="required"  [placeholder]="placeholder | translate" [(ngModel)]="value" [disabled]="disabled" (change)="onChange($event.value)">
-      <md-option *ngFor="let i of catList" [disabled]="i.IsActive != undefined ? !i.IsActive : false" [value]="i.Id">
-        {{ i[fieldDisplay] || i.NameDescription || i.Name}} 
+      <md-option *ngFor="let i of catList" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+        {{  i[fieldDisplay] || i.nameDescription || i.name}} 
       </md-option>
  </md-select>
  

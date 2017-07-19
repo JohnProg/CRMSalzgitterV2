@@ -16,6 +16,9 @@ import { BaseComponent } from '../../../catalogs/base.component';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import {TranslateService} from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-productindex',
@@ -36,10 +39,11 @@ export class ProductindexComponent extends BaseComponent  {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
+    public _router: Router,
     public route: ActivatedRoute,
-    public _router: Router) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
 
     this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);

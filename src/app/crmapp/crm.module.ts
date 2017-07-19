@@ -10,20 +10,55 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '../shared/shared.module';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
-import { ApolloClient } from 'apollo-client';
+import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import { ApolloModule } from 'apollo-angular';
-
-
+import { environment } from '../../environments/environment';
 
 // services 
 import { OpportunityService, ActionsService, CatalogService, 
   ConfigurationService, TokenService } from './services/index';
 
 
+const networkInterface = createNetworkInterface({
+  uri: environment.server + 'api/graphql',
+});
+
+networkInterface.use([{
+  applyMiddleware(req, next) {
+    if (!req.options.headers) {
+      req.options.headers = {};  // Create the header object if needed.
+    }
+    // get the authentication token from local storage if it exists
+    let t = localStorage.getItem('tokendata');
+    if( t ) {
+        let tokenData = JSON.parse(t);
+        if( tokenData) {
+            req.options.headers.authorization = tokenData.token_type + ' ' + tokenData.access_token;
+        }
+    }    
+    
+
+    next();
+  }
+}]);
+
+// by default, this client will send queries to `/graphql` (relative to the URL of your app)
+export const client: ApolloClient = new ApolloClient({ networkInterface  });
+
+
+
+
+export function provideClient(): ApolloClient {
+  return client;
+}
+
+
+
+
 //catalogs
 import { BaseComponent, CatalogComponent, CurrencyComponent,  
   ActionoppComponent, StateComponent, IncotermComponent,
-  TemplateemailComponent
+  TemplateemailComponent, BaseOppComponent
  } from './catalogs/index';
 
 
@@ -93,12 +128,10 @@ import * as moment from 'moment';
 
 import { AuthHelper } from './authHelper/authHelper';
 
-// Create the client as outlined above
-const client: ApolloClient = new ApolloClient();
 
-export function provideClient(): ApolloClient {
-  return client;
-}
+
+
+
 
 @NgModule({
   declarations: [
@@ -111,7 +144,7 @@ export function provideClient(): ApolloClient {
     IncotermComponent,
     CatalogComponent,
     TemplateemailComponent,
-
+    BaseOppComponent,
     //Options
     OptionsComponent,
     CompanyComponent,

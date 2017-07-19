@@ -21,7 +21,8 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
-
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
 
    _props: ProductProperty[] = new Array<ProductProperty>();
   itemEdit: OpportunityDetailSumary;
-  sortBy: string = 'ItemDescription';
+  sortBy: string = 'itemDescription';
 
 
 
@@ -65,9 +66,10 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     public _http: Http, 
     public _tableService: TdDataTableService,
     public translate: TranslateService,
-    public route: ActivatedRoute) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route);
-
+    public route: ActivatedRoute,
+    public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+ 
 
     this.setTitle = false;
     this._columns = <BehaviorSubject<ITdDataTableColumn[]>>new BehaviorSubject([]);
@@ -93,7 +95,7 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     
     this.refreshItems();
     let pparams: TCRMEntity[] = new Array<TCRMEntity>();
-    pparams.push( (<TCRMEntity>{ Name: 'idproduct', Description: this.idProduct.toString()}) );
+    pparams.push( (<TCRMEntity>{ name: 'idproduct', description: this.idProduct.toString()}) );
     this._curService.loadCustomCatalogObs('ProductProperty/searchByProduct', pparams)
     .map((response) => response.json())
     .subscribe( (items: ProductProperty[]) => {
@@ -119,10 +121,10 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     
   initEntity() {
     this.itemEdit = new OpportunityDetailSumary() ;
-    this.itemEdit.IdOpportunityDetail  = this.idDetail;
-    this.itemEdit.DateCreated = new Date();
-    this.itemEdit.Price = this.price;
-    this.itemEdit.Quantity = this.maxQty;
+    this.itemEdit.idOpportunityDetail  = this.idDetail;
+    this.itemEdit.dateCreated = new Date();
+    this.itemEdit.price = this.price;
+    this.itemEdit.quantity = this.maxQty;
     this.initDetails();
   }
 
@@ -132,13 +134,13 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
       let pdet: OpportunityDetailSumaryProperty[] = new Array<OpportunityDetailSumaryProperty>();
       this._props.forEach((c: ProductProperty) => {
         let p: OpportunityDetailSumaryProperty = new OpportunityDetailSumaryProperty();
-        p.IdOpportunityDetailSumary = this.itemEdit.Id;
-        p.IdProperty = c.IdProperty;
-        p.PropertyValue = '';
-        p.IsRequired = c.IsRequired;
-        p.Property = new Property();
-        p.NameDescription = 'prop' + c.IdProperty;
-        Object.assign(p.Property, c.Property);
+        p.idOpportunityDetailSumary = this.itemEdit.id;
+        p.idProperty = c.idProperty;
+        p.propertyValue = '';
+        p.isRequired = c.isRequired;
+        p.property = new Property();
+        p.nameDescription = 'prop' + c.idProperty;
+        Object.assign(p.property, c.property);
         pdet.push(p);
       });
 
@@ -156,16 +158,16 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
 
  saveEntity() {
     this.pdetails.forEach( (t: OpportunityDetailSumaryProperty[]) => {
-      this.itemEdit.OpportunityDetailSumaryProperties = new Array<OpportunityDetailSumaryProperty>();
+      this.itemEdit.opportunityDetailSumaryProperties = new Array<OpportunityDetailSumaryProperty>();
       t.forEach( (o: OpportunityDetailSumaryProperty ) => {
             let p: OpportunityDetailSumaryProperty = new OpportunityDetailSumaryProperty();
-            p.IdOpportunityDetailSumary = o.IdOpportunityDetailSumary;
-            p.IdProperty = o.IdProperty;
-            p.PropertyValue = o.PropertyValue;
-            this.itemEdit.OpportunityDetailSumaryProperties.push(p);
+            p.idOpportunityDetailSumary = o.idOpportunityDetailSumary;
+            p.idProperty = o.idProperty;
+            p.propertyValue = o.propertyValue;
+            this.itemEdit.opportunityDetailSumaryProperties.push(p);
       });
     });
-    if (this.itemEdit.Id > 0) {
+    if (this.itemEdit.id > 0) {
       this._curService.update(this.itemEdit, true);
     } else {
       this._curService.create(this.itemEdit, true);
@@ -187,28 +189,28 @@ export class OpportunitydetailsumaryComponent extends BaseComponent {
     this.afterLoadAll(items);
   }
 afterLoadAll(itms: OpportunityDetailSumary[]) {
-      if( itms !== undefined && itms.length > 0 && itms[0].OpportunityDetailSumaryProperties !== undefined 
-        && itms[0].OpportunityDetailSumaryProperties.length > 0) {
+      if( itms !== undefined && itms.length > 0 && itms[0].opportunityDetailSumaryProperties !== undefined 
+        && itms[0].opportunityDetailSumaryProperties.length > 0) {
         this._pcolumns = new Array<ITdDataTableColumn>();
         this._pcolumns.push( (<ITdDataTableColumn> { name: 'tActions' ,  label: '' }));
-        itms[0].OpportunityDetailSumaryProperties.forEach( (t: OpportunityDetailSumaryProperty) => {
-          this._pcolumns.push( (<ITdDataTableColumn> { name: 'prop' +  t.IdProperty,
-               label: t.Property.Name, tooltip: '', IdProperty: t.IdProperty }));
+        itms[0].opportunityDetailSumaryProperties.forEach( (t: OpportunityDetailSumaryProperty) => {
+          this._pcolumns.push( (<ITdDataTableColumn> { name: 'prop' +  t.idProperty,
+               label: t.property.name, tooltip: '', idProperty: t.idProperty }));
         });
 
         itms.forEach( (t: OpportunityDetailSumary) => {
-          t.OpportunityDetailSumaryProperties.forEach( (p: OpportunityDetailSumaryProperty) => {
-              t['prop' + p.IdProperty] = p.PropertyValue;
+          t.opportunityDetailSumaryProperties.forEach( (p: OpportunityDetailSumaryProperty) => {
+              t['prop' + p.idProperty] = p.propertyValue;
           });
         });
 
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Quantity' ,  label: 'Quantity', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'quantity' ,  label: 'Quantity', tooltip: '',
          numeric: true, format: NUMBER_FORMAT, draw: true  }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Price' ,  label: 'Price', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'price' ,  label: 'Price', tooltip: '',
          numeric: true, format: CURRENCY_FORMAT, draw: true }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Amount' ,  label: 'Amount', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'amount' ,  label: 'Amount', tooltip: '',
          numeric: true, format: CURRENCY_FORMAT, draw: true }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'Comment' ,  label: 'Comment', tooltip: '',
+        this._pcolumns.push( (<ITdDataTableColumn> { name: 'comment' ,  label: 'Comment', tooltip: '',
          draw: true }));
 
 

@@ -19,6 +19,9 @@ import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
 import {  TCRMEntity } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 
 @Component({
   selector: 'crm-quotationfromsupplierdialogemail',
@@ -26,6 +29,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['../../components/email-sender/email-sender.component.scss']
 })
 export class QuotationfromsupplierdialogemailComponent extends EmailSenderComponent {
+
 
   idOpp: number = 0;
  //this._oppservice.currentOpp
@@ -40,10 +44,11 @@ constructor(
           public _http: Http, 
           public _tableService: TdDataTableService,
           public translate: TranslateService,
-          public _router: Router, public _route: ActivatedRoute ) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions,
-        _mediaService, _ngZone, _http, _tableService,translate,  _route, _router);
-    this.catalogName = 'Quotation from Supplier Dialog';
+          public _router: Router, 
+          public _route: ActivatedRoute,
+          public apollo: Apollo) {
+    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _router, _route, apollo);
+     this.catalogName = 'Quotation from Supplier Dialog';
     this.mainField = 'IdQuotationFromSupplier';
     this.baseApi = 'QuotationFromSupplierDialog';
    }

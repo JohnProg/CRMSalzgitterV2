@@ -27,11 +27,11 @@
           <div layout="row">
 
             <md-input-container>
-              <input mdInput #name  flex='60' name="name"  [(ngModel)]="itemEdit.Name"  required placeholder="Name" maxlength="150">
+              <input mdInput #name  flex='60' name="name"  [(ngModel)]="itemEdit.name"  required placeholder="Name" maxlength="150">
             </md-input-container>
 
           <div flex="40" layout-align="center center">
-          <md-radio-group name="eMailTo"  [(ngModel)]="itemEdit.EMailTo" class="top15">
+          <md-radio-group name="eMailTo"  [(ngModel)]="itemEdit.eMailTo" class="top15">
             <md-radio-button style="padding-right:10px;" *ngFor="let eto of emailTo" name="eMailTo" [value]="eto.id"> {{eto.name}}
             </md-radio-button>
           </md-radio-group>
@@ -60,7 +60,7 @@
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
           <div layout="row">
-            <button md-button (click)="editEntity(row.Id)">{{value}}</button>
+            <button md-button (click)="editEntity(row.id)">{{value}}</button>
           </div>
         </ng-template>
              
