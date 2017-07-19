@@ -240,6 +240,7 @@ import { AuthHelper } from './authHelper/authHelper';
     AuthGuard, AuthHelper,
 
 
+
   ], // additional providers needed for this module
   entryComponents: [ ],
 
