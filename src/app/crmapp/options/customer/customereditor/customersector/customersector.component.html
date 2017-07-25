@@ -1,0 +1,36 @@
+
+<section *ngIf="isEditing">
+  <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+
+
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <section flex-gt-sm="30">
+        <md-select class="cbxClass" #idSector name="idSector" flex required="true" placeholder="Select Sector" multiple="true"  [(ngModel)]="sectorSelected">
+          <md-option *ngFor="let i of notSelectedProducts" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.nameDescription || i.name}}
+          </md-option>
+        </md-select>
+      </section>
+    </div>
+  </form>
+</section>
+
+
+
+<section *ngIf="!isEditing">
+
+
+  <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <div layout="row" flex="5">
+        <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+      </div>
+    </ng-template>
+
+  </td-data-table>
+  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+    (change)="change($event)">
+  </td-paging-bar>
+</section>

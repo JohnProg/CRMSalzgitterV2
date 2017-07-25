@@ -84,6 +84,10 @@
         },
         "OPTIONS": {
             "DISPLAYNAME": "Opciones",
+            "CUSTOMER": {
+                "TOOLTIP": "Create/Edit Customers",
+                "DISPLAYNAME": "Customer"
+            },             
             "PRODUCT": {
                 "TOOLTIP": "Crear/Editar  Productos",
                 "DISPLAYNAME": "Productos"
@@ -124,7 +128,14 @@
                 "TOOLTIP": "Create/Edit Purchase Orders",
                 "DISPLAYNAME": "Purchase Order"
             }           
-        }                          
+        },
+        "SHIPPING": {
+            "DISPLAYNAME": "Embarque",
+            "OPPORTUNITY": {
+                "TOOLTIP": "Create/Edit Embarques",
+                "DISPLAYNAME": "Embarque"
+            }           
+        }                             
     }
   },
   "OPPORTUNITY": {

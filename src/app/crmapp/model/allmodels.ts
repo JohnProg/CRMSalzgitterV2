@@ -171,18 +171,13 @@
 		idCollectionDataType: number;
 	}
 	export class Colony extends TCRMEntity {
-		brokers: Broker[];
 		city: City;
 		colonyType: ColonyType;
-		companies: Company[];
-		customerDeliveryPoints: CustomerDeliveryPoint[];
-		customers: Customer[];
 		description: string;
 		id: number;
 		idCity: number;
 		idColonyType: number;
 		name: string;
-		railSpurs: RailSpur[];
 		zipCode: string;
 	}
 	export class ColonyType extends TCRMEntity {
@@ -241,6 +236,7 @@
 		purchaseOrders: PurchaseOrder[];
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
+		shippings: Shipping[];
 		states: State[];
 		suppliers: Supplier[];
 	}
@@ -273,13 +269,13 @@
 		number: string;
 		opportunities: Opportunity[];
 		phone: string;
-		productExtendeds: ProductExtended[];
 		products: Product[];
 		purchaseOrders: PurchaseOrder[];
 		railSpurs: RailSpur[];
 		responsible: Responsible;
 		rFC: string;
 		sectors: Sector[];
+		shippings: Shipping[];
 		street: string;
 	}
 	export class CustomerContact extends TCRMEntity {
@@ -304,11 +300,10 @@
 		quotationToCustomerDialogs: QuotationToCustomerDialog[];
 	}
 	export class CustomerDeliveryPoint extends TCRMEntity {
-		cDPContact: string;
-		cDPCP: string;
-		cDPName: string;
-		cDPStreet: string;
-		cDPTelephone: string;
+		cdpContact: string;
+		cdpName: string;
+		cdpStreet: string;
+		cdpTelephone: string;
 		colony: Colony;
 		customer: Customer;
 		deliveryType: DeliveryType;
@@ -316,8 +311,13 @@
 		idColony: number;
 		idCustomer: number;
 		idDeliveryType: number;
+		opportunities: Opportunity[];
+		purchaseOrders: PurchaseOrder[];
+		quotationFromSuppliers: QuotationFromSupplier[];
+		quotationToCustomers: QuotationToCustomer[];
+		shippings: Shipping[];
 	}
-	export class CustomerDocument extends TCRMEntity {
+	export class CustomerDocument extends BaseDocument {
 		comment: string;
 		customer: Customer;
 		dateUploaded: Date;
@@ -325,8 +325,56 @@
 		docName: string;
 		id: number;
 		idCustomer: number;
+		idDocumentType: number;
 		parentFolder: string;
 	}
+	export class CustomerMarket extends TCRMEntity{
+		customer: Customer;
+		id: number;
+		idCustomer: number;
+		idMarket: number;
+		market: Market;
+	}
+	export class CustomerProduct extends TCRMEntity {
+		buyerName: string;
+		customer: Customer;
+		customerName: string;
+		customerProductPrices: CustomerProductPrice[];
+		eAU: number;
+		id: number;
+		idCustomer: number;
+		idProduct: number;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
+		prodDescription: string;
+		product: Product;
+		spec: string;
+		thickness: number;
+		width: number;
+	}
+	export class CustomerProductPrice extends TCRMEntity {
+		customerProduct: CustomerProduct;
+		id: number;
+		idCustomerProduct: number;
+		price: number;
+		validFrom: Date;
+		validTo: Date;
+	}	
+	export class CustomerRailSpur extends TCRMEntity {
+		customer: Customer;
+		id: number;
+		idCustomer: number;
+		idRailSpur: number;
+		railSpur: RailSpur;
+	}
+	export class CustomerSector extends TCRMEntity {
+		customer: Customer;
+		id: number;
+		idCustomer: number;
+		idSector: number;
+		sector: Sector;
+	}	
 	export class DeliveryType extends TCRMEntity {
 		customerDeliveryPoints: CustomerDeliveryPoint[];
 		description: string;
@@ -505,6 +553,29 @@
 		name: string;
 		nickName: string;
 	}
+	export class getCustomerContacts_Result extends TCRMEntity {
+		cellPhone: string;
+		email: string;
+		id: number;
+		idCustomer: number;
+		name: string;
+		position: string;
+		nickName: string;
+	}	
+	export class GetCustomerDeliverPoints_Result extends TCRMEntity {
+		cdpContact: string;
+		cdpName: string;
+		cdpTelephone: string;
+		colonyName: string;
+		deliveryTypeName: string;
+		id: number;
+		idColony: number;
+		idCustomer: number;
+		idDeliveryType: number;
+		isActive: boolean;
+		stateName: string;
+		zipCode: string;
+	}	
 	export class GetCustomerDirectory_Result extends TCRMEntity {
 		address: string;
 		city: string;
@@ -516,13 +587,34 @@
 		responsible: string;
 		sector: string;
 	}
-	export class GetCustomerProducts_Result extends TCRMEntity {
-		customerName: string;
-		familyName: string;
+	export class GetCustomerDocuments_Result extends TCRMEntity {
+		comment: string;
+		dateUploaded: Date;
+		docName: string;
+		docTypeName: string;
+		id: number;
 		idCustomer: number;
-		idFamily: number;
+		idDocumentType: number;
+	}	
+	export class GetCustomerMarkets_Result extends TCRMEntity {
+		description: string;
+		id: number;
+		idCustomer: number;
+		idMarket: number;
+		name: string;
+	}	
+	export class GetCustomerProducts_Result extends TCRMEntity {
+		buyerName: string;
+		description: string;
+		id: number;
+		idCustomer: number;
 		idProduct: number;
-		productName: string;
+		name: string;
+		partNumberBuyer: string;
+		prodDescription: string;
+		spec: string;
+		thickness: number;
+		width: number;
 	}
 	export class getCustomers_Result extends TCRMEntity {
 		colonyName: string;
@@ -540,10 +632,17 @@
 		rFC: string;
 		street: string;
 	}
+	export class GetCustomerSectors_Result extends TCRMEntity {
+		description: string;
+		id: number;
+		idCustomer: number;
+		idSector: number;
+		name: string;
+	}	
 	export class GetFieldForPurchaseOrder_Result extends TCRMEntity {
 		asImporter: boolean;
 		creditDays: number;
-		deliveryLocation: string;
+		idDeliveryPoint: number;
 		idContact: number;
 		idCountryOrigin: number;
 		idCurrency: number;
@@ -632,6 +731,35 @@
 		productDescription: string;
 		productName: string;
 	}
+	export class GetPODetailForShipping_Result extends TCRMEntity {
+		amountSum: number;
+		asImporter: boolean;
+		extended: number;
+		id: number;
+		idCurrency: number;
+		idDetail: number;
+		idDetailSum: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMarket: number;
+		idProduct: number;
+		idSector: number;
+		idStatus: number;
+		idTransactionFlow: number;
+		interestRate: number;
+		itemDescription: string;
+		itemPrice: number;
+		itemQuantity: number;
+		pONumber: string;
+		priceSum: number;
+		productName: string;
+		qtyInShipping: number;
+		qtyShipSum: number;
+		qtySum: number;
+		salePrice: number;
+		shipQty: number;
+		sumaryDescription: string;
+	}	
 	export class getProductProperties_Result extends TCRMEntity {
 		description: string;
 		id: number;
@@ -690,6 +818,7 @@
 		productDescription: string;
 		productName: string;
 		salePrice: number;
+		shipQty: number;
 	}
 	export class GetPurchaseOrderDialogDocumentIndex_Result extends TCRMEntity {
 		dateUploaded: Date;
@@ -712,7 +841,7 @@
 	export class GetQFSFields_Result {
 			asImporter: boolean;
 			creditDays: number;
-			deliveryLocation: string;
+			idDeliveryPoint: number;
 			idContact: number;
 			idCountryOrigin: number;
 			idCurrency: number;
@@ -839,7 +968,44 @@
 		officePhone: string;
 		positionDescription: string;
 	}
-	export class getState_Result extends TCRMEntity {
+	export class GetShippingDetails_Result extends TCRMEntity  {
+		extended: number;
+		id: number;
+		idPurchaseOrder: number;
+		idPurchaseOrderDetail: number;
+		idPurchaseOrderDetailSumary: number;
+		idShipping: number;
+		itemDescription: string;
+		shipPrice: number;
+		shipQty: number;
+		sumaryDescription: string;
+		sumaryOrdered: number;
+		totalQtyOrdered: number;
+	}
+	export class GetShippings_Result extends TCRMEntity  {
+		aDA: Date;
+		bLDate: Date;
+		bLNumber: string;
+		cDPName: string;
+		countryName: string;
+		customerName: string;
+		eTA: Date;
+		eTD: Date;
+		id: number;
+		idCountryOrigin: number;
+		idCustomer: number;
+		idDeliveryPoint: number;
+		idMill: number;
+		idPort: number;
+		idStatus: number;
+		idUser: number;
+		millName: string;
+		portName: string;
+		shipDate: Date;
+		statusName: string;
+		userName: string;
+	}
+	export class getState_Result extends TCRMEntity  {
 		countryName: string;
 		description: string;
 		fullName: string;
@@ -913,12 +1079,7 @@
 		purchaseOrders: PurchaseOrder[];
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
-	}
-	export class OEM extends TCRMEntity {
-		description: string;
-		id: number;
-		name: string;
-		productExtendeds: ProductExtended[];
+		shippings: Shipping[];
 	}
 	export class Opportunity extends TCRMEntity {
 		asImporter: boolean;
@@ -928,8 +1089,8 @@
 		currency: Currency;
 		customer: Customer;
 		customerContact: CustomerContact;
+		customerDeliveryPoint: CustomerDeliveryPoint;
 		dateCreated: Date;
-		deliveryLocation: string;
 		docType: DocType;
 		estatusOpportunity: EstatusOpportunity;
 		id: number;
@@ -937,6 +1098,7 @@
 		idCurrency: number;
 		idCustomer: number;
 		idCustomerContact: number;
+		idDeliveryPoint: number;
 		idDocType: number;
 		idIncoTerm: number;
 		idLinerTerms: number;
@@ -1022,6 +1184,7 @@
 		purchaseOrders: PurchaseOrder[];
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
+		shippings: Shipping[];
 	}
 	export class Position extends TCRMEntity {
 		customerContacts: CustomerContact[];
@@ -1040,40 +1203,11 @@
 		idFamily: number;
 		name: string;
 		opportunityDetails: OpportunityDetail[];
-		productExtendeds: ProductExtended[];
 		productProperties: ProductProperty[];
 		purchaseOrderDetails: PurchaseOrderDetail[];
 		quotationFromSupplierDetails: QuotationFromSupplierDetail[];
 		quotationToCustomerDetails: QuotationToCustomerDetail[];
 		suppliers: Supplier[];
-	}
-	export class ProductExtended extends TCRMEntity {
-		buyerName: string;
-		customer: Customer;
-		customerName: string;
-		eAU: number;
-		id: number;
-		idCustomer: number;
-		idOEM: number;
-		idProduct: number;
-		oEM: OEM;
-		partNumberBuyer: string;
-		partNumberOEM: string;
-		platform: string;
-		prodDescription: string;
-		product: Product;
-		productExtendedPrices: ProductExtendedPrice[];
-		spec: number;
-		thickness: number;
-		width: number;
-	}
-	export class ProductExtendedPrice extends TCRMEntity {
-		id: number;
-		idProductExtended: number;
-		price: number;
-		productExtended: ProductExtended;
-		validFrom: Date;
-		validTo: Date;
 	}
 	export class ProductProperty extends TCRMEntity {
 		id: number;
@@ -1104,8 +1238,8 @@
 		currency: Currency;
 		customer: Customer;
 		customerContact: CustomerContact;
+		customerDeliveryPoint: CustomerDeliveryPoint;
 		dateCreated: Date;
-		deliveryLocation: string;
 		docType: DocType;
 		estatusOpportunity: EstatusOpportunity;
 		id: number;
@@ -1114,6 +1248,7 @@
 		idCurrency: number;
 		idCustomer: number;
 		idCustomerContact: number;
+		idDeliveryPoint: number;
 		idDocType: number;
 		idIncoTerm: number;
 		idLinerTerm: number;
@@ -1148,6 +1283,7 @@
 		responsible: Responsible;
 		sector: Sector;
 		shipmentOffered: Date;
+		shippingDetails: ShippingDetail[];
 		sMIM: string;
 		transactionFlow: TransactionFlow;
 		typeOpportunity: TypeOpportunity;
@@ -1166,6 +1302,8 @@
 		purchaseOrder: PurchaseOrder;
 		purchaseOrderDetailSumaries: PurchaseOrderDetailSumary[];
 		salePrice: number;
+		shippingDetails: ShippingDetail[];
+		shipQty: number;
 	}
 	export class PurchaseOrderDetailSumary extends EditorDetailSumary {
 		amount: number;
@@ -1176,7 +1314,9 @@
 		price: number;
 		purchaseOrderDetail: PurchaseOrderDetail;
 		purchaseOrderDetailSumaryProperties: PurchaseOrderDetailSumaryProperty[];
+		qtyShipped: number;
 		quantity: number;
+		shippingDetails: ShippingDetail[];
 	}
 	export class PurchaseOrderDetailSumaryProperty extends EditorDetailSumaryProperty {
 		idPurchaseOrderDetailSumary: number;
@@ -1195,14 +1335,15 @@
 		country: Country;
 		creditDays: number;
 		currency: Currency;
+		customerDeliveryPoint: CustomerDeliveryPoint;
 		dateCreated: Date;
 		dateReceived: Date;
-		deliveryLocation: string;
 		docType: DocType;
 		estatusOpportunity: EstatusOpportunity;
 		id: number;
 		idCountryOrigin: number;
 		idCurrency: number;
+		idDeliveryPoint: number;
 		idDocType: number;
 		idIncoTerm: number;
 		idLinerTerm: number;
@@ -1272,14 +1413,15 @@
 		country: Country;
 		creditDays: number;
 		currency: Currency;
+		customerDeliveryPoint: CustomerDeliveryPoint;
 		dateCreated: Date;
 		dateSend: Date;
-		deliveryLocation: string;
 		docType: DocType;
 		estatusOpportunity: EstatusOpportunity;
 		id: number;
 		idCountry: number;
 		idCurrency: number;
+		idDeliveryPoint: number;
 		idDocType: number;
 		idIncoTerm: number;
 		idLinerTerm: number;
@@ -1416,6 +1558,49 @@
 		opportunities: Opportunity[];
 		purchaseOrders: PurchaseOrder[];
 	}
+	export class Shipping extends TCRMEntity {
+		ada: Date;
+		blDate: Date;
+		blNumber: string;
+		country: Country;
+		customer: Customer;
+		customerDeliveryPoint: CustomerDeliveryPoint;
+		eta: Date;
+		etd: Date;
+		id: number;
+		idCountryOrigin: number;
+		idCurrency: number;
+		idCustomer: number;
+		idDeliveryPoint: number;
+		idIncoTerm: number;
+		idLinerTerm: number;		
+		idMill: number;
+		idPort: number;
+		idStatus: number;
+		idUser: number;
+		mill: Mill;
+		port: Port;
+		shipDate: Date;
+		shippingDetails: ShippingDetail[];
+		shipNotes: string;
+		statusShip: StatusShip;
+		user: User;
+		vesselName: string;
+	}
+	export class ShippingDetail extends TCRMEntity {
+		extended: number;
+		id: number;
+		idPurchaseOrder: number;
+		idPurchaseOrderDetail: number;
+		idPurchaseOrderDetailSumary: number;
+		idShipping: number;
+		purchaseOrder: PurchaseOrder;
+		purchaseOrderDetail: PurchaseOrderDetail;
+		purchaseOrderDetailSumary: PurchaseOrderDetailSumary;
+		shipping: Shipping;
+		shipPrice: number;
+		shipQty: number;
+	}
 	export class State extends TCRMEntity {
 		cities: City[];
 		country: Country;
@@ -1423,6 +1608,13 @@
 		id: number;
 		idCountry: number;
 		name: string;
+	}
+	export class StatusShip extends TCRMEntity {
+		description: string;
+		id: number;
+		name: string;
+		allowEdit: boolean;
+		shippings: Shipping[];
 	}
 	export class Supplier extends TCRMEntity {
 		country: Country;
@@ -1493,8 +1685,13 @@
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
 		responsibles: Responsible[];
+		shippings: Shipping[];
 		userName: string;
 		userPassword: string;
 	}
 
 
+	export class ShipPODetailModel {
+		items: GetPODetailForShipping_Result[];
+		po: number;
+	}

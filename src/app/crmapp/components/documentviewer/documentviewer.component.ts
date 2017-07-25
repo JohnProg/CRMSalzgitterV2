@@ -62,7 +62,7 @@ export class DocumentviewerComponent extends BaseComponent {
     this.initData();
   }
 
- initData() {
+ loadData() {
     let pparams = new URLSearchParams();
     pparams.set('iddialog', '0');
     pparams.set('idparent', this.idParent.toString());

@@ -41,7 +41,6 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor, OnI
        this._curService.loadCatalogObs( this.catalog , undefined,  undefined)
        .map((response) => response.json()).subscribe((data) => {
            Object.assign(this.catList, <TCRMEntity[]>data);
-
       }, (error) => {});
     } else if(this.parentSelect !== undefined) {
       this.parentSelect.valueChange.subscribe((data: TCRMEntity) => {

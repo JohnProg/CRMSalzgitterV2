@@ -33,7 +33,6 @@ import gql from 'graphql-tag';
 })
 export class PurchaseordereditordetailsumaryComponent extends EditordetailsumaryComponent {
 
-
   itemEdit: PurchaseOrderDetailSumary;
   
   constructor(public _router: Router, public _route: ActivatedRoute, 
@@ -54,14 +53,11 @@ export class PurchaseordereditordetailsumaryComponent extends Editordetailsumary
     this.catalogName = 'Purchase Order Details Sumary';
     this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName);
     this.refreshItemUrl = 'PurchaseOrderDetailSumary/searchByDetail';
-    this.sumProperties = 'PurchaseOrderDetailSumaryProperties';
+    this.sumProperties = 'purchaseOrderDetailSumaryProperties';
   }
 
 
-
-   
   initEntity() {
-    
     this.itemEdit = new PurchaseOrderDetailSumary() ;
     this.itemEdit.idPurchaseOrderDetail  = this.idDetail;
     this.itemEdit.idDetail = this.idDetail;

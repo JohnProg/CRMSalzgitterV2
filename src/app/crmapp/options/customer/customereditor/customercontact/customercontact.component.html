@@ -1,0 +1,74 @@
+<section *ngIf="isEditing">
+  <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="60">
+        <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250" />
+        <md-hint align="end">{{name.value.length}} / 250</md-hint>
+      </md-input-container>
+      <section flex-gt-sm="30">
+        <md-select class="cbxClass" #idPosition name="idPosition" flex required="true" placeholder="Position" [(ngModel)]="itemEdit.idPosition">
+          <md-option *ngFor="let i of catPosition" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.nameDescription || i.name}}
+          </md-option>
+        </md-select>
+      </section>
+          <section flex-gt-sm="10" >
+            <md-slide-toggle #isActive name="Active"  [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
+          </section>         
+    </div>
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <md-input-container flex-gt-sm="40">
+        <input mdInput #officePhone name="officePhone" [(ngModel)]="itemEdit.officePhone" required placeholder="Office Phone" maxlength="50" />
+        <md-hint align="end">{{officePhone.value.length}} / 50</md-hint>
+      </md-input-container>
+      <md-input-container flex-gt-sm="20">
+        <input mdInput #extension name="extension" [(ngModel)]="itemEdit.extension" required placeholder="Extension" maxlength="50" />
+        <md-hint align="end">{{extension.value.length}} / 50</md-hint>
+      </md-input-container>
+
+      <md-input-container flex-gt-sm="40">
+        <input mdInput #cellPhone flex name="cellPhone" [(ngModel)]="itemEdit.cellPhone" placeholder="Cell Phone" maxlength="50" />
+        <md-hint align="end">{{cellPhone.value.length}} / 50</md-hint>
+      </md-input-container>
+
+    </div>
+
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #email flex name="email" [(ngModel)]="itemEdit.email" placeholder="E-Mail" maxlength="250" />
+        <md-hint align="end">{{email.value.length}} / 250</md-hint>
+      </md-input-container>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #nickName flex name="nickName" [(ngModel)]="itemEdit.nickName" placeholder="Nickname" maxlength="150" />
+        <md-hint align="end">{{nickName.value.length}} / 150</md-hint>
+      </md-input-container>      
+    </div>
+
+  </form>
+</section>
+
+
+
+<section *ngIf="!isEditing">
+
+
+  <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+    <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
+      <div layout="row">
+        <button md-button (click)="editEntity(row.id)">{{value}}</button>
+      </div>
+    </ng-template>
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <div layout="row" flex="5">
+        <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+      </div>
+    </ng-template>
+
+  </td-data-table>
+  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+    (change)="change($event)">
+  </td-paging-bar>
+</section>

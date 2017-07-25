@@ -16,7 +16,7 @@ import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
-import { TCRMEntity } from '../model/index';
+import { TCRMEntity, Colony } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 
@@ -36,10 +36,11 @@ export const cFloatPosMask = createNumberMask({
     });
 
 
-const findCustContactQl = gql`
+const findCustCatalogsQl = gql`
   query 
-        findCustoerContacts($custid: Int!) {
+        findCustCatalogs($custid: Int!) {
             findCustomerContacts(custid: $custid) { id name isActive  } 
+            findDeliveryPoint(custid: $custid) { id cDPName isActive  } 
         }
 `;
 
@@ -144,9 +145,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   catTypeOpp: TCRMEntity[];
   catMill: TCRMEntity[];
   catCountry: TCRMEntity[];
-
+ 
   catProduct: TCRMEntity[];
   catActionsOpp: TCRMEntity[];
+  catDeliveryPoint: TCRMEntity[];
+  catOEM: TCRMEntity[];
+  catPosition: TCRMEntity[];
+  catColony: Colony[];
   constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -218,7 +223,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.searchEvent = this._actions.searchEvent
       .subscribe((res) => {
-
+         
         this.search(res);
       },
       err => console.log(err),   //removed dot
@@ -305,10 +310,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initData() {
+    
     if (this.autoLoad === true) {
         this.loadData();
     }
     this._totalItems = this._curService.totalItems.subscribe((total: number) => {
+      
       this.totalItems = total;
     });
     this.initEntity();
@@ -316,6 +323,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadData() {
+    
       if ( this.isLoading === false ) {
 
         if ( this.dataLoaded === true ) {
@@ -385,6 +393,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveEntity() {
+    
     this.form.ngSubmit.emit(this.form);
   }
 
@@ -411,7 +420,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     //this._curService.assignList(item.items);
   }
 
-  afterDelete(item: any) {}
+  afterDelete(item: any) {
+    this.loadData();
+  }
 
 
   change(event: IPChangeEventSorted): void {
@@ -451,6 +462,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   search(searchTerm: string): void {
+    
     this.searchTerm = searchTerm;
     this.currentPage = 0;
     this.reloadPaged(this.searchTerm);
@@ -504,9 +516,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadCustomerContact(idcust: number) {
-   this._curService.loadQl(findCustContactQl, { custid: idcust })
+   this._curService.loadQl(findCustCatalogsQl, { custid: idcust })
     .subscribe(({data}) => {
       this.catCustomerContact = data['findCustomerContacts'];
+      this.catDeliveryPoint = data['findDeliveryPoint'];
     }, (error: Error) => {
       this._loadingService.resolve('');
       debugger

@@ -38,6 +38,7 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   @Input() parentField: string;
 
   
+  
   itemEdit: BaseDocument;
   
   files: any;

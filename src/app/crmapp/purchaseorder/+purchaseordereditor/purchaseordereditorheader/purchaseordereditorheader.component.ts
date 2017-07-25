@@ -120,7 +120,7 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
         this.itemEdit.isActive = true;
         this.itemEdit.idMarket = data.idMarket;
         this.itemEdit.idSector = data.idSector;
-        this.itemEdit.deliveryLocation = data.deliveryLocation;
+        this.itemEdit.idDeliveryPoint = data.idDeliveryPoint;
         this.itemEdit.oppNotes = data.oppNotes;
         this.itemEdit.asImporter = data.asImporter;
         this.itemEdit.idTransactionFlow = data.idTransactionFlow;

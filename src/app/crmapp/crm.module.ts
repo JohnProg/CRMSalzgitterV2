@@ -65,9 +65,22 @@ import { BaseComponent, CatalogComponent, CurrencyComponent,
 import { 
   //options
   OptionsComponent, CompanyComponent, 
+  // Customer
+  CustomerComponent, CustomerindexComponent , CustomereditorComponent, CustomereditorheaderComponent,
+    CustomerbrokerComponent,
+    CustomercontactComponent,
+    CustomerdeliverypointComponent,
+    CustomerdocumentComponent,
+    CustomermarketComponent,
+    CustomersectorComponent,
+    CustomerproductComponent,
+    CustomerrailspurComponent,
+    CustomerbaseComponent,
   // Products
   ProductComponent, ProducteditorComponent, ProductpropertyComponent,
-  ProductindexComponent, ActionopportunityComponent, ActionopportunitytemplateemailComponent } from './options/index';
+  ProductindexComponent, ActionopportunityComponent, ActionopportunitytemplateemailComponent
+
+} from './options/index';
 
 
 
@@ -77,7 +90,7 @@ import { CRMSelectComponent, GenericActionsComponent,
   CrmselectchildComponent, EmailSenderComponent,
   EditordetailsumaryComponent, EditorbasedialogComponent,
   EditorbasedialogdocumentComponent,
-  DocumentviewerComponent } from './components/index';
+  DocumentviewerComponent,SelectcolonyComponent } from './components/index';
 
 // Directives
 
@@ -119,6 +132,15 @@ import { PurchaseorderComponent,
 
    } from './purchaseorder/index';
 
+// Shipping
+import {ShippingComponent, ShippingindexComponent, 
+  ShippingindexviewerComponent, 
+  ShippingeditorComponent, 
+  ShippingeditorheaderComponent,
+  ShippingeditordetailComponent
+
+} from './shipping/index';
+
 // Login
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -145,11 +167,27 @@ import { AuthHelper } from './authHelper/authHelper';
     CatalogComponent,
     TemplateemailComponent,
     BaseOppComponent,
+    SelectcolonyComponent,
     //Options
     OptionsComponent,
     CompanyComponent,
     ActionopportunityComponent,
     ActionopportunitytemplateemailComponent,
+
+    //Customer
+    CustomerComponent,
+    CustomerindexComponent , 
+    CustomereditorComponent,
+    CustomerbaseComponent,
+    CustomereditorheaderComponent,
+    CustomerbrokerComponent,
+    CustomercontactComponent,
+    CustomerdeliverypointComponent,
+    CustomerdocumentComponent,
+    CustomermarketComponent,
+    CustomersectorComponent,
+    CustomerproductComponent,
+    CustomerrailspurComponent,    
       //Products
     ProductComponent, 
     ProducteditorComponent,
@@ -212,7 +250,14 @@ import { AuthHelper } from './authHelper/authHelper';
     // Directives
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
-
+// Shipping
+    ShippingComponent,
+    ShippingindexComponent,
+    ShippingindexviewerComponent,
+    ShippingeditorComponent,
+    ShippingeditorheaderComponent,
+    ShippingeditordetailComponent,
+    
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     TranslateModule,

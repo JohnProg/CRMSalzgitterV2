@@ -125,15 +125,19 @@ export class BaseOppComponent extends BaseComponent {
   }
 
   setDeliveryRequired() {
+   if( this.catIncoTerm != undefined) {
+      setTimeout(() => {
+    
+          let req =  <IncoTerm>(this.catIncoTerm.filter( i => i.id === this.itemEdit['idIncoTerm'])[0]);
+          if( req !== undefined) {
+            this.deliveryRequired = req['deliveryRequired'];
+            if ( this.deliveryRequired === false ) {
+              this.itemEdit['idDeliveryPoint'] = undefined;
+            }
+          }
 
-    setTimeout(() => {
-        let req =  <IncoTerm>(this.catIncoTerm.filter( i => i.id === this.itemEdit['idIncoTerm'])[0]);
-        this.deliveryRequired = req.deliveryRequired;
-        if ( this.deliveryRequired === false ) {
-          this.itemEdit['deliveryLocation'] = undefined;
-        }
-    },1000);
-
+      },1000);
+   }
   }  
 
   afterCreate(item: TCRMEntity) {

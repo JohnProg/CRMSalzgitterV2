@@ -45,5 +45,7 @@ export class QuotationtocustomerindexComponent  {
     });
   }
 
-  search(t: string) {}
+  search(e) {
+    this._actions.search(e);
+  }
 }

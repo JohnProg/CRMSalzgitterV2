@@ -10,8 +10,14 @@ import { BaseComponent, CatalogComponent, CurrencyComponent,
 ActionoppComponent,  StateComponent, IncotermComponent,
 TemplateemailComponent } from './crmapp/catalogs/index';
 
-import { OptionsComponent, ActionopportunityComponent, ProductComponent, ProductindexComponent,
-   ProducteditorComponent } from './crmapp/options/index';
+import { OptionsComponent, ActionopportunityComponent, 
+  ProductComponent, ProductindexComponent,
+   ProducteditorComponent,
+  CustomerComponent,
+    CustomerindexComponent,
+    CustomereditorComponent,  
+
+} from './crmapp/options/index';
 
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent,
 OpportunitydetailComponent, OpportunityheaderComponent, 
@@ -37,6 +43,9 @@ import {
    PurchaseorderComponent, PurchaseorderindexComponent,
    PurchaseordereditorComponent
 } from './crmapp/purchaseorder/index';
+
+// shippings
+import { ShippingComponent, ShippingindexComponent, ShippingeditorComponent } from './crmapp/shipping/index';
 
 import { LoginComponent } from './crmapp/login/login.component';
 
@@ -99,6 +108,15 @@ const routes: Routes = [
 
               ]
             },
+            {
+              path: 'customer',
+              component: CustomerComponent,
+              children: [
+                { path: '', component: CustomerindexComponent },
+                { path: 'edit/:id', component: CustomereditorComponent },
+              ]
+            },
+            
           ]
         },
         {
@@ -205,7 +223,24 @@ const routes: Routes = [
             { path: 'sendemail/:id', component: QuotationtocustomerdialogemailComponent },
             { path: 'insert', component: QuotationfromsuppliereditorComponent }
           ]
-        }        
+        },
+ //Shipping
+        {
+          path: 'shipping', component: ShippingComponent,
+          canActivate: [AuthGuard],          
+          children: [
+            {
+              path: '',
+              component: ShippingindexComponent,
+            },
+            {
+              path: 'from/:id',
+              component: ShippingindexComponent,
+            },
+            { path: 'edit/:id', component: ShippingeditorComponent
+            }
+          ]
+        }                        
      ]
    }
   

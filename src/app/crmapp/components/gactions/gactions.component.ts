@@ -160,6 +160,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private search(atext: string): void {
+    
     this._actions.search(atext);
   }
 

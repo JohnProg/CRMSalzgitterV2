@@ -157,6 +157,14 @@
       "icon": "euro_symbol",
       "childrens": [
           {
+            "name": "customer",
+            "tooltip": "HOME.MENU.OPTIONS.CUSTOMER.TOOLTIP",
+            "active": "true",
+            "routerlink": "customer",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.OPTIONS.CUSTOMER.DISPLAYNAME"
+          },        
+          {
             "name": "products",
             "tooltip": "HOME.MENU.OPTIONS.PRODUCT.TOOLTIP",
             "active": "true",
@@ -219,7 +227,15 @@
             "routerlink": "purchaseorder",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.PURCHASEORDER.DISPLAYNAME"
-          }                                
+          },
+          {
+            "name": "index",
+            "tooltip": "HOME.MENU.SHIPPING.TOOLTIP",
+            "active": "true",
+            "routerlink": "shipping",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.SHIPPING.DISPLAYNAME"
+          }                                           
       ]
     }
   ]

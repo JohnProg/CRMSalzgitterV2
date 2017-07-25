@@ -27,8 +27,8 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
   sText: string;
 }
 
-export const NUMBER_FORMAT: any = (v: number) => v;
-export const DECIMAL_FORMAT: any = (v: number) => v.toFixed(2);
+export const NUMBER_FORMAT: any = (v: number) => (v || 0).toLocaleString();
+export const DECIMAL_FORMAT: any = (v: number) => (v || 0).toLocaleString();
 export const CURRENCY_FORMAT: any = (v: number ) =>  '$' + (v || 0).toLocaleString();
 export const DATE_FORMAT: any = (v: number ) =>  v !== undefined ? v.toLocaleString() : '';
 
@@ -122,6 +122,7 @@ export class CatalogService {
   }
 
   changeTotal(total: number) {
+    
       this._totalItems.next(total);
   }
 
@@ -181,33 +182,22 @@ export class CatalogService {
   }
 
   getPaged(p: IPChangeEventSorted) {
-    let pparams = new URLSearchParams();
-    pparams.set('page', p.page.toString());
-    pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy === undefined) { p.sortBy = 'name'; }
-    if (p.sortType === undefined) { p.sortType = 'ASC'; }
-    pparams.set('sortBy', p.sortBy);
-    pparams.set('sortType', p.sortType);
-    pparams.set('sText', p.sText);
+
     let index = (p.page * p.pageSize) + 1;
-    let t = this._tableService.pageData(this.dataStore.entities, index , --index + p.pageSize) ;
+    let t = this.dataStore.entities;
+    if( p.sText != undefined && p.sText.length > 0 ) {
+       t = this._tableService.filterData(t, p.sText, true); 
+    }
+    
+
+    t = this._tableService.sortData(t, p.sortBy, p.sortType == 'ASC' ? TdDataTableSortingOrder.Ascending : TdDataTableSortingOrder.Descending );
+    t = this._tableService.pageData(t, index , --index + p.pageSize);    
     this._entList.next(t);
+    this.changeTotal(t.length);
     //this.afterLoadAllEvent.next(this.dataStore.entities);
   }
 
-  refreshPaged(p: IPChangeEventSorted, items: TCRMEntity[]) {
-    let pparams = new URLSearchParams();
-    pparams.set('page', p.page.toString());
-    pparams.set('pageSize', p.pageSize.toString());
-    if (p.sortBy === undefined) { p.sortBy = 'name'; }
-    if (p.sortType === undefined) { p.sortType = 'ASC'; }
-    pparams.set('sortBy', p.sortBy);
-    pparams.set('sortType', p.sortType);
-    pparams.set('sText', p.sText);
-    let index = (p.page * p.pageSize) + 1;
-    let t = this._tableService.pageData(this.dataStore.entities, index , --index + p.pageSize) ;
-    this._entList.next(t);
-  }
+
 
   getCustomPaged(p: IPChangeEventSorted, action: string = 'GetPaged', cparams: TCRMEntity[]) {
     let pparams = new URLSearchParams();
@@ -267,6 +257,7 @@ export class CatalogService {
     this._rest.create( entity)
       .map((response) => response.json())
       .subscribe( (data: ReturnSaveRequest) => {
+        
         if(customHandle === false ) {
           this.dataStore.entities.push(data.data);
           this._entList.next(Object.assign({}, this.dataStore).entities);
@@ -282,6 +273,32 @@ export class CatalogService {
       });
   }
 
+    createArray(entity: any, customHandle: boolean = false) {
+
+    this._rest.create( entity)
+      .map((response) => response.json())
+      .subscribe( (data: ReturnSaveRequest) => {
+        
+        if(customHandle === false ) {
+          this.dataStore.entities = [];
+          data.data.forEach(element => {
+            this.dataStore.entities.push(element);
+          });
+          
+          this._entList.next(Object.assign({}, this.dataStore).entities);
+          this.changeTotal(this.dataStore.entities.length);
+          this.afterCreateEmitter.emit(  data.data);
+          this.itemEdit.id = data.data.id;
+          this.afterLoadAllEvent.next(this.dataStore.entities);
+          this._snackBarService.open( this.catalogName + ' ' + data.message, 'Ok');
+        } else {
+           this.dataStore.entities.push(data.data);
+           this.afterCreateEmitter.emit( this.dataStore.entities);
+        }
+      }, (error) => {
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      });
+  }
 
   uploadFile(url: string, entity: any, fileToUpload: any, customHandle: boolean = false) {
     debugger
@@ -349,7 +366,6 @@ export class CatalogService {
   remove(entId: number, customHandle: boolean = false ) {
 
     this._rest.delete(entId).subscribe( (response) => {
-
       this.dataStore.entities.forEach((t, i) => {
         if (t.id === entId) { this.dataStore.entities.splice(i, 1); }
       });

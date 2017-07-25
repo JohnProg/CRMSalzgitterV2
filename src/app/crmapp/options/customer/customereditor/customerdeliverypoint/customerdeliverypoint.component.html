@@ -1,0 +1,68 @@
+<section *ngIf="isEditing">
+  <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="60">
+        <input mdInput #cdpName flex name="cdpName" [(ngModel)]="itemEdit.cdpName" required placeholder="{{ 'NAME' | translate}}"
+          maxlength="150" />
+        <md-hint align="end">{{cdpName.value.length}} / 150</md-hint>
+      </md-input-container>
+      <section flex-gt-sm="30">
+        <md-select class="cbxClass" #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
+          <md-option *ngFor="let i of catDelivType" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.nameDescription || i.name}}
+          </md-option>
+        </md-select>
+      </section>
+      <section flex-gt-sm="10">
+        <md-slide-toggle #isActive name="Active" [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
+      </section>
+    </div>
+
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #cdpStreet name="cdpStreet" [(ngModel)]="itemEdit.cdpStreet" required placeholder="Street" maxlength="150" />
+        <md-hint align="end">{{cdpStreet.value.length}} / 150</md-hint>
+      </md-input-container>
+      <crm-selectcolony name="zipcode" byType="1" [(ngModel)]="itemEdit.idColony" placeholder="Colony" ></crm-selectcolony>
+    </div>
+ <div layout-gt-sm="row" layout-lt-sm="row" layout-margin >
+          <md-input-container flex-gt-sm="20">
+            <input mdInput #cdpTelephone flex name="cdpTelephone" [(ngModel)]="itemEdit.cdpTelephone"  placeholder="Phone" maxlength="20"
+            />
+            <md-hint align="end">{{cdpTelephone.value.length}} / 20</md-hint>
+          </md-input-container>
+         <md-input-container flex-gt-sm="80">
+            <input mdInput #cdpContact flex name="cdpContact" [(ngModel)]="itemEdit.cdpContact" required placeholder="Contact Name" maxlength="150"
+            />
+            <md-hint align="end">{{cdpContact.value.length}} / 150</md-hint>
+          </md-input-container>
+        </div>    
+  </form>
+</section>
+
+
+
+<section *ngIf="!isEditing">
+
+
+  <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+    <ng-template tdDataTableTemplate="cdpName" let-value="value" let-row="row" let-column="column">
+      <div layout="row">
+        <button md-button (click)="customEditEntity(row.id, row.zipCode)">{{value}}</button>
+      </div>
+    </ng-template>
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <div layout="row" flex="5">
+        <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+      </div>
+    </ng-template>
+
+  </td-data-table>
+  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+    (change)="change($event)">
+  </td-paging-bar>
+</section>

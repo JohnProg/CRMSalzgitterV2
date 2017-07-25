@@ -1,0 +1,58 @@
+<form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+  <section *ngIf="isEditing">
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <h3 >Please fill data in items that you want to add</h3>
+    </div>
+    <td-expansion-panel-group>
+      <td-expansion-panel *ngFor="let po of poDetails " [label]="'PO#: ' + po.po">
+        <md-card class="example-card" *ngFor="let pod of po.items " flex>
+
+          <md-card-content>
+            <md-card-subtitle>Description: {{ pod.sumaryDescription}}</md-card-subtitle>
+            <div layout="row" layout-margin>
+              <span flex="30">Qty Ordered: {{pod.qtySum | number}}</span>
+              <span flex="30">Qty Shipped: {{pod.qtyShipSum | number}}</span>
+              <span flex="30">Balance: {{ (pod.qtySum - pod.qtyShipSum )  | number}}</span>
+            </div>
+            <div layout="row" layout-margin>
+              <md-input-container flex="30">
+                <input mdInput [name]="'qty' + pod.idDetailSum" [(ngModel)]="pod.qtyInShipping" placeholder="Ship Qty" currencyMask [options]="{ prefix: ''}">
+              </md-input-container>
+
+              <md-input-container flex="30">
+                <input mdInput [name]="'price' + pod.idDetailSum" [(ngModel)]="pod.priceSum" placeholder="Price" currencyMask>
+              </md-input-container>
+              <md-input-container flex="40">
+                <input mdInput [name]="'amount' + pod.idDetailSum"  disabled placeholder="Amount" value="{{ (pod.qtyInShipping * pod.priceSum) | currency }}" >
+              </md-input-container>
+            </div>
+          </md-card-content>
+
+        </md-card>
+
+      </td-expansion-panel>
+
+    </td-expansion-panel-group>
+
+  </section>
+</form>
+
+
+<section *ngIf="!isEditing">
+
+  
+  <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <div layout="row" flex="5">
+        <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+      </div>
+    </ng-template>
+
+  </td-data-table>
+      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+   (change)="change($event)"
+        >
+      </td-paging-bar>
+</section>

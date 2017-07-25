@@ -87,6 +87,7 @@ export class ActionsService {
     }
 
     public search(afilter: string) {
+      
         this.searchEvent.emit(afilter);
     }
 

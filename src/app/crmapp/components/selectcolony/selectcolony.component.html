@@ -1,0 +1,12 @@
+<div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+  <md-input-container flex-gt-sm="20" >
+    <input mdInput #zipcode name="zipcode" placeholder="Zip Code" (change)="getFromZipCode($event)" [(ngModel)]="zipCode">
+  </md-input-container>
+<div flex-gt-sm="80">
+  <md-select class="cbxClass"   [required]="required" [placeholder]="placeholder | translate" [(ngModel)]="value" [disabled]="disabled" (change)="onChange($event.value)">
+    <md-option *ngFor="let i of catList" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+      {{ i[fieldDisplay] || i.nameDescription || i.name}}
+    </md-option>
+  </md-select>
+</div>
+</div>

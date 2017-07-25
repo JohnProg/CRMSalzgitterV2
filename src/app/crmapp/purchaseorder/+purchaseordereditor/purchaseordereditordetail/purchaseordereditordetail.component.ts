@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
-import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT, DECIMAL_FORMAT } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { PurchaseOrderDetail } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
@@ -111,6 +111,7 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
     this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
     this.columns.push({ name: 'itemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
     this.columns.push({ name: 'salePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
+    this.columns.push({ name: 'shipQty', label: 'Qtty shipped', numeric: true, format: DECIMAL_FORMAT, sortable: false });
   }
 
   initEntity() {

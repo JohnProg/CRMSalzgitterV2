@@ -92,9 +92,11 @@
           </section>                 
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding *ngIf="deliveryRequired">
-          <md-input-container flex class="">
-            <textarea mdInput flex #deliveryLocation name="deliveryLocation" maxlength="500"  placeholder="{{'DELIVERYLOCATION' | translate}}" [(ngModel)]="itemEdit.deliveryLocation" [required]="deliveryRequired" ></textarea>
-          </md-input-container>         
+            <md-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true"  placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint"  >
+                  <md-option *ngFor="let i of catDeliveryPoint" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                    {{ i.cDPName }} 
+                  </md-option>
+            </md-select>          
         </div>
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
           <section flex-gt-sm="25" >

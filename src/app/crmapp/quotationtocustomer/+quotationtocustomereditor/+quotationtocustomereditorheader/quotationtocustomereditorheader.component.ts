@@ -111,7 +111,7 @@ export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
         this.itemEdit.idUser = data.idUser;
         this.itemEdit.idIncoTerm = data.idIncoTerm;
         this.itemEdit.idLinerTerm = data.idLinerTerm;
-        this.itemEdit.deliveryLocation = data.deliveryLocation;
+        this.itemEdit.idDeliveryPoint = data.idDeliveryPoint;
         this.itemEdit.quoteNotes = data.oppNotes;
         this.itemEdit.asImporter = data.asImporter;
         this.itemEdit.idStatus = 1;

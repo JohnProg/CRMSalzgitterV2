@@ -1,0 +1,95 @@
+<section *ngIf="isEditing">
+  <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+
+
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <section flex-gt-sm="40">
+        <md-select class="cbxClass" #idProducts name="idProducts" flex required="true" placeholder="Select Product" [(ngModel)]="itemEdit.idProduct">
+          <md-option *ngFor="let i of catProduct" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.nameDescription || i.name}}
+          </md-option>
+        </md-select>
+      </section>
+      <md-input-container flex-gt-sm="60">
+        <input mdInput #prodDescription flex name="prodDescription" [(ngModel)]="itemEdit.prodDescription" required placeholder="Description"
+          maxlength="500" />
+        <md-hint align="end">{{prodDescription.value.length}} / 500</md-hint>
+      </md-input-container>
+
+    </div>
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #customerName flex name="customerName" [(ngModel)]="itemEdit.customerName" required placeholder="Customer Name"
+          maxlength="150" />
+        <md-hint align="end">{{customerName.value.length}} / 150</md-hint>
+      </md-input-container>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #buyerName flex name="buyerName" [(ngModel)]="itemEdit.buyerName" required placeholder="Buyer Name" maxlength="150"
+        />
+        <md-hint align="end">{{buyerName.value.length}} / 150</md-hint>
+      </md-input-container>
+    </div>
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #platform flex name="platform" [(ngModel)]="itemEdit.platform" required placeholder="Platform" maxlength="150"
+        />
+        <md-hint align="end">{{platform.value.length}} / 150</md-hint>
+      </md-input-container>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #partNumberOEM flex name="partNumberOEM" [(ngModel)]="itemEdit.partNumberOEM" required placeholder="Part OEM"
+          maxlength="150" />
+        <md-hint align="end">{{partNumberOEM.value.length}} / 150</md-hint>
+      </md-input-container>
+    </div>
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #partNumberBuyer flex name="partNumberBuyer" [(ngModel)]="itemEdit.partNumberBuyer"  placeholder="Part Buyer"
+          maxlength="150" />
+        <md-hint align="end">{{partNumberBuyer.value.length}} / 150</md-hint>
+      </md-input-container>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #eau flex name="eau" [(ngModel)]="itemEdit.eau" placeholder="EAU" currencyMask [options]="{ prefix: '', allowNegative: false, precision: 0 }"
+        />
+      </md-input-container>
+    </div>
+    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+      <md-input-container flex-gt-sm="50">
+        <input mdInput #spec flex name="spec" [(ngModel)]="itemEdit.spec"  placeholder="Spec" maxlength="150" />
+        <md-hint align="end">{{spec.value.length}} / 150</md-hint>
+      </md-input-container>
+      <md-input-container flex-gt-sm="25">
+        <input mdInput #thickness flex name="thickness" [(ngModel)]="itemEdit.thickness" placeholder="Thickness" currencyMask [options]="{ prefix: '', allowNegative: false, precision: 2 }"
+        />
+      </md-input-container>
+      <md-input-container flex-gt-sm="25">
+        <input mdInput #width flex name="width" [(ngModel)]="itemEdit.width" placeholder="Width" currencyMask [options]="{ prefix: '', allowNegative: false, precision: 2 }"
+        />
+      </md-input-container>
+    </div>
+  </form>
+</section>
+
+
+
+<section *ngIf="!isEditing">
+
+
+  <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+    <ng-template tdDataTableTemplate="prodDescription" let-value="value" let-row="row" let-column="column">
+      <div layout="row">
+        <button md-button (click)="editEntity(row.id)">{{value}}</button>
+      </div>
+    </ng-template>
+    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+      <div layout="row" flex="5">
+        <button md-icon-button (click)="confirmDelete( row)">
+            <md-icon>delete</md-icon>
+          </button>
+      </div>
+    </ng-template>
+
+  </td-data-table>
+  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
+    (change)="change($event)">
+  </td-paging-bar>
+</section>

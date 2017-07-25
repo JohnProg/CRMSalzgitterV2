@@ -79,11 +79,8 @@ export class EditordetailsumaryComponent extends BaseComponent {
     
   }
 
-  ngOnInitClass() {
-    super.ngOnInitClass();
-  }
-
-  initData() {
+  
+  loadData() {
     
     this.refreshItems();
     let pparams: TCRMEntity[] = new Array<TCRMEntity>();
@@ -91,13 +88,14 @@ export class EditordetailsumaryComponent extends BaseComponent {
     this._curService.loadCustomCatalogObs('ProductProperty/searchByProduct', pparams)
     .map((response) => response.json())
     .subscribe( (items: ProductProperty[]) => {
+      
          this._props = items;
          
          this.initDetails();
     });
-    this.initEntity();
+
   }
-  
+
   refreshItems() {
     let oparams: URLSearchParams = new URLSearchParams();
     oparams.set('iddetail', this.idDetail.toString());
@@ -172,6 +170,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
   }
 
   afterLoadAll(itms: EditorDetailSumary[]) {
+    
       if( itms !== undefined && itms.length > 0 && itms[0][this.sumProperties] !== undefined 
         && itms[0][this.sumProperties].length > 0) {
         this._pcolumns = new Array<ITdDataTableColumn>();
