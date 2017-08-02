@@ -336,23 +336,29 @@
 		market: Market;
 	}
 	export class CustomerProduct extends TCRMEntity {
-		buyerName: string;
-		customer: Customer;
-		customerName: string;
-		customerProductPrices: CustomerProductPrice[];
-		eAU: number;
+		constructor() {
+			super();
+			this.customerProductExtended = new CustomerProductExtended();
+		}
 		id: number;
 		idCustomer: number;
 		idProduct: number;
+		isAutomotive: boolean;
+		customerProductExtended: CustomerProductExtended;
+	}
+	export class CustomerProductExtended extends TCRMEntity {
+		buyerName: string;
+		customerName: string;
+		eau: number;
+		idCustomerProduct: number;
 		partNumberBuyer: string;
 		partNumberOEM: string;
 		platform: string;
 		prodDescription: string;
-		product: Product;
 		spec: string;
 		thickness: number;
 		width: number;
-	}
+	}	
 	export class CustomerProductPrice extends TCRMEntity {
 		customerProduct: CustomerProduct;
 		id: number;
@@ -605,13 +611,15 @@
 	}	
 	export class GetCustomerProducts_Result extends TCRMEntity {
 		buyerName: string;
-		description: string;
 		id: number;
 		idCustomer: number;
 		idProduct: number;
-		name: string;
 		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
 		prodDescription: string;
+		productDescription: string;
+		productName: string;
 		spec: string;
 		thickness: number;
 		width: number;

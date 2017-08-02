@@ -23,7 +23,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {  GetCustomerProducts_Result, CustomerProduct, TCRMEntity, Colony, Product } from '../../../../model/allmodels';
+import {  GetCustomerProducts_Result, CustomerProduct, TCRMEntity, Colony, Product, CustomerProductExtended } from '../../../../model/allmodels';
 import { SelectcolonyComponent } from '../../../../components/index';
 import { CustomerbaseComponent } from '../customerbase.component';
 
@@ -79,10 +79,15 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
   }
 
   addColumns() {
-    this.columns.push({ name: 'prodDescription', label: 'Prod. Description', tooltip: '' });
-    this.columns.push({ name: 'buyerName', label: 'Buyer Name' });
-    this.columns.push({ name: 'name', label: 'Material', tooltip: '' });
-    this.columns.push({ name: 'partNumberBuyer', label: 'Part #', tooltip: '' });
+        this.columns.push({ name: 'productName', label: 'Material', tooltip: '' });
+    this.columns.push({ name: 'platform', label: 'Platform', tooltip: '' });
+
+
+    this.columns.push({ name: 'spec', label: 'Spec' });
+    this.columns.push({ name: 'thickness', label: 'Thickness', tooltip: '' });
+    this.columns.push({ name: 'width', label: 'Width', tooltip: '' });
+    this.columns.push({ name: 'partNumberBuyer', label: 'Part buyer', tooltip: '' });
+    this.columns.push({ name: 'partNumberOEM', label: 'Part OEM', tooltip: '' });
     
   }
 
@@ -121,5 +126,14 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
   // }
 
 
+   changeAuto(event) {
+      
+   }
+
+   afterLoadItem(itm:  CustomerProduct) {
+     
+     if( itm.customerProductExtended === null ) itm.customerProductExtended = new CustomerProductExtended();
+     super.afterLoadItem(itm);
+  }
 
 }
