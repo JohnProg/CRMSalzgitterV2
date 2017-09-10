@@ -1,4 +1,4 @@
-import { Component, NgZone, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Component, NgZone, AfterViewInit, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder  } from '@angular/http';
 import { ConfigurationService, ActionsService, TokenService } from '../crmapp/services/index';
@@ -9,7 +9,7 @@ import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } fro
 import { Subscription } from 'rxjs/Subscription';
 import {TranslateService} from '@ngx-translate/core';
 import { User } from '../crmapp/model/allmodels';
-
+import { AuthHelper } from '../crmapp/authHelper/authHelper';
 
 @Component({
   selector: 'crm-main',
@@ -19,20 +19,17 @@ import { User } from '../crmapp/model/allmodels';
 })
 export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
-
+   userName: string;
+   userEmail: string;
 
   isSmallScreen: boolean = false;
-  userSubscription: Subscription;
+ 
   protected _querySubscriptionxs: Subscription;
   protected _querySubscriptionsm: Subscription;
   protected _querySubscriptionmd: Subscription;
   protected _querySubscriptionlg: Subscription;
-  
-  _routeList: BehaviorSubject<Object[]>;
 
-  routes: Observable<Object[]>;
-  userName: string = 'test';
-  userEmail: string = 'test';
+
   constructor(private _router: Router, 
               private _http: Http,
               private _confs: ConfigurationService,
@@ -42,15 +39,14 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
               private _ngZone: NgZone,
               private translate: TranslateService,
               private _route: ActivatedRoute, 
-              private _token: TokenService) {
+              private _token: TokenService,
+              private _auth: AuthHelper) {
         // this language will be used as a fallback when a translation isn't found in the current language
       translate.setDefaultLang('en');
       // the lang to use, if the lang isn't available, it will use the current loader to get them
       translate.use('en');
-      this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
-      this.routes = this._routeList.asObservable();
-
-
+      
+      let t = this._auth;
   }
 
   logout(): void {
@@ -60,51 +56,32 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.setUserInfo();   
       this.watchScreen();
-      this.userSubscription = this._actions.userInfoEvent.subscribe((user: User) => {
-        this.userName = user.name;
-        this.userEmail = user.eMail;
-      });
-      this.setUserInfo();
   }
 
-
   setUserInfo() {
-    
-     if( this._confs.userInfo ) {
-        this.userName = this._confs.userInfo.name;
-        this.userEmail = this._confs.userInfo.eMail;
-     }
+        if( this._confs.userInfo ) {
+          this.userName = this._confs.userInfo.name;
+          this.userEmail = this._confs.userInfo.eMail;
+        }
   }
 
   ngAfterViewInit() {
 
-    let h : Headers = new Headers();
-    h.append('Access-Control-Allow-Origin', this._confs.root);
-    this._http.get(this._confs.appBase + 'data/crm-menu.json', { headers: h })
-    .map((response) => response.json()).subscribe((result) => {
-      this._routeList.next(result);
-    }, (error) => {
-        debugger
-    });
   }
 
-
-
-    ngOnDestroy() {
-
+  ngOnDestroy() {
     if (this._querySubscriptionxs !== undefined) { this._querySubscriptionxs.unsubscribe(); }
     if (this._querySubscriptionsm !== undefined) { this._querySubscriptionsm.unsubscribe(); }
     if (this._querySubscriptionmd !== undefined) { this._querySubscriptionmd.unsubscribe(); }
     if (this._querySubscriptionlg !== undefined) { this._querySubscriptionlg.unsubscribe(); }
-    if (this.userSubscription !== undefined) { this.userSubscription.unsubscribe(); }
   }
 
 
-    checkScreen(): void {
+  checkScreen(): void {
 
     this._ngZone.run(() => {
-
       this.isSmallScreen = this._mediaService.query('sm'); // or '(min-width: 960px) and (max-width: 1279px)'
     });
   }

@@ -22,4 +22,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class OpportunityComponent   {
 
+
+
+
 }

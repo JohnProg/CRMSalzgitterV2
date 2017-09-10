@@ -53,22 +53,11 @@ export class EditordetailsumaryComponent extends BaseComponent {
 
   refreshItemUrl: string;
   sumProperties: string;
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+  total: number = 0;
+  totalAmount: number = 0;
 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.setTitle = false;
     this._columns = <BehaviorSubject<ITdDataTableColumn[]>>new BehaviorSubject([]);
     this.pcolumns = this._columns.asObservable();
@@ -76,7 +65,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
     this._pdetails = <BehaviorSubject<EditorDetailSumaryProperty[]>>new BehaviorSubject([]);
     this.pdetails = this._pdetails.asObservable();
     this.handleScreenChange = false;
-    
+    this.subEditor = true;  
   }
 
   
@@ -84,14 +73,15 @@ export class EditordetailsumaryComponent extends BaseComponent {
     
     this.refreshItems();
     let pparams: TCRMEntity[] = new Array<TCRMEntity>();
-    pparams.push( (<TCRMEntity>{ name: 'idproduct', description: this.idProduct.toString()}) );
+    pparams.push( (<TCRMEntity>{ name: 'prodId', description: this.idProduct.toString()}) );
+    pparams.push( (<TCRMEntity>{ name: 'idprop', description: '0'}) );
     this._curService.loadCustomCatalogObs('ProductProperty/searchByProduct', pparams)
     .map((response) => response.json())
     .subscribe( (items: ProductProperty[]) => {
       
          this._props = items;
          
-         this.initDetails();
+         //this.initDetails();
     });
 
   }
@@ -111,7 +101,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
 
     
   initEntity() {
-    this.initDetails();
+    //this.initDetails();
   }
 
   initDetails() {
@@ -119,26 +109,41 @@ export class EditordetailsumaryComponent extends BaseComponent {
     if (this._props !== undefined) {
 
       let pdet: EditorDetailSumaryProperty[] = new Array<EditorDetailSumaryProperty>();
-      
+      debugger
       this._props.forEach((c: ProductProperty) => {
         let p: EditorDetailSumaryProperty = new EditorDetailSumaryProperty();
         p.idParent = this.itemEdit.id;
         p.idProperty = c.idProperty;
         p.propertyValue = '';
         p.isRequired = c.isRequired;
-        p.property = new Property();
+        
         p.nameDescription = 'prop' + c.idProperty;
-        Object.assign(p.property, c.property);
+        p.property = new Property();
+        if( c.property != undefined) {
+           Object.assign(p.property, c.property);
+        } else {
+          p.property.name = c.name;
+          p.property.id = c.id;
+          p.property.description = c.description;
+          
+        }
         pdet.push(p);
       });
 
       if(pdet.length > 0) {
+        this.setPropertyValues(pdet);
         this._pdetails.next(pdet);
+        
       }
     }
 
   }
 
+  setPropertyValues(details: EditorDetailSumaryProperty[] ) {
+
+  }
+
+  
   addEntity() {
     this.initEntity();
     this.isEditing = true;
@@ -170,7 +175,8 @@ export class EditordetailsumaryComponent extends BaseComponent {
   }
 
   afterLoadAll(itms: EditorDetailSumary[]) {
-    
+      this.total = 0;
+      this.totalAmount = 0;
       if( itms !== undefined && itms.length > 0 && itms[0][this.sumProperties] !== undefined 
         && itms[0][this.sumProperties].length > 0) {
         this._pcolumns = new Array<ITdDataTableColumn>();
@@ -181,20 +187,20 @@ export class EditordetailsumaryComponent extends BaseComponent {
         });
 
         itms.forEach( (t: EditorDetailSumary) => {
+          this.total += t.quantity;
+          this.totalAmount += t.amount;
           t[this.sumProperties].forEach( (p: EditorDetailSumaryProperty) => {
               t['prop' + p.idProperty] = p.propertyValue;
           });
         });
 
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'quantity' ,  label: 'Quantity', tooltip: '',
-         numeric: true, format: NUMBER_FORMAT, draw: true  }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'price' ,  label: 'Price', tooltip: '',
-         numeric: true, format: CURRENCY_FORMAT, draw: true }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'amount' ,  label: 'Amount', tooltip: '',
-         numeric: true, format: CURRENCY_FORMAT, draw: true }));
-        this._pcolumns.push( (<ITdDataTableColumn> { name: 'comment' ,  label: 'Comment', tooltip: '',
-         draw: true }));
+        this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity', tooltip: '', numeric: true, format: NUMBER_FORMAT, sortable: false });
+        this._pcolumns.push(  { name: 'price' ,  label: 'Price', tooltip: '', numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+        this._pcolumns.push(  { name: 'amount' ,  label: 'Amount', tooltip: '', numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+        this._pcolumns.push(  { name: 'comment' ,  label: 'Comment', tooltip: '' });
         this._columns.next(this._pcolumns);
+
+
       }
       this.isLoading = false;
       this.onHasSumary.emit(itms.length > 0);
@@ -223,8 +229,16 @@ export class EditordetailsumaryComponent extends BaseComponent {
 
 
   deleteEntity(id: number) {
+
     this._curService.remove(id);
   }
 
-
+  qtyChange(event)  {
+    this.itemEdit.quantity = event;
+    this.itemEdit.amount  = event * this.itemEdit.price;
+  }
+  priceChange(event)  {
+    this.price = event;
+    this.itemEdit.amount  = this.itemEdit.quantity * event;
+  }  
 }

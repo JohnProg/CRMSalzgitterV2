@@ -33,11 +33,12 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   private showSaveEvent: Subscription;
   private showCancelEvent: Subscription;
   private showSideNavEvent: Subscription;
+ 
 
   private showEmailEvent: Subscription;
 
 
-
+  
   catalogTitle: string;
   deleteDescription: string;
   showSearch: boolean = true;
@@ -60,7 +61,6 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
       .subscribe((res) => {
         this.catalogTitle = res;
       });
-
 
     this.showSearchEvent = this._actions.showSearchEvent
       .subscribe((res) => {
@@ -98,11 +98,12 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.setEditEvent = this._actions.setEditEvent
       .subscribe((e: any) => {
-        this.setEdit();
+        this.setEdit(e);
       });
 
     this.deleteItemEvent = this._actions.deleteItemEvent
       .subscribe((e: IDeleteEventModel) => {
+        
         this.deleteItem(e);
       });
 
@@ -151,12 +152,14 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     this._actions.addItemEvent.emit();
   }
 
-  private setEdit() {
+  private setEdit(e: any) {
     
     this.showSave = true;
     this.showAdd = false;
     this.showSearch = false;
-    this.showCancel = true;
+    if( e == undefined || ( e.isChild != undefined && e.isChild == false) ) {
+       this.showCancel = true;
+    }
   }
 
   private search(atext: string): void {
@@ -165,18 +168,19 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private deleteItem(e: IDeleteEventModel): void {
+    
     this._dialogService
       .openConfirm({ message: 'Are you sure you want to delete ' + e.title + '?' })
       .afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
           this._loadingService.register('users.list');
-          this.deleteConfirmed(e.objId);
+          this.deleteConfirmed(e);
         }
       });
   }
 
-  private deleteConfirmed( c: string) {
-    this._actions.deleteItemConfirmedEvent.emit(c);
+  private deleteConfirmed(e: IDeleteEventModel) {
+    this._actions.deleteItemConfirmedEvent.emit(e);
   }
 
   private cancelEdit() {

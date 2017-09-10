@@ -13,7 +13,7 @@ export class ActionsService {
     public editItemEvent: EventEmitter<any>=new EventEmitter();
     public saveItemEvent: EventEmitter<any> =new EventEmitter();
     public deleteItemEvent: EventEmitter<IDeleteEventModel> = new EventEmitter();
-    public deleteItemConfirmedEvent: EventEmitter<any>=new EventEmitter();
+    public deleteItemConfirmedEvent: EventEmitter<IDeleteEventModel>=new EventEmitter();
     public cancelEditEvent: EventEmitter<any>=new EventEmitter();
     public setEditEvent: EventEmitter<any>=new EventEmitter();
 
@@ -66,25 +66,27 @@ export class ActionsService {
     }
 
     public deleteItem(e: IDeleteEventModel) {
+      
       this.deleteItemEvent.emit(e);
     }
 
-    public deleteItemConfirmed() {
-         this.deleteItemConfirmedEvent.emit();
+    public deleteItemConfirmed(e: IDeleteEventModel) {
+         this.deleteItemConfirmedEvent.emit(e);
     }
 
     public cancelEdit() {
       this.cancelEditEvent.emit();
     }
 
-    public setEdit() {
+    public setEdit(e: any = undefined) {
 
-      this.setEditEvent.emit();
+      this.setEditEvent.emit(e);
     }
 
     public updateTitle(atitle: string) {
       this.updateTitleEvent.emit(atitle);
     }
+
 
     public search(afilter: string) {
       

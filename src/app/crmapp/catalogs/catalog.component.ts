@@ -15,6 +15,7 @@ import { MenuClass } from '../model/menuclass';
 import { Subscription } from 'rxjs/Subscription';
 import { BaseComponent } from './base.component';
 import { TCRMEntity } from '../model/index';
+import { EnumDocType } from '../constants/index';
 
 @Component({
   selector: 'crm-catalog',
@@ -25,13 +26,15 @@ import { TCRMEntity } from '../model/index';
 export class CatalogComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(BaseComponent) headercomp: BaseComponent;
+
   scrId: number = 1;
   afterCreateItem: Subscription;
   afterItemLoaded: Subscription;
   idCustomer: number;
   catalogs: MenuClass[] = [
   ];
-
+  quoteType : EnumDocType;
+  
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,

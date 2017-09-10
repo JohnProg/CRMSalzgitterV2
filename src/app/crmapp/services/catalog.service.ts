@@ -20,6 +20,8 @@ import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import {  TCRMEntity, ReturnSaveRequest, QueryResponse } from '../model/index';
+import * as moment from 'moment';
+import { environment } from '../../../environments/environment';
 
 export interface IPChangeEventSorted extends IPageChangeEvent {
   sortBy: string;
@@ -30,7 +32,7 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
 export const NUMBER_FORMAT: any = (v: number) => (v || 0).toLocaleString();
 export const DECIMAL_FORMAT: any = (v: number) => (v || 0).toLocaleString();
 export const CURRENCY_FORMAT: any = (v: number ) =>  '$' + (v || 0).toLocaleString();
-export const DATE_FORMAT: any = (v: number ) =>  v !== undefined ? v.toLocaleString() : '';
+export const DATE_FORMAT: any = (v: Date ) =>   v !== undefined ? moment(v).format(environment.dateFormat) : '';
 
 @Injectable()
 export class CRMRestService extends RESTService<TCRMEntity>  {
@@ -88,6 +90,11 @@ export class CatalogService {
   afterUpdateEmitter: EventEmitter<any> = new EventEmitter<any>();
   afterCreateEmitter: EventEmitter<any> = new EventEmitter<any>();
   afterDeleteEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+  onUpdateErrorEmitter: EventEmitter<any> = new EventEmitter<any>();
+  onCreateErrorEmitter: EventEmitter<any> = new EventEmitter<any>();
+  onDeleteErrorEmitter: EventEmitter<any> = new EventEmitter<any>();
+
   afterLoadAllEvent: EventEmitter<TCRMEntity[]> = new EventEmitter<TCRMEntity[]>();
   _rest: CRMRestService;
 
@@ -193,7 +200,7 @@ export class CatalogService {
     t = this._tableService.sortData(t, p.sortBy, p.sortType == 'ASC' ? TdDataTableSortingOrder.Ascending : TdDataTableSortingOrder.Descending );
     t = this._tableService.pageData(t, index , --index + p.pageSize);    
     this._entList.next(t);
-    this.changeTotal(t.length);
+    //this.changeTotal(t.length);
     //this.afterLoadAllEvent.next(this.dataStore.entities);
   }
 
@@ -252,7 +259,7 @@ export class CatalogService {
     });
   }
   
-  create(entity: any, customHandle: boolean = false) {
+  create(entity: any, customHandle: boolean = false ) {
 
     this._rest.create( entity)
       .map((response) => response.json())
@@ -269,11 +276,12 @@ export class CatalogService {
            this.afterCreateEmitter.emit( this.dataStore.entities);
         }
       }, (error) => {
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+        this.onCreateErrorEmitter.emit(error);
+        this._snackBarService.open(error.message, 'Ok');
       });
   }
 
-    createArray(entity: any, customHandle: boolean = false) {
+  createArray(entity: any, customHandle: boolean = false) {
 
     this._rest.create( entity)
       .map((response) => response.json())
@@ -296,7 +304,7 @@ export class CatalogService {
            this.afterCreateEmitter.emit( this.dataStore.entities);
         }
       }, (error) => {
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+        this.onCreateErrorEmitter.emit(error);
       });
   }
 
@@ -331,7 +339,7 @@ export class CatalogService {
            this.afterCreateEmitter.emit( this.dataStore.entities);
         }
       }, (error) => {
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+         this._snackBarService.open(error.message, 'Ok');
       });
   }
 
@@ -357,7 +365,7 @@ export class CatalogService {
         }
         this._snackBarService.open(this.catalogName + data.message, 'Ok');
       }, (error) => {
-        this._snackBarService.open(error.Message, 'Ok');
+        this.onUpdateErrorEmitter.emit(error);
       });
   }
 
@@ -366,18 +374,24 @@ export class CatalogService {
   remove(entId: number, customHandle: boolean = false ) {
 
     this._rest.delete(entId).subscribe( (response) => {
-      this.dataStore.entities.forEach((t, i) => {
-        if (t.id === entId) { this.dataStore.entities.splice(i, 1); }
-      });
-
+      // this.dataStore.entities.forEach((t, i) => {
+      //   if (t.id === entId) { this.dataStore.entities.splice(i, 1); }
+      // });
+      
+      let idx = this.dataStore.entities.findIndex(o => o.id == entId);
+      
+      if( idx >= 0) {
+        this.dataStore.entities.splice(idx, 1); 
+      }
+      //let et = Object.assign({}, this.dataStore).entities;
       if( customHandle === false) {
-        this._entList.next(Object.assign({}, this.dataStore).entities);
+        //this._entList.next(this.dataStore.entities);
       }
       this.afterDeleteEmitter.emit(this.dataStore.entities);
       this._snackBarService.open(response, 'Ok');
 
     }, (error) => {
-      this._snackBarService.open(error.Message, 'Ok');
+      this.onDeleteErrorEmitter.emit(error);
     });
   }
 

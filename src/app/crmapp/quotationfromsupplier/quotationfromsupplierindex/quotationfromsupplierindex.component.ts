@@ -45,8 +45,6 @@ export class QuotationfromsupplierindexComponent   {
     });
   }
 
-  search(e) {
-    this._actions.search(e);
-  }
+
 
 }

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Title }     from '@angular/platform-browser';
 import { multi } from './data';
-
+import { AuthHelper } from '../crmapp/authHelper/authHelper';
 @Component({
   selector: 'crm-dashboard',
   templateUrl: './dashboard.component.html',
@@ -24,7 +24,8 @@ export class DashboardComponent implements AfterViewInit  {
           private _router: Router,
         private _route: ActivatedRoute,
         private _token: TokenService,
-              private _confs: ConfigurationService ) {
+              private _confs: ConfigurationService,
+            private _auth: AuthHelper ) {
 
   }
 
@@ -33,6 +34,10 @@ export class DashboardComponent implements AfterViewInit  {
   ngAfterViewInit(): void {
     this._titleService.setTitle( 'CRM Salzgitter' );
  
+  }
+
+  setOneDrive() {
+    localStorage.removeItem('oneDriveToken');
   }
 
 }

@@ -18,10 +18,15 @@
 		selected: boolean;
 		wLJsPath: string;
 		isActive: boolean;
+		showActions: boolean;
 	}
 	export class TCRMEntity extends BaseEntity {
 	}
 
+	export class BaseOpportunity extends TCRMEntity {
+		isEditable: boolean;
+		allowChild: boolean;
+	}
 	export class EditorDetailSumary extends TCRMEntity {
 		amount: number;
 		comment: string;
@@ -76,7 +81,6 @@
 		parentFolder: string;
 	}
 
-
 	export class ActionOpportunity extends TCRMEntity {
 		actionOpportunityDocTypes: ActionOpportunityDocType[];
 		eMailTo: number;
@@ -125,7 +129,7 @@
 		agentNumber: string;
 		colony: Colony;
 		contactName: string;
-		customers: Customer[];
+		customerBrokers: CustomerBroker[];
 		eMail: string;
 		id: number;
 		idColony: number;
@@ -194,9 +198,10 @@
 		id: number;
 		idColony: number;
 		legalResponsible: string;
-		logo: number[];
+		logo: string;
 		number: string;
 		phone: string;
+		rfc: string;
 		street: string;
 		taxAmount: number;
 		zipCode: string;
@@ -254,29 +259,39 @@
 	export class Customer extends TCRMEntity {
 		brokers: Broker[];
 		colony: Colony;
+		customerBrokers: CustomerBroker[];
 		customerContacts: CustomerContact[];
 		customerDeliveryPoints: CustomerDeliveryPoint[];
 		customerDocuments: CustomerDocument[];
+		customerMarkets: CustomerMarket[];
+		customerProducts: CustomerProduct[];
+		customerRailSpurs: CustomerRailSpur[];
+		customerSectors: CustomerSector[];
 		daysCredit: number;
 		id: number;
 		idColony: number;
 		idResponsible: number;
 		interestRate: number;
+		isActive: boolean;
+		isAutomotive: boolean;
 		limitCreditGermany: number;
 		limitCreditUSA: number;
-		markets: Market[];
 		name: string;
 		number: string;
 		opportunities: Opportunity[];
 		phone: string;
-		products: Product[];
 		purchaseOrders: PurchaseOrder[];
-		railSpurs: RailSpur[];
 		responsible: Responsible;
 		rFC: string;
-		sectors: Sector[];
 		shippings: Shipping[];
 		street: string;
+	}
+	export class CustomerBroker extends TCRMEntity {
+		broker: Broker;
+		customer: Customer;
+		id: number;
+		idBroker: number;
+		idCustomer: number;
 	}
 	export class CustomerContact extends TCRMEntity {
 		cellPhone: string;
@@ -311,6 +326,7 @@
 		idColony: number;
 		idCustomer: number;
 		idDeliveryType: number;
+		isActive: boolean;
 		opportunities: Opportunity[];
 		purchaseOrders: PurchaseOrder[];
 		quotationFromSuppliers: QuotationFromSupplier[];
@@ -345,6 +361,7 @@
 		idProduct: number;
 		isAutomotive: boolean;
 		customerProductExtended: CustomerProductExtended;
+		customerProductProperties: CustomerProductProperty[];
 	}
 	export class CustomerProductExtended extends TCRMEntity {
 		buyerName: string;
@@ -355,9 +372,6 @@
 		partNumberOEM: string;
 		platform: string;
 		prodDescription: string;
-		spec: string;
-		thickness: number;
-		width: number;
 	}	
 	export class CustomerProductPrice extends TCRMEntity {
 		customerProduct: CustomerProduct;
@@ -366,6 +380,13 @@
 		price: number;
 		validFrom: Date;
 		validTo: Date;
+	}	
+	export class CustomerProductProperty extends TCRMEntity {
+		id: number;
+		idCustomerProduct: number;
+		idProperty: number;
+		property: Property;
+		propertyValue: string;
 	}	
 	export class CustomerRailSpur extends TCRMEntity {
 		customer: Customer;
@@ -396,12 +417,22 @@
 	export class DocType extends TCRMEntity {
 		actionOpportunityDocTypes: ActionOpportunityDocType[];
 		description: string;
+		docTypeStatus: DocTypeStatu[];
 		id: number;
 		name: string;
 		opportunities: Opportunity[];
 		purchaseOrders: PurchaseOrder[];
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
+	}
+	export class DocTypeStatu extends TCRMEntity {
+		allowChild: boolean;
+		docType: DocType;
+		estatusOpportunity: EstatusOpportunity;
+		id: number;
+		idDocType: number;
+		idStatus: number;
+		isEditable: boolean;
 	}
 	export class DocumentType extends TCRMEntity {
 		description: string;
@@ -438,8 +469,8 @@
 	export class EstatusOpportunity extends TCRMEntity {
 		actionOpportunities: ActionOpportunity[];
 		description: string;
+		docTypeStatus: DocTypeStatu[];
 		id: number;
-		isEditable: boolean;
 		name: string;
 		opportunities: Opportunity[];
 		purchaseOrders: PurchaseOrder[];
@@ -462,7 +493,7 @@
 		responsibleTargets: ResponsibleTarget[];
 	}
 	export class GenericList extends TCRMEntity {
-		descripcion: string;
+		description: string;
 		idString: string;
 		name: string;
 	}
@@ -565,8 +596,8 @@
 		id: number;
 		idCustomer: number;
 		name: string;
-		position: string;
 		nickName: string;
+		position: string;
 	}	
 	export class GetCustomerDeliverPoints_Result extends TCRMEntity {
 		cdpContact: string;
@@ -609,6 +640,18 @@
 		idMarket: number;
 		name: string;
 	}	
+    export class GetCustomerProductData_Result extends TCRMEntity {
+		currentPrice: number;
+		id: number;
+		idCustomer: number;
+		idProduct: number;
+		isAutomotive: boolean;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
+		prodDescription: string;
+		productName: string;
+	}
 	export class GetCustomerProducts_Result extends TCRMEntity {
 		buyerName: string;
 		id: number;
@@ -620,9 +663,6 @@
 		prodDescription: string;
 		productDescription: string;
 		productName: string;
-		spec: string;
-		thickness: number;
-		width: number;
 	}
 	export class getCustomers_Result extends TCRMEntity {
 		colonyName: string;
@@ -650,12 +690,12 @@
 	export class GetFieldForPurchaseOrder_Result extends TCRMEntity {
 		asImporter: boolean;
 		creditDays: number;
-		idDeliveryPoint: number;
 		idContact: number;
 		idCountryOrigin: number;
 		idCurrency: number;
 		idCustomer: number;
 		idCustomerContact: number;
+		idDeliveryPoint: number;
 		idDocType: number;
 		idIncoTerm: number;
 		idLinerTerm: number;
@@ -672,10 +712,25 @@
 		idTypeOpp: number;
 		idUser: number;
 		interestRate: number;
+		isAutomotive: boolean;
 		offerValidity: Date;
 		oppNotes: string;
 		shipmentOffered: Date;
 	}
+	export class GetFieldForShipping_Result extends TCRMEntity {
+		id: number;
+		idCountryOrigin: number;
+		idCurrency: number;
+		idCustomer: number;
+		idDeliveryPoint: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMill: number;
+		idPort: number;
+		isAutomotive: boolean;
+		idDocType: number;
+		idStatus: number;
+	}	
 	export class getListIntFomXML_Result extends TCRMEntity {
 		id: number;
 	}
@@ -801,6 +856,7 @@
 		name: string;
 	}
 	export class GetPurchaseOrder_Result extends TCRMEntity {
+		allowChild: boolean;
 		aSign: string;
 		currencyName: string;
 		customerName: string;
@@ -811,6 +867,7 @@
 		idMill: number;
 		idQuotationToCustomer: number;
 		idStatus: number;
+		isAutomotive: boolean;
 		isEditable: boolean;
 		millName: string;
 		sMIM: string;
@@ -846,34 +903,35 @@
 		responsibleName: string;
 		toContact: number;
 	}
-	export class GetQFSFields_Result {
-			asImporter: boolean;
-			creditDays: number;
-			idDeliveryPoint: number;
-			idContact: number;
-			idCountryOrigin: number;
-			idCurrency: number;
-			idCustomer: number;
-			idCustomerContact: number;
-			idDocType: number;
-			idIncoTerm: number;
-			idLinerTerm: number;
-			idMarket: number;
-			idMill: number;
-			idOpportunity: number;
-			idPort: number;
-			idResponsible: number;
-			idSector: number;
-			idStatus: number;
-			idTransactionFlow: number;
-			idTypeOpp: number;
-			idUser: number;
-			interestRate: number;
-			offerValidity: Date;
-			oppNotes: string;
-			shipmentOffered: Date;
-	}	
+	export class GetQFSFields_Result extends TCRMEntity {
+		asImporter: boolean;
+		creditDays: number;
+		idContact: number;
+		idCountryOrigin: number;
+		idCurrency: number;
+		idCustomer: number;
+		idCustomerContact: number;
+		idDeliveryPoint: number;
+		idDocType: number;
+		idIncoTerm: number;
+		idLinerTerm: number;
+		idMarket: number;
+		idMill: number;
+		idOpportunity: number;
+		idPort: number;
+		idResponsible: number;
+		idSector: number;
+		idStatus: number;
+		idTransactionFlow: number;
+		idTypeOpp: number;
+		idUser: number;
+		interestRate: number;
+		offerValidity: Date;
+		oppNotes: string;
+		shipmentOffered: Date;
+	}
 	export class getQuotationFromSupplier_Result extends TCRMEntity {
+		allowChild: boolean;
 		aSign: string;
 		asImporter: boolean;
 		currencyName: string;
@@ -887,6 +945,7 @@
 		idOpportunity: number;
 		idPort: number;
 		idStatus: number;
+		isAutomotive: boolean;
 		isEditable: boolean;
 		millName: string;
 		portName: string;
@@ -923,6 +982,7 @@
 		toContact: number;
 	}
 	export class GetQuotationToCustomer_Result extends TCRMEntity {
+		allowChild: boolean;
 		aSign: string;
 		currencyName: string;
 		customerName: string;
@@ -933,6 +993,7 @@
 		idMill: number;
 		idQuotationFromSupplier: number;
 		idStatus: number;
+		isAutomotive: boolean;
 		isEditable: boolean;
 		millName: string;
 		sstatusName: string;
@@ -1007,6 +1068,7 @@
 		idPort: number;
 		idStatus: number;
 		idUser: number;
+		isAutomotive: boolean;
 		millName: string;
 		portName: string;
 		shipDate: Date;
@@ -1019,6 +1081,14 @@
 		fullName: string;
 		id: number;
 		idCountry: number;
+		name: string;
+	}
+	export class GetStatusByDocType_Result extends TCRMEntity {
+		allowChild: boolean;
+		description: string;
+		id: number;
+		idDocType: number;
+		isEditable: boolean;
 		name: string;
 	}
 	export class getUsers_Result extends TCRMEntity {
@@ -1067,7 +1137,7 @@
 		win32ThreadId: string;
 	}
 	export class Market extends TCRMEntity {
-		customers: Customer[];
+		customerMarkets: CustomerMarket[];
 		description: string;
 		id: number;
 		name: string;
@@ -1121,6 +1191,7 @@
 		incoTerm: IncoTerm;
 		interestRate: number;
 		isActive: boolean;
+		isAutomotive: boolean;
 		lastUpdated: Date;
 		linerTerm: LinerTerm;
 		market: Market;
@@ -1136,15 +1207,16 @@
 		typeOpportunity: TypeOpportunity;
 		user: User;
 	}
-	export class OpportunityDetail extends TCRMEntity {
+	export class OpportunityDetail extends TCRMEntity  {
 		dateAdded: Date;
 		id: number;
+		idCustomerProduct: number;
 		idOpportunity: number;
 		idProduct: number;
 		itemDescription: string;
-		itemExtended: number;
-		itemPrice: number;
-		itemQuantity: number;
+		itemExtended: number = 0;
+		itemPrice: number = 0;
+		itemQuantity: number = 0;
 		opportunity: Opportunity;
 		opportunityDetailSumaries: OpportunityDetailSumary[];
 		product: Product;
@@ -1204,7 +1276,7 @@
 	export class Product extends TCRMEntity {
 		campaignTemplate: string;
 		campaignTemplateSubject: string;
-		customers: Customer[];
+		customerProducts: CustomerProduct[];
 		description: string;
 		family: Family;
 		id: number;
@@ -1227,6 +1299,7 @@
 		property: Property;
 	}
 	export class Property extends TCRMEntity {
+		customerProductProperties: CustomerProductProperty[];
 		description: string;
 		id: number;
 		name: string;
@@ -1236,7 +1309,8 @@
 		quotationFromSupplierDetailSumaryProperties: QuotationFromSupplierDetailSumaryProperty[];
 		quotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
 	}
-	export class PurchaseOrder extends TCRMEntity {
+	export class PurchaseOrder extends BaseOpportunity {
+
 		asImporter: boolean;
 		bookingDate: Date;
 		comments: string;
@@ -1275,6 +1349,7 @@
 		incoTerm: IncoTerm;
 		interestRate: number;
 		isActive: boolean;
+		isAutomotive: boolean;
 		lastUpdated: Date;
 		linerTerm: LinerTerm;
 		market: Market;
@@ -1282,7 +1357,7 @@
 		offerValidity: Date;
 		oppNotes: string;
 		opportunity: Opportunity;
-		pONumber: string;
+		poNumber: string;
 		port: Port;
 		purchaseOrderDetails: PurchaseOrderDetail[];
 		purchaseOrderDialogs: PurchaseOrderDialog[];
@@ -1292,7 +1367,7 @@
 		sector: Sector;
 		shipmentOffered: Date;
 		shippingDetails: ShippingDetail[];
-		sMIM: string;
+		smim: string;
 		transactionFlow: TransactionFlow;
 		typeOpportunity: TypeOpportunity;
 		user: User;
@@ -1338,7 +1413,7 @@
 	export class PurchaseOrderDocument extends BaseDocument {
 		idPurchaseOrderDialog: number;
 	}
-	export class QuotationFromSupplier extends TCRMEntity {
+	export class QuotationFromSupplier extends BaseOpportunity {
 		asImporter: boolean;
 		country: Country;
 		creditDays: number;
@@ -1364,6 +1439,7 @@
 		idUser: number;
 		incoTerm: IncoTerm;
 		interestRate: number;
+		isAutomotive: boolean;
 		linerTerm: LinerTerm;
 		mill: Mill;
 		offerValidity: Date;
@@ -1416,7 +1492,7 @@
 		idQuotationFromSupplierDialog: number;
 	}
 
-	export class QuotationToCustomer extends TCRMEntity {
+	export class QuotationToCustomer extends BaseOpportunity {
 		asImporter: boolean;
 		country: Country;
 		creditDays: number;
@@ -1441,6 +1517,7 @@
 		idUser: number;
 		incoTerm: IncoTerm;
 		interestRate: number;
+		isAutomotive: boolean;
 		linerTerm: LinerTerm;
 		mill: Mill;
 		offerValidity: Date;
@@ -1495,7 +1572,7 @@
 	export class RailSpur extends TCRMEntity {
 		carsPerDay: number;
 		colony: Colony;
-		customers: Customer[];
+		customerRailSpurs: CustomerRailSpur[];
 		id: number;
 		idColony: number;
 		idRailSpurType: number;
@@ -1559,7 +1636,7 @@
 		message: string;
 	}
 	export class Sector extends TCRMEntity {
-		customers: Customer[];
+		customerSectors: CustomerSector[];
 		description: string;
 		id: number;
 		name: string;
@@ -1586,11 +1663,14 @@
 		idPort: number;
 		idStatus: number;
 		idUser: number;
+		incoTerm: IncoTerm;
+		isAutomotive: boolean;
+		linerTerm: LinerTerm;
 		mill: Mill;
 		port: Port;
 		shipDate: Date;
-		shippingDetails: ShippingDetail[];
 		shipNotes: string;
+		shippingDetails: ShippingDetail[];
 		statusShip: StatusShip;
 		user: User;
 		vesselName: string;
@@ -1618,10 +1698,10 @@
 		name: string;
 	}
 	export class StatusShip extends TCRMEntity {
+		allowEdit: boolean;
 		description: string;
 		id: number;
 		name: string;
-		allowEdit: boolean;
 		shippings: Shipping[];
 	}
 	export class Supplier extends TCRMEntity {
@@ -1699,7 +1779,15 @@
 	}
 
 
-	export class ShipPODetailModel {
+	export class ShipPODetailModel extends TCRMEntity {
 		items: GetPODetailForShipping_Result[];
 		po: number;
+	}
+export class ValidaCustomerProductPriceDate_Result extends TCRMEntity {
+		id: number;
+		idCustomer: number;
+		idProduct: number;
+		price: number;
+		validFrom: Date;
+		validTo: Date;
 	}

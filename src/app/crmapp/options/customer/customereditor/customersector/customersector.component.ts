@@ -45,27 +45,14 @@ export class CustomersectorComponent extends CustomerbaseComponent {
 
   itemEdit: CustomerSector;
   sectorSelected: number[];
-  constructor( public _router: Router,  
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _router, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Sectors';
     this.catalog = 'CustomerSector';
-    this._curService.setAPI( this.catalog + '/', this.catalogName);
+    this._curService.setAPI( this.catalog + '/', this.catalogName);  
   }
-
-
   ngOnInitClass() {
     super.ngOnInitClass();
     this.entList = <Observable<GetCustomerSectors_Result[]>>this._curService.entList;

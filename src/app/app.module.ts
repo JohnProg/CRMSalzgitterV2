@@ -17,6 +17,9 @@ import { CRMModule } from './crmapp/crm.module';
 import { Md2Module }  from 'md2';
 import { environment } from '../environments/environment';
 
+import { MainmenuComponent } from './mainmenu/mainmenu.component';
+
+
 
 
 const httpInterceptorProviders: Type<any>[] = [
@@ -31,13 +34,7 @@ export function HttpLoaderFactory(http: Http) {
   declarations: [
     AppComponent,
     routedComponents,
-
-
-
-
-
-
-
+    MainmenuComponent,
 
   ], // directives, components, and pipes owned by this NgModule
   imports: [

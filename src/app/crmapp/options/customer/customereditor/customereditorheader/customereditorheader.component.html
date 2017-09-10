@@ -1,5 +1,5 @@
 
-<form #f="ngForm" #form flex (ngSubmit)="submitForm(form)">
+<form #editform="ngForm"  flex (ngSubmit)="submitForm(form)">
 
 
         <div layout-gt-sm="row" layout-lt-sm="column"  layout-margin >
@@ -18,16 +18,19 @@
           </section>
         </div>
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <md-input-container flex-gt-sm="50">
+          <md-input-container flex-gt-sm="35">
             <input mdInput #street   name="street" [(ngModel)]="itemEdit.street" required placeholder="Street" maxlength="100"
             />
             <md-hint align="end">{{street.value.length}} / 100</md-hint>
           </md-input-container>
-         <md-input-container flex-gt-sm="50">
+         <md-input-container flex-gt-sm="35">
             <input mdInput #number  name="number" [(ngModel)]="itemEdit.number" required placeholder="Number" maxlength="50"
             />
             <md-hint align="end">{{number.value.length}} / 50</md-hint>
           </md-input-container>
+          <section flex-gt-sm="30">
+            <md-slide-toggle #isAutomotive name="isAutomotive" [(ngModel)]="itemEdit.isAutomotive" >Automotive</md-slide-toggle>
+          </section>          
         </div>
 
         <crm-selectcolony name="zipcode" byType="1" [(ngModel)]="itemEdit.idColony"></crm-selectcolony>

@@ -18,7 +18,8 @@
     "stop-api": "pkill covalent-data",
     "webdriver-update": "bash ./node_modules/.bin/webdriver-manager update",
     "test": "ng test --code-coverage --single-run",
-    "ghpages-deploy": "ng build --base-href /testmaterial/ --aot -prod --sourcemap=false && bash scripts/ghpages-deploy"
+    "test:watch": "ng test --code-coverage",
+    "ghpages-deploy": "ng build --base-href /covalent-quickstart/ --aot -prod --sourcemap=false && bash scripts/ghpages-deploy"
   },
   "engines": {
     "node": ">4.4 < 7",
@@ -64,6 +65,7 @@
     "core-js": "^2.4.1",
     "d3": "^4.9.0",
     "graphql-tag": "2.4.2",
+    "graphql-tools": "^1.2.2",
     "hammerjs": "^2.0.8",
     "highlight.js": "9.10.0",
     "md2": "0.0.19",
@@ -71,12 +73,14 @@
     "ng2-currency-mask": "^4.0.2",
     "rxjs": "^5.4.0",
     "showdown": "1.6.4",
+    "superagent": "^3.6.0",
     "text-mask-addons": "^3.5.1",
     "zone.js": "^0.8.5"
   },
   "devDependencies": {
-    "@angular/cli": "^1.1.2",
-    "@angular/compiler-cli": "^4.2.3",
+    "@angular/cli": "^1.3.2",
+    "@angular/compiler-cli": "^4.2.0",
+    "@microsoft/microsoft-graph-types": "^1.0.1",
     "@types/hammerjs": "2.0.30",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
@@ -87,15 +91,17 @@
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.0.0",
     "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
-    "karma-firefox-launcher": "1.0.0",
+    "karma-coverage-istanbul-reporter": "^0.3.0",
     "karma-jasmine": "^1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "phantomjs-prebuilt": "2.1.7",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-remap-istanbul": "^0.6.0",
+    "karma-spec-reporter": "^0.0.31",
+    "phantomjs-prebuilt": "2.1.14",
     "protractor": "~5.1.0",
     "ts-node": "~2.1.0",
     "tslint": "^5.2.0",
-    "typescript": "~2.3.4"
+    "typescript": "~2.3.1"
   },
   "optionalDependencies": {
     "@covalent/data": "0.7.0"

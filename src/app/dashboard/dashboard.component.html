@@ -3,10 +3,13 @@
     <span>CRM Dashboard</span>
     <span flex></span>
   </div>
-  <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']" style="display: none;">
-       
+  <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']" >
+    <button md-mini-fab class="" (click)="setOneDrive()" aria-label="SendEmail" >
+        <md-icon>email</md-icon>
+    </button> 
   </div>
 
+  
 
   <td-layout-footer>
     <div layout="row" layout-align="start center">

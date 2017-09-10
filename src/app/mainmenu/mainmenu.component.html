@@ -1,0 +1,17 @@
+
+     <ng-template let-item  ngFor [ngForOf]="routes | async">
+        <td-expansion-panel [label]=" item.title | translate "  [expand]="false" >
+              <md-nav-list td-sidenav-content>
+          <ng-template let-mitem  ngFor [ngForOf]="item.childrens">
+            <a md-list-item  md-ripple [routerLink]="[item.route + '/' + mitem.routerlink]" ><md-icon>{{mitem.icon}}</md-icon>{{ mitem.displayName | translate}}</a>
+
+          </ng-template>
+              </md-nav-list>
+      </td-expansion-panel>      
+
+     </ng-template>
+
+    <md-nav-list td-navigation-drawer-menu>
+      <a md-list-item (click)="logout()"><md-icon>exit_to_app</md-icon>{{ 'HOME.SIGNOUT' | translate }}</a>
+    </md-nav-list>
+ 

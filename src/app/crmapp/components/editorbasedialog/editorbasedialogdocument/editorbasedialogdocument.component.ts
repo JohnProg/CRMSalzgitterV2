@@ -5,7 +5,7 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
-
+import { NgForm } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -38,28 +38,19 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   @Input() parentField: string;
 
   
-  
+  @ViewChild('docForm') form: NgForm;
   itemEdit: BaseDocument;
   
   files: any;
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+    this.subEditor = true;
     this.setTitle = false;
-    this.catalogName = 'Dialog Document';
+    this.catalogName = 'Dialog Document';   
   }
+
 
   ngOnInitClass() {
     this._curService.setAPI(this.baseApi, this.catalogName);
@@ -68,16 +59,11 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   }
 
 
-  initData() {
-    this.refreshItems();
-    this.initEntity();
-  }
-
   afterViewInit(): void {
     this._actions.setEdit();
   }
 
-  refreshItems() {
+  loadData() {
     let pparams: URLSearchParams = new URLSearchParams();
     pparams.set('iddialog', this.idDialog.toString());
     pparams.set('idparent', '0');
@@ -124,12 +110,12 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
 
 
   afterCreate(item: BaseDocument) {
-    Object.assign(this.itemEdit, item);
+    //Object.assign(this.itemEdit, item);
     this.isEditing = false;
   }
 
   afterUpdate(item: BaseDocument) {
-    Object.assign(this.itemEdit, item);
+    //Object.assign(this.itemEdit, item);
     this.isEditing = false;
   }
 

@@ -6,8 +6,8 @@
   <md-card-content>
 
 <section *ngIf="isEditing">
-   <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-    <button  md-raised-button color="primary" (click)="submitForm(form)"  >Save </button>
+   <form #docForm="ngForm"  id="docForm" flex (ngSubmit)="submitForm(docForm)" novalidate>
+    <button  md-raised-button color="primary"  >Save </button>
     <button md-raised-button color="secondary" (click)="cancelEdit()" >Cancel </button>
     <section layout="column" flex="100" layout-margin>
       <div layout-gt-sm="row" layout-lt-sm="column" flex>

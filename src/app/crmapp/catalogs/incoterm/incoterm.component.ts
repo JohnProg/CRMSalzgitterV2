@@ -33,28 +33,14 @@ export class IncotermComponent extends BaseComponent {
 
   itemEdit: IncoTerm;
 
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'IncoTerm';
-    this._curService.setAPI('IncoTerm/', this.catalogName);
+    this._curService.setAPI('IncoTerm/', this.catalogName);   
   }
 
 
-
-  ngOnInit() {
+  ngOnInitClass() {
 
     this.initData();
     this.entList = <Observable<IncoTerm[]>> this._curService.entList;

@@ -17,21 +17,23 @@ import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
-import {  Opportunity, IncoTerm, TCRMEntity } from '../model/index';
+import {  Opportunity, IncoTerm, TCRMEntity, GetStatusByDocType_Result } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 import { BaseComponent } from './base.component';
 import { AbstractValueAccessor } from '../components/abstractvalueaccessor';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-
+import { EnumDocType } from '../constants/index';
 
 export const oppQl = gql`
-  query {
+  query 
+  findStatusByDocType($iddoc: Int!)
+  {
     currencies { id name description aSign }
     responsibles { id name isActive  }
-    estatusOpportunities { id name description }
-    customers { id name }
+    findStatusByDocType(iddoc: $iddoc) { id name description allowChild isEditable idDocType }
+    customers { id name isAutomotive interestRate daysCredit idResponsible }
     contacts { id name isActive }
     markets { id name description }
     sectors { id name description }
@@ -54,13 +56,13 @@ export class BaseOppComponent extends BaseComponent {
 
   @Input() idDoc: number = 0;
   deliveryRequired: boolean = false;
-
+  @Input() quoteType: EnumDocType;
 
    loadCatalogs() {
-    this._curService.loadQl(oppQl, undefined)
+    this._curService.loadQl(oppQl, { iddoc: this.quoteType })
     .subscribe(({data}) => {
       this.catDocType = data['docType'];
-      this.catStatus = data['estatusOpportunities'];
+      this.catStatus = data['findStatusByDocType'];
       this.catResponsible = data['responsibles'];
       this.catCustomer = data['customers'];
       this.catCurrencies = data['currencies'];
@@ -76,7 +78,7 @@ export class BaseOppComponent extends BaseComponent {
       this.catMill = data['mills'];
     }, (error: Error) => {
       this._loadingService.resolve('');
-      debugger
+      
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     }
     );   
@@ -90,6 +92,7 @@ export class BaseOppComponent extends BaseComponent {
     this._actions.showCancel(false);
 
     if (this.idDoc > 0) {
+
       this.editEntity(this.idDoc);
       this._actions.updateTitle('Edit ' + this.idDoc.toString());
     } else {
@@ -106,6 +109,7 @@ export class BaseOppComponent extends BaseComponent {
       this.loadCustomerContact(item['idCustomer']);
     }
     this.setDeliveryRequired();
+    this.setAllowChild();
   }
 
 
@@ -114,6 +118,17 @@ export class BaseOppComponent extends BaseComponent {
     this.loadCustomerContact(event.value);
   }
 
+  afterLoadCustomerContact() {
+    if( this.itemEdit.id == 0 && this.catCustomer != undefined) {
+      let cust = this.catCustomer.find(o => o.id == this.itemEdit['idCustomer']);
+      if( cust !== undefined) {
+        this.itemEdit['isAutomotive'] = cust.isAutomotive;
+        this.itemEdit['creditDays'] = cust.daysCredit;
+        this.itemEdit['interestRate'] = cust.interestRate;
+        this.itemEdit['idResponsible'] = cust.idResponsible;
+      }
+    }
+  }
 
   onMillChange(event: any) {
     this.itemEdit['idCountryOrigin'] = undefined;
@@ -125,10 +140,9 @@ export class BaseOppComponent extends BaseComponent {
   }
 
   setDeliveryRequired() {
-   if( this.catIncoTerm != undefined) {
-      setTimeout(() => {
-    
-          let req =  <IncoTerm>(this.catIncoTerm.filter( i => i.id === this.itemEdit['idIncoTerm'])[0]);
+    setTimeout(() => {
+   if( this.catIncoTerm != undefined) {    
+       let req =  <IncoTerm>(this.catIncoTerm.filter( i => i.id === this.itemEdit['idIncoTerm'])[0]);
           if( req !== undefined) {
             this.deliveryRequired = req['deliveryRequired'];
             if ( this.deliveryRequired === false ) {
@@ -136,12 +150,26 @@ export class BaseOppComponent extends BaseComponent {
             }
           }
 
-      },1000);
-   }
+      }
+   },500);
   }  
 
+  setAllowChild() {
+    setTimeout(() => {
+    if( this.catStatus != undefined) {
+      
+          let req =  <GetStatusByDocType_Result>(this.catStatus.filter( i => i.id === this.itemEdit['idStatus'])[0]);
+          if( req !== undefined) {
+            this.itemEdit['allowChild'] = req['allowChild'];
+            this.itemEdit['isEditable'] = req['isEditable'];
+          }
+
+      }
+   },500);
+  }
   afterCreate(item: TCRMEntity) {
     super.afterCreate(item);
     this.idDoc = item.id;
+    this.setAllowChild();
   }
 }

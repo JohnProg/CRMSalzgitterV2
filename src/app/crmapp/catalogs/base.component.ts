@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Subscription } from 'rxjs/Subscription';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
-import { CatalogService, IPChangeEventSorted } from '../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, OnedrivegraphService } from '../services/index';
 import { ConfigurationService } from '../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -16,13 +16,16 @@ import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
-import { TCRMEntity, Colony } from '../model/index';
+import { TCRMEntity, Colony, Customer, GetStatusByDocType_Result } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { AuthHelper } from '../authHelper/authHelper';
+import * as moment from 'moment';
+
 
 export const cCurrencyMask = createNumberMask({
       allowDecimal: true
@@ -58,7 +61,6 @@ const findCountryByMill = gql`
   providers: [],
 })
 export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-
   gQuery: any;
   private addEvent;
   private searchEvent;
@@ -76,6 +78,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private afterLoadAllEvent: Subscription;
   private afterDeleteEvent: Subscription;
 
+  private onCreateErrorEvent: Subscription;
+  private onUpdateErrorEvent: Subscription;
+  private onDeleteErrorEvent: Subscription;
+
   onItemCreated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   onItemLoaded: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   @ViewChild('editform') form: NgForm;
@@ -88,7 +94,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   currencyMask = cCurrencyMask;
   floatPosMask = cFloatPosMask;
-  
+  subEditor: boolean = false;
   columns: ITdDataTableColumn[] = [
   ];
 
@@ -116,6 +122,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pagesArray: number[] = [5, 8, 10, 13, 20, 50, 100];
 
+  fieldDelete: string = 'id';
   emailTo: TCRMEntity[] =  [
     <TCRMEntity>{ id: 1, name: 'Internal' },
     <TCRMEntity>{ id: 2, name: 'Customer' },
@@ -129,9 +136,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   catDocType: TCRMEntity[];
-  catStatus: TCRMEntity[];
+  catStatus: GetStatusByDocType_Result[];
   catResponsible: TCRMEntity[];
-  catCustomer: TCRMEntity[];
+  catCustomer: Customer[];
   catCustomerContact: TCRMEntity[];
   catCurrencies: TCRMEntity[];
   catContact: TCRMEntity[];
@@ -152,6 +159,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   catOEM: TCRMEntity[];
   catPosition: TCRMEntity[];
   catColony: Colony[];
+  catProperties: TCRMEntity[];
   constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -163,7 +171,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _tableService: TdDataTableService,
     public translate: TranslateService,
     public route: ActivatedRoute,
-    public apollo: Apollo
+    public apollo: Apollo,
+    public _router: Router,
+    public _auth: AuthHelper,
+    public _one: OnedrivegraphService
     ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
                        _dialogService,_snackBarService, _tableService, apollo);
@@ -174,7 +185,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.ngBeforeInit();
     if( this.route.snapshot.data['baseapi'] !== undefined ) {
       let baseapi = this.route.snapshot.data['baseapi'];
       this._curService.setAPI(baseapi + '/', this.catalogName);
@@ -197,6 +208,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadCatalogs();
   }
 
+  ngBeforeInit() {
+
+
+  }
+
   ngOnInitClass() {
     this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
     this.initData();
@@ -209,7 +225,51 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
 
+    this.deleteConfEvent = this._actions.deleteItemConfirmedEvent
+      .subscribe((e: IDeleteEventModel) => {
+        this.deleteConfirmed(e);
+      },
+      err => console.log(err),   //removed dot
+      () => console.log('recived data') //removed dot
+      );
+
+
+
+      // Service events
+    this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
+    this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
+    this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
+    this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
+    this.afterDeleteEvent = this._curService.afterDeleteEmitter.subscribe(item => this.afterDelete(item));
+
+
+    this.onCreateErrorEvent = this._curService.afterCreateEmitter.subscribe(item => this.onCreateError(item));
+    this.onUpdateErrorEvent = this._curService.afterUpdateEmitter.subscribe(item => this.onUpdateError(item));
+    this.onDeleteErrorEvent = this._curService.afterDeleteEmitter.subscribe(item => this.onDeleteError(item));
+
+
+    if (this.setTitle === true) {
+       this._actions.updateTitle(this.catalogName);
+    }
+
+    if( this.subEditor == false) {
+      this._actions.showAdd(true);
+      this._actions.showSearch(true);
+      this._actions.showSave(false);
+      this._actions.showCancel(false);
+      this._actions.showEmail(false);
+
+          this.editItemEvent = this._actions.editItemEvent.subscribe( (id: number) => {
+          this.editEntity(id);
+        } )
+
+        this.cancelEditEvent = this._actions.cancelEditEvent.subscribe( () => {
+          this.cancelEdit();
+        } );
+
+
     this.saveEvent = this._actions.saveItemEvent.subscribe( (save) => {
+      
        this.saveEntity();
     });
     this.addEvent = this._actions.addItemEvent
@@ -230,37 +290,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       () => console.log('recived data') //removed dot                    
       );
 
-    this.deleteConfEvent = this._actions.deleteItemConfirmedEvent
-      .subscribe((res: string) => {
-        this.deleteConfirmed(res);
-      },
-      err => console.log(err),   //removed dot
-      () => console.log('recived data') //removed dot
-      );
-
-    this.editItemEvent = this._actions.editItemEvent.subscribe( (id: number) => {
-      this.editEntity(id);
-    } )
-
-    this.cancelEditEvent = this._actions.cancelEditEvent.subscribe( () => {
-      this.cancelEdit();
-    } );
-
-      // Service events
-    this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
-    this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
-    this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
-    this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
-    this.afterDeleteEvent = this._curService.afterDeleteEmitter.subscribe(item => this.afterDelete(item));
-
-    if (this.setTitle === true) {
-       this._actions.updateTitle(this.catalogName);
     }
-    this._actions.showAdd(true);
-    this._actions.showSearch(true);
-    this._actions.showSave(false);
-    this._actions.showCancel(false);
-    this._actions.showEmail(false);
     this.sendEmailEvent = this._actions.sendEmailEvent
     .subscribe((e: any) => {
       this.sendEmail();
@@ -287,6 +317,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.sendEmailEvent !== undefined) { this.sendEmailEvent.unsubscribe(); }
     if (this.afterDeleteEvent !== undefined) { this.afterDeleteEvent.unsubscribe(); }
 
+
+    if (this.onCreateErrorEvent !== undefined) { this.onCreateErrorEvent.unsubscribe(); }
+    if (this.onUpdateErrorEvent !== undefined) { this.onUpdateErrorEvent.unsubscribe(); }
+    if (this.onDeleteErrorEvent !== undefined) { this.onDeleteErrorEvent.unsubscribe(); }
 
 
     if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
@@ -362,7 +396,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initEntity();
     this.itemEdit.id = 0;
     this.isEditing = true;
-    this._actions.setEdit();
+    this._actions.setEdit({ isChild: this.singleEditor });
   }
 
   deleteEntity(id: number) {
@@ -421,7 +455,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   afterDelete(item: any) {
-    this.loadData();
+    this.reloadPaged(undefined);
   }
 
 
@@ -436,11 +470,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   confirmDelete(item:  TCRMEntity) {
     this.itemEdit = item;
-    this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: item.description || item.name, objId: this.objId }) );
+    
+    this._actions.deleteItemEvent.emit( { title: item.description || item.name || item[this.fieldDelete], objId: this.objId } );
   }
 
-  deleteConfirmed(res: string) {
-    if( res === this.objId) {
+  deleteConfirmed(e: IDeleteEventModel) {
+    if( e.objId === this.objId) {
       this.deleteEntity(this.itemEdit.id);
     }
   }
@@ -492,7 +527,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   afterLoadItem(itm:  TCRMEntity) {
      this.isEditing = true;
      this.itemEdit = itm;
-     this._actions.setEdit();
+     this._actions.setEdit({ isChild: this.singleEditor });
      this.onItemLoaded.emit(itm);
   }
 
@@ -505,6 +540,19 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
   }
+
+  onCreateError(error) {
+    this._snackBarService.open(' Could not create ' + this.catalogName + ', error: ' + error.message, 'Ok');
+  }
+  
+  onUpdateError(error) {
+    this._snackBarService.open(' Could not update ' + this.catalogName + ', error: ' + error.message, 'Ok');
+  }
+
+  onDeleteError(error) {
+    this._snackBarService.open(' Could not delete ' + this.catalogName + ', error: ' + error.message, 'Ok');
+  }
+
 
   afterLoadAll(itms: TCRMEntity[]) {
     this.isLoading = false;
@@ -520,6 +568,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     .subscribe(({data}) => {
       this.catCustomerContact = data['findCustomerContacts'];
       this.catDeliveryPoint = data['findDeliveryPoint'];
+      this.afterLoadCustomerContact();
     }, (error: Error) => {
       this._loadingService.resolve('');
       debugger
@@ -528,6 +577,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  afterLoadCustomerContact() {
+
+  }
   loadCountryOrigin(idmill: number) {
    this._curService.loadQl(findCountryByMill, { idmill: idmill })
     .subscribe(({data}) => {
@@ -548,4 +600,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     return t;
   }
 
+  checkOneDriveToke() {
+    let t = this._confs.oneDriveToken;
+    if( t == undefined ) {
+      this._auth.login();
+    } else if(  t['expire_date'] <= moment() ) {
+      this._auth.login();
+    }
+  }
 }

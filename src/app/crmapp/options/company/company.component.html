@@ -1,0 +1,84 @@
+<md-card>
+    <md-card-content>
+
+
+
+
+        <form  #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)">
+
+
+            <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+                <md-input-container flex>
+                    <input mdInput #companyName flex name="companyName" [(ngModel)]="itemEdit.companyName" required placeholder="Name" maxlength="250"
+                    />
+                    <md-hint align="end">{{companyName.value.length}} / 250</md-hint>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+                <md-input-container flex-gt-sm="75">
+                    <input mdInput #street name="street" [(ngModel)]="itemEdit.street" required placeholder="Street" maxlength="100" />
+                    <md-hint align="end">{{street.value.length}} / 100</md-hint>
+                </md-input-container>
+                <md-input-container flex-gt-sm="25">
+                    <input mdInput #number name="number" [(ngModel)]="itemEdit.number" required placeholder="Number" maxlength="50" />
+                    <md-hint align="end">{{number.value.length}} / 50</md-hint>
+                </md-input-container>
+            </div>
+            <crm-selectcolony name="zipcode" byType="1" [(ngModel)]="itemEdit.idColony"></crm-selectcolony>
+
+            <div layout-gt-sm="row" layout-lt-sm="row" layout-margin>
+                <md-input-container flex-gt-sm="50">
+                    <input mdInput #phone flex name="phone" [(ngModel)]="itemEdit.phone" placeholder="Phone" maxlength="50" />
+                    <md-hint align="end">{{phone.value.length}} / 50</md-hint>
+                </md-input-container>
+                <md-input-container flex-gt-sm="50">
+                    <input mdInput #fax flex name="fax" [(ngModel)]="itemEdit.fax" required placeholder="Fax" maxlength="50" />
+                    <md-hint align="end">{{fax.value.length}} / 50</md-hint>
+                </md-input-container>
+            </div>
+
+
+
+            <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+
+
+                <md-input-container flex-gt-sm="50">
+                    <input mdInput #legalResponsible flex name="legalResponsible" required [(ngModel)]="itemEdit.legalResponsible" placeholder="Legal Responsible"  />
+                    <md-hint align="end">{{legalResponsible.value.length}} / 150</md-hint>
+                </md-input-container>
+                <md-input-container flex-gt-sm="25">
+                    <input mdInput #rfc flex name="rfc" [(ngModel)]="itemEdit.rfc" required placeholder="RFC"  />
+                    <md-hint align="end">{{rfc.value.length}} / 50</md-hint>
+                </md-input-container>
+                <md-input-container flex-gt-sm="25">
+                    <input mdInput #taxAmount flex name="taxAmount" [(ngModel)]="itemEdit.taxAmount"  placeholder="Tax amount " currencyMask [options]="{ prefix: '', suffix: '%' }"
+                    />
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row" layout-lt-sm="column" flex layout-margin>
+                <section flex-gt-sm="45">
+                <md-input-container tdFileDrop (fileDrop)="files = $event" (click)="fileInput.inputElement.click()" (keyup.enter)="fileInput.inputElement.click()"
+                    (keyup.delete)="fileInput.clear()" (keyup.backspace)="fileInput.clear()" flex>
+                    <input mdInput placeholder="select or drop file" [value]="files?.length ? (files?.length + ' file') : files?.name" 
+                        readonly/>
+                </md-input-container>
+                <button md-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
+                <md-icon>cancel</md-icon>
+                </button>
+                <td-file-input class="push-left-sm push-right-sm" #fileInput name="fileInput" multiple="false"  (select)="uploadFile($event)" [(ngModel)]="files">
+                    <md-icon>folder</md-icon>
+                    <span class="text-upper">Browse...</span>
+                </td-file-input>
+                </section>
+                 <section flex-gt-sm="55" >
+                    <img [src]="'data:image/jpg;base64,'+ itemEdit.logo"  /> 
+                 </section>  
+            </div>
+
+
+        </form>
+
+
+    </md-card-content>
+</md-card>

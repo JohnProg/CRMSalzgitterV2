@@ -1,20 +1,22 @@
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section flex-gt-sm="35" >
-            <md-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
-                  <md-option *ngFor="let i of catResponsible" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>
 
-          </section>
-          <section  flex-gt-sm="35" >
-            <md-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
-                  <md-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>
-          </section>    
+
+        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+            <section  flex-gt-sm="35" >
+                <md-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
+                      <md-option *ngFor="let i of catCustomer" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                        {{ i.nameDescription || i.name}} 
+                      </md-option>
+                </md-select>                
+              </section>
+              <section  flex-gt-sm="35" >
+                <md-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
+                      <md-option *ngFor="let i of catCustomerContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                        {{ i.nameDescription || i.name}} 
+                      </md-option>
+                </md-select>                
+              </section>          
+         
           <section  flex-gt-sm="30" >
             <md-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
                   <md-option *ngFor="let i of catStatus" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
@@ -31,20 +33,21 @@
           </md-input-container>         
         </div>         
         <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <section  flex-gt-sm="35" >
-            <md-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
-                  <md-option *ngFor="let i of catCustomer" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                    {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>                
-          </section>
-          <section  flex-gt-sm="35" >
-            <md-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
-                  <md-option *ngFor="let i of catCustomerContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                    {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>                
-          </section>
+            <section flex-gt-sm="35" >
+                <md-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+                      <md-option *ngFor="let i of catResponsible" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                        {{ i.nameDescription || i.name}} 
+                      </md-option>
+                </md-select>
+    
+              </section>
+              <section  flex-gt-sm="35" >
+                <md-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
+                      <md-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                        {{ i.nameDescription || i.name}} 
+                      </md-option>
+                </md-select>
+              </section>    
           <section  flex-gt-sm="30" >
             <md-select class="cbxClass" #idContact name="idContact" flex required="true"  placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
                   <md-option *ngFor="let i of catContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
@@ -118,7 +121,9 @@
                   </md-option>
             </md-select>             
           </section> 
-              
+          <section flex-gt-sm="25" >           
+            <md-slide-toggle #isAutomotive name="isAutomotive"  [(ngModel)]="itemEdit.isAutomotive">Is Automotive</md-slide-toggle>
+          </section>                  
         </div>       
 
        

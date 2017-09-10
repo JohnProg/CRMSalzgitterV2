@@ -32,51 +32,20 @@ import gql from 'graphql-tag';
 export class OpportunityindexComponent extends BaseComponent  {
 
 
-  constructor( 
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public _router: Router,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.sortBy = 'id';
     this.catalogName = 'Opportunity';
-    this._curService.setAPI('Opportunity/', this.catalogName);
-
-  }
-
-
-
-
-
-  ngOnInitClass() {
-    this.entList = <Observable<GetOpportunities[]>>this._curService.entList;
-    this.initData();
-    //this.reloadPaged();
-  }
-
-  reloadPaged(sText: string = undefined) {
-    this._curService.getPaged(this.getPageParams(sText));
+    this._curService.setAPI('Opportunity/', this.catalogName);   
   }
 
 
   editEntity(id: number) {
-
     this._router.navigate(['opportunity/edit/' + id]);
   }
 
 
   addColumns() {
-
     //super.addColumns();
     this.columns.push({ name: 'id', label: 'Opportunity', tooltip: '' });
     this.columns.push({ name: 'customerName', label: 'Customer Name' });
@@ -84,7 +53,10 @@ export class OpportunityindexComponent extends BaseComponent  {
     this.columns.push({ name: 'asImporter', label: 'IOR' });
     this.columns.push({ name: 'statusName', label: 'Status' });
     this.columns.push({ name: 'lastUpdated', label: 'Last Update' });
-
   }
 
+  addEntity() {
+    
+    this._router.navigate(['opportunity/edit/0']);
+  }
 }

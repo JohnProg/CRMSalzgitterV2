@@ -23,7 +23,7 @@ import { CatalogComponent } from '../../catalogs/catalog.component';
 
 import { QuotationToCustomer } from '../../model/index';
 import { QuotationtocustomereditorheaderComponent } from './+quotationtocustomereditorheader/quotationtocustomereditorheader.component';
-
+import { EnumDocType } from '../../constants/index';
 
 
 @Component({
@@ -50,7 +50,7 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
-
+    this.quoteType = EnumDocType.QuotationToCustomer;
     this._route.params.subscribe((params: { id: number }) => {
       this.idQuotation = params.id;
     });

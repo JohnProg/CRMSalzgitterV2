@@ -27,31 +27,18 @@ import gql from 'graphql-tag';
 })
 export class CustomerindexComponent  extends BaseComponent  {
 
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public _router: Router,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Customer';
-    this._curService.setAPI('Customer/', this.catalogName);
+    this._curService.setAPI('Customer/', this.catalogName);   
   }
+
 
   ngOnInitClass() {
     this.entList = <Observable<Customer[]>>this._curService.entList;
     this.initData();
-    this.reloadPaged();
+   // this.reloadPaged();
   }
 
   editEntity(id: number) {

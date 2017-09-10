@@ -9,3 +9,4 @@ export * from './editorbasedialog/editorbasedialog.component';
 export * from './editorbasedialog/editorbasedialogdocument/editorbasedialogdocument.component';
 export * from './documentviewer/documentviewer.component';
 export * from './selectcolony/selectcolony.component';
+export * from './quotationindexviewer/quotationindexviewer.component';

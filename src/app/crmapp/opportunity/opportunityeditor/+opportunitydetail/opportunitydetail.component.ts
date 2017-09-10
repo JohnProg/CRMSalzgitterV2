@@ -5,7 +5,7 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 import { Subscription } from 'rxjs/Subscription';
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
-import { OpportunityDetail } from '../../../model/allmodels';
+import { OpportunityDetail, Opportunity, GetCustomerProductData_Result } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -23,7 +23,7 @@ import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor
 import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';
 import {TranslateService} from '@ngx-translate/core';
 import { IDeleteEventModel } from '../../../model/deleteeventmodel';
-
+import { MdSelect } from '@angular/material';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -35,6 +35,13 @@ const productQl = gql`
   }
 `;
 
+
+const getProductData = gql`
+  query 
+        productData($idcust: Int!, $idproduct: Int!) {
+            getCustomerProductData(idcust: $idcust, idproduct: $idproduct) { currentPrice id idCustomer idProduct isAutomotive partNumberBuyer partNumberOEM platform productName prodDescription } 
+        }
+`;
 @Component({
   selector: 'crm-opportunitydetail',
   templateUrl: './opportunitydetail.component.html',
@@ -44,45 +51,36 @@ const productQl = gql`
 export class OpportunitydetailComponent extends BaseComponent {
 
   @Input() idOpp: number = 0;
+   @Input() opp: Opportunity;
   itemEdit: OpportunityDetail;
   sortBy: string = 'itemDescription';
   allowProduct: boolean = true;
   propSubscription: Subscription;
+  productData: GetCustomerProductData_Result[];
 
- constructor(public _router: Router, 
-     public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+  @ViewChild('idProduct') mdProduct: MdSelect;
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Opp Details';
     this._curService.setAPI('OpportunityDetail', this.catalogName);
-    this.itemEdit = new OpportunityDetail();
-
+    this.itemEdit = new OpportunityDetail();  
   }
 
-  loadCatalogs() {
-    this._curService.loadQl(productQl, undefined)
-      .subscribe(({data}) => {
-        this.catProduct = data['products'];
 
+  loadCatalogs() {
+    let t = this;
+    this._curService.loadQl(getProductData, { idcust: this.opp.idCustomer, idproduct: 0 })
+      .subscribe(({data}) => {
+        this.productData = data['getCustomerProductData'];
       }, (error: Error) => {
         this._loadingService.resolve('');
         debugger
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       }
-      );   
+      );     
   }
-
+  
   ngOnInitClass() {
     this.entList = <Observable<OpportunityDetail[]>>this._curService.entList;
     this.initData();
@@ -109,7 +107,7 @@ export class OpportunitydetailComponent extends BaseComponent {
     this.columns.push({ name: 'itemDescription', label: 'Item Description' });
     this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
 
-    this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
+    this.columns.push({ name: 'itemQuantity', label: 'Quantity', numeric: true, format: NUMBER_FORMAT, sortable: false });
     this.columns.push({ name: 'itemPrice', label: 'Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
     this.columns.push({ name: 'itemExtended', label: 'Extended', numeric: true, format: CURRENCY_FORMAT, sortable: false });
   }
@@ -134,6 +132,7 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
   afterCreate(item: OpportunityDetail) {
+    
     Object.assign(this.itemEdit, item);
   }
 
@@ -144,4 +143,25 @@ export class OpportunitydetailComponent extends BaseComponent {
   hasSumary(h: boolean) {
     this.allowProduct = h || this.itemEdit.id === 0;
   }
+
+  qtyChange(event)  {
+    this.itemEdit.itemQuantity = event;
+    this.itemEdit.itemExtended  = event * this.itemEdit.itemPrice;
+  }
+  priceChange(event)  {
+    this.itemEdit.itemPrice = event;
+    this.itemEdit.itemExtended  = this.itemEdit.itemQuantity * event;
+  }  
+
+
+  productChange(event) {
+    let p = parseInt(event);
+
+    let pid =  <GetCustomerProductData_Result>(this.productData.filter( i => i.id === p)[0]);
+    this.itemEdit.idProduct = pid.idProduct;
+    this.itemEdit.itemPrice = pid.currentPrice;
+    this.itemEdit.itemDescription = pid.prodDescription;
+    //this.itemEdit.idCustomerProduct = pid.id;
+  }
+
 }

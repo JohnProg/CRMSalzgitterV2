@@ -30,28 +30,14 @@ import gql from 'graphql-tag';
 export class QuotationtocustomerdialogemailComponent extends EmailSenderComponent {
 
   idOpp: number = 0;
- //this._oppservice.currentOpp
-constructor(
-          public _confs: ConfigurationService,
-          public _loadingService: TdLoadingService,
-          public _dialogService: TdDialogService,
-          public _snackBarService: MdSnackBar,
-          public _actions: ActionsService,
-          public _mediaService: TdMediaService,
-          public _ngZone: NgZone, 
-          public _http: Http, 
-          public _tableService: TdDataTableService,
-          public translate: TranslateService,
-          public _router: Router, 
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _router, route, apollo);
  
-    this.catalogName = 'Quotation to Customer Dialog';
-    this.mainField = 'IdQuotationToCustomer';
-    this.baseApi = 'QuotationToCustomerDialog';
-   }
 
-  
+
+   ngBeforeInit() {
+    super.ngBeforeInit();
+     this.catalogName = 'Quotation to Customer Dialog';
+    this.mainField = 'IdQuotationToCustomer';
+    this.baseApi = 'QuotationToCustomerDialog'; 
+  }
 
 }

@@ -56,25 +56,13 @@ export class EditorbasedialogComponent extends BaseComponent {
     itemEdit: BaseOrderDialog;
     showEMail: boolean = false;
     searchByUrl: string;
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public _router: Router,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.autoLoad = false;
-    
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+    this.autoLoad = false;   
   }
+
 
  ngOnInitClass() {
     this.catalogName = this.catName;

@@ -32,27 +32,14 @@ export class QuotationfromsupplierdialogemailComponent extends EmailSenderCompon
 
 
   idOpp: number = 0;
- //this._oppservice.currentOpp
-constructor(
-          public _confs: ConfigurationService,
-          public _loadingService: TdLoadingService,
-          public _dialogService: TdDialogService,
-          public _snackBarService: MdSnackBar,
-          public _actions: ActionsService,
-          public _mediaService: TdMediaService,
-          public _ngZone: NgZone, 
-          public _http: Http, 
-          public _tableService: TdDataTableService,
-          public translate: TranslateService,
-          public _router: Router, 
-          public _route: ActivatedRoute,
-          public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, _router, _route, apollo);
+ 
+
+   ngBeforeInit() {
+    super.ngBeforeInit();
      this.catalogName = 'Quotation from Supplier Dialog';
     this.mainField = 'IdQuotationFromSupplier';
-    this.baseApi = 'QuotationFromSupplierDialog';
-   }
-
+    this.baseApi = 'QuotationFromSupplierDialog'; 
+  }
   
 
 }

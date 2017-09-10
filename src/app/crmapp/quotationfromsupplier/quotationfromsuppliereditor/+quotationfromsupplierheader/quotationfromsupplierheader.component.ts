@@ -42,32 +42,17 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
 
   deliveryRequired: boolean = false;
   dta: Date;
-  constructor(public _router: Router, 
-    public _route: ActivatedRoute,
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService
-    ,  public _oppservice: OpportunityService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.itemEdit = new QuotationFromSupplier();
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+     this.itemEdit = new QuotationFromSupplier();
     this.catalogName = 'Quotation from Supplier';
     this.autoLoad = false;
     this._curService.setAPI('QuotationFromSupplier/', this.catalogName);
     this.singleEditor = true;
-    this.dta = new Date();
+    this.dta = new Date(); 
   }
-
-
   ngOnInitClass() {
     this.entList = <Observable<QuotationFromSupplier[]>>this._curService.entList;
   }
@@ -92,12 +77,12 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
 
 
   loadFromOpp(oid: number ) {
+    
     this._curService.loadItemObs('Opportunity', oid) 
       .map((response) => response.json())
         .subscribe( (data: Opportunity) => {
         this.opp = new Opportunity();
         Object.assign(this.opp, data);
-        this._oppservice.currentOpp = data;
         this.itemEdit.idOpportunity = data.id;
         this.itemEdit.idCurrency = data.idCurrency;
         this.itemEdit.idPort = data.idPort;

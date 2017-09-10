@@ -23,7 +23,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {  GetCustomerProducts_Result, CustomerProduct, TCRMEntity, Colony, Product, CustomerProductExtended } from '../../../../model/allmodels';
+import {  GetCustomerProducts_Result, CustomerProduct, TCRMEntity, 
+         Colony, Product, CustomerProductExtended, ProductProperty, CustomerProductProperty  } from '../../../../model/allmodels';
 import { SelectcolonyComponent } from '../../../../components/index';
 import { CustomerbaseComponent } from '../customerbase.component';
 
@@ -35,6 +36,7 @@ const custProductQl = gql`
   }
 `;
 
+
 @Component({
   selector: 'crm-customerproduct',
   templateUrl: './customerproduct.component.html',
@@ -43,28 +45,15 @@ const custProductQl = gql`
 export class CustomerproductComponent  extends CustomerbaseComponent {
 
   itemEdit: CustomerProduct;
+  prodProps: ProductProperty[];
 
-  constructor( public _router: Router,  
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _router, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.catalogName = 'Customer Products';
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+     this.catalogName = 'Customer Products';
     this.catalog = 'CustomerProduct';
-    this._curService.setAPI( this.catalog + '/', this.catalogName);
+    this._curService.setAPI( this.catalog + '/', this.catalogName); 
   }
-
-
   ngOnInitClass() {
     super.ngOnInitClass();
     this.entList = <Observable<GetCustomerProducts_Result[]>>this._curService.entList;
@@ -127,8 +116,44 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
 
 
    changeAuto(event) {
-      
+     
+
+      if( this.itemEdit.idProduct > 0 && this.itemEdit.isAutomotive == true ) {
+         this.getProperties();
+      } else {
+        this.itemEdit.customerProductProperties = undefined;
+      }
+    
    }
+
+  changeProduct(event) {
+    
+      if( this.itemEdit.idProduct && this.itemEdit.isAutomotive == true  ) {
+         this.getProperties();
+      } else {
+        this.itemEdit.customerProductProperties = undefined;
+      }
+  }
+
+
+  getProperties() {
+    let pparams: TCRMEntity[] = new Array<TCRMEntity>();
+    pparams.push( (<TCRMEntity>{ name: 'prodId', description: this.itemEdit.idProduct.toString()}) );
+            this._curService.loadCustomCatalogObs('ProductProperty/searchByProductProp', pparams)
+            .map((response) => response.json())
+            .subscribe( (items: ProductProperty[]) => {
+                this.prodProps = items;
+                this.itemEdit.customerProductProperties = new Array< CustomerProductProperty>();
+                items.forEach( (p: ProductProperty) => {
+                      let pp: CustomerProductProperty = new CustomerProductProperty();
+                      pp.idCustomerProduct = this.itemEdit.id;
+                      pp.idProperty = p.idProperty;
+                      pp.propertyValue = undefined;
+                      pp.property = p.property;
+                      this.itemEdit.customerProductProperties.push(pp);
+                });
+            });
+  }
 
    afterLoadItem(itm:  CustomerProduct) {
      

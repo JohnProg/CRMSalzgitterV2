@@ -35,23 +35,11 @@ import { CustomerbaseComponent } from '../customerbase.component';
 })
 export class CustomerrailspurComponent  extends CustomerbaseComponent {
 
-  constructor( public _router: Router,  
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _router, _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.singleEditor = true;
-    this.autoLoad = false;
-  }
 
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+     this.singleEditor = true;
+    this.autoLoad = false; 
+  }
 }

@@ -8,13 +8,13 @@
             <md-hint align="end">{{name.value.length}} / 100</md-hint>
           </md-input-container>
           <md-input-container>
-            <input mdInput #EMailSubject flex name="EMailSubject" [(ngModel)]="itemEdit.emailSubject" required placeholder="Email Subject"
+            <input mdInput #eMailSubject flex name="eMailSubject" [(ngModel)]="itemEdit.eMailSubject" required placeholder="Email Subject"
               maxlength="250">
-            <md-hint align="end">{{EMailSubject.value.length}} / 250</md-hint>
+            <md-hint align="end">{{eMailSubject.value.length}} / 250</md-hint>
           </md-input-container>          
         </section>
           <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-              <ckeditor #EMailBody flex="100" placeholder="Body" name="EMailBody" [(ngModel)]="itemEdit.emailBody"  debounce="500">
+              <ckeditor #eMailBody flex="100" placeholder="Body" name="eMailBody" [(ngModel)]="itemEdit.eMailBody"  debounce="500">
               </ckeditor>
           </div>        
 

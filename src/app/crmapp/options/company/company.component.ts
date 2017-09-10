@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, ElementRef } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
 import { ActionsService } from '../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -11,12 +11,14 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
-import {  Company } from '../../model/allmodels';
-import { CRMSelectComponent } from '../../components/crmselect/crmselect.component';
+import {  Company, Colony } from '../../model/allmodels';
+import { SelectcolonyComponent } from '../../components/index';
+
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+
 
 
 @Component({
@@ -27,57 +29,88 @@ import gql from 'graphql-tag';
 })
 export class CompanyComponent extends BaseComponent {
 
-
+  idCompany: number = 1;
   itemEdit: Company = new Company();
   zipCode: string = "";
-  @ViewChild('colony') colony: CRMSelectComponent;
+  colony: Colony;
+  @ViewChild(SelectcolonyComponent) _colony: SelectcolonyComponent;
+  files: any;
+  @ViewChild('imgRef') img:ElementRef;
 
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Company';
     this._curService.setAPI('Company/', this.catalogName);
+    this.singleEditor = true;
+    this.autoLoad = false;   
   }
 
 
-  ngOnInit() {
-    this.autoLoad = false;
+  ngOnInitClass() {
+    this.entList = <Observable<Company[]>>this._curService.entList;
+    this.initEntity();
 
-    this.initData();
-    this.entList = <Observable<Company[]>> this._curService.entList;
-    this.editEntity(1);
+
+  }
+
+  afterViewInit(): void {
+      if (this.idCompany > 0) {
+        this.editEntity(this.idCompany);
+      } else {
+        
+        this.addEntity();
+      }
   }
 
   initEntity() {
     this.itemEdit = new  Company();
   }
 
-    editEntity( id: number ) {
-      this.itemEdit = <Company>this._curService.itemEdit;
-      this._curService.load(id);
+
+  cancelEdit(): void {
+    this._router.navigate([ '../'], { relativeTo: this.route });
+  }
+
+
+  afterLoadItem(itm:  Company) {
+    super.afterLoadItem(itm);
+    
+    this._colony.setZipCode(itm.colony.zipCode);
+    //this.img.nativeElement.src = "data:image/jpg;base64," + itm.logo;
+  }
+
+
+  loadCatalogs() {
+
+        // this._curService.loadQl(custQl, undefined)
+        // .subscribe(({data}) => {
+        //   this.catResponsible = data['responsibles'];
+        // }, (error: Error) => {
+        //   this._loadingService.resolve('');
+          
+        //   this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+        // }
+        // );   
+  }
+
+  uploadFile(ffiles: FileList | File) {
+    if (ffiles instanceof FileList) {
+      
+    } else {
+        let reader: FileReader = new FileReader();
+        let t: string;
+        let tself = this;
+        reader.onloadend = function () {
+          
+          t = reader.result.split(',')[1];
+          tself.itemEdit.logo = t;
+          //tself._curService.create(tself.itemEdit);
+        };
+        reader.readAsDataURL(ffiles);
     }
-
-  afterLoadItem(item : Company) {
-      this.zipCode = (<Company>item).zipCode;
-      //this.colony.reloadFromZipCode(this.zipCode);
-      this._actions.showAdd(false);
-      this._actions.showSearch(false);
   }
 
-  zipChange(event) {
-     //this.colony.reloadFromZipCode(event);
-  }
+
 
 }

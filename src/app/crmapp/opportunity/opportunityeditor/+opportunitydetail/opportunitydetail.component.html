@@ -2,19 +2,20 @@
 
       <section *ngIf="isEditing">
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>        
-        <section layout="column" flex="100" layout-margin>
 
-        <div layout-gt-sm="row" layout-lt-sm="column" flex >
-            <md-select class="cbxClass" #idProduct name="idProduct" flex required="true" [disabled]="!allowProduct"  placeholder="Product" [(ngModel)]="itemEdit.idProduct"  >
-                  <md-option *ngFor="let i of catProduct" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{ i.nameDescription || i.name}} 
+
+        <div layout-gt-sm="row" layout-lt-sm="column" flex  layout-margin >
+            <md-select class="cbxClass" #idCustomerProduct name="idCustomerProduct" flex required="true" [disabled]="!allowProduct"  placeholder="Product" [(ngModel)]="itemEdit.idCustomerProduct" (change)="productChange($event.value)"  >
+                  <md-option *ngFor="let i of productData" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id"  > 
+                    {{ i.productName  }} {{ i.platform != null ? ' [Platform: ' + i.platform + ']': '' }}
+                    {{ i.partNumberBuyer != null ? ' [Buyer Part: ' + i.partNumberBuyer + ']': '' }}
                   </md-option>
             </md-select>          
         </div>
 
 
-        <div layout-gt-sm="row" layout-lt-sm="column" >
-          <md-input-container flex class="">
+        <div layout-gt-sm="row" layout-lt-sm="column"  layout-margin >
+          <md-input-container flex >
             <textarea mdInput flex #itemDescription name="itemDescription" maxlength="500"  placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.itemDescription" ></textarea>
                   <md-hint align="end">{{itemDescription.value.length}} / 500</md-hint>
           </md-input-container>         
@@ -22,20 +23,20 @@
 
 
         <div layout-gt-sm="row" layout-lt-sm="column" layout-margin >
-          <md-input-container class="md-icon-float" flex-gt-xs="35">
-            <input   mdInput  #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" />
+          <md-input-container  flex="30" >
+            <input   mdInput  #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" (ngModelChange)="qtyChange($event)" />
           </md-input-container>
-          <md-input-container class="md-icon-float" flex-gt-xs="35">
-            <input  mdInput   #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" [(ngModel)]="itemEdit.itemPrice" currencyMask  />
+          <md-input-container  flex="30" >
+            <input  mdInput   #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)"  />
           </md-input-container>
-          <md-input-container class="md-icon-float" flex-gt-xs="30">
-            <input  mdInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.itemExtended" currencyMask />
+          <md-input-container  flex="33" >
+            <input  mdInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.itemExtended" currencyMask disabled/>
           </md-input-container>          
         </div> 
 
-        </section>
+
     </form>
-        <crm-opportunitydetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" [price]="itemEdit.itemPrice" ></crm-opportunitydetailsumary>
+        <crm-opportunitydetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idCustomerProduct]="itemEdit.idCustomerProduct" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" [price]="itemEdit.itemPrice" ></crm-opportunitydetailsumary>
       </section>
 
 
@@ -58,6 +59,8 @@
           </button>
           </div>
         </ng-template>
+
+        <tfoot>
 
       </td-data-table>
 

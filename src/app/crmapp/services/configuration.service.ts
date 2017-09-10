@@ -19,9 +19,10 @@ export class ConfigurationService {
     public pageSize: number = 5;
     public currentPage: number = 0;
 
+    
 
 
-
+    public oneDriveToken: any; 
 
     public TOKEN_ENDPOINT: string = this.server + 'Token';
     public tokenData: any;

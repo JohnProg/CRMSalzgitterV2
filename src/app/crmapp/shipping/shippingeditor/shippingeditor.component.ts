@@ -35,9 +35,9 @@ export class ShippingeditorComponent extends CatalogComponent {
   idShipping: number;
   scrId: number = 1;
   @ViewChild(ShippingeditorheaderComponent) headercomp: ShippingeditorheaderComponent;
-
+  byType: number = 0;
   shipping: Shipping;
-
+  idPO: number;
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -48,14 +48,16 @@ export class ShippingeditorComponent extends CatalogComponent {
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
-
+    this.quoteType = EnumDocType.Shipping;
     this._route.params.subscribe((params: { id: number }) => {
        this.idShipping = params.id;
       });
   }
 
 
+
   doOnItemCreated(itm: Shipping) {
+    debugger
     this.idShipping = itm.id;
     this.shipping = itm;
   }
@@ -67,57 +69,52 @@ export class ShippingeditorComponent extends CatalogComponent {
 
 
   onItemLoaded(itm: Shipping) {
-    
+    this.idShipping = itm.id;
     this.shipping = itm;
   }
+
+  
+  goToPO() {
+    this._router.navigate(['/purchaseorder/edit', this.idPO]);
+ }
 }
 
 
 
 
-// @Component({
-//   selector: 'crm-purchaseordereditorfromopp',
-//   templateUrl: './quotationtocustomereditor.component.html',
-//   styleUrls: ['./quotationtocustomereditor.component.scss'],
-//   providers: [],
-// })
-// export class PurchaseordereditorFromComponent extends PurchaseordereditorComponent {
+@Component({
+  selector: 'crm-shippingeditor',
+  templateUrl: './shippingeditor.component.html',
+  styleUrls: ['./shippingeditor.component.scss'],
+  providers: [],
+})
+export class ShippingeditorFromPOComponent extends ShippingeditorComponent {
 
 
-//   constructor(
-//     public _loadingService: TdLoadingService,
-//     public _dialogService: TdDialogService,
-//     public _snackBarService: MdSnackBar,
-//     public _mediaService: TdMediaService,
-//     public _actions: ActionsService,
-//     public _ngZone: NgZone,
-//     public _router: Router, public _route: ActivatedRoute,
-//     translate: TranslateService) {
-//     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
+  constructor(
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _mediaService: TdMediaService,
+    public _actions: ActionsService,
+    public _ngZone: NgZone,
+    public _router: Router, public _route: ActivatedRoute,
+    translate: TranslateService) {
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
 
-//     this._route.params.subscribe((params: { id: number, bytype: number }) => {
-//       this.byType = params.bytype;
-//       switch(params.bytype) {
-//         case EnumDocType.Opportunity:
-//              this.idOpp = params.id;
-//              break;
-//         case EnumDocType.QuotationFromSupplier:
-//              this.idQFS = params.id;
-//              break;
-//         case EnumDocType.QuotationToCustomer:
-//              this.idQTC = params.id;
-//              break;
-//         default:
-//              break;
-//       }
-//     });
+    this._route.params.subscribe((params: { id: number, bytype: number }) => {
+      this.idShipping = 0;
+      this.byType = params.bytype;
+      this.idPO = params.id;
+    });
 
-//   }
+  }
 
 
-//   afterInit() {
-//     super.afterInit();
-//     this.headercomp.loadFromOpp(this.idOpp);
-//   }
-// }
+
+  afterInit() {
+    super.afterInit();
+    this.headercomp.loadFromOpp(this.idPO);
+  }
+}
 

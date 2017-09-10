@@ -43,22 +43,10 @@ export class CustomereditorheaderComponent extends BaseComponent {
    @ViewChild(SelectcolonyComponent) _colony: SelectcolonyComponent;
    itemEdit: Customer;
    colony: Colony;
-  constructor(public _router: Router,  
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
- 
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Customer';
     this._curService.setAPI('Customer/', this.catalogName);
     this.singleEditor = true;

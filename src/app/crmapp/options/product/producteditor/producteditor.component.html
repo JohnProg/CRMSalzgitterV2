@@ -1,9 +1,11 @@
-<form #f="ngForm" #form flex (ngSubmit)="submitForm(form)">
+
 
 
   <md-card>
     <md-card-content>
       <section layout-margin>
+
+        <form #editform="ngForm"  flex (ngSubmit)="submitForm(form)">
         <section layout-lt-sm="column" layout="row" flex="100">
 
           <section flex="40">
@@ -23,15 +25,14 @@
           </md-input-container>
 
         </section>
-
+</form>
         <section layout-lt-sm="column" layout="row" flex>
 
 
           <td-expansion-panel *ngIf="itemEdit.id > 0" label="Properties" flex (expanded)="expandProperties()">
-            <crm-productproperty [idprop]="itemEdit.id"></crm-productproperty>
+            <crm-productproperty [idproduct]="itemEdit.id"></crm-productproperty>
           </td-expansion-panel>
         </section>
       </section>
     </md-card-content>
   </md-card>
-</form>

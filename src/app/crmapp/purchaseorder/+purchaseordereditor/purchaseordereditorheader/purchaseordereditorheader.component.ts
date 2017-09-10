@@ -37,31 +37,17 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
   idParent: number = 0;
   itemEdit: PurchaseOrder;
   dta: Date;
-  constructor(public _router: Router, 
-    public _route: ActivatedRoute,
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    public _http: Http,
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public _oppservice: OpportunityService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.itemEdit = new PurchaseOrder();
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+     this.itemEdit = new PurchaseOrder();
     this.catalogName = 'Purchase Order';
     this.autoLoad = false;
     this._curService.setAPI('PurchaseOrder/', this.catalogName);
     this.singleEditor = true;
-    this.dta = new Date();
+    this.dta = new Date(); 
   }
-
 
   ngOnInitClass() {
     this.entList = <Observable<PurchaseOrder[]>>this._curService.entList;
@@ -97,12 +83,10 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
    
     p.push(p1);
     p.push(p2);
+    
     this._curService.loadCustomCatalogObs('PurchaseOrder/getFieldsForOrder', p) 
       .map((response) => response.json())
         .subscribe( (data: GetFieldForPurchaseOrder_Result) => {
-
-
-        this._oppservice.currentFields = data;
         this.itemEdit.idOpportunity = data.idOpportunity;
         this.itemEdit.idQuotationFromSupplier = data.idQuotationFromSupplier;
         this.itemEdit.idQuotationToCustomer = data.idQuotationToCustomer;
@@ -133,6 +117,9 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
         this.itemEdit.interestRate = data.interestRate;
         //this.countryOrigin.loadCustomDataFromId(this.itemEdit.idMill);
         this.idParent = data.idQuotationToCustomer;
+
+        this.loadCountryOrigin(this.itemEdit.idMill);
+        this.loadCustomerContact(this.itemEdit.idCustomer);
       }, error => {
         this._snackBarService.open('Purchase Order does not exists', 'Ok');
       });
@@ -141,19 +128,6 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
 
   }
 
-  // loadCurrentOpp(oid: number ) {
-  //   this._curService.loadItemObs('QuotationFromSupplier', oid) 
-  //     .map((response) => response.json())
-  //       .subscribe( (data: QuotationFromSupplier) => {
-  //       this.opp = new QuotationFromSupplier();
-  //       Object.assign(this.opp, data);
-  //       this._oppservice.currentQFS = data;
-  //       this.idParent = data.id;
-  //     }, error => {
-  //       this._snackBarService.open('Opportunity does not exists', 'Ok');
-  //     });
-
-  // }
 
   goToOpp() {
         this._router.navigate(['/quotationfromsupplier/edit', this.idParent]);

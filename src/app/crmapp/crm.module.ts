@@ -14,8 +14,9 @@ import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import { ApolloModule } from 'apollo-angular';
 import { environment } from '../../environments/environment';
 
+
 // services 
-import { OpportunityService, ActionsService, CatalogService, 
+import { OpportunityService, ActionsService, CatalogService, OnedrivegraphService,
   ConfigurationService, TokenService } from './services/index';
 
 
@@ -23,27 +24,29 @@ const networkInterface = createNetworkInterface({
   uri: environment.server + 'api/graphql',
 });
 
-networkInterface.use([{
-  applyMiddleware(req, next) {
-    if (!req.options.headers) {
-      req.options.headers = {};  // Create the header object if needed.
-    }
-    // get the authentication token from local storage if it exists
-    let t = localStorage.getItem('tokendata');
-    if( t ) {
-        let tokenData = JSON.parse(t);
-        if( tokenData) {
-            req.options.headers.authorization = tokenData.token_type + ' ' + tokenData.access_token;
-        }
-    }    
-    
+networkInterface.use([
+  {
+    applyMiddleware(req, next) {
+      if (!req.options.headers) {
+        req.options.headers = {};  // Create the header object if needed.
+      }
+      // get the authentication token from local storage if it exists
+      let t = localStorage.getItem('tokendata');
+      if( t ) {
+          let tokenData = JSON.parse(t);
+          if( tokenData) {
+              req.options.headers.authorization = tokenData.token_type + ' ' + tokenData.access_token;
+          }
+      }    
+      
 
-    next();
+      next();
+    }
   }
-}]);
+]);
 
 // by default, this client will send queries to `/graphql` (relative to the URL of your app)
-export const client: ApolloClient = new ApolloClient({ networkInterface  });
+export const client: ApolloClient = new ApolloClient({ networkInterface });
 
 
 
@@ -76,6 +79,7 @@ import {
     CustomerproductComponent,
     CustomerrailspurComponent,
     CustomerbaseComponent,
+    CustomerproductpriceComponent,
   // Products
   ProductComponent, ProducteditorComponent, ProductpropertyComponent,
   ProductindexComponent, ActionopportunityComponent, ActionopportunitytemplateemailComponent
@@ -90,7 +94,7 @@ import { CRMSelectComponent, GenericActionsComponent,
   CrmselectchildComponent, EmailSenderComponent,
   EditordetailsumaryComponent, EditorbasedialogComponent,
   EditorbasedialogdocumentComponent,
-  DocumentviewerComponent,SelectcolonyComponent } from './components/index';
+  DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent } from './components/index';
 
 // Directives
 
@@ -129,6 +133,7 @@ import { PurchaseorderComponent,
    PurchaseordereditorComponent, PurchaseordereditorheaderComponent,
    PurchaseordereditordetailComponent,
    PurchaseordereditordetailsumaryComponent,
+   PurchaseordereditorFromQTSComponent,
 
    } from './purchaseorder/index';
 
@@ -137,7 +142,8 @@ import {ShippingComponent, ShippingindexComponent,
   ShippingindexviewerComponent, 
   ShippingeditorComponent, 
   ShippingeditorheaderComponent,
-  ShippingeditordetailComponent
+  ShippingeditordetailComponent,
+  ShippingeditorFromPOComponent
 
 } from './shipping/index';
 
@@ -149,7 +155,6 @@ import { AuthGuard } from './_guards/auth.guard';
 import * as moment from 'moment';
 
 import { AuthHelper } from './authHelper/authHelper';
-
 
 
 
@@ -188,6 +193,7 @@ import { AuthHelper } from './authHelper/authHelper';
     CustomersectorComponent,
     CustomerproductComponent,
     CustomerrailspurComponent,    
+    CustomerproductpriceComponent,
       //Products
     ProductComponent, 
     ProducteditorComponent,
@@ -238,7 +244,7 @@ import { AuthHelper } from './authHelper/authHelper';
    PurchaseordereditorheaderComponent,
    PurchaseordereditordetailComponent,
    PurchaseordereditordetailsumaryComponent,
-
+   PurchaseordereditorFromQTSComponent,
 // Components
   // Cbx Components
     CRMSelectComponent, CrmselectchildComponent,
@@ -247,6 +253,7 @@ import { AuthHelper } from './authHelper/authHelper';
     EditorbasedialogComponent,  
     EditorbasedialogdocumentComponent,
     DocumentviewerComponent,
+    QuotationindexviewerComponent,
     // Directives
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
@@ -257,6 +264,7 @@ import { AuthHelper } from './authHelper/authHelper';
     ShippingeditorComponent,
     ShippingeditorheaderComponent,
     ShippingeditordetailComponent,
+    ShippingeditorFromPOComponent,
     
   ], // directives, components, and pipes owned by this NgModule
   imports: [
@@ -282,7 +290,7 @@ import { AuthHelper } from './authHelper/authHelper';
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
-    AuthGuard, AuthHelper,
+    AuthGuard, AuthHelper, OnedrivegraphService,
 
 
 

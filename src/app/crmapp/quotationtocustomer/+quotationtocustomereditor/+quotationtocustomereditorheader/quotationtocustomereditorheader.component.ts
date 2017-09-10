@@ -41,30 +41,17 @@ export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
   opp: QuotationFromSupplier;
 
   dta: Date;
-  constructor(public _router: Router, 
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,  
-    public _oppservice: OpportunityService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.itemEdit = new QuotationToCustomer();
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+     this.itemEdit = new QuotationToCustomer();
     this.catalogName = 'Quotation to Customer';
     this.autoLoad = false;
     this._curService.setAPI('QuotationToCustomer/', this.catalogName);
     this.singleEditor = true;
-    this.dta = new Date();
+    this.dta = new Date(); 
   }
-
 
   ngOnInitClass() {
     this.entList = <Observable<QuotationToCustomer[]>>this._curService.entList;
@@ -126,6 +113,8 @@ export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
         this.itemEdit.creditDays = data.creditDays;
         this.itemEdit.interestRate = data.interestRate;        
         this.idParent = oid;
+        
+        this.loadCountryOrigin(this.itemEdit.idMill);
       }, error => {
         this._snackBarService.open('QFS does not exists', 'Ok');
       });

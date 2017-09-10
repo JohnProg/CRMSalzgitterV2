@@ -52,27 +52,14 @@ export class ShippingeditordetailComponent extends BaseComponent {
 
   poDetails: ShipPODetailModel[]; 
 
- constructor(public _router: Router, public _route: ActivatedRoute, 
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    public _http: Http,
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Shipping Detail';
     this._curService.setAPI('ShippingDetail', this.catalogName);
-    this.itemEdit = new GetShippingDetails_Result();
+    this.itemEdit = new GetShippingDetails_Result();  
   }
-
-
 
   ngOnInitClass() {
     this.entList = <Observable<GetShippingDetails_Result[]>>this._curService.entList;
@@ -137,7 +124,7 @@ export class ShippingeditordetailComponent extends BaseComponent {
     pparams.push( (<TCRMEntity>{ name: 'idport', description: this.shipData.idPort.toString()}) );
     pparams.push( (<TCRMEntity>{ name: 'idmill', description: this.shipData.idMill.toString()}) );
     pparams.push( (<TCRMEntity>{ name: 'idcountry', description: this.shipData.idCountryOrigin.toString()}) );
-    pparams.push( (<TCRMEntity>{ name: 'iddelivery', description: this.shipData.idDeliveryPoint.toString()}) );
+    pparams.push( (<TCRMEntity>{ name: 'iddelivery', description: this.shipData.idDeliveryPoint != undefined ? this.shipData.idDeliveryPoint.toString() : '0'}) );
 
 
     this._curService.loadCustomCatalogObs('ShippingDetail/getPODetailForShipping', pparams)

@@ -10,7 +10,9 @@ import { BaseComponent, CatalogComponent, CurrencyComponent,
 ActionoppComponent,  StateComponent, IncotermComponent,
 TemplateemailComponent } from './crmapp/catalogs/index';
 
-import { OptionsComponent, ActionopportunityComponent, 
+import { OptionsComponent, 
+  CompanyComponent,
+  ActionopportunityComponent, 
   ProductComponent, ProductindexComponent,
    ProducteditorComponent,
   CustomerComponent,
@@ -41,26 +43,25 @@ import { QuotationtocustomerComponent,
 // Purchase Order
 import {
    PurchaseorderComponent, PurchaseorderindexComponent,
-   PurchaseordereditorComponent
+   PurchaseordereditorComponent, PurchaseordereditorFromQTSComponent
 } from './crmapp/purchaseorder/index';
 
 // shippings
-import { ShippingComponent, ShippingindexComponent, ShippingeditorComponent } from './crmapp/shipping/index';
+import { ShippingComponent, ShippingindexComponent, ShippingeditorComponent, ShippingeditorFromPOComponent } from './crmapp/shipping/index';
 
 import { LoginComponent } from './crmapp/login/login.component';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-
+  //{ path: 'onedriveCallback', component: MainComponent },
   {
-    path: '', 
-    component: MainComponent,
-    canActivate: [AuthGuard],
+    path: '', component: MainComponent, 
     children: [
         {
           component: DashboardComponent,
           path: '',
+          canActivate: [AuthGuard]
         },
         {
           path: 'catalogs', component: CatalogComponent,
@@ -83,7 +84,7 @@ const routes: Routes = [
             { path: 'property', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties' } },
             { path: 'sector', component: BaseComponent, data: { baseapi: 'Sector', catName: 'Sector' } },
             { path: 'tender', component: BaseComponent, data: { baseapi: 'Tender', catName: 'Tender' } },
-            { path: 'actionopp', component: ActionoppComponent },
+            { path: 'actionopp', component: ActionoppComponent, data: { baseapi: 'ActionOpportunity', catName: 'Opportunity Action' } },
             { path: 'country', component: BaseComponent, data: { baseapi: 'Country', catName: 'Country' } },
             { path: 'state', component: StateComponent },
             { path: 'incoterm', component: IncotermComponent },
@@ -97,7 +98,7 @@ const routes: Routes = [
           path: 'options', component: OptionsComponent,
           canActivate: [AuthGuard],
           children: [
-            //{ path: 'company', component: CompanyComponent },
+            { path: 'company', component: CompanyComponent },
             { path: 'actionopp', component: ActionopportunityComponent },
             {
               path: 'products',
@@ -137,7 +138,8 @@ const routes: Routes = [
 
               ]
             },
-            { path: 'sendemail/:id', component: OpportunitydialogemailComponent },
+            { path: 'sendemail/:id', component: OpportunitydialogemailComponent},
+            
             { path: 'insert', component: OpportunityeditorComponent }
           ]
         },
@@ -153,22 +155,12 @@ const routes: Routes = [
               path: 'fromopp/:id',
               component: QuotationfromsupplierindexComponent
             },          
-            { path: 'edit/:id', component: QuotationfromsuppliereditorComponent,
-              children: [
-
-              ]
-            },
-            { path: 'createfromopp/:id', component: QuotationfromsuppliereditorFromOppComponent,
-              children: [
-
-              ]
-            },        
+            { path: 'edit/:id', component: QuotationfromsuppliereditorComponent },
+            { path: 'createfromquote/:id', component: QuotationfromsuppliereditorFromOppComponent },        
             { path: 'sendemail/:id', component: QuotationfromsupplierdialogemailComponent },
             { path: 'insert', component: QuotationfromsuppliereditorComponent }
           ]
         },    
-
-
         //Quotation to Customer
         {
           path: 'quotationtocustomer', component: QuotationtocustomerComponent,
@@ -187,17 +179,14 @@ const routes: Routes = [
 
               ]
             },
-            { path: 'createfromquote/:id', component: QuotationtocustomereditorFromQFSComponent,
-              children: [
-
-              ]
+            { path: 'createfromquote/:id', component: QuotationtocustomereditorFromQFSComponent
             },        
             { path: 'sendemail/:id', component: QuotationtocustomerdialogemailComponent },
             { path: 'insert', component: QuotationfromsuppliereditorComponent }
           ]
         },
 
-  //Purchase Order
+      //Purchase Order
         {
           path: 'purchaseorder', component: PurchaseorderComponent,
           canActivate: [AuthGuard],          
@@ -215,7 +204,7 @@ const routes: Routes = [
 
               ]
             },
-            { path: 'createfromquote/:id', component: QuotationtocustomereditorFromQFSComponent,
+            { path: 'createfromquote/:id', component: PurchaseordereditorFromQTSComponent,
               children: [
 
               ]
@@ -224,7 +213,7 @@ const routes: Routes = [
             { path: 'insert', component: QuotationfromsuppliereditorComponent }
           ]
         },
- //Shipping
+      //Shipping
         {
           path: 'shipping', component: ShippingComponent,
           canActivate: [AuthGuard],          
@@ -237,12 +226,15 @@ const routes: Routes = [
               path: 'from/:id',
               component: ShippingindexComponent,
             },
+            { 
+              path: 'createfromquote/:id', component: ShippingeditorFromPOComponent
+            },            
             { path: 'edit/:id', component: ShippingeditorComponent
             }
           ]
-        }                        
-     ]
-   }
+        }                     
+    ]
+  }
   
 ];
 

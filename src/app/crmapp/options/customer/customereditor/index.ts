@@ -8,5 +8,6 @@ export * from './customermarket/customermarket.component';
 export * from './customerproduct/customerproduct.component';
 export * from './customerrailspur/customerrailspur.component';
 export * from './customersector/customersector.component';
+export * from './customerproduct/customerproductprice/customerproductprice.component';
 export * from './customerbase.component';
 

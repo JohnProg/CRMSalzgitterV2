@@ -33,51 +33,15 @@ export class ActionoppComponent extends BaseComponent {
 
   pTitle: string;
   
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
-
-     this.catalogName = 'Opp Action';
-     this._curService.setAPI('ActionOpportunity/', this.catalogName);
-  }
-
-  ngOnInit() {
-    this.pTitle = '';
+  ngOnInitClass() {
+    this.entList = <Observable<ActionOpportunity[]>>this._curService.entList;
     this.initData();
-    this.entList = <Observable<ActionOpportunity[]>> this._curService.entList;
   }
+
 
   addColumns() {
-
-    this.columns.push({ name: 'Name', label: 'Name' });
-    this.columns.push({ name: 'EmailToText', label: 'EMail to' });
-    this.columns.push({ name: 'EstatusName', label: 'Status' });
-    this.columns.push({ name: 'BidStatusDescription', label: 'Bid Status' });
-    this.columns.push({ name: 'TemplateName', label: 'Template EMail' });
-
-
+    this.columns.push({ name: 'name', label: 'Name' });
   }
-    editEntity( id: number ) {
-      this.itemEdit = <ActionOpportunity>this._curService.itemEdit;
-      this._curService.load(id);
-    }
-
-    addEntity() {
-      this.itemEdit = new ActionOpportunity();
-      this.itemEdit.id = 0;
-
-    }
 
 
 }

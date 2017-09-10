@@ -52,7 +52,7 @@ export class PurchaseordereditorComponent extends CatalogComponent {
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
-
+    this.quoteType = EnumDocType.PurchaseOrder;
     this._route.params.subscribe((params: { id: number }) => {
        this.idPurchase = params.id;
       });
@@ -97,49 +97,51 @@ export class PurchaseordereditorComponent extends CatalogComponent {
 
 
 
-// @Component({
-//   selector: 'crm-purchaseordereditorfromopp',
-//   templateUrl: './quotationtocustomereditor.component.html',
-//   styleUrls: ['./quotationtocustomereditor.component.scss'],
-//   providers: [],
-// })
-// export class PurchaseordereditorFromComponent extends PurchaseordereditorComponent {
+@Component({
+  selector: 'crm-purchaseordereditorfromoppqts',
+  templateUrl: './purchaseordereditor.component.html',
+  styleUrls: ['./purchaseordereditor.component.scss']
+})
+export class PurchaseordereditorFromQTSComponent extends PurchaseordereditorComponent {
 
 
-//   constructor(
-//     public _loadingService: TdLoadingService,
-//     public _dialogService: TdDialogService,
-//     public _snackBarService: MdSnackBar,
-//     public _mediaService: TdMediaService,
-//     public _actions: ActionsService,
-//     public _ngZone: NgZone,
-//     public _router: Router, public _route: ActivatedRoute,
-//     translate: TranslateService) {
-//     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
+  constructor(
+    public _loadingService: TdLoadingService,
+    public _dialogService: TdDialogService,
+    public _snackBarService: MdSnackBar,
+    public _mediaService: TdMediaService,
+    public _actions: ActionsService,
+    public _ngZone: NgZone,
+    public _router: Router, public _route: ActivatedRoute,
+    translate: TranslateService) {
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
 
-//     this._route.params.subscribe((params: { id: number, bytype: number }) => {
-//       this.byType = params.bytype;
-//       switch(params.bytype) {
-//         case EnumDocType.Opportunity:
-//              this.idOpp = params.id;
-//              break;
-//         case EnumDocType.QuotationFromSupplier:
-//              this.idQFS = params.id;
-//              break;
-//         case EnumDocType.QuotationToCustomer:
-//              this.idQTC = params.id;
-//              break;
-//         default:
-//              break;
-//       }
-//     });
+    this._route.params.subscribe((params: { id: number, bytype: number }) => {
+      this.idPurchase = 0;
+      this.idOpp = params.id;
+      this.byType = params.bytype;
+      // switch(params.bytype) {
+      //   case EnumDocType.Opportunity:
+      //        this.idOpp = params.id;
+      //        break;
+      //   case EnumDocType.QuotationFromSupplier:
+      //        this.idQFS = params.id;
+      //        break;
+      //   case EnumDocType.QuotationToCustomer:
+      //        this.idQTC = params.id;
+      //        break;
+      //   default:
+      //        break;
+      // }
+    });
 
-//   }
+  }
 
 
-//   afterInit() {
-//     super.afterInit();
-//     this.headercomp.loadFromOpp(this.idOpp);
-//   }
-// }
+  afterInit() {
+    super.afterInit();
+    
+    this.headercomp.loadFromOpp(this.idOpp);
+  }
+}
 

@@ -1,10 +1,10 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../../services/actions.services';
-
+import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { CatalogService, IPChangeEventSorted } from '../../../../services/catalog.service';
 import { ConfigurationService } from '../../../../services/configuration.service';
-import { TCRMEntity, getProductProperties_Result, ProductProperty, ReturnSaveRequest } from '../../../../model/allmodels';
+import {  getProductProperties_Result, ProductProperty, Product } from '../../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -19,152 +19,92 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import {TranslateService} from '@ngx-translate/core';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 
+export const propql = gql`
+  query {
+    properties { id name description }
+
+  }
+`;
 @Component({
   selector: 'crm-productproperty',
   templateUrl: './productproperty.component.html',
   styleUrls: ['./productproperty.component.scss'],
   providers: [],
 })
-export class ProductpropertyComponent   {
-  @Input() idprop: number;
+export class ProductpropertyComponent extends BaseComponent   {
 
-  isEditProp: boolean = false;
+  @Input() idproduct: number;
+  sortBy: string = 'pOrder';
+  // isEditProp: boolean = false;
 
-  _catList = <BehaviorSubject<getProductProperties_Result[]>>new BehaviorSubject([]);
+  // _catList = <BehaviorSubject<getProductProperties_Result[]>>new BehaviorSubject([]);
 
-  propList: Observable<getProductProperties_Result[]>;
-  _props: getProductProperties_Result[] = new Array<getProductProperties_Result>();
-  dataStore: { properties: getProductProperties_Result[] };
+  // propList: Observable<getProductProperties_Result[]>;
+  // _props: getProductProperties_Result[] = new Array<getProductProperties_Result>();
+  // dataStore: { properties: getProductProperties_Result[] };
 
-  propEdit: ProductProperty;
-  itemEdit: getProductProperties_Result;
-  propColumns: ITdDataTableColumn[] = [
-  ];
-  catalogName: string;
+  // propEdit: ProductProperty;
+  
+  // propColumns: ITdDataTableColumn[] = [
+  // ];
+  // catalogName: string;
 
-constructor(public _router: Router, public _route: ActivatedRoute, public _curService: CatalogService, public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone) {
-    this.dataStore = { properties: [] };
+  itemEdit: ProductProperty;
 
-    this.propColumns.push({ name: 'pOrder', label: 'Order', tooltip: '' });
-    this.propColumns.push({ name: 'name', label: 'Name', tooltip: '' });
-    this.propColumns.push({ name: 'description', label: 'Description' });
-    this.propColumns.push({ name: 'isRequired', label: 'Required' });
-    this.propColumns.push({ name: 'tActions', label: '' });
-    this.propEdit = new ProductProperty();
+  ngBeforeInit() {
+    super.ngBeforeInit();
+    this.setTitle = false;
+    this.subEditor = true;
     this.catalogName = 'Product Properties';
+    this._curService.setAPI( 'ProductProperty/', this.catalogName);    
   }
 
 
-  loadProperties() {
-     if (this.propList == undefined) {
 
-      this.propList = this._catList.asObservable();
-      let cparams: TCRMEntity[] = new Array<TCRMEntity>();
-      let p: TCRMEntity = new TCRMEntity();
-      p.name = 'prodId';
-      p.description = this.idprop.toString();
-      cparams.push(p);
+  loadCatalogs() {
+    let t = this;
+    this._curService.loadQl(propql, undefined)
+      .subscribe(({data}) => {
+        this.catProperties = data['properties'];
+      }, (error: Error) => {
+        this._loadingService.resolve('');
+        debugger
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      }
+      );     
+  }
 
-      let prop: TCRMEntity = new TCRMEntity();
-      prop.name = 'idprop';
-      prop.description = '0';
-      cparams.push(prop);
+  loadData() {
+    let pparams = new URLSearchParams();
+    pparams.set('prodId', this.idproduct.toString());
+    pparams.set('idprop', '0');
+    this._curService.loadCustomAll('ProductProperty/searchByProduct', pparams);
+  }
 
-
-      this._curService.loadCustomCatalogObs('Product/GetProperties', cparams)
-        .map((response) => response.json()).subscribe((data) => {
-          this.dataStore.properties = data;
-          this._catList.next(Object.assign({}, this.dataStore).properties);
-        }, (error) => {
-          this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-        });
-
-      this._curService.loadCatalog('Property', this._props, undefined);
-    }
+  addColumns  () {
+    
+    this.columns.push({ name: 'pOrder', label: 'Order', tooltip: '' });
+    this.columns.push({ name: 'name', label: 'Name', tooltip: '' });
+    this.columns.push({ name: 'description', label: 'Description' });
+    this.columns.push({ name: 'isRequired', label: 'Required' });
+    //this.columns.push({ name: 'tActions', label: '' });
   }
 
   initEntity() {
     this.itemEdit = new  ProductProperty();
+    this.itemEdit.idProduct = this.idproduct;
   }
 
-  editProperty(item: getProductProperties_Result) {
-    this.itemEdit = item;
-
-    this.propEdit = new ProductProperty();
-    this.propEdit.idProduct = this.idprop;
-    this.propEdit.idProperty = item.idProperty;
-    this.propEdit.id = item.id;
-    this.propEdit.pOrder = item.pOrder;
-    this.isEditProp = true;
+  afterCreate(item: any) {
+    this.isEditing = false;
   }
 
-  addProperty() {
-    this.propEdit = new ProductProperty();
-    this.propEdit.id = 0;
-    this.propEdit.idProduct = this.idprop;
-    this.isEditProp = true;
+  afterUpdate(item: any) {
+    this.isEditing = false;
   }
-
-  cancelEditProp() {
-    this.isEditProp = false;
-  }
-
-  saveProp(item) {
-
-    if (item.id === 0) {
-      this._curService.customPost('Product/SaveProperty', item)
-        .map((response) => response.json()).subscribe((data) => {
-          this.isEditProp = false;
-          this.dataStore.properties.push(data.Data);
-          this._catList.next(Object.assign({}, this.dataStore).properties);
-          this._snackBarService.open(data.Message, 'Ok');
-        }, (error) => {
-          this._loadingService.resolve('users.list');
-          this._snackBarService.open(error.Message, 'Ok');
-        });
-    } else {
-      this._curService.customPost('Product/UpdateProperty', item)
-        .map((response) => response.json()).subscribe((data ) => {
-          this.isEditProp = false;
-          this.dataStore.properties.forEach((t, i) => {
-              if (t.id === data.Data.id) { this.dataStore.properties[i] = data.Data; }
-            });
-          this._catList.next(Object.assign({}, this.dataStore).properties);
-          this._snackBarService.open(data.Message, 'Ok');
-        }, (error) => {
-          this._loadingService.resolve('users.list');
-          this._snackBarService.open(error.Message, 'Ok');
-        });
-    }
-  }
-
-  deleteProperty(item: TCRMEntity) {
-
-    let cparams: TCRMEntity[] = [];
-    this._curService.customDelete('Product/DeleteProperty?idprop=' + item.id.toString(), cparams)
-      .map((response) => response.text()).subscribe((data) => {
-
-        this._snackBarService.open(data, 'Ok');
-        let index = this.dataStore.properties.findIndex((o) => o.id === item.id);
-        this.dataStore.properties.splice(index, 1);
-        this._catList.next(Object.assign({}, this.dataStore).properties);
-
-      }, (error) => {
-        this._loadingService.resolve('users.list');
-        this._snackBarService.open(error, 'Ok');
-      });
-  }
-
-  submitProperty(form: any) {
-
-  }
-
 }

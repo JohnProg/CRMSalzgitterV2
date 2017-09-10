@@ -37,26 +37,12 @@ export class ProducteditorComponent extends BaseComponent {
 @ViewChild(ProductpropertyComponent) _props: ProductpropertyComponent;
 
 
-  constructor(public _router: Router,  
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
- 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Product';
     this._curService.setAPI('Product/', this.catalogName);
     this.singleEditor = true;
-    this.autoLoad = false;
+    this.autoLoad = false;   
   }
 
 
@@ -91,7 +77,7 @@ export class ProducteditorComponent extends BaseComponent {
 
   expandProperties() {
 
-    this._props.loadProperties();
+   //this._props.loadProperties();
 
   }
 

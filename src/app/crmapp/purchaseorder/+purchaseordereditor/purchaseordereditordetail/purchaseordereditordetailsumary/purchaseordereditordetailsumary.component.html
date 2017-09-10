@@ -8,7 +8,7 @@
   <md-card-content>
 
     <section *ngIf="isEditing" flex>
-      <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
+      <form #editform="ngForm" flex  (ngSubmit)="submitForm(form)">
 
         <section layout="row" flex="100" layout-margin>
           <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">

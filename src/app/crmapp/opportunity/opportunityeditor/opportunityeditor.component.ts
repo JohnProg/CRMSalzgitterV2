@@ -24,7 +24,7 @@ import { Opportunity } from '../../model/index';
 import { OpportunityheaderComponent } from './+opportunityheader/opportunityheader.component';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-
+import { EnumDocType } from '../../constants/index';
 
 @Component({
   selector: 'crm-opportunityeditor',
@@ -48,13 +48,14 @@ export class OpportunityeditorComponent extends CatalogComponent {
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
-
+    this.quoteType = EnumDocType.Opportunity;
     this._route.params.subscribe((params: { id: number }) => {
       this.idOpp = params.id;
     });
   }
 
   doOnItemCreated(itm: Opportunity) {
+    this.opp = itm;
     this.idOpp = itm.id;
   }
 

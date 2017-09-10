@@ -7,12 +7,7 @@
 </td-paging-bar>
 <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
   <ng-template tdDataTableTemplate="id" let-value="value" let-row="row" let-column="column">
-    <button md-button md-ripple class="block relative" [routerLink]="['edit', row.id]" *ngIf="idOpp == 0 || idOpp == undefined">
-              {{value}}
-            </button>
-    <button md-button md-ripple class="block relative" [routerLink]="['/quotationfromsupplier/edit', row.id]" *ngIf="idOpp > 0">
-              {{value}}
-            </button>
+    <button md-button (click)="editEntity(row.id)">{{value}}</button>
   </ng-template>
 
   <ng-template tdDataTableTemplate="DateReceived" let-value="value" let-row="row" let-column="column">

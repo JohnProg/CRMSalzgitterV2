@@ -20,78 +20,36 @@ import { getQuotationFromSupplier_Result } from '../../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { EnumDocType } from '../../../constants/index';
+import {  QuotationindexviewerComponent } from '../../../components/index';
+
 
 @Component({
   selector: 'crm-quotationtocustomerindexviewer',
-  templateUrl: './quotationtocustomerindexviewer.component.html',
+  templateUrl: '../../../components/quotationindexviewer/quotationindexviewer.component.html',
   styleUrls: ['./quotationtocustomerindexviewer.component.scss']
 })
-export class QuotationtocustomerindexviewerComponent  extends BaseComponent  {
+export class QuotationtocustomerindexviewerComponent  extends QuotationindexviewerComponent  {
+  
+  catalogName: string ="Quotation to Customers";
+  baseApi: string ="QuotationToCustomer/searchByQFS";
+  parentDoc: number = 2;
+  parentRoute: string ="quotationtocustomer";  
 
-  @Input() idQFS: number = 0;
-  @Input() idOpp: number = 0;
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    private _router: Router,
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.sortBy = 'id';
-    this.catalogName = 'Quotation to Customer';
-    this._curService.setAPI('QuotationToCustomer/', this.catalogName);
-    this.route.params.subscribe((params: { id: number }) => {
-      this.idQFS = params.id;
-    });
+  
+
+
+  getLoadParams(): URLSearchParams {
+    let pparams = new URLSearchParams();
+    pparams.set('idquote', this.byType === EnumDocType.QuotationFromSupplier ?  this.idParent.toString() : '0');
+    pparams.set('idopp', this.byType == EnumDocType.Opportunity ? this.idParent.toString() : '0');
+    return pparams;
   }
-
-
-  loadData() {
-
-    if( this.idQFS > 0 || this.idOpp > 0) {
-        let pparams = new URLSearchParams();
-        pparams.set('idquote', this.idOpp === 0 ?  this.idQFS.toString() : '0');
-        pparams.set('idopp', this.idOpp > 0 ? this.idOpp.toString() : '0');
-        this._curService.loadCustomAll('QuotationToCustomer/searchByQFS', pparams);
-        this.dataLoaded = true;
-    } else {
-      super.loadData();
-    }
-  }
-
-  ngOnInitClass() {
-    this.entList = <Observable<getQuotationFromSupplier_Result[]>>this._curService.entList;
-    this.initData();
-    //this.reloadPaged();
-  }
-
-  editEntity(id: number) {
-    this._router.navigate(['quotationtocustomer/edit/' + id]);
-  }
-
-
-  addEntity() {
-    if( this.idQFS > 0) {
-      this._router.navigate(['/quotationtocustomer/createfromquote/', this.idQFS]);
-    } else {
-      this._router.navigate(['/quotationtocustomer/edit/', 0]);
-    }
-  }
-
 
   addColumns() {
-
     //super.addColumns();
     this.columns.push({ name: 'id', label: 'Quotation', tooltip: '' });
-    if(( this.idQFS === undefined || this.idQFS === 0) && ( this.idOpp === undefined || this.idOpp === 0) ) {
+    if( this.byType == 0  ) {
       this.columns.push({ name: 'customerName', label: 'Customer' });
     }
     this.columns.push({ name: 'idQuotationFromSupplier', label: 'QFS' });

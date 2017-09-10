@@ -29,6 +29,10 @@
         <md-icon md-list-icon>insert_chart</md-icon>
         Quotation to Customer
       </a>      
+      <a md-list-item md-ripple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
+        <md-icon md-list-icon>insert_chart</md-icon>
+        Purchase Orders
+      </a>    
     </md-nav-list>
 
     <div td-toolbar-content layout="row" layout-align="start center" flex>
@@ -43,7 +47,7 @@
     <md-card>
       <md-card-content>
 
-        <crm-quotationfromsupplierheader [idDoc]="idQuotation"  *ngIf="scrId == 1"></crm-quotationfromsupplierheader>
+        <crm-quotationfromsupplierheader [idDoc]="idQuotation"  *ngIf="scrId == 1" [quoteType]="quoteType"></crm-quotationfromsupplierheader>
 
         <crm-quotationfromsupplierdetail [idQuotation]="idQuotation" *ngIf="scrId == 2 "></crm-quotationfromsupplierdetail>
 
@@ -63,8 +67,13 @@
                 [idCustomer]="idCustomer"></crm-editorbasedialog>
 
 
-        <crm-quotationtocustomerindexviewer [idQFS]="idQuotation" *ngIf="scrId == 5 "></crm-quotationtocustomerindexviewer>
-
+        <crm-quotationtocustomerindexviewer [idParent]="idQuotation" [byType]="quoteType"
+         [allowChild]="qts.allowChild"
+        *ngIf="scrId == 5 "></crm-quotationtocustomerindexviewer>
+        <crm-purchaseorderindexviewer [idParent]="idQuotation" [byType]="quoteType" 
+        [allowChild]="false"
+        *ngIf="scrId == 6"></crm-purchaseorderindexviewer>
+        
       </md-card-content>
     </md-card>
 </div>

@@ -33,30 +33,15 @@ export class StateComponent extends BaseComponent {
    enableAdd: boolean = false;
    itemEdit: State;
  
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.autoLoad = false;
     this.catalogName = 'State';
-    this._curService.setAPI('State/', this.catalogName);
+    this._curService.setAPI('State/', this.catalogName); 
   }
 
 
-  ngOnInit() {
-
-
+  ngOnInitClass() {
     this.initData();
     this.entList = <Observable<State[]>> this._curService.entList;
   }

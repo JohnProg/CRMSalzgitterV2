@@ -27,29 +27,15 @@ import gql from 'graphql-tag';
 })
 export class TemplateemailComponent extends BaseComponent {
 
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Template Email';
-    this._curService.setAPI('TemplateEmail/', this.catalogName);
+    this._curService.setAPI('TemplateEmail/', this.catalogName);   
   }
 
   addColumns() {
-    this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
-    this.columns.push({ name: 'EMailSubject', label: 'EMail Subject' });
+    this.columns.push({ name: 'name', label: 'Name', tooltip: '' });
+    this.columns.push({ name: 'eMailSubject', label: 'EMail Subject' });
   }
 
 }

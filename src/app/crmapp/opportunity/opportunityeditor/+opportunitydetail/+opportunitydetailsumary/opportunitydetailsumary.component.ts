@@ -5,7 +5,7 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../../services/catalog.service';
 import { ConfigurationService } from '../../../../services/configuration.service';
-import { OpportunityDetailSumary, OpportunityDetailSumaryProperty, Property, TCRMEntity, ProductProperty } from '../../../../model/allmodels';
+import { OpportunityDetailSumary, OpportunityDetailSumaryProperty, Property, TCRMEntity, ProductProperty, EditorDetailSumaryProperty } from '../../../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -25,6 +25,15 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 
+
+const findCustProdProp = gql`
+  query 
+        findCustomerProductProperties($idcustproduct: Int!) {
+            findCustomerProductProperties(idcustproduct: $idcustproduct) { idProperty propertyValue } 
+        }
+`;
+
+
 @Component({
   selector: 'crm-opportunitydetailsumary',
   templateUrl: './opportunitydetailsumary.component.html',
@@ -33,30 +42,19 @@ import gql from 'graphql-tag';
 export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponent {
 
   itemEdit: OpportunityDetailSumary;
+  allowPropEdit: boolean = true;
+  @Input() idCustomerProduct: number = 0;
+  
 
-  constructor(public _router: Router,
-      public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
-    this.catalogName = 'Opp Details Sumary';
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
+     this.catalogName = 'Opp Details Sumary';
     this._curService.setAPI('OpportunityDetailSumary', this.catalogName);
     this.refreshItemUrl = 'OpportunityDetailSumary/searchByDetail';
-    this.sumProperties = 'opportunityDetailSumaryProperties';
-
+    this.sumProperties = 'opportunityDetailSumaryProperties'; 
   }
 
-    
   initEntity() {
     this.itemEdit = new OpportunityDetailSumary() ;
     this.itemEdit.idOpportunityDetail  = this.idDetail;
@@ -80,5 +78,29 @@ export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponen
     });
  }
 
+
+  setPropertyValues(details: EditorDetailSumaryProperty[] ) {
+        this._curService.loadQl(findCustProdProp, { idcustproduct: this.idCustomerProduct })
+      .subscribe(({data}) => {
+        let pdata = data['findCustomerProductProperties'];
+        pdata.forEach( (element: EditorDetailSumaryProperty) => {
+           let pid = details.filter( i => i.idProperty === element.idProperty)[0];
+           if( pid != null) {
+             pid.propertyValue = element.propertyValue;
+           }
+        });
+        this.itemEdit.quantity = this.maxQty - this.total;
+        this.itemEdit.price = this.price;
+        this.itemEdit.amount = this.itemEdit.quantity * this.itemEdit.price;
+        if(pdata.length > 0) {
+           this.allowPropEdit = false;
+        }
+      }, (error: Error) => {
+        this._loadingService.resolve('');
+        debugger
+        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+      }
+      ); 
+  }
 
 }

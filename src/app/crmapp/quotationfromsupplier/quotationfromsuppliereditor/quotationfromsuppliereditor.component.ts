@@ -23,6 +23,7 @@ import { CatalogComponent } from '../../catalogs/catalog.component';
 
 import { QuotationFromSupplier } from '../../model/index';
 import { QuotationfromsupplierheaderComponent } from './+quotationfromsupplierheader/quotationfromsupplierheader.component';
+import { EnumDocType } from '../../constants/index';
 
 @Component({
   selector: 'crm-quotationfromsuppliereditor',
@@ -49,7 +50,7 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
-
+    this.quoteType = EnumDocType.QuotationFromSupplier;
     this._route.params.subscribe((params: { id: number }) => {
       this.idQuotation = params.id;
     });
@@ -75,6 +76,7 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
   }
 
   onItemLoaded(itm: QuotationFromSupplier) {
+    super.onItemLoaded(itm);
     this.qts = itm;
     this.idCustomer = this.qts.idCustomer;
   }

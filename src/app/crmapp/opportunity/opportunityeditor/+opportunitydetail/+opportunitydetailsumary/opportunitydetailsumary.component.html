@@ -1,19 +1,19 @@
 <md-card flex>
   <md-card-title>Sumary Detail</md-card-title>
   <md-card-subtitle>
-    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
+    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing && (total < maxQty)"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
     <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
     <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
   </md-card-subtitle>
   <md-card-content>
 
     <section *ngIf="isEditing" flex>
-      <form #f="ngForm" flex #form (ngSubmit)="submitForm(form)">
+      <form #editform="ngForm" flex  (ngSubmit)="submitForm(form)">
 
         <section layout="row" flex="100" layout-margin>
           <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">
             <md-input-container>
-              <input mdInput flex [id]="pc.nameDescription" [name]="pc.nameDescription" maxlength="500" [placeholder]="pc.property.name" [required]="pc.isRequired"
+              <input mdInput flex [id]="pc.nameDescription" [name]="pc.nameDescription" maxlength="500" [placeholder]="pc.property.name" [required]="pc.isRequired" [disabled]="!allowPropEdit"
                 [(ngModel)]="pc.propertyValue">
               <md-hint align="end"> 500</md-hint>
             </md-input-container>
@@ -23,13 +23,13 @@
         <section layout="row" flex="100" layout-margin>
 
           <md-input-container flex="30">
-            <input  mdInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}" >
+            <input  mdInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}"  (ngModelChange)="qtyChange($event)" >
           </md-input-container>
           <md-input-container flex="30">
-            <input  mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.price" currencyMask>
+            <input  mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [ngModel]="itemEdit.price" currencyMask  (ngModelChange)="priceChange($event)">
           </md-input-container>
           <md-input-container flex="35">
-            <input  mdInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount" currencyMask>
+            <input  mdInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount" currencyMask disabled>
           </md-input-container>
 
         </section>
@@ -46,13 +46,16 @@
 
 
     <section flex *ngIf="!isEditing">
-
+      <div>
+        <span flex>&nbsp;</span>
+          <span>Total quantity: {{total | number}}</span>
+      </div>
       <td-data-table flex [columns]="pcolumns | async" [data]="entList | async" [sortable]="false">
         <ng-template *ngFor="let pc of (pcolumns | async)" [tdDataTableTemplate]="pc.name" let-value="value" let-row="row" let-column="column">
           <span flex>{{value}} </span>
         </ng-template>
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
-          <div layout="row" flex="5">
+          <div layout="row" flex="5" >
             <button md-icon-button (click)="confirmDelete( row)">
             <md-icon>delete</md-icon>
           </button>

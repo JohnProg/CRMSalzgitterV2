@@ -25,6 +25,13 @@ import gql from 'graphql-tag';
 
 
 
+// export const curQl = gql`
+//  mutation createCurrency($currency: { id: '', name: '', description: '', aSign: '' }) {
+//     createCurrency( value: $currency) {
+//          id name description aSign
+//       }
+//   }
+// `;
 
 @Component({
   selector: 'crm-currency',
@@ -39,24 +46,11 @@ export class CurrencyComponent extends BaseComponent {
 
   itemEdit: Currency;
   
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Currencies';
     this._curService.setAPI('Currency', this.catalogName);
   }
-
   ngOnInitClass() {
     this.entList = <Observable<Currency[]>>this._curService.entList;
     this.initData();
@@ -82,9 +76,6 @@ export class CurrencyComponent extends BaseComponent {
     //this._curService.loadQl( gCurrency, { ssid: id }, 'currency' );
 
   }
-
-
-
 
   
 }

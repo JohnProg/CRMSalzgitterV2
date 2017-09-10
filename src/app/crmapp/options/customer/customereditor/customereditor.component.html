@@ -1,7 +1,9 @@
 
 
-  <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
-    [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
+  <td-layout-manage-list #manageList 
+      [opened]="_mediaService.registerQuery('gt-sm') | async" 
+      [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
+    [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'"   >
     <md-toolbar td-sidenav-content>
        <button md-button routerLink="/options/customer">Go to Index</button>
     </md-toolbar>

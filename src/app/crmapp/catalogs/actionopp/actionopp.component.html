@@ -1,61 +1,36 @@
-<md-card flex >
+<md-card flex>
 
   <md-card-content>
-    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
-      <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
-    <span class="md-title">{{catalogName}}</span>
-      </span>
 
-      <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" (searchDebounce)="search($event)"
-        flex>
-      </td-search-box>
-
-
-      <button md-fab class="md-mini md-primary" (click)="addEntity()" aria-label="Add Item" *ngIf="!isEditing ">
-                   <md-icon>add</md-icon>
-
-    </button>
-    </div>
-
-
-
-    <form #f="ngForm" #form flex (ngSubmit)="submitForm(form.value)">
+    <form #editform="ngForm" flex (ngSubmit)="submitForm(form.value)">
       <section *ngIf="isEditing" flex="100">
 
- <div class="form-group"   flex="100">
-        <div layout="column" layout-xs="column"   >
-          <div layout="row">
+        <div class="form-group" flex="100">
+          <div layout="column" layout-xs="column">
+            <div layout="row">
 
-            <md-input-container>
-              <input mdInput #name  flex='60' name="name"  [(ngModel)]="itemEdit.name"  required placeholder="Name" maxlength="150">
-            </md-input-container>
+              <md-input-container>
+                <input mdInput #name flex='60' name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150">
+              </md-input-container>
 
-          <div flex="40" layout-align="center center">
-          <md-radio-group name="eMailTo"  [(ngModel)]="itemEdit.eMailTo" class="top15">
-            <md-radio-button style="padding-right:10px;" *ngFor="let eto of emailTo" name="eMailTo" [value]="eto.id"> {{eto.name}}
-            </md-radio-button>
-          </md-radio-group>
+              <div flex="40" layout-align="center center">
+                <md-radio-group name="eMailTo" [(ngModel)]="itemEdit.eMailTo" class="top15">
+                  <md-radio-button style="padding-right:10px;" *ngFor="let eto of emailTo" name="eMailTo" [value]="eto.id"> {{eto.name}}
+                  </md-radio-button>
+                </md-radio-group>
+              </div>
+            </div>
+
           </div>
-          </div>
-       
-      </div>
-      </div>
-        <div layout="row" flex layout-align="end center">
-          <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
-                   <md-icon>highlight_off</md-icon>
-                    </button>
-          <button md-button type="button" class="md-icon-button md-primary" (click)="saveEntity()" [disabled]="!f.valid" aria-label="Save Item">
-                   <md-icon>save</md-icon>
-          </button>
-
         </div>
+
       </section>
     </form>
 
 
 
-  
-  <md-divider></md-divider>
+
+    <md-divider></md-divider>
     <section>
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
@@ -63,7 +38,7 @@
             <button md-button (click)="editEntity(row.id)">{{value}}</button>
           </div>
         </ng-template>
-             
+
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
 
@@ -74,15 +49,9 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="5" [total]="totalItems"
-        (change)="change($event)">
+      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="5" [total]="totalItems" (change)="change($event)">
       </td-paging-bar>
     </section>
   </md-card-content>
 
-    </md-card>
-
-
-
-
-
+</md-card>

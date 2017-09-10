@@ -30,7 +30,9 @@ import gql from 'graphql-tag';
 })
 export class EmailSenderComponent extends BaseComponent {
 
-  
+     userName: string;
+   userEmail: string;
+  scrId: number;
   loadUrl: string;
   itemEdit: EMailTemplate;
   idDialog: number = 0;
@@ -38,39 +40,32 @@ export class EmailSenderComponent extends BaseComponent {
   optionsModel: number[];
   mainField: string;
   baseApi: string;
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public _router: Router,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
- 
+
+
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.autoLoad = false;
     this.singleEditor = true;
-    this.route.params.subscribe((params: { id: number }) => {
+    this.route.params.subscribe((params: { id: number, scrid: number }) => {
       this.idDialog = params.id;
-    });
-
-
+      this.scrId = params.scrid;
+    });  
   }
-
 
   ngOnInitClass() {
     super.ngOnInitClass();
     this._curService.setAPI(this.baseApi + '/', this.catalogName);
     this.loadUrl = this.baseApi + '/getEMailData?iddialog=';
+      this.setUserInfo();   
   }
 
+
+  setUserInfo() {
+        if( this._confs.userInfo ) {
+          this.userName = this._confs.userInfo.name;
+          this.userEmail = this._confs.userInfo.eMail;
+        }
+  }
 
 
  afterViewInit(): void {
@@ -121,6 +116,7 @@ export class EmailSenderComponent extends BaseComponent {
 
   sendEmail() {
     this._curService.customPost(this.baseApi + '/sendEmail', this.itemEdit).subscribe((t: any) => {
+      this.cancelEdit();
     });
   }
 
@@ -132,7 +128,7 @@ export class EmailSenderComponent extends BaseComponent {
     })[0];
     if( d === undefined) {
       let a = this.allContacts.filter( (t: any) => {
-        return t.EMail === name;
+        return t.eMail === name;
       })[0];
       let c: GenericList = new GenericList();
       c.name = a.name;

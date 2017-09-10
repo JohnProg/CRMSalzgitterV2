@@ -46,25 +46,11 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
   propSubscription: Subscription;
 
 
-
- constructor(public _router: Router, public _route: ActivatedRoute, 
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone,
-    public _http: Http,
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
- 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Purchase Order';
     this._curService.setAPI('PurchaseOrderDetail', this.catalogName);
-    this.itemEdit = new PurchaseOrderDetail();
+    this.itemEdit = new PurchaseOrderDetail();   
   }
 
   loadCatalogs() {

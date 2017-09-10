@@ -25,6 +25,10 @@ import { GetCustomerDocuments_Result,  CustomerDocument, Customer } from '../../
 import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { AuthHelper } from '../../../../authHelper/authHelper';
+import * as MicrosoftGraph from "@microsoft/microsoft-graph-types"
+import * as request from 'superagent';
+import { environment } from '../../../../../../environments/environment';
 
 
 @Component({
@@ -39,24 +43,15 @@ export class CustomerdocumentComponent extends BaseComponent {
   itemEdit: CustomerDocument;
   sortBy: 'docName';
   files: any;
- constructor(
-    public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
-    public _actions: ActionsService,
-    public _mediaService: TdMediaService,
-    public _ngZone: NgZone, 
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public translate: TranslateService,
-    public route: ActivatedRoute,
-    public apollo: Apollo) {
-    super( _confs, _loadingService, _dialogService, _snackBarService, _actions, _mediaService, _ngZone, _http, _tableService, translate, route, apollo);
 
+  ngBeforeInit() {
+    super.ngBeforeInit();
     this.catalogName = 'Customer Document';
     this._curService.setAPI('CustomerDocument', this.catalogName);    
+    //this._auth = auth;
   }
+
+      
 
   ngOnInitClass() {
 
@@ -85,6 +80,10 @@ export class CustomerdocumentComponent extends BaseComponent {
     this.itemEdit.docId = 'testid';
   }
 
+  addEntity() {
+    this.checkOneDriveToke();
+    super.addEntity();
+  }
 
 
   confirmDelete(item: CustomerDocument) {
@@ -94,23 +93,34 @@ export class CustomerdocumentComponent extends BaseComponent {
 
   submitForm(form) {
 
-    if (this.files ) {
-      let reader: FileReader = new FileReader();
-      let t: string;
-      let tself = this;
-      reader.onloadend = function () {
-        t = reader.result;
-        tself.itemEdit.docName = tself.files.name;
-        tself.itemEdit.aData64 = t;
-        tself._curService.create(tself.itemEdit);
-      };
-      reader.readAsDataURL(this.files);
+    if (this.files) {
 
+      let cname = this.customer.name.replace(/[^A-Z0-9]+/ig, "");
+      let parent = this._one.getRootFolderInfo(environment.oneDriveRootCustomer);
+      this._one.GetChildFolderInfo(parent.id, cname,
+        (item: MicrosoftGraph.DriveItem) => {
+          this._one.uploadFile(item.id, this.files,
+            (itemCreated: MicrosoftGraph.DriveItem) => {
+              debugger
+              this.itemEdit.parentFolder = parent['id'];
+              this.itemEdit.docId = itemCreated.id;
+              this.itemEdit.docName = itemCreated.name;
+              this._curService.create(this.itemEdit);
+            },
+            (itemCreated: MicrosoftGraph.DriveItem) => {
+              debugger
+            }
+          );
+        });
 
     }
 
   }
 
+  
+    downLoad(item: CustomerDocument) {
+        debugger
+    }
 
   // afterCreate(item: CustomerDocument) {
   //   Object.assign(this.itemEdit, item);
