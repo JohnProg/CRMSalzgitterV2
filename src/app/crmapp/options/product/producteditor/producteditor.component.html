@@ -3,30 +3,31 @@
 
   <md-card>
     <md-card-content>
+        <ng-template [tdLoading]="loadName">
       <section layout-margin>
 
         <form #editform="ngForm"  flex (ngSubmit)="submitForm(form)">
-        <section layout-lt-sm="column" layout="row" flex="100">
+        <section layout-lt-md="column" layout="row" flex="100">
 
           <section flex="40">
             <crm-select #idFamily name="idFamily" catalog="Family" placeholder="Select family" [(ngModel)]="itemEdit.idFamily"></crm-select>
           </section>
 
 
-          <md-input-container flex="60">
+          <md-form-field flex="60">
             <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150" />
             <md-hint align="end">{{name.value.length}} / 150</md-hint>
-          </md-input-container>
+          </md-form-field>
         </section>
-        <section layout-lt-sm="column" layout="row" flex="100">
-          <md-input-container flex>
+        <section layout-lt-md="column" layout="row" flex="100">
+          <md-form-field flex>
             <input mdInput #description name="description" [(ngModel)]="itemEdit.description" required placeholder="Description" maxlength="150">
             <md-hint align="end">{{description.value.length}} / 150</md-hint>
-          </md-input-container>
+          </md-form-field>
 
         </section>
 </form>
-        <section layout-lt-sm="column" layout="row" flex>
+        <section layout-lt-md="column" layout="row" flex>
 
 
           <td-expansion-panel *ngIf="itemEdit.id > 0" label="Properties" flex (expanded)="expandProperties()">
@@ -34,5 +35,7 @@
           </td-expansion-panel>
         </section>
       </section>
+       
+ </ng-template>
     </md-card-content>
   </md-card>

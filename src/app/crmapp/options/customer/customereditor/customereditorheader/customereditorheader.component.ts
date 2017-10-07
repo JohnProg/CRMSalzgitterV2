@@ -40,7 +40,7 @@ export const custQl = gql`
 export class CustomereditorheaderComponent extends BaseComponent {
 
    @Input() idCustomer: number;
-   @ViewChild(SelectcolonyComponent) _colony: SelectcolonyComponent;
+   @ViewChild('ccolony') _colony: SelectcolonyComponent;
    itemEdit: Customer;
    colony: Colony;
 
@@ -48,7 +48,7 @@ export class CustomereditorheaderComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Customer';
-    this._curService.setAPI('Customer/', this.catalogName);
+    this._curService.setAPI('Customer/', this.catalogName, this.loadName);
     this.singleEditor = true;
     this.autoLoad = false;
   }
@@ -91,7 +91,9 @@ export class CustomereditorheaderComponent extends BaseComponent {
   afterLoadItem(itm:  Customer) {
     super.afterLoadItem(itm);
     
-    this._colony.setZipCode(itm.colony.zipCode);
+    setTimeout( () => {
+       this._colony.setZipCode(itm.colony.zipCode);
+    }, 300);
   }
 
 

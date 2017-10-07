@@ -1,21 +1,28 @@
-<td-layout-nav logo="assets:logocrm">
-  <div td-toolbar-content layout="row" layout-align="center center" flex>
-    <span>CRM Dashboard</span>
-    <span flex></span>
-  </div>
-  <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']" >
-    <button md-mini-fab class="" (click)="setOneDrive()" aria-label="SendEmail" >
-        <md-icon>email</md-icon>
-    </button> 
-  </div>
 
-  
+    <td-layout-nav >
+        
+        
+                  <div td-toolbar-content layout="row" layout-align="center center" flex>
+                      <button md-icon-button td-menu-button tdLayoutToggle>
+                          <md-icon>menu</md-icon>
+                        </button>   
+                        <span>CRM Dashboard</span>
+                        <span flex></span>                        
+                </div>
+              
+                <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']" >
+                    
+                      </div>
+                      
+                      
+                  <td-layout-footer>
+                    <div layout="row" layout-align="start center">
+                      <span class="md-caption">Copyright &copy; 2017 Salzgitter Mexico. All rights reserved</span>
+                      <span flex></span>
+                      <md-icon class="md-icon-ux" svgIcon="assets:logocrm"></md-icon>
+                    </div>
+                  </td-layout-footer>
+                </td-layout-nav>
 
-  <td-layout-footer>
-    <div layout="row" layout-align="start center">
-      <span class="md-caption">Copyright &copy; 2017 Salzgitter Mexico. All rights reserved</span>
-      <span flex></span>
-      <md-icon class="md-icon-ux" svgIcon="assets:logocrm"></md-icon>
-    </div>
-  </td-layout-footer>
-</td-layout-nav>
+
+

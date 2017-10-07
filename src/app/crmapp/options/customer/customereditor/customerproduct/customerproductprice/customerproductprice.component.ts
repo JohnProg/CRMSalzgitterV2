@@ -37,14 +37,15 @@ export class CustomerproductpriceComponent extends BaseComponent {
   @Input() idParent: number = 0;
   itemEdit: CustomerProductPrice;
   sortBy: string = 'validFrom';
-
+  loadName: string = 'price.load';
 
   ngBeforeInit() {
     super.ngBeforeInit();
     this.setTitle = false;
     this.subEditor = true;
     this.catalogName = 'Prices';
-    this._curService.setAPI('CustomerProductPrice', this.catalogName);   
+    
+    this._curService.setAPI('CustomerProductPrice', this.catalogName, this.loadName);   
   }
   
 
@@ -85,14 +86,14 @@ export class CustomerproductpriceComponent extends BaseComponent {
     this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: moment(item.validFrom).format(environment.dateFormat), objId: this.objId }) );
   }
 
-    afterCreate(item: any) {
-    Object.assign(this.itemEdit, item.item);
+  afterCreate(item: any) {
+    Object.assign(this.itemEdit, item);
     this.isEditing = false;
   }
 
     afterUpdate(item: any) {
 
-    Object.assign(this.itemEdit, item.item);
+    Object.assign(this.itemEdit, item);
     this.isEditing = false;
 
   }

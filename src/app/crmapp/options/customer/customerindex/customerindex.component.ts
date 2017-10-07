@@ -31,7 +31,7 @@ export class CustomerindexComponent  extends BaseComponent  {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Customer';
-    this._curService.setAPI('Customer/', this.catalogName);   
+    this._curService.setAPI('Customer/', this.catalogName, this.loadName);   
   }
 
 

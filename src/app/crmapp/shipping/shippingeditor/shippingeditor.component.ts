@@ -32,6 +32,7 @@ import { ShippingeditorheaderComponent } from './shippingeditorheader/shippinged
 })
 export class ShippingeditorComponent extends CatalogComponent {
 
+
   idShipping: number;
   scrId: number = 1;
   @ViewChild(ShippingeditorheaderComponent) headercomp: ShippingeditorheaderComponent;
@@ -57,9 +58,10 @@ export class ShippingeditorComponent extends CatalogComponent {
 
 
   doOnItemCreated(itm: Shipping) {
-    debugger
+    
     this.idShipping = itm.id;
     this.shipping = itm;
+    this.idCustomer = this.shipping.idCustomer;
   }
 
   linkClick(scr: number ) : boolean {
@@ -71,6 +73,7 @@ export class ShippingeditorComponent extends CatalogComponent {
   onItemLoaded(itm: Shipping) {
     this.idShipping = itm.id;
     this.shipping = itm;
+    this.idCustomer = this.shipping.idCustomer;
   }
 
   

@@ -33,7 +33,7 @@ export class ProductindexComponent extends BaseComponent  {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Product';
-    this._curService.setAPI('Product/', this.catalogName);   
+    this._curService.setAPI('Product/', this.catalogName, this.loadName);   
   }
 
   ngOnInitClass() {

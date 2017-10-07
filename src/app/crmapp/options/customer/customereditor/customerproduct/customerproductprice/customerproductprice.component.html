@@ -1,12 +1,12 @@
 <td-expansion-panel label="Prices" sublabel="" >
 
-
+    <ng-template [tdLoading]="loadName">
 
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section *ngIf="isEditing">
 
 
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
           <section  flex-gt-sm="35" >
             <md2-datepicker  #validFrom name="validFrom" placeholder="Valid from" required="true" [(ngModel)]="itemEdit.validFrom"></md2-datepicker>
           </section>  
@@ -14,9 +14,9 @@
             <md2-datepicker  #validTo name="validTo" placeholder="Valid to" required="true" [(ngModel)]="itemEdit.validTo"></md2-datepicker>
           </section> 
         <section  flex-gt-sm="30" >
-                    <md-input-container class="md-icon-float" >
+                    <md-form-field class="md-icon-float" >
             <input  mdInput  #price name="price" placeholder="Price" [(ngModel)]="itemEdit.price"  currencyMask  >
-          </md-input-container>  
+          </md-form-field>  
         </section> 
         </div>    
 
@@ -40,11 +40,18 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar [firstLast]="false" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-        (change)="change($event)">
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+        <span hide-xs>Rows per page:</span>
+        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <md-option *ngFor="let size of pagesArray" [value]="size">
+            {{size}}
+          </md-option>
+        </md-select>
+        <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
 
     </section>
-
+ 
+  </ng-template>
 
 </td-expansion-panel>

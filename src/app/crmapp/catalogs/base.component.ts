@@ -16,7 +16,7 @@ import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
-import { TCRMEntity, Colony, Customer, GetStatusByDocType_Result } from '../model/index';
+import { TCRMEntity, Colony, Customer, GetStatusByDocType_Result, findActionOppByType_Result } from '../model/allmodels';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 
@@ -50,7 +50,7 @@ const findCustCatalogsQl = gql`
 const findCountryByMill = gql`
   query 
         findCountryByMill($idmill: Int!) {
-            findCountryByMill(idmill: $idmill) { id name description  } 
+            findCountryByMill(idmill: $idmill) { id name description idCountry } 
         }
 `;
 
@@ -86,6 +86,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   onItemLoaded: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   @ViewChild('editform') form: NgForm;
 
+  loadName: string = 'item.load';
   pageChange: Subscription;
   isEditing: boolean = false;
   singleEditor: boolean = false;
@@ -154,12 +155,14 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   catCountry: TCRMEntity[];
  
   catProduct: TCRMEntity[];
-  catActionsOpp: TCRMEntity[];
+  catActionsOpp: findActionOppByType_Result[];
   catDeliveryPoint: TCRMEntity[];
   catOEM: TCRMEntity[];
   catPosition: TCRMEntity[];
   catColony: Colony[];
   catProperties: TCRMEntity[];
+
+  catEMail: TCRMEntity[];
   constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -178,6 +181,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
                        _dialogService,_snackBarService, _tableService, apollo);
+                       
     this.addColumns();
     this.addActionColumn();
     this.pageSize = this._confs.pageSize;
@@ -186,14 +190,18 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.ngBeforeInit();
+    
+    if( this.route.snapshot.data['catName'] !== undefined) {
+      let catName = this.route.snapshot.data['catName'];
+      this.catalogName = catName;
+   }
+   
     if( this.route.snapshot.data['baseapi'] !== undefined ) {
       let baseapi = this.route.snapshot.data['baseapi'];
-      this._curService.setAPI(baseapi + '/', this.catalogName);
+      this._curService.setAPI(baseapi + '/', this.catalogName, this.loadName);
     }
-    if( this.route.snapshot.data['catName'] !== undefined) {
-       let catName = this.route.snapshot.data['catName'];
-       this.catalogName = catName;
-    }
+    
+
 
 
     if ( this.handleScreenChange === true) {
@@ -236,20 +244,24 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
       // Service events
-    this.afterLoadEvent = this._curService.getAfterLoadEmitter().subscribe(item => this.afterLoadItem(item));
+    this.afterLoadEvent = this._curService.afterLoadEmitter.subscribe(item => this.afterLoadItem(item));
     this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
     this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
     this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
     this.afterDeleteEvent = this._curService.afterDeleteEmitter.subscribe(item => this.afterDelete(item));
 
 
-    this.onCreateErrorEvent = this._curService.afterCreateEmitter.subscribe(item => this.onCreateError(item));
-    this.onUpdateErrorEvent = this._curService.afterUpdateEmitter.subscribe(item => this.onUpdateError(item));
-    this.onDeleteErrorEvent = this._curService.afterDeleteEmitter.subscribe(item => this.onDeleteError(item));
+    this.onCreateErrorEvent = this._curService.onCreateErrorEmitter.subscribe(item => this.onCreateError(item));
+    this.onUpdateErrorEvent = this._curService.onUpdateErrorEmitter.subscribe(item => this.onUpdateError(item));
+    this.onDeleteErrorEvent = this._curService.onDeleteErrorEmitter.subscribe(item => this.onDeleteError(item));
 
 
     if (this.setTitle === true) {
-       this._actions.updateTitle(this.catalogName);
+      setTimeout( () => {
+        
+        this._actions.updateTitle(this.catalogName);       
+      }, 50);
+
     }
 
     if( this.subEditor == false) {
@@ -335,12 +347,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   addColumns() {
+    
     this.columns.push({ name: 'name', label: 'Name', tooltip: '' });
     this.columns.push({ name: 'description', label: 'Description' });
   }
 
   addActionColumn() {
-    this.columns.push({ name: 'tActions', label: '' });
+    this.columns.push({ name: 'tActions', label: '', width: 120 });
   }
 
   initData() {
@@ -370,7 +383,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initEntity() {
-    this.itemEdit = new  TCRMEntity();
+    this.itemEdit = new TCRMEntity();
   }
 
 
@@ -439,6 +452,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this._actions.cancelEdit();
 
     }
+    
      this.onItemCreated.emit(item);
     //this._curService.assignList(item.items);
   }
@@ -456,6 +470,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   afterDelete(item: any) {
     this.reloadPaged(undefined);
+    
   }
 
 
@@ -529,6 +544,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
      this.itemEdit = itm;
      this._actions.setEdit({ isChild: this.singleEditor });
      this.onItemLoaded.emit(itm);
+     
   }
 
   screenChange(e: IPageChangeEvent) {
@@ -556,6 +572,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   afterLoadAll(itms: TCRMEntity[]) {
     this.isLoading = false;
+    
 
   }
 
@@ -570,7 +587,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.catDeliveryPoint = data['findDeliveryPoint'];
       this.afterLoadCustomerContact();
     }, (error: Error) => {
-      this._loadingService.resolve('');
       debugger
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     }
@@ -585,7 +601,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     .subscribe(({data}) => {
       this.catCountry = data['findCountryByMill'];
     }, (error: Error) => {
-      this._loadingService.resolve('');
       debugger
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
     }
@@ -600,12 +615,23 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     return t;
   }
 
-  checkOneDriveToke() {
+  checkOneDriveToken() {
     let t = this._confs.oneDriveToken;
+    let today = moment();
     if( t == undefined ) {
       this._auth.login();
-    } else if(  t['expire_date'] <= moment() ) {
+      return false;
+    } else if(  today >= moment(t['expire_date'])  ) {
       this._auth.login();
+      return false;
     }
+    return true;
+  }
+
+  removeSpeciaCharacters(t: string) {
+    if( t != '' && t != undefined) {
+       return t.replace(/[^A-Z0-9]+/ig, "");
+    }
+    return '';
   }
 }

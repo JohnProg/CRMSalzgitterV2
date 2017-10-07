@@ -37,11 +37,11 @@ export class DocumentviewerComponent extends BaseComponent {
  @Input() catName: string = "Documents";
  sortBy: string = 'docTypeName';
  itemEdit: BaseDocument;
-
+ loadName: string = 'docview.load';
  
  ngOnInitClass() {
     this.catalogName = this.catName;
-    this._curService.setAPI( this.baseApi + '/', this.catalogName);
+    this._curService.setAPI( this.baseApi + '/', this.catalogName, this.loadName);
     this.entList = <Observable<BaseDocument[]>>this._curService.entList;
     this.initData();
   }
@@ -54,13 +54,19 @@ export class DocumentviewerComponent extends BaseComponent {
     this.initEntity();
   }
 
+
   addColumns() {
      this.columns.push({ name: 'docTypeName', label: 'Doc. Type' });
      this.columns.push({ name: 'dateUploaded', label: 'Date Uploaded', tooltip: '' });
      this.columns.push({ name: 'docName', label: 'Document Name' });
   }
 
-  downLoad() {}
+  downLoad(item: BaseDocument) {
+    if( this.checkOneDriveToken() == true) {
+      this._one.loadItem = this.loadName;
+      this._one.downloadFile(item.docId, item.docName);
+    }
+  }
   
   initEntity() {
     this.itemEdit = new  BaseDocument();
@@ -69,6 +75,12 @@ export class DocumentviewerComponent extends BaseComponent {
   confirmDelete(item:  BaseDocument) {
     this.itemEdit = item;
     this._actions.deleteItemEvent.emit( (<IDeleteEventModel>{ title: item.docName, objId: this.objId }) );
+  }
+
+  afterLoadAll(itms: BaseDocument[]) {
+    super.afterLoadAll(itms);
+    this._actions.showAdd(false);
+
   }
 
 }

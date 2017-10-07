@@ -1,41 +1,50 @@
 
-
+ <ng-template [tdLoading]="loadName">
       <section *ngIf="isEditing">
 <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-        <section layout="column" flex="100" layout-margin>
 
-        <div layout-gt-sm="row" layout-lt-sm="column" flex >
-           <md-select class="cbxClass" #idProduct name="idProduct" flex required="true" [disabled]="!allowProduct"  placeholder="Product" [(ngModel)]="itemEdit.idProduct"  >
-                  <md-option *ngFor="let i of catProduct" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{  i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>                  
+
+        <div layout-gt-sm="row" layout-lt-md="column" flex  layout-margin >
+            <md2-select class="cbxClass" #idCustomerProduct name="idCustomerProduct" flex required="true" [disabled]="!allowProduct"  placeholder="Product" [(ngModel)]="itemEdit.idCustomerProduct" (change)="productChange($event.value)"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #sproduct  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of productData  | nameDesc: { text: sproduct.value, fields: [ 'productName', 'platform', 'partNumberBuyer'] }		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id"  > 
+                    {{ i.productName  }} {{ i.platform != null ? ' [Platform: ' + i.platform + ']': '' }}
+                    {{ i.partNumberBuyer != null ? ' [Buyer Part: ' + i.partNumberBuyer + ']': '' }}
+                  </md2-option>
+            </md2-select>                
         </div>
 
 
-        <div layout-gt-sm="row" layout-lt-sm="column" >
-          <md-input-container flex class="">
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+          <md-form-field flex class="">
             <textarea mdInput flex #itemDescription name="itemDescription" maxlength="500"  placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.itemDescription" ></textarea>
                   <md-hint align="end">{{itemDescription.value.length}} / 150</md-hint>
-          </md-input-container>         
+          </md-form-field>         
         </div>  
 
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-margin >
-          <md-input-container flex-gt-xs="25">
-            <input mdInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.itemQuantity" currencyMask [options]="{ prefix: ''}" >
-          </md-input-container>
-          <md-input-container class="md-icon-float" flex-gt-xs="25">
-            <input  mdInput #ItemPrice name="ItemPrice" placeholder="Cost Price" [(ngModel)]="itemEdit.itemPrice" currencyMask >
-          </md-input-container>
-          <md-input-container class="md-icon-float" flex-gt-xs="25">
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
+            <md-form-field  flex-gt-sm="25" >
+                <input   mdInput  #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" (ngModelChange)="qtyChange($event)" />
+              </md-form-field>
+              <md-form-field  flex-gt-sm="25" >
+                <input  mdInput   #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)"  />
+              </md-form-field>
+              <md-form-field  flex-gt-sm="25" >
+                <input  mdInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.itemExtended" currencyMask disabled/>
+              </md-form-field>  
+
+          <md-form-field class="md-icon-float" flex-gt-sm="25">
             <input  mdInput  #SalePrice name="SalePrice" placeholder="Sale Price" [(ngModel)]="itemEdit.salePrice"  currencyMask  >
-          </md-input-container>  
-          <md-input-container class="md-icon-float" flex-gt-xs="25">
-            <input  mdInput   #Extended name="Extended" placeholder="Extended Price" [(ngModel)]="itemEdit.extended"  currencyMask  >
-          </md-input-container>          
+          </md-form-field>  
         </div> 
 
-        </section>
+
     </form>
         <crm-purchaseordereditordetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.Quantity" [price]="itemEdit.SalePrice" ></crm-purchaseordereditordetailsumary>
       </section>
@@ -46,11 +55,12 @@
 
 
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-        <ng-template tdDataTableTemplate="itemDescription"  let-value="value" let-row="row"  let-column="column">
-          <div layout="row" flex>
-            <button md-button  (click)="editEntity(row.id)">{{value}}</button>
-          </div>
-        </ng-template>
+          <ng-template tdDataTableTemplate="itemDescription" let-value="value" let-row="row" let-column="column">
+              <button [tooltip]="row.itemDescription" md-button  (click)="editEntity(row.id)">{{value | maxString}}</button>
+          </ng-template>
+            <ng-template tdDataTableTemplate="productDescription" let-value="value" let-row="row" let-column="column">
+                <span [tooltip]="row.productDescription">{{value | maxString}}</span>
+                </ng-template>
 
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
@@ -64,5 +74,5 @@
       </td-data-table>
 
     </section>
-
+  </ng-template>
 

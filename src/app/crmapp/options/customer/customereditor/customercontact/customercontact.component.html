@@ -1,48 +1,53 @@
+<ng-template [tdLoading]="loadName">
 <section *ngIf="isEditing">
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
-      <md-input-container flex-gt-sm="60">
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <md-form-field flex-gt-sm="60">
         <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250" />
         <md-hint align="end">{{name.value.length}} / 250</md-hint>
-      </md-input-container>
-      <section flex-gt-sm="30">
-        <md-select class="cbxClass" #idPosition name="idPosition" flex required="true" placeholder="Position" [(ngModel)]="itemEdit.idPosition">
-          <md-option *ngFor="let i of catPosition" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+      </md-form-field>
+
+        <md2-select class="cbxClass" flex-gt-sm="30" #idPosition name="idPosition" flex required="true" placeholder="Position" [(ngModel)]="itemEdit.idPosition">
+            <md2-select-header>               
+                <section layout-padding>
+                    <md-form-field>
+                        <input mdInput flex #sposition  placeholder="Search" maxlength="15"  >
+                      </md-form-field>
+                </section>
+             </md2-select-header>           
+          <md2-option *ngFor="let i of catPosition | nameDesc:sposition.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
-          </md-option>
-        </md-select>
-      </section>
-          <section flex-gt-sm="10" >
-            <md-slide-toggle #isActive name="Active"  [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
-          </section>         
+          </md2-option>
+        </md2-select>
+        <md-slide-toggle #isActive name="Active" flex-gt-sm="10"  [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
     </div>
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-input-container flex-gt-sm="40">
+      <md-form-field flex-gt-sm="40">
         <input mdInput #officePhone name="officePhone" [(ngModel)]="itemEdit.officePhone" required placeholder="Office Phone" maxlength="50" />
         <md-hint align="end">{{officePhone.value.length}} / 50</md-hint>
-      </md-input-container>
-      <md-input-container flex-gt-sm="20">
+      </md-form-field>
+      <md-form-field flex-gt-sm="20">
         <input mdInput #extension name="extension" [(ngModel)]="itemEdit.extension" required placeholder="Extension" maxlength="50" />
         <md-hint align="end">{{extension.value.length}} / 50</md-hint>
-      </md-input-container>
+      </md-form-field>
 
-      <md-input-container flex-gt-sm="40">
+      <md-form-field flex-gt-sm="40">
         <input mdInput #cellPhone flex name="cellPhone" [(ngModel)]="itemEdit.cellPhone" placeholder="Cell Phone" maxlength="50" />
         <md-hint align="end">{{cellPhone.value.length}} / 50</md-hint>
-      </md-input-container>
+      </md-form-field>
 
     </div>
 
-    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
-      <md-input-container flex-gt-sm="50">
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <md-form-field flex-gt-sm="50">
         <input mdInput #email flex name="email" [(ngModel)]="itemEdit.email" placeholder="E-Mail" maxlength="250" />
         <md-hint align="end">{{email.value.length}} / 250</md-hint>
-      </md-input-container>
-      <md-input-container flex-gt-sm="50">
+      </md-form-field>
+      <md-form-field flex-gt-sm="50">
         <input mdInput #nickName flex name="nickName" [(ngModel)]="itemEdit.nickName" placeholder="Nickname" maxlength="150" />
         <md-hint align="end">{{nickName.value.length}} / 150</md-hint>
-      </md-input-container>      
+      </md-form-field>      
     </div>
 
   </form>
@@ -68,7 +73,14 @@
     </ng-template>
 
   </td-data-table>
-  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-    (change)="change($event)">
+  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+    <span hide-xs>Rows per page:</span>
+    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <md-option *ngFor="let size of pagesArray" [value]="size">
+        {{size}}
+      </md-option>
+    </md-select>
+    <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
   </td-paging-bar>
 </section>
+</ng-template>

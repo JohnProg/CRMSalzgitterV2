@@ -16,7 +16,8 @@ export const environment: {
   baseHref: string,
   dateFormat: string,
   oneDriveBase: string,
-  oneDriveRootCustomer: string
+  oneDriveRootCustomer: string,
+  rootDocBase: string
   } = {
   production: false,
   appBase: 'http://localhost:4200/',
@@ -32,5 +33,6 @@ export const environment: {
   baseHref: '/',
   dateFormat: 'YYYY.MM.DD',
   oneDriveBase: 'https://graph.microsoft.com/beta/',
-  oneDriveRootCustomer: 'CustomerDocumentV2Dev'
+  oneDriveRootCustomer: 'CustomerDocumentV2',
+  rootDocBase: 'DEV'
 };

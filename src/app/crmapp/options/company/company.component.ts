@@ -41,7 +41,7 @@ export class CompanyComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Company';
-    this._curService.setAPI('Company/', this.catalogName);
+    this._curService.setAPI('Company/', this.catalogName, this.loadName);
     this.singleEditor = true;
     this.autoLoad = false;   
   }
@@ -50,17 +50,18 @@ export class CompanyComponent extends BaseComponent {
   ngOnInitClass() {
     this.entList = <Observable<Company[]>>this._curService.entList;
     this.initEntity();
-
-
   }
 
   afterViewInit(): void {
+
+    setTimeout( () => {
       if (this.idCompany > 0) {
         this.editEntity(this.idCompany);
       } else {
-        
         this.addEntity();
-      }
+      }      
+    }, 50);
+
   }
 
   initEntity() {
@@ -75,8 +76,9 @@ export class CompanyComponent extends BaseComponent {
 
   afterLoadItem(itm:  Company) {
     super.afterLoadItem(itm);
-    
+    setTimeout(() => {
     this._colony.setZipCode(itm.colony.zipCode);
+    }, 200);
     //this.img.nativeElement.src = "data:image/jpg;base64," + itm.logo;
   }
 

@@ -49,7 +49,7 @@ export class CurrencyComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Currencies';
-    this._curService.setAPI('Currency', this.catalogName);
+    this._curService.setAPI('Currency', this.catalogName, this.loadName);
   }
   ngOnInitClass() {
     this.entList = <Observable<Currency[]>>this._curService.entList;

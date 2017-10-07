@@ -33,26 +33,13 @@ import gql from 'graphql-tag';
 export class ActionopportunityComponent extends BaseComponent  {
 
 
-  @ViewChild(ActionopportunitytemplateemailComponent) _templates: ActionopportunitytemplateemailComponent;
 
 
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Action Opportunities';
-    this._curService.setAPI('ActionOpportunity/', this.catalogName);    
+    this._curService.setAPI('ActionOpportunity/', this.catalogName, this.loadName);    
   }
-
-  addColumns() {
-    this.columns.push({ name: 'Name', label: 'Name', tooltip: '' });
-    this.columns.push({ name: 'EMailTo', label: 'EMailTo' });
-  }
-
-  expandProperties() {
-
-    this._templates.loadTemplates();
-
-  }
-
 
 
 }

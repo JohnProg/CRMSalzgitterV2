@@ -1,39 +1,37 @@
+
 <md-card>
   <md-card-content>
-      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+      <ng-template [tdLoading]="loadName">
       <section *ngIf="isEditing">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
+    
         <section  layout="column" flex="100" layout-margin>
         <section  flex="100" >
-          <md-input-container>
+          <md-form-field>
             <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
             <md-hint align="end">{{name.value.length}} / 150</md-hint>
-          </md-input-container>
+          </md-form-field>
+          <md-form-field>
+            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="{{ 'DESCRIPTION' | translate}}"
+              maxlength="150">
+            <md-hint align="end">{{description.value.length}} / 150</md-hint>
+          </md-form-field>
+        </section>
 
-        </section>
-        <section  flex >
-          <crm-select #idStatus name="idStatus" required catalog="EstatusOpportunity" placeholder="Status Opp" [(ngModel)]="itemEdit.idStatus" ></crm-select>
-        </section>    
-        <div layout-gt-sm="row" layout-lt-sm="column" flex layout-padding>
-          <span>Email to:    </span>
-          <md-radio-group #EMailTo name="EMailTo" [(ngModel)]="itemEdit.emailTo">
-            <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
-            <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
-            <md-radio-button value="3">{{ 'BOTH' | translate}}</md-radio-button>
-          </md-radio-group>
-        </div>   
-        <section layout-lt-sm="column" layout="row" flex>
-          <td-expansion-panel *ngIf="itemEdit.id > 0" label="Email Templates" flex (expanded)="expandProperties()">
-            <crm-actionopportunitytemplateemail [idaction]="itemEdit.id"></crm-actionopportunitytemplateemail>
-          </td-expansion-panel>
-        </section>
 
 
         </section>   
                 
-      </section>
+
     </form>
+    <section layout-lt-md="column" layout="row" flex>
+      <td-expansion-panel *ngIf="itemEdit.id > 0" label="Extended Data" flex >
+        <crm-actionopportunitytemplateemail [idaction]="itemEdit.id"></crm-actionopportunitytemplateemail>
+      </td-expansion-panel>
+    </section>
+  </section>
 
-
+  
     <section *ngIf="!isEditing">
 
             <ng-template tdLoading="items.load">
@@ -52,14 +50,18 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-   (change)="change($event)"
-        >
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+        <span hide-xs>Rows per page:</span>
+        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <md-option *ngFor="let size of pagesArray" [value]="size">
+            {{size}}
+          </md-option>
+        </md-select>
+        <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
 
       </ng-template>  
     </section>
+  </ng-template>
   </md-card-content>
 </md-card>
-
-     

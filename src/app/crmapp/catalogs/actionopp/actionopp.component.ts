@@ -29,18 +29,11 @@ import gql from 'graphql-tag';
 })
 export class ActionoppComponent extends BaseComponent {
 
-
-
-  pTitle: string;
-  
-  ngOnInitClass() {
-    this.entList = <Observable<ActionOpportunity[]>>this._curService.entList;
-    this.initData();
-  }
-
-
-  addColumns() {
-    this.columns.push({ name: 'name', label: 'Name' });
+  ngBeforeInit() {
+    super.ngBeforeInit();
+    this.sortBy = 'name';
+    this.catalogName = 'Action Opportunity';
+    this._curService.setAPI('ActionOpportunity/', this.catalogName, this.loadName);   
   }
 
 

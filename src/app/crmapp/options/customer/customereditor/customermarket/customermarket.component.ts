@@ -51,7 +51,7 @@ export class CustomermarketComponent extends CustomerbaseComponent {
     super.ngBeforeInit();
      this.catalogName = 'Markets';
     this.catalog = 'CustomerMarket';
-    this._curService.setAPI( this.catalog + '/', this.catalogName); 
+    this._curService.setAPI( this.catalog + '/', this.catalogName, this.loadName); 
   }
 
   ngOnInitClass() {

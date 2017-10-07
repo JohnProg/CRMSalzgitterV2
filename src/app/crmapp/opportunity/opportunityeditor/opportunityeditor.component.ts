@@ -57,6 +57,7 @@ export class OpportunityeditorComponent extends CatalogComponent {
   doOnItemCreated(itm: Opportunity) {
     this.opp = itm;
     this.idOpp = itm.id;
+    this.idCustomer = itm.idCustomer;
   }
 
   linkClick(scr: number ) : boolean {
@@ -66,7 +67,9 @@ export class OpportunityeditorComponent extends CatalogComponent {
 
 
   onItemLoaded(itm: Opportunity) {
+    
     this.opp = itm;
-    this.idCustomer = this.opp.idCustomer;
+    this.idOpp = itm.id;
+    this.idCustomer = itm.idCustomer;
   }
 }

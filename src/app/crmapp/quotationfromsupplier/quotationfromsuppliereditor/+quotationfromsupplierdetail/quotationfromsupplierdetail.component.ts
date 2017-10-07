@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../catalogs/base.component';
+import {  EditordetailComponent } from '../../../components/index';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -26,106 +27,35 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 
-const productQl = gql`
-  query {
-    products { id name description }
-  }
-`;
-
 @Component({
   selector: 'crm-quotationfromsupplierdetail',
   templateUrl: './quotationfromsupplierdetail.component.html',
   styleUrls: ['./quotationfromsupplierdetail.component.scss']
 })
-export class QuotationfromsupplierdetailComponent extends BaseComponent {
+export class QuotationfromsupplierdetailComponent extends EditordetailComponent {
 
-  @Input() idQuotation: number = 0;
+
   itemEdit: QuotationFromSupplierDetail;
-  sortBy: string = 'itemDescription';
-  allowProduct: boolean = true;
-  propSubscription: Subscription;
-
-
-
-  ngBeforeInit() {
-    super.ngBeforeInit();
-    this.catalogName = 'Quotation Details';
-    this._curService.setAPI('QuotationFromSupplierDetail', this.catalogName);
-    this.itemEdit = new QuotationFromSupplierDetail();   
-  }
-
-  
-  loadCatalogs() {
-    this._curService.loadQl(productQl, undefined)
-      .subscribe(({data}) => {
-        this.catProduct = data['products'];
-
-      }, (error: Error) => {
-        this._loadingService.resolve('');
-        debugger
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-      }
-      );   
-  }
+  baseApi: string = 'QuotationFromSupplierDetail';
+  catalogName: string = 'Quotation Details';
+  baseSearch: string = 'searchByQuotation';
   
   ngOnInitClass() {
     this.entList = <Observable<QuotationFromSupplierDetail[]>>this._curService.entList;
     this.initData();
   }
 
-
-  initData() {
+  getLoadParams(): URLSearchParams {
     let pparams = new URLSearchParams();
-    pparams.set('idquote', this.idQuotation.toString());
-    this._curService.loadCustomAll('QuotationFromSupplierDetail/searchByQuotation', pparams);
-    this.initEntity();
+    pparams.set('idquote', this.idOpp.toString());
+    return pparams;
   }
 
-  afterViewInit(): void {
-    this._actions.updateTitle('Details for Quotation from Supplier ' + this.idQuotation.toString());
-
-  }
-
-  onDestroy() {
-    if (this.propSubscription !== undefined) { this.propSubscription.unsubscribe(); }
-  }
-
-  addColumns() {
-    this.columns.push({ name: 'itemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
-
-    this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
-    this.columns.push({ name: 'itemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'salePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-  }
 
   initEntity() {
     this.itemEdit = new QuotationFromSupplierDetail() ;
-    this.itemEdit.idQuotationFromSupplier  = this.idQuotation;
+    this.itemEdit.idQuotationFromSupplier  = this.idOpp;
     this.itemEdit.idProduct = 0;
   }
 
-
-  afterLoadItem(itm: QuotationFromSupplierDetail) {
-    super.afterLoadItem(itm);
-    this._actions.updateTitle('Edit item ' + this.idQuotation.toString());
-  }
-
-
-  confirmDelete(item:  QuotationFromSupplierDetail) {
-    this.itemEdit = item;
-    this._actions.deleteItem({ title: item.itemDescription, objId: this.objId});
-  }
-
-  afterCreate(item: QuotationFromSupplierDetail) {
-    Object.assign(this.itemEdit, item);
-  }
-
-  afterUpdate(item: QuotationFromSupplierDetail) {
-    Object.assign(this.itemEdit, item);
-  }
-
-  hasSumary(h: boolean) {
-    this.allowProduct = h;
-  }
 }

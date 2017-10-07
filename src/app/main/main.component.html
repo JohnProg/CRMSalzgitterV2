@@ -1,8 +1,26 @@
-<td-layout #layout>
-  <td-navigation-drawer logo="assets:logocrm" sidenavTitle="{{ 'HOME.CRMSALZGITTER' | translate }}" [name]="userName" [email]="userEmail">
-     
-    
-    <crm-mainmenu ></crm-mainmenu>
+
+
+<td-layout >
+
+
+
+  <td-navigation-drawer flex logo="assets:logocrm" 
+       sidenavTitle="CRM Salzgitter" [name]="userName" [email]="userEmail">
+    <div td-navigation-drawer-menu>
+        <crm-mainmenu ></crm-mainmenu>
+    </div>
+         
+   
   </td-navigation-drawer>
-  <router-outlet></router-outlet>
+
+
+
+  <router-outlet></router-outlet> 
+
+
+
+
+
 </td-layout>
+
+

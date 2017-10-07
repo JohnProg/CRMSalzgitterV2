@@ -42,7 +42,7 @@ export class QuotationindexviewerComponent extends BaseComponent  {
 
   
     ngOnInitClass() {
-      this._curService.setAPI(this.baseApi, this.catalogName);
+      this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
       super.ngOnInitClass();
     }
 

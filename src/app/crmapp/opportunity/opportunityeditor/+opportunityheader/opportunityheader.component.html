@@ -1,130 +1,200 @@
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
 
-
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <ng-template [tdLoading]="loadName">
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
             <section  flex-gt-sm="35" >
-                <md-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
-                      <md-option *ngFor="let i of catCustomer" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                <md2-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
+                    <md2-select-header>               
+                        <section layout-padding>
+                            <md-form-field>
+                                <input mdInput flex #scustomer  placeholder="Search" maxlength="15"  >
+                              </md-form-field>
+                            </section>
+                        </md2-select-header>                   
+                      <md2-option *ngFor="let i of catCustomer  | nameDesc:scustomer.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                         {{ i.nameDescription || i.name}} 
-                      </md-option>
-                </md-select>                
+                      </md2-option>
+                </md2-select>                
               </section>
               <section  flex-gt-sm="35" >
-                <md-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
-                      <md-option *ngFor="let i of catCustomerContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+                <md2-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
+                    <md2-select-header>               
+                        <section layout-padding>
+                            <md-form-field>
+                                <input mdInput flex #scustcontact  placeholder="Search" maxlength="15"  >
+                              </md-form-field>
+                            </section>
+                        </md2-select-header>                   
+                      <md2-option *ngFor="let i of catCustomerContact  | nameDesc:scustcontact.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                         {{ i.nameDescription || i.name}} 
-                      </md-option>
-                </md-select>                
+                      </md2-option>
+                </md2-select>                
               </section>          
          
           <section  flex-gt-sm="30" >
-            <md-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
-                  <md-option *ngFor="let i of catStatus" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            <md2-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
+                  <md2-option *ngFor="let i of catStatus" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>            
+                  </md2-option>
+            </md2-select>            
           </section>             
         </div>   
            
-        <div flex layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-          <md-input-container flex >
+        <div flex layout-gt-sm="row" layout-lt-md="column" layout-padding>
+          <md-form-field flex >
             <textarea mdInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.oppNotes" ></textarea>
              <md-hint flex align="end">{{oppNotes.value.length}} / 500</md-hint>
-          </md-input-container>         
+          </md-form-field>         
         </div>         
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
             <section flex-gt-sm="35" >
-                <md-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
-                      <md-option *ngFor="let i of catResponsible" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                <md2-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+                    <md2-select-header>               
+                        <section layout-padding>
+                            <md-form-field>
+                                <input mdInput flex #sresponsible  placeholder="Search" maxlength="15"  >
+                              </md-form-field>
+                            </section>
+                        </md2-select-header>                   
+                      <md2-option *ngFor="let i of catResponsible  | nameDesc:sresponsible.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                         {{ i.nameDescription || i.name}} 
-                      </md-option>
-                </md-select>
+                      </md2-option>
+                </md2-select>
     
               </section>
               <section  flex-gt-sm="35" >
-                <md-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
-                      <md-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                <md2-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
+                      <md2-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                         {{ i.nameDescription || i.name}} 
-                      </md-option>
-                </md-select>
+                      </md2-option>
+                </md2-select>
               </section>    
           <section  flex-gt-sm="30" >
-            <md-select class="cbxClass" #idContact name="idContact" flex required="true"  placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
-                  <md-option *ngFor="let i of catContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idContact name="idContact" flex required="true"  placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #scontact  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header> 
+                  <md2-option *ngFor="let i of catContact  | nameDesc:scontact.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>              
+                  </md2-option>
+            </md2-select>              
           </section>          
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
           <section flex-gt-sm="35" >
-            <md-select class="cbxClass" #idMarket name="idMarket" flex required="true"  placeholder="Market" [(ngModel)]="itemEdit.idMarket"  >
-                  <md-option *ngFor="let i of catMarket" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idMarket name="idMarket" flex required="true"  placeholder="Market" [(ngModel)]="itemEdit.idMarket"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #smarket  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of catMarket  | nameDesc:smarket.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>               
+                  </md2-option>
+            </md2-select>               
           </section>
           <section  flex-gt-sm="35" >
-            <md-select class="cbxClass" #idSector name="idSector" flex required="true"  placeholder="Sector" [(ngModel)]="itemEdit.idSector"  >
-                  <md-option *ngFor="let i of catSector" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idSector name="idSector" flex required="true"  placeholder="Sector" [(ngModel)]="itemEdit.idSector"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #ssector  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of catSector  | nameDesc:ssector.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>             
+                  </md2-option>
+            </md2-select>             
           </section>      
           <section  flex-gt-sm="30" >
-            <md-select class="cbxClass" #idPort name="idPort" flex required="true"  placeholder="Port" [(ngModel)]="itemEdit.idPort"  >
-                  <md-option *ngFor="let i of catPort" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idPort name="idPort" flex required="true"  placeholder="Port" [(ngModel)]="itemEdit.idPort"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #sport  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of catPort  | nameDesc:sport.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>              
+                  </md2-option>
+            </md2-select>              
           </section>           
         </div>
 
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
           <section flex-gt-sm="25" >
-            <md-select class="cbxClass" #idTransactionFlow name="idTransactionFlow" flex required="true"  placeholder="Transaction Flow" [(ngModel)]="itemEdit.idTransactionFlow"  >
-                  <md-option *ngFor="let i of catTransactionFlow" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idTransactionFlow name="idTransactionFlow" flex required="true"  placeholder="Transaction Flow" [(ngModel)]="itemEdit.idTransactionFlow"  >
+                  <md2-option *ngFor="let i of catTransactionFlow" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>              
+                  </md2-option>
+            </md2-select>              
           </section> 
           <section flex-gt-sm="25" >
-            <md-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
-                  <md-option *ngFor="let i of catIncoTerm" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #sincoterm  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of catIncoTerm  | nameDesc:sincoterm.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>             
+                  </md2-option>
+            </md2-select>             
           </section>  
           <section flex-gt-sm="25" >
-            <md-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true"  placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerms"  >
-                  <md-option *ngFor="let i of catLinerTerm" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true"  placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerms"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #slinerterm  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of catLinerTerm  | nameDesc:slinerterm.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>               
+                  </md2-option>
+            </md2-select>               
           </section>   
           <section flex-gt-sm="25" >           
             <md-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.asImporter">As Importer</md-slide-toggle>
           </section>                 
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding *ngIf="deliveryRequired">
-            <md-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true"  placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint"  >
-                  <md-option *ngFor="let i of catDeliveryPoint" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding *ngIf="deliveryRequired">
+            <md2-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true"  placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #sdelivery  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                    </section>
+                 </md2-select-header>               
+                  <md2-option *ngFor="let i of catDeliveryPoint  | nameDesc:sdelivery.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.cDPName }} 
-                  </md-option>
-            </md-select>         
+                  </md2-option>
+            </md2-select>         
         </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
           <section flex-gt-sm="25" >
-            <md-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
-                  <md-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+            <md2-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
+                  <md2-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>             
+                  </md2-option>
+            </md2-select>             
           </section> 
           <section flex-gt-sm="25" >           
             <md-slide-toggle #isAutomotive name="isAutomotive"  [(ngModel)]="itemEdit.isAutomotive">Is Automotive</md-slide-toggle>
           </section>                  
         </div>       
 
-       
+      </ng-template>
       </form>

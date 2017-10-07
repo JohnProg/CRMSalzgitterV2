@@ -51,7 +51,7 @@ export class CustomersectorComponent extends CustomerbaseComponent {
     super.ngBeforeInit();
     this.catalogName = 'Sectors';
     this.catalog = 'CustomerSector';
-    this._curService.setAPI( this.catalog + '/', this.catalogName);  
+    this._curService.setAPI( this.catalog + '/', this.catalogName, this.loadName);  
   }
   ngOnInitClass() {
     super.ngOnInitClass();

@@ -45,9 +45,9 @@ export class OpportunityheaderComponent extends BaseOppComponent {
     this.itemEdit = new Opportunity();
     this.catalogName = 'Opportunity';
     this.autoLoad = false;
-    this._curService.setAPI('Opportunity/', this.catalogName);
+    this._curService.setAPI('Opportunity/', this.catalogName, this.loadName);
     this.singleEditor = true;
-    this.quoteType  
+    
   }
 
   ngOnInitClass() {

@@ -1,7 +1,13 @@
 <td-layout-nav >
-  <div td-toolbar-content layout="row" layout-align="center center" flex>
-        <crm-gactions flex ></crm-gactions>
-  </div>
-  <router-outlet></router-outlet>
+        <button md-icon-button td-menu-button tdLayoutToggle>
+                <md-icon>menu</md-icon>
+              </button>
+        <div td-toolbar-content layout="row" layout-align="center center" flex>
+            <crm-gactions flex ></crm-gactions>
+      </div>
+
+
+<router-outlet></router-outlet>
+
 
 </td-layout-nav>

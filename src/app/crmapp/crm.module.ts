@@ -61,7 +61,7 @@ export function provideClient(): ApolloClient {
 //catalogs
 import { BaseComponent, CatalogComponent, CurrencyComponent,  
   ActionoppComponent, StateComponent, IncotermComponent,
-  TemplateemailComponent, BaseOppComponent
+  TemplateemailComponent, BaseOppComponent, MillComponent, MillcountryComponent
  } from './catalogs/index';
 
 
@@ -82,7 +82,8 @@ import {
     CustomerproductpriceComponent,
   // Products
   ProductComponent, ProducteditorComponent, ProductpropertyComponent,
-  ProductindexComponent, ActionopportunityComponent, ActionopportunitytemplateemailComponent
+  ProductindexComponent, ActionopportunityComponent, ActionopportunitytemplateemailComponent,
+  OpptypeComponent, OpptypestatusComponent
 
 } from './options/index';
 
@@ -94,7 +95,8 @@ import { CRMSelectComponent, GenericActionsComponent,
   CrmselectchildComponent, EmailSenderComponent,
   EditordetailsumaryComponent, EditorbasedialogComponent,
   EditorbasedialogdocumentComponent,
-  DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent } from './components/index';
+  DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent,
+  NameDescPipe, MaxStringPipe, EditordetailComponent } from './components/index';
 
 // Directives
 
@@ -173,11 +175,16 @@ import { AuthHelper } from './authHelper/authHelper';
     TemplateemailComponent,
     BaseOppComponent,
     SelectcolonyComponent,
+    EditordetailComponent,
+    MillComponent,
+    MillcountryComponent,
+    
     //Options
     OptionsComponent,
     CompanyComponent,
     ActionopportunityComponent,
     ActionopportunitytemplateemailComponent,
+    OpptypeComponent, OpptypestatusComponent,
 
     //Customer
     CustomerComponent,
@@ -266,6 +273,8 @@ import { AuthHelper } from './authHelper/authHelper';
     ShippingeditordetailComponent,
     ShippingeditorFromPOComponent,
     
+    NameDescPipe,
+    MaxStringPipe,
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     TranslateModule,
@@ -281,19 +290,14 @@ import { AuthHelper } from './authHelper/authHelper';
        SharedModule,
        Md2Module,
        CKEditorModule,
-       Md2Module,
        TranslateModule,
-       TextMaskModule,
-
+       TextMaskModule
   ],
   providers: [
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
     AuthGuard, AuthHelper, OnedrivegraphService,
-
-
-
   ], // additional providers needed for this module
   entryComponents: [ ],
 

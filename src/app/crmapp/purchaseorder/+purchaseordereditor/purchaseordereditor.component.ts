@@ -90,6 +90,10 @@ export class PurchaseordereditorComponent extends CatalogComponent {
 
   onItemLoaded(itm: PurchaseOrder) {
     this.po = itm;
+    this.idPurchase = itm.id;
+    this.idQTC = itm.idQuotationToCustomer;
+    this.idQFS = itm.idQuotationFromSupplier;
+    this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
   }
 }

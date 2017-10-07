@@ -54,7 +54,7 @@ export class EmailSenderComponent extends BaseComponent {
 
   ngOnInitClass() {
     super.ngOnInitClass();
-    this._curService.setAPI(this.baseApi + '/', this.catalogName);
+    this._curService.setAPI(this.baseApi + '/', this.catalogName, this.loadName);
     this.loadUrl = this.baseApi + '/getEMailData?iddialog=';
       this.setUserInfo();   
   }

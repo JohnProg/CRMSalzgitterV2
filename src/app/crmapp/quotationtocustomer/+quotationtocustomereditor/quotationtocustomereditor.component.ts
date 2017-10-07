@@ -80,6 +80,7 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
 
   onItemLoaded(itm: QuotationToCustomer) {
     this.qts = itm;
+    this.idQuotation = itm.id;
     this.idCustomer = this.qts.idCustomer;
   }
 }

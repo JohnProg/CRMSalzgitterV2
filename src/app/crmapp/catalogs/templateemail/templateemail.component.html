@@ -1,26 +1,33 @@
 <md-card>
   <md-card-content>
+
+      <ng-template [tdLoading]="loadName">
+          <section *ngIf="isEditing">
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-      <section *ngIf="isEditing">
-        <section layout="column" flex="100" layout-margin>
-          <md-input-container>
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="100" />
-            <md-hint align="end">{{name.value.length}} / 100</md-hint>
-          </md-input-container>
-          <md-input-container>
-            <input mdInput #eMailSubject flex name="eMailSubject" [(ngModel)]="itemEdit.eMailSubject" required placeholder="Email Subject"
-              maxlength="250">
-            <md-hint align="end">{{eMailSubject.value.length}} / 250</md-hint>
-          </md-input-container>          
-        </section>
-          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+
+
+          <div layout="row" >
+              <md-form-field flex>
+                  <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="100" />
+                  <md-hint align="end">{{name.value.length}} / 100</md-hint>
+                </md-form-field>
+            </div>
+            <div layout="row" >
+                <md-form-field flex>
+                    <input mdInput #eMailSubject flex name="eMailSubject" [(ngModel)]="itemEdit.eMailSubject" required placeholder="Email Subject"
+                    maxlength="250">
+                  <md-hint align="end">{{eMailSubject.value.length}} / 250</md-hint>
+                  </md-form-field>
+              </div>
+
+          <div layout-gt-sm="row"  >
               <ckeditor #eMailBody flex="100" placeholder="Body" name="eMailBody" [(ngModel)]="itemEdit.eMailBody"  debounce="500">
               </ckeditor>
           </div>        
 
-      </section>
+  
     </form>
-
+  </section>
 
     <section *ngIf="!isEditing">
 
@@ -41,11 +48,18 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-   (change)="change($event)"
-        >
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+        <span hide-xs>Rows per page:</span>
+        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <md-option *ngFor="let size of pagesArray" [value]="size">
+            {{size}}
+          </md-option>
+        </md-select>
+        <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
     </section>
+
+  </ng-template>
   </md-card-content>
 </md-card>
 

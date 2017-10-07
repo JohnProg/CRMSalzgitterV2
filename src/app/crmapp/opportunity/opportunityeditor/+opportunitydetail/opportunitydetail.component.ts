@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../catalogs/base.component';
+import {  EditordetailComponent } from '../../../components/index';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -48,68 +49,17 @@ const getProductData = gql`
   styleUrls: ['./opportunitydetail.component.scss'],
   providers: []
 })
-export class OpportunitydetailComponent extends BaseComponent {
+export class OpportunitydetailComponent extends EditordetailComponent {
 
-  @Input() idOpp: number = 0;
-   @Input() opp: Opportunity;
   itemEdit: OpportunityDetail;
-  sortBy: string = 'itemDescription';
-  allowProduct: boolean = true;
-  propSubscription: Subscription;
-  productData: GetCustomerProductData_Result[];
-
-  @ViewChild('idProduct') mdProduct: MdSelect;
-
-  ngBeforeInit() {
-    super.ngBeforeInit();
-    this.catalogName = 'Opp Details';
-    this._curService.setAPI('OpportunityDetail', this.catalogName);
-    this.itemEdit = new OpportunityDetail();  
-  }
 
 
-  loadCatalogs() {
-    let t = this;
-    this._curService.loadQl(getProductData, { idcust: this.opp.idCustomer, idproduct: 0 })
-      .subscribe(({data}) => {
-        this.productData = data['getCustomerProductData'];
-      }, (error: Error) => {
-        this._loadingService.resolve('');
-        debugger
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-      }
-      );     
-  }
-  
+  baseApi: string = 'OpportunityDetail';
+  catalogName: string = 'Opportunity Details';
+
   ngOnInitClass() {
     this.entList = <Observable<OpportunityDetail[]>>this._curService.entList;
     this.initData();
-  }
-
-
-  initData() {
-    let pparams = new URLSearchParams();
-    pparams.set('idopp', this.idOpp.toString());
-    this._curService.loadCustomAll('OpportunityDetail/searchByOpp', pparams);
-    this.initEntity();
-  }
-
-  afterViewInit(): void {
-    this._actions.updateTitle('Details for opportunity ' + this.idOpp.toString());
-
-  }
-
-  onDestroy() {
-    if (this.propSubscription !== undefined) { this.propSubscription.unsubscribe(); }
-  }
-
-  addColumns() {
-    this.columns.push({ name: 'itemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
-
-    this.columns.push({ name: 'itemQuantity', label: 'Quantity', numeric: true, format: NUMBER_FORMAT, sortable: false });
-    this.columns.push({ name: 'itemPrice', label: 'Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'itemExtended', label: 'Extended', numeric: true, format: CURRENCY_FORMAT, sortable: false });
   }
 
   initEntity() {
@@ -120,48 +70,5 @@ export class OpportunitydetailComponent extends BaseComponent {
   }
 
 
-  afterLoadItem(itm: OpportunityDetail) {
-    super.afterLoadItem(itm);
-    this._actions.updateTitle('Edit item ' + this.idOpp.toString());
-  }
-
-
-  confirmDelete(item:  OpportunityDetail) {
-    this.itemEdit = item;
-    this._actions.deleteItem( { title: item.itemDescription, objId: this.objId });
-  }
-
-  afterCreate(item: OpportunityDetail) {
-    
-    Object.assign(this.itemEdit, item);
-  }
-
-  afterUpdate(item: OpportunityDetail) {
-    Object.assign(this.itemEdit, item);
-  }
-
-  hasSumary(h: boolean) {
-    this.allowProduct = h || this.itemEdit.id === 0;
-  }
-
-  qtyChange(event)  {
-    this.itemEdit.itemQuantity = event;
-    this.itemEdit.itemExtended  = event * this.itemEdit.itemPrice;
-  }
-  priceChange(event)  {
-    this.itemEdit.itemPrice = event;
-    this.itemEdit.itemExtended  = this.itemEdit.itemQuantity * event;
-  }  
-
-
-  productChange(event) {
-    let p = parseInt(event);
-
-    let pid =  <GetCustomerProductData_Result>(this.productData.filter( i => i.id === p)[0]);
-    this.itemEdit.idProduct = pid.idProduct;
-    this.itemEdit.itemPrice = pid.currentPrice;
-    this.itemEdit.itemDescription = pid.prodDescription;
-    //this.itemEdit.idCustomerProduct = pid.id;
-  }
 
 }

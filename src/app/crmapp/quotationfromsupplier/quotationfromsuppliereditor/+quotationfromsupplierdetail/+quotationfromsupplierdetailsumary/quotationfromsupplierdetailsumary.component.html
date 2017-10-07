@@ -1,5 +1,8 @@
+<td-expansion-panel label="Sumary Detail" sublabel="Total quantity: {{total | number}}   " >
+
+    <ng-template [tdLoading]="loadName">
 <md-card flex>
-  <md-card-title>Sumary Detail</md-card-title>
+  
   <md-card-subtitle>
     <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
     <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
@@ -12,32 +15,32 @@
 
         <section layout="row" flex="100" layout-margin>
           <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">
-            <md-input-container>
+            <md-form-field>
               <input mdInput flex [name]="pc.nameDescription" maxlength="500" [placeholder]="pc.property.name" [required]="pc.isRequired" [ngModelOptions]="{standalone: true}"
                 [(ngModel)]="pc.propertyValue">
               <md-hint align="end"> 500</md-hint>
-            </md-input-container>
+            </md-form-field>
           </div>
 
         </section>
         <section layout="row" flex="100" layout-margin>
-          <md-input-container  flex-gt-xs="30">
+          <md-form-field  flex-gt-xs="30">
             <input  mdInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}">
-          </md-input-container>
-          <md-input-container class="md-icon-float" flex-gt-xs="30">
+          </md-form-field>
+          <md-form-field class="md-icon-float" flex-gt-xs="30">
             <input  mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.price" currencyMask>
-          </md-input-container>
-          <md-input-container class="md-icon-float" flex-gt-xs="35">
+          </md-form-field>
+          <md-form-field class="md-icon-float" flex-gt-xs="35">
             <input  mdInput #Amount  name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount"  currencyMask>
-          </md-input-container>
+          </md-form-field>
 
         </section>
 
-        <div layout-gt-sm="row" layout-lt-sm="column">
-          <md-input-container flex class="">
+        <div layout-gt-sm="row" layout-lt-md="column">
+          <md-form-field flex class="">
             <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.comment"></textarea>
             <md-hint align="end">{{Comment.value.length}} / 250</md-hint>
-          </md-input-container>
+          </md-form-field>
         </div>
 
       </form>
@@ -59,10 +62,18 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar #dpagingBar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
-                <span td-paging-bar-label hide-xs>{{ 'ROWSPERPAGE' | translate }}:</span> {{dpagingBar.range}} <span hide-xs>of {{dpagingBar.total}}</span>
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+        <span hide-xs>Rows per page:</span>
+        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <md-option *ngFor="let size of pagesArray" [value]="size">
+            {{size}}
+          </md-option>
+        </md-select>
+        <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
     </section>
   </md-card-content>
 
 </md-card>
+</ng-template>
+</td-expansion-panel>

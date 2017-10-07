@@ -8,7 +8,7 @@ import { AuthGuard } from './crmapp/_guards/auth.guard';
 
 import { BaseComponent, CatalogComponent, CurrencyComponent, 
 ActionoppComponent,  StateComponent, IncotermComponent,
-TemplateemailComponent } from './crmapp/catalogs/index';
+TemplateemailComponent, MillComponent } from './crmapp/catalogs/index';
 
 import { OptionsComponent, 
   CompanyComponent,
@@ -17,7 +17,8 @@ import { OptionsComponent,
    ProducteditorComponent,
   CustomerComponent,
     CustomerindexComponent,
-    CustomereditorComponent,  
+    CustomereditorComponent,
+    OpptypeComponent,  
 
 } from './crmapp/options/index';
 
@@ -53,11 +54,12 @@ import { LoginComponent } from './crmapp/login/login.component';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  
   //{ path: 'onedriveCallback', component: MainComponent },
   {
     path: '', component: MainComponent, 
     children: [
+        { path: 'login', component: LoginComponent },
         {
           component: DashboardComponent,
           path: '',
@@ -76,7 +78,7 @@ const routes: Routes = [
             { path: 'family', component: BaseComponent, data: { baseapi: 'Family', catName: 'Families' } },
             { path: 'linerterm', component: BaseComponent, data: { baseapi: 'LinerTerm', catName: 'Liner Term' } },
             { path: 'market', component: BaseComponent, data: { baseapi: 'Market', catName: 'Market' } },
-            { path: 'mill', component: BaseComponent, data: { baseapi: 'Mill', catName: 'Mill' } },
+            { path: 'mill', component: MillComponent },
             { path: 'organization', component: BaseComponent, data: { baseapi: 'Organization', catName: 'Organization' } },
             { path: 'paymentterm', component: BaseComponent, data: { baseapi: 'PaymentTerm', catName: 'Payment Term' } },
             { path: 'port', component: BaseComponent, data: { baseapi: 'Port', catName: 'Port' } },
@@ -91,7 +93,8 @@ const routes: Routes = [
             { path: 'transactionflow', component: BaseComponent, data: { baseapi: 'TransactionFlow', catName: 'Transaction Flow' } },
             { path: 'templateemail', component: TemplateemailComponent },
             { path: 'typeopportunity', component: BaseComponent, data: { baseapi: 'TypeOpportunity', catName: 'Type Opportunity' } },
-
+            { path: 'status', component: BaseComponent, data: { baseapi: 'EstatusOpportunity', catName: 'Status' } },
+            
           ]
         },
         {
@@ -117,7 +120,7 @@ const routes: Routes = [
                 { path: 'edit/:id', component: CustomereditorComponent },
               ]
             },
-            
+            { path: 'doctype', component: OpptypeComponent }
           ]
         },
         {

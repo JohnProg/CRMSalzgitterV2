@@ -33,7 +33,12 @@ export class AuthHelper {
 		let tk = localStorage.getItem('oneDriveToken');
 		if(tk != null) {
 			let access_token = JSON.parse(tk);
-			this._confs.oneDriveToken = access_token;
+			if( access_token['expire_date'] >= moment() ) {
+				localStorage.removeItem('oneDriveToken');
+				this._confs.oneDriveToken = undefined;
+			} else {
+				this._confs.oneDriveToken = access_token;	
+			}
 		}
 		
 		if (this.params["access_token"] != null) {
@@ -55,6 +60,7 @@ export class AuthHelper {
 			}
 		}
 	}
+	
 	
 	login() {
 		

@@ -49,7 +49,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
      this.itemEdit = new QuotationFromSupplier();
     this.catalogName = 'Quotation from Supplier';
     this.autoLoad = false;
-    this._curService.setAPI('QuotationFromSupplier/', this.catalogName);
+    this._curService.setAPI('QuotationFromSupplier/', this.catalogName, this.loadName);
     this.singleEditor = true;
     this.dta = new Date(); 
   }

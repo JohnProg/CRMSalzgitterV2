@@ -29,7 +29,7 @@ import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-quotationfromsupplierdetailsumary',
-  templateUrl: './quotationfromsupplierdetailsumary.component.html',
+  templateUrl: '../../../../components/editordetailsumary/editordetailsumary.component.html',
   styleUrls: ['./quotationfromsupplierdetailsumary.component.scss']
 })
 export class QuotationfromsupplierdetailsumaryComponent extends EditordetailsumaryComponent {
@@ -40,7 +40,7 @@ export class QuotationfromsupplierdetailsumaryComponent extends Editordetailsuma
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Quotation from Supplier Details Sumary';
-    this._curService.setAPI('QuotationFromSupplierDetailSumary', this.catalogName);
+    this._curService.setAPI('QuotationFromSupplierDetailSumary', this.catalogName, this.loadName);
     this.refreshItemUrl = 'QuotationFromSupplierDetailSumary/searchByDetail';
     this.sumProperties = 'quotationFromSupplierDetailSumaryProperties';  
   }

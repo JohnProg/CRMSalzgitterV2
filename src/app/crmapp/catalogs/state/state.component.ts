@@ -37,7 +37,7 @@ export class StateComponent extends BaseComponent {
     super.ngBeforeInit();
     this.autoLoad = false;
     this.catalogName = 'State';
-    this._curService.setAPI('State/', this.catalogName); 
+    this._curService.setAPI('State/', this.catalogName, this.loadName); 
   }
 
 

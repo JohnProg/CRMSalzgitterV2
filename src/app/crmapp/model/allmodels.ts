@@ -19,6 +19,7 @@
 		wLJsPath: string;
 		isActive: boolean;
 		showActions: boolean;
+		updateStatus: boolean;
 	}
 	export class TCRMEntity extends BaseEntity {
 	}
@@ -82,24 +83,19 @@
 	}
 
 	export class ActionOpportunity extends TCRMEntity {
-		actionOpportunityDocTypes: ActionOpportunityDocType[];
-		eMailTo: number;
-		estatusOpportunity: EstatusOpportunity;
+		description: string;
 		id: number;
-		idStatus: number;
 		name: string;
-		opportunityDialogs: OpportunityDialog[];
-		purchaseOrderDialogs: PurchaseOrderDialog[];
-		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
-		quotationToCustomerDialogs: QuotationToCustomerDialog[];
-		showActionType: number;
 	}
 	export class ActionOpportunityDocType extends TCRMEntity {
 		actionOpportunity: ActionOpportunity;
 		docType: DocType;
+		emailTo: number;
+		estatusOpportunity: EstatusOpportunity;
 		id: number;
 		idActionOpportunity: number;
 		idDocType: number;
+		idStatus: number;
 		idTemplateEmail: number;
 		templateEMail: TemplateEMail;
 	}
@@ -424,6 +420,7 @@
 		purchaseOrders: PurchaseOrder[];
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
+		rootFolder: string;
 	}
 	export class DocTypeStatu extends TCRMEntity {
 		allowChild: boolean;
@@ -492,6 +489,15 @@
 		products: Product[];
 		responsibleTargets: ResponsibleTarget[];
 	}
+	export class findActionOppByType_Result {
+		description: string;
+		eMailTo: number;
+		id: number;
+		idDocType: number;
+		idStatus: number;
+		idTemplateEmail: number;
+		name: string;
+	}	
 	export class GenericList extends TCRMEntity {
 		description: string;
 		idString: string;
@@ -500,11 +506,14 @@
 	export class GetActionDoctType_Result  extends TCRMEntity {
 		docTypeName: string;
 		eMailSubject: string;
+		eMailTo: number;
 		id: number;
 		idActionOpportunity: number;
 		idDocType: number;
+		idStatus: number;
 		idTemplateEmail: number;
-		name: string;
+		statusName: string;
+		templateName: string;
 	}
 	export class getAllContactsWithCustomers_Result extends TCRMEntity {
 		aTipo: string;
@@ -581,6 +590,7 @@
 	export class getCountriesFromIdMill_Result extends TCRMEntity {
 		description: string;
 		id: number;
+		idCountry: number;
 		name: string;
 	}
 	export class getCustomerContactList_Result extends TCRMEntity {
@@ -627,6 +637,7 @@
 	export class GetCustomerDocuments_Result extends TCRMEntity {
 		comment: string;
 		dateUploaded: Date;
+		docId: string;
 		docName: string;
 		docTypeName: string;
 		id: number;
@@ -791,13 +802,16 @@
 		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
 		productDescription: string;
 		productName: string;
 	}
 	export class GetPODetailForShipping_Result extends TCRMEntity {
 		amountSum: number;
 		asImporter: boolean;
-		extended: number;
+		itemExtended: number;
 		id: number;
 		idCurrency: number;
 		idDetail: number;
@@ -878,8 +892,12 @@
 		idProduct: number;
 		idPurchaseOrder: number;
 		itemDescription: string;
+		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
 		productDescription: string;
 		productName: string;
 		salePrice: number;
@@ -888,6 +906,7 @@
 	export class GetPurchaseOrderDialogDocumentIndex_Result extends TCRMEntity {
 		dateUploaded: Date;
 		dNotes: string;
+		docId: string;
 		docName: string;
 		docTypeName: string;
 		id: number;
@@ -952,13 +971,16 @@
 		sstatusName: string;
 	}
 	export class GetQuotationFromSupplierDetails_Result extends TCRMEntity {
-		extended: number;
 		id: number;
 		idProduct: number;
 		idQuotationFromSupplier: number;
 		itemDescription: string;
+		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
 		productDescription: string;
 		productName: string;
 		salePrice: number;
@@ -966,6 +988,7 @@
 	export class GetQuotationFromSupplierDialogDocumentIndex_Result extends TCRMEntity {
 		dateUploaded: Date;
 		dNotes: string;
+		docId: string;
 		docName: string;
 		docTypeName: string;
 		id: number;
@@ -1003,8 +1026,12 @@
 		idProduct: number;
 		idQuotationToCustomer: number;
 		itemDescription: string;
+		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
+		partNumberBuyer: string;
+		partNumberOEM: string;
+		platform: string;
 		productDescription: string;
 		productName: string;
 		salePrice: number;
@@ -1012,6 +1039,7 @@
 	export class GetQuotationToCustomerDialogDocumentIndex_Result extends TCRMEntity {
 		dateUploaded: Date;
 		dNotes: string;
+		docId: string;
 		docName: string;
 		docTypeName: string;
 		id: number;
@@ -1051,6 +1079,25 @@
 		sumaryOrdered: number;
 		totalQtyOrdered: number;
 	}
+	export class GetShippingDialogDocumentIndex_Result extends TCRMEntity {
+		dateUploaded: Date;
+		dNotes: string;
+		docId: string;
+		docName: string;
+		docTypeName: string;
+		id: number;
+		idDocumentType: number;
+	}
+	export class GetShippingDialogIndex_Result extends TCRMEntity {
+		actionName: string;
+		contactName: string;
+		custContactName: string;
+		dateDialog: Date;
+		id: number;
+		idShipping: number;
+		responsibleName: string;
+		toContact: number;
+	}	
 	export class GetShippings_Result extends TCRMEntity  {
 		aDA: Date;
 		bLDate: Date;
@@ -1088,6 +1135,7 @@
 		description: string;
 		id: number;
 		idDocType: number;
+		idDStatus: number;
 		isEditable: boolean;
 		name: string;
 	}
@@ -1158,6 +1206,11 @@
 		quotationFromSuppliers: QuotationFromSupplier[];
 		quotationToCustomers: QuotationToCustomer[];
 		shippings: Shipping[];
+	}
+	export class MillCountry extends TCRMEntity {
+		id: number;
+		idMill: number;
+		idCountry: number;
 	}
 	export class Opportunity extends TCRMEntity {
 		asImporter: boolean;
@@ -1374,11 +1427,12 @@
 	}
 	export class PurchaseOrderDetail extends TCRMEntity {
 		dateAdded: Date;
-		extended: number;
 		id: number;
+		idCustomerProduct: number;
 		idProduct: number;
 		idPurchaseOrder: number;
 		itemDescription: string;
+		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
 		product: Product;
@@ -1458,11 +1512,12 @@
 	}
 	export class QuotationFromSupplierDetail extends TCRMEntity {
 		dateAdded: Date;
-		extended: number;
 		id: number;
+		idCustomerProduct: number;
 		idProduct: number;
 		idQuotationFromSupplier: number;
 		itemDescription: string;
+		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
 		product: Product;
@@ -1536,9 +1591,11 @@
 		expenseSMIM_Cost: number;
 		expenseSupplierSide_Cost: number;
 		id: number;
+		idCustomerProduct: number;
 		idProduct: number;
 		idQuotationToCustomer: number;
 		itemDescription: string;
+		itemExtended: number;
 		itemPrice: number;
 		itemQuantity: number;
 		product: Product;
@@ -1648,6 +1705,7 @@
 		blDate: Date;
 		blNumber: string;
 		country: Country;
+		currency: Currency;
 		customer: Customer;
 		customerDeliveryPoint: CustomerDeliveryPoint;
 		eta: Date;
@@ -1671,7 +1729,6 @@
 		shipDate: Date;
 		shipNotes: string;
 		shippingDetails: ShippingDetail[];
-		statusShip: StatusShip;
 		user: User;
 		vesselName: string;
 	}
@@ -1689,6 +1746,37 @@
 		shipPrice: number;
 		shipQty: number;
 	}
+	export class ShippingDialog extends TCRMEntity {
+		actionOpportunity: ActionOpportunity;
+		contact: Contact;
+		customerContact: CustomerContact;
+		dateDialog: Date;
+		dateSend: Date;
+		dNotes: string;
+		emailSended: boolean;
+		id: number;
+		idAction: number;
+		idContact: number;
+		idCustomerContact: number;
+		idResponsible: number;
+		idShipping: number;
+		shipping: Shipping;
+		shippingDialogDocuments: ShippingDialogDocument[];
+		subject: string;
+		toContact: number;
+	}
+	export class ShippingDialogDocument extends TCRMEntity {
+		dateUploaded: Date;
+		dNotes: string;
+		docId: string;
+		docName: string;
+		documentType: DocumentType;
+		id: number;
+		idDocumentType: number;
+		idShippingDialog: number;
+		parentFolder: string;
+		shippingDialog: ShippingDialog;
+	}	
 	export class State extends TCRMEntity {
 		cities: City[];
 		country: Country;
@@ -1696,13 +1784,6 @@
 		id: number;
 		idCountry: number;
 		name: string;
-	}
-	export class StatusShip extends TCRMEntity {
-		allowEdit: boolean;
-		description: string;
-		id: number;
-		name: string;
-		shippings: Shipping[];
 	}
 	export class Supplier extends TCRMEntity {
 		country: Country;

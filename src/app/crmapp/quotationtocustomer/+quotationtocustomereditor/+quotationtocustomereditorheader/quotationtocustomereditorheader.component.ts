@@ -48,7 +48,7 @@ export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
      this.itemEdit = new QuotationToCustomer();
     this.catalogName = 'Quotation to Customer';
     this.autoLoad = false;
-    this._curService.setAPI('QuotationToCustomer/', this.catalogName);
+    this._curService.setAPI('QuotationToCustomer/', this.catalogName, this.loadName);
     this.singleEditor = true;
     this.dta = new Date(); 
   }

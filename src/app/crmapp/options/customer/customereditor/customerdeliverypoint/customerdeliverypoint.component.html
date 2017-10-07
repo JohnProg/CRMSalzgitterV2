@@ -1,43 +1,50 @@
+<ng-template [tdLoading]="loadName">
 <section *ngIf="isEditing">
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
 
-    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
-      <md-input-container flex-gt-sm="60">
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <md-form-field flex-gt-sm="60">
         <input mdInput #cdpName flex name="cdpName" [(ngModel)]="itemEdit.cdpName" required placeholder="{{ 'NAME' | translate}}"
           maxlength="150" />
         <md-hint align="end">{{cdpName.value.length}} / 150</md-hint>
-      </md-input-container>
-      <section flex-gt-sm="30">
-        <md-select class="cbxClass" #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
-          <md-option *ngFor="let i of catDelivType" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+      </md-form-field>
+
+        <md2-select class="cbxClass" flex-gt-sm="30" #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
+            <md2-select-header>               
+                <section layout-padding>
+                    <md-form-field>
+                        <input mdInput flex #sdelivtype  placeholder="Search" maxlength="15"  >
+                      </md-form-field>
+                </section>
+             </md2-select-header>           
+          <md2-option *ngFor="let i of catDelivType  | nameDesc:sdelivtype.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
-          </md-option>
-        </md-select>
-      </section>
-      <section flex-gt-sm="10">
-        <md-slide-toggle #isActive name="Active" [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
-      </section>
+          </md2-option>
+        </md2-select>
+        <md-slide-toggle #isActive name="Active" flex-gt-sm="10" [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
     </div>
 
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-input-container flex-gt-sm="50">
+      <md-form-field  >
         <input mdInput #cdpStreet name="cdpStreet" [(ngModel)]="itemEdit.cdpStreet" required placeholder="Street" maxlength="150" />
         <md-hint align="end">{{cdpStreet.value.length}} / 150</md-hint>
-      </md-input-container>
-      <crm-selectcolony name="zipcode" byType="1" [(ngModel)]="itemEdit.idColony" placeholder="Colony" ></crm-selectcolony>
+      </md-form-field>
+
     </div>
- <div layout-gt-sm="row" layout-lt-sm="row" layout-margin >
-          <md-input-container flex-gt-sm="20">
+    <crm-selectcolony name="zipcode" byType="1" [(ngModel)]="itemEdit.idColony" placeholder="Colony" ></crm-selectcolony>
+
+ <div layout-gt-sm="row" layout-lt-md="row" layout-margin >
+          <md-form-field flex-gt-sm="20">
             <input mdInput #cdpTelephone flex name="cdpTelephone" [(ngModel)]="itemEdit.cdpTelephone"  placeholder="Phone" maxlength="20"
             />
             <md-hint align="end">{{cdpTelephone.value.length}} / 20</md-hint>
-          </md-input-container>
-         <md-input-container flex-gt-sm="80">
+          </md-form-field>
+         <md-form-field flex-gt-sm="80">
             <input mdInput #cdpContact flex name="cdpContact" [(ngModel)]="itemEdit.cdpContact" required placeholder="Contact Name" maxlength="150"
             />
             <md-hint align="end">{{cdpContact.value.length}} / 150</md-hint>
-          </md-input-container>
+          </md-form-field>
         </div>    
   </form>
 </section>
@@ -62,7 +69,15 @@
     </ng-template>
 
   </td-data-table>
-  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-    (change)="change($event)">
+  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+    <span hide-xs>Rows per page:</span>
+    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <md-option *ngFor="let size of pagesArray" [value]="size">
+        {{size}}
+      </md-option>
+    </md-select>
+    <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
   </td-paging-bar>
 </section>
+
+</ng-template>

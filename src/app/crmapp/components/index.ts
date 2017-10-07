@@ -10,3 +10,5 @@ export * from './editorbasedialog/editorbasedialogdocument/editorbasedialogdocum
 export * from './documentviewer/documentviewer.component';
 export * from './selectcolony/selectcolony.component';
 export * from './quotationindexviewer/quotationindexviewer.component';
+export * from './pipes/index';
+export * from './editordetail/editordetail.component';

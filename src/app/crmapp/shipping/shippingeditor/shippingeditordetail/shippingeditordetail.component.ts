@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { Subscription } from 'rxjs/Subscription';
-import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT, DECIMAL_FORMAT } from '../../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT, DECIMAL_FORMAT, MAXSTRING_FORMAT } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 
 import 'rxjs/add/operator/map';
@@ -57,7 +57,7 @@ export class ShippingeditordetailComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Shipping Detail';
-    this._curService.setAPI('ShippingDetail', this.catalogName);
+    this._curService.setAPI('ShippingDetail', this.catalogName, this.loadName);
     this.itemEdit = new GetShippingDetails_Result();  
   }
 
@@ -95,8 +95,10 @@ export class ShippingeditordetailComponent extends BaseComponent {
   }
 
   addColumns() {
+
+    this.columns.push({ name: 'idPurchaseOrder', label: 'PO #' });
     this.columns.push({ name: 'itemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'sumaryDescription', label: 'Product', tooltip: '' });
+    this.columns.push({ name: 'sumaryDescription', label: 'Product' });
 
     this.columns.push({ name: 'shipQty', label: 'Quantity', numeric: true, format: NUMBER_FORMAT, });
     this.columns.push({ name: 'shipPrice', label: 'Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });

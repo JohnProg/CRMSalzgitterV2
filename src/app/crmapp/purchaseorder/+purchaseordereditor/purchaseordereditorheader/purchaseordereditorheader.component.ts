@@ -44,7 +44,7 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
      this.itemEdit = new PurchaseOrder();
     this.catalogName = 'Purchase Order';
     this.autoLoad = false;
-    this._curService.setAPI('PurchaseOrder/', this.catalogName);
+    this._curService.setAPI('PurchaseOrder/', this.catalogName, this.loadName);
     this.singleEditor = true;
     this.dta = new Date(); 
   }

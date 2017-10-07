@@ -1,7 +1,7 @@
 
   <section *ngIf="!isEditing">
 
-
+      <ng-template [tdLoading]="loadName">
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="dateUploaded" let-value="value" let-row="row"  let-column="column" >
           <div layout="row">
@@ -22,5 +22,5 @@
         </ng-template>
 
       </td-data-table>
-
+    </ng-template>
     </section>

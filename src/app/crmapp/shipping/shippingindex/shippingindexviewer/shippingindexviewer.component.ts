@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { Title }  from '@angular/platform-browser';
-import { CatalogService, IPChangeEventSorted } from '../../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT, DATE_FORMAT } from '../../../services/catalog.service';
 import { ActionsService } from '../../../services/actions.services';
 import { ConfigurationService } from '../../../services/configuration.service';
 
@@ -49,7 +49,7 @@ export class ShippingindexviewerComponent extends QuotationindexviewerComponent 
     }
     this.columns.push({ name: 'statusName', label: 'Status' });
     this.columns.push({ name: 'blNumber', label: 'BLNumber' });
-    this.columns.push({ name: 'blDate', label: 'BL Date' });
+    this.columns.push({ name: 'blDate', label: 'BL Date', numeric: false, format: DATE_FORMAT });
     this.columns.push({ name: 'cdpName', label: 'Delivery Point' });
     this.columns.push({ name: 'userName', label: 'Created by' });
   }

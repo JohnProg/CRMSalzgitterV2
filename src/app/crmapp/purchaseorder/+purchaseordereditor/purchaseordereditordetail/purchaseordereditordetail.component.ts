@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../catalogs/base.component';
+import {  EditordetailComponent } from '../../../components/index';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
@@ -25,46 +26,17 @@ import { IDeleteEventModel } from '../../../model/deleteeventmodel';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-const productQl = gql`
-  query {
-    products { id name description }
-  }
-`;
-
-
 @Component({
   selector: 'crm-purchaseordereditordetail',
   templateUrl: './purchaseordereditordetail.component.html',
   styleUrls: ['./purchaseordereditordetail.component.scss']
 })
-export class PurchaseordereditordetailComponent  extends BaseComponent {
+export class PurchaseordereditordetailComponent  extends EditordetailComponent {
 
-  @Input() idPurchase: number = 0;
   itemEdit: PurchaseOrderDetail;
-  sortBy: string = 'itemDescription';
-  allowProduct: boolean = true;
-  propSubscription: Subscription;
-
-
-  ngBeforeInit() {
-    super.ngBeforeInit();
-    this.catalogName = 'Purchase Order';
-    this._curService.setAPI('PurchaseOrderDetail', this.catalogName);
-    this.itemEdit = new PurchaseOrderDetail();   
-  }
-
-  loadCatalogs() {
-    this._curService.loadQl(productQl, undefined)
-      .subscribe(({data}) => {
-        this.catProduct = data['products'];
-
-      }, (error: Error) => {
-        this._loadingService.resolve('');
-        debugger
-        this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
-      }
-      );   
-  }
+  baseApi: string = 'PurchaseOrderDetail';
+  catalogName: string = 'Purchase Order';
+  baseSearch: string = 'searchByPO';
 
 
   ngOnInitClass() {
@@ -72,61 +44,17 @@ export class PurchaseordereditordetailComponent  extends BaseComponent {
     this.initData();
   }
 
-
-  initData() {
+  getLoadParams(): URLSearchParams {
     let pparams = new URLSearchParams();
-    pparams.set('idpo', this.idPurchase.toString());
+    pparams.set('idpo', this.idOpp.toString());
     pparams.set('iddetail', '0');
-    this._curService.loadCustomAll('PurchaseOrderDetail/searchByPO', pparams);
-    this.initEntity();
-  }
-
-  afterViewInit(): void {
-    this._actions.updateTitle('Details for Purchase Order ' + this.idPurchase.toString());
-
-  }
-
-  onDestroy() {
-    if (this.propSubscription !== undefined) { this.propSubscription.unsubscribe(); }
-  }
-
-  addColumns() {
-    this.columns.push({ name: 'itemDescription', label: 'Item Description' });
-    this.columns.push({ name: 'productDescription', label: 'Product', tooltip: '' });
-
-    this.columns.push({ name: 'itemQuantity', label: 'Quantity' });
-    this.columns.push({ name: 'itemPrice', label: 'Cost Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'salePrice', label: 'Sales Price', numeric: true, format: CURRENCY_FORMAT, sortable: false });
-    this.columns.push({ name: 'shipQty', label: 'Qtty shipped', numeric: true, format: DECIMAL_FORMAT, sortable: false });
+    return pparams;
   }
 
   initEntity() {
     this.itemEdit = new PurchaseOrderDetail() ;
-    this.itemEdit.idPurchaseOrder  = this.idPurchase;
+    this.itemEdit.idPurchaseOrder  = this.idOpp;
     this.itemEdit.idProduct = 0;
   }
 
-
-  afterLoadItem(itm: PurchaseOrderDetail) {
-    super.afterLoadItem(itm);
-    this._actions.updateTitle('Edit item ' + this.idPurchase.toString());
-  }
-
-
-  confirmDelete(item:  PurchaseOrderDetail) {
-    this.itemEdit = item;
-    this._actions.deleteItem({ title: item.itemDescription, objId: this.objId});
-  }
-
-  afterCreate(item: PurchaseOrderDetail) {
-    Object.assign(this.itemEdit, item);
-  }
-
-  afterUpdate(item: PurchaseOrderDetail) {
-    Object.assign(this.itemEdit, item);
-  }
-
-  hasSumary(h: boolean) {
-    this.allowProduct = h;
-  }
 }

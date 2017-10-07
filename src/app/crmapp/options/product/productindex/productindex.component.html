@@ -1,5 +1,5 @@
 
-
+ <ng-template [tdLoading]="loadName">
   <md-card>
     <md-card-content>
     <td-data-table  [data]="entList | async" [columns]="columns" [sortable]="true" 
@@ -23,13 +23,20 @@
 
     </td-data-table>
     
-    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="[5,10,20,50,100]" [pageSize]="5" [total]="totalItems"
-      (change)="change($event)">
+    <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+      <span hide-xs>Rows per page:</span>
+      <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+        <md-option *ngFor="let size of pagesArray" [value]="size">
+          {{size}}
+        </md-option>
+      </md-select>
+      <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
     </td-paging-bar>
 
 
     </md-card-content>
   </md-card>
+</ng-template>
 
 
 

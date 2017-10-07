@@ -107,8 +107,9 @@ export class ActionsService {
     }
 
     public showCancel(ashow: boolean) {
-      
+      setTimeout(() => {
       this.showCancelEvent.emit(ashow);
+      }, 50);
     }
 
     public showSideNav(ashow: boolean) {

@@ -3,18 +3,25 @@
 
     <div layout-margin>
       <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-
+          <ng-template [tdLoading]="loadName">
         <section>
 
-          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-            <md-select flex options="allContacts" class="cbxClass" placeholder="Sent to" (change)="onContactChange($event.value)">
-              <md-option class="selectable" *ngFor="let sto of allContacts" [value]="sto.eMail" [disabled]="!sto.isActive || false">
+          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+            <md2-select flex options="allContacts" class="cbxClass" placeholder="Sent to" (change)="onContactChange($event.value)">
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #sallcontacts  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                        </section>
+                    </md2-select-header> 
+              <md2-option class="selectable" *ngFor="let sto of allContacts  | nameDesc:sallcontacts.value	" [value]="sto.eMail" [disabled]="!sto.isActive || false">
                 {{ sto.name }}
                 < {{sto.eMail}} >
-              </md-option>
-            </md-select>
+              </md2-option>
+            </md2-select>
           </div>
-          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
             
             <md-chip-list>
               <md-chip *ngFor="let em of itemEdit.eMailTo; index as idx"> {{em.name}}
@@ -24,17 +31,17 @@
               </md-chip>
             </md-chip-list>
           </div>
-          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
-            <md-input-container flex>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+            <md-form-field flex>
               <input mdInput placeholder="Subject" mdInput flex #eMailSubject name="eMailSubject" [(ngModel)]="itemEdit.eMailSubject">
-            </md-input-container>
+            </md-form-field>
           </div>
-          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
             <ckeditor #eMailBody flex="100" placeholder="Body" name="eMailBody" [(ngModel)]="itemEdit.eMailBody" debounce="500">
             </ckeditor>
           </div>
 
-          <div layout-gt-sm="row" layout-lt-sm="column" layout-padding>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
             <h1 class="md-title">Documents added</h1>
             <md-list>
               <md-list-item *ngFor="let doc of itemEdit.emailAttachments">
@@ -45,6 +52,7 @@
           </div>
 
         </section>
+      </ng-template>
       </form>
     </div>
     <td-layout-footer color="primary"> 

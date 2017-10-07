@@ -1,14 +1,11 @@
-<td-layout-nav >
-  <div td-toolbar-content layout="row" layout-align="center center" flex>
-    <span>{{ 'HOME.MENU.QUOTATIONTOCUSTOMER.DISPLAYNAME' | translate }}</span>
-    <div flex></div>
-  </div>
+
   <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
     [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
-    <md-toolbar td-sidenav-content>
-       <button md-button routerLink="/quotationtocustomer">Go to Index</button>
-    </md-toolbar>
     <md-nav-list td-sidenav-content>
+        <a md-list-item md-ripple class="block relative" routerLink="/quotationtocustomer">
+          <md-icon md-list-icon>dashboard</md-icon>
+          Go to Index
+        </a>          
       <a md-list-item md-ripple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
         <md-icon md-list-icon>dashboard</md-icon>
         {{ "HEADER" | translate}}
@@ -30,22 +27,14 @@
         Purchase Orders
       </a>       
     </md-nav-list>
-
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
-
-      <crm-gactions flex></crm-gactions>
-      <button md-mini-fab class="" tooltip="Go to QFS" (click)="goToUpp()" aria-label="Add Item" *ngIf="scrId == 1"  >
-          <md-icon>business</md-icon>
-      </button>
-    </div>
-
-       <div flex>
     <md-card>
       <md-card-content>
-
+          <button md-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+              <md-icon>arrow_back</md-icon>
+          </button>
         <crm-quotationtocustomereditorheader [idDoc]="idQuotation"  *ngIf="scrId == 1" [quoteType]="quoteType"></crm-quotationtocustomereditorheader>
 
-        <crm-quotationtocustomereditordetail [idQuotation]="idQuotation" *ngIf="scrId == 2 "></crm-quotationtocustomereditordetail>
+        <crm-quotationtocustomereditordetail [idOpp]="idQuotation" [idCustomer]="idCustomer" *ngIf="scrId == 2 "></crm-quotationtocustomereditordetail>
 
         <crm-documentviewer [idParent]="idQuotation" baseApi="QuotationToCustomerDocument" 
         *ngIf="scrId == 4 "
@@ -60,7 +49,9 @@
                 documentParentField="idQuotationToCustomerDialog"
                 *ngIf="scrId == 3 "
                 catName="QTS Dialogs"
-                [idCustomer]="idCustomer"></crm-editorbasedialog>
+                [idCustomer]="idCustomer"
+                [quoteType]="quoteType"
+                ></crm-editorbasedialog>
 
        <crm-purchaseorderindexviewer 
              [idParent]="idQuotation" 
@@ -68,6 +59,5 @@
              *ngIf="scrId == 5"></crm-purchaseorderindexviewer>
       </md-card-content>
     </md-card>
-</div>
+
   </td-layout-manage-list>
-</td-layout-nav>

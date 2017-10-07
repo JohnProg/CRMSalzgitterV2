@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 
-import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, EMAILTO_FORMAT } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -21,17 +21,21 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { TranslateService } from '@ngx-translate/core';
-import { BaseOrderDialog  } from '../../model/allmodels';
+import { BaseOrderDialog, Customer, DocType, findActionOppByType_Result  } from '../../model/allmodels';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-
+import { EnumDocType } from '../../constants/index';
+import { Md2Dialog } from 'md2';
 
 const catQl = gql`
   query 
-  findActionOppByType($typeid: Int!, $idaction: Int!) {
-    findActionOppByType(idtypedoc: $typeid, idactionopp: $idaction ) { id name  }
+  findActionOppByType($typeid: Int!, $idaction: Int!, $custid: Int!) {
+    findActionOppByType(idtypedoc: $typeid, idactionopp: $idaction ) { id name eMailTo   }
     responsibles { id name isActive }
     contacts { id name isActive }
+    findCustomerContacts(custid: $custid) { id name isActive  } 
+    customer(sid: $custid) { id name }
+    docType(sid: $typeid) { id name description rootFolder }
   }
 `;
 
@@ -51,13 +55,16 @@ export class EditorbasedialogComponent extends BaseComponent {
     @Input() documentBaseApi: string;
     @Input() documentParentField: string;
     @Input() idCustomer: number;
+    @Input() quoteType: EnumDocType;
+   
+    @ViewChild('confirmstatus') confirmDialog: Md2Dialog;
 
     sortBy: string = 'actionName';
     itemEdit: BaseOrderDialog;
     showEMail: boolean = false;
     searchByUrl: string;
-
-
+    customer: Customer;
+    docType: DocType;
   ngBeforeInit() {
     super.ngBeforeInit();
     this.autoLoad = false;   
@@ -66,7 +73,7 @@ export class EditorbasedialogComponent extends BaseComponent {
 
  ngOnInitClass() {
     this.catalogName = this.catName;
-    this._curService.setAPI(this.baseApi, this.catalogName);
+    this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
     this.entList = <Observable<BaseOrderDialog[]>>this._curService.entList;
     this.initData();
   }
@@ -107,6 +114,7 @@ export class EditorbasedialogComponent extends BaseComponent {
 
   addColumns() {
      this.columns.push({ name: 'actionName', label: 'Action' });
+     this.columns.push({ name: 'toContact', label: 'EMail to', numeric: false, format: EMAILTO_FORMAT  });
      this.columns.push({ name: 'contactName', label: 'Contact', tooltip: '' });
      this.columns.push({ name: 'custContactName', label: 'Cust. Contact', tooltip: '' });
      this.columns.push({ name: 'responsibleName', label: 'Responsible' });
@@ -122,7 +130,7 @@ export class EditorbasedialogComponent extends BaseComponent {
   afterLoadItem(itm: BaseOrderDialog) {
     super.afterLoadItem(itm);
     
-    this.loadCustomerContact(this.idCustomer);
+    //this.loadCustomerContact(this.idCustomer);
     setTimeout(() => {
     this._actions.showEmail(true);
     }, 500);
@@ -154,18 +162,57 @@ export class EditorbasedialogComponent extends BaseComponent {
   }
 
   loadCatalogs() {
-    this._curService.loadQl(catQl, { typeid: 2, idaction: 0 })
+    this._curService.loadQl(catQl, { typeid: this.quoteType, idaction: 0, custid:this.idCustomer })
       .subscribe(({data}) => {
         this.catResponsible = data['responsibles'];
         this.catActionsOpp = data['findActionOppByType'];
         this.catContact = data['contacts'];
+        this.catCustomerContact = data['findCustomerContacts'];
+        this.customer = data['customer'];
+        this.docType = data['docType'];
       }, (error: Error) => {
         this._loadingService.resolve('');
         debugger
         this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
       }
-      );   
+      );  
+     // this.loadCustomerContact(this.idCustomer); 
   }
 
+  actionChange(event) {
+    let act =  <findActionOppByType_Result>(this.catActionsOpp.filter( i => i.id === this.itemEdit.idAction)[0]);
+    if(act != null ) {
+      this.itemEdit.toContact = act.eMailTo;
+    }
+  }
+
+  submitForm(form) {
+    if ( form.valid &&  this.beforeSave() === true) {
+      if (this.itemEdit.id > 0) {
+        this.confirmUpdateStatus();
+      } else {
+        this._curService.create(this.itemEdit);
+      }     
+    } else {
+      this._snackBarService.open('There are some errors, please review data ', 'Ok');
+    }
+  }
+
+
+  confirmUpdateStatus() {
+
+    this.confirmDialog.open();
+
+  }
+
+  updateConfirm() {
+    this.itemEdit.updateStatus = true;
+    this._curService.update(this.itemEdit);
+  }
+
+  noConfirm() {
+    this.itemEdit.updateStatus = false;
+    this._curService.update(this.itemEdit);
+  }
 
 }

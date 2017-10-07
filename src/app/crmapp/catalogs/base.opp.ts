@@ -90,15 +90,18 @@ export class BaseOppComponent extends BaseComponent {
     this._actions.showSearch(false);
     this._actions.showSave(true);
     this._actions.showCancel(false);
+    setTimeout( () => {
+        if (this.idDoc > 0) {
 
-    if (this.idDoc > 0) {
+        this.editEntity(this.idDoc);
+        this._actions.updateTitle('Edit ' + this.idDoc.toString());
+      } else {
+        this._actions.updateTitle('Create ');
+        this.addEntity();
+      }    
+    }, 50);
 
-      this.editEntity(this.idDoc);
-      this._actions.updateTitle('Edit ' + this.idDoc.toString());
-    } else {
-      this._actions.updateTitle('Create ');
-      this.addEntity();
-    }
+
   }
 
 

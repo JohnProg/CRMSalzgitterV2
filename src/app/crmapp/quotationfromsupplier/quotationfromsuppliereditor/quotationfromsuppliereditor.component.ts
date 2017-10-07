@@ -65,6 +65,7 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
   }
 
   doOnItemCreated(itm: QuotationFromSupplier) {
+    this.qts = itm;
     this.idQuotation = itm.id;
     this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
@@ -77,8 +78,11 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
 
   onItemLoaded(itm: QuotationFromSupplier) {
     super.onItemLoaded(itm);
+    
     this.qts = itm;
-    this.idCustomer = this.qts.idCustomer;
+    this.idQuotation = itm.id;
+    this.idOpp = itm.idOpportunity;
+    this.idCustomer = itm.idCustomer;
   }
 }
 

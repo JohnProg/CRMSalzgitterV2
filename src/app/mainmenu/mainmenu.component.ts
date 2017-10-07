@@ -52,6 +52,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
 
     let h: Headers = new Headers();
     h.append('Access-Control-Allow-Origin', this._confs.root);
+    
     this._http.get(this._confs.appBase + 'data/crm-menu.json', { headers: h })
       .map((response) => response.json()).subscribe((result) => {
         this._routeList.next(result);

@@ -1,39 +1,38 @@
 <md-card flex>
 
   <md-card-content>
-
+      <ng-template [tdLoading]="loadName">
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section *ngIf="isEditing">
 
-        <div layout="column" layout-margin>
-
-          <md-input-container class="example-full-width">
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150">
-            <md-hint align="end">{{name.value.length}} / 150</md-hint>
-          </md-input-container>
-
-
-          <md-input-container class="example-full-width">
-            <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="Description"
-              maxlength="150">
-            <md-hint align="end">{{description.value.length}} / 150</md-hint>
-          </md-input-container>
-
-          <div flex="20">
-
-            <md-input-container class="example-full-width">
-              <input mdInput #aSign name="aSign" [(ngModel)]="itemEdit.aSign" required placeholder="Sign" value="" maxlength="50">
-              <md-hint align="end">{{aSign.value.length}} / 50</md-hint>
-            </md-input-container>
-
+        <div layout="row" >
+            <md-form-field flex>
+                <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150">
+                <md-hint align="end">{{name.value.length}} / 150</md-hint>
+              </md-form-field>
           </div>
-        </div>
 
+          <div layout="row" >
+              <md-form-field flex>
+                  <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="Description"
+                    maxlength="150">
+                  <md-hint align="end">{{description.value.length}} / 150</md-hint>
+                </md-form-field>           
+              </div>
+
+        <div flex="20">
+            
+                        <md-form-field class="example-full-width">
+                          <input mdInput #aSign name="aSign" [(ngModel)]="itemEdit.aSign" required placeholder="Sign" value="" maxlength="50">
+                          <md-hint align="end">{{aSign.value.length}} / 50</md-hint>
+                        </md-form-field>
+            
+                      </div>
       </section>
     </form>
 
     <section *ngIf="!isEditing">
- <ng-template tdLoading="items.load">
+
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
           <div layout="row">
@@ -51,12 +50,19 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar [firstLast]="false" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-        (change)="change($event)">
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+        <span hide-xs>Rows per page:</span>
+        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <md-option *ngFor="let size of pagesArray" [value]="size">
+            {{size}}
+          </md-option>
+        </md-select>
+        <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
 
- </ng-template>
+
     </section>
+  </ng-template>
   </md-card-content>
 
 </md-card>

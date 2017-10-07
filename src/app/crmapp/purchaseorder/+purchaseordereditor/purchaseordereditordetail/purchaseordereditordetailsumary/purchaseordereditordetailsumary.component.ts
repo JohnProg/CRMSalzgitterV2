@@ -40,7 +40,7 @@ export class PurchaseordereditordetailsumaryComponent extends Editordetailsumary
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Purchase Order Details Sumary';
-    this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName);
+    this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName, this.loadName);
     this.refreshItemUrl = 'PurchaseOrderDetailSumary/searchByDetail';
     this.sumProperties = 'purchaseOrderDetailSumaryProperties';  
   }

@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { Title }  from '@angular/platform-browser';
-import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, DATE_FORMAT } from '../../services/catalog.service';
 import { ActionsService } from '../../services/actions.services';
 import { ConfigurationService } from '../../services/configuration.service';
 
@@ -36,7 +36,7 @@ export class OpportunityindexComponent extends BaseComponent  {
     super.ngBeforeInit();
     this.sortBy = 'id';
     this.catalogName = 'Opportunity';
-    this._curService.setAPI('Opportunity/', this.catalogName);   
+    this._curService.setAPI('Opportunity/', this.catalogName, this.loadName);   
   }
 
 
@@ -52,7 +52,7 @@ export class OpportunityindexComponent extends BaseComponent  {
     this.columns.push({ name: 'oppNotes', label: 'Project Name' });
     this.columns.push({ name: 'asImporter', label: 'IOR' });
     this.columns.push({ name: 'statusName', label: 'Status' });
-    this.columns.push({ name: 'lastUpdated', label: 'Last Update' });
+    this.columns.push({ name: 'lastUpdated', label: 'Last Update', numeric: false, format: DATE_FORMAT });
   }
 
   addEntity() {

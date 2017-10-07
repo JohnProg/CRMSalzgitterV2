@@ -13,3 +13,6 @@ export * from './product/productindex/productindex.component';
 export * from './actionopportunity/actionopportunity.component';
 export * from './actionopportunity/+actionopportunitytemplateemail/actionopportunitytemplateemail.component';
 
+export * from './opptype/opptype.component';
+export * from './opptype/opptypestatus/opptypestatus.component';
+

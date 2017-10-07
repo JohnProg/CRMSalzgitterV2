@@ -43,7 +43,7 @@ export class ShippingeditorheaderComponent extends BaseOppComponent {
     this.itemEdit = new Shipping();
     this.catalogName = 'Shipping';
     this.autoLoad = false;
-    this._curService.setAPI('Shipping/', this.catalogName);
+    this._curService.setAPI('Shipping/', this.catalogName, this.loadName);
     this.singleEditor = true;  
   }
 
@@ -95,6 +95,10 @@ export class ShippingeditorheaderComponent extends BaseOppComponent {
           }, error => {
             this._snackBarService.open('Purchase Order does not exists', 'Ok');
           });
+  }
+
+  searchCurrency(e: any) {
+    debugger
   }
 }
 

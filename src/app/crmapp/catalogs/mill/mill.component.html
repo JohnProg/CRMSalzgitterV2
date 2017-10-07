@@ -1,0 +1,73 @@
+<md-card>
+  
+  
+    <md-card-content>
+  
+        <ng-template [tdLoading]="loadName">
+  
+            <section *ngIf="isEditing">
+        <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate class="md-padding">
+  
+          <div layout="row" >
+            <md-form-field flex >
+              <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
+              <md-hint align="end">{{name.value.length}} / 150</md-hint>
+  
+            </md-form-field >
+  
+          </div>
+      
+          <div layout="row" >
+              <md-form-field  flex>
+                  <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="{{ 'DESCRIPTION' | translate}}"
+                    maxlength="150">
+                  <md-hint align="end">{{description.value.length}} / 150</md-hint>
+                </md-form-field >
+          </div>    
+   
+      </form>
+      <td-expansion-panel [expand]="true" label="Countries assigned">
+      <crm-millcountry [idMill]="itemEdit.id"></crm-millcountry>
+    </td-expansion-panel>
+    </section>
+  
+      <section *ngIf="!isEditing">
+  
+  
+   <ng-template tdLoading="items.load">
+        <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+          <ng-template tdDataTableTemplate="name" let-value="value" let-row="row"  let-column="column">
+            <div layout="row">
+              <button md-button (click)="editEntity(row.id)">{{value}}</button>
+            </div>
+          </ng-template>
+          <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+            <div layout="row" flex="5">
+  
+              <button md-icon-button (click)="confirmDelete( row)">
+              <md-icon>delete</md-icon>
+            </button>
+            </div>
+          </ng-template>
+  
+        </td-data-table>
+  
+        <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+          <span hide-xs>Rows per page:</span>
+          <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+            <md-option *ngFor="let size of pagesArray" [value]="size">
+              {{size}}
+            </md-option>
+          </md-select>
+          <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+        </td-paging-bar>
+  
+  
+              </ng-template>  
+      </section>
+  
+    </ng-template>
+    </md-card-content>
+  </md-card>
+  
+       

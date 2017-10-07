@@ -36,7 +36,7 @@ const findCustProdProp = gql`
 
 @Component({
   selector: 'crm-opportunitydetailsumary',
-  templateUrl: './opportunitydetailsumary.component.html',
+  templateUrl: '../../../../components/editordetailsumary/editordetailsumary.component.html',
   styleUrls: ['./opportunitydetailsumary.component.scss']
 })
 export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponent {
@@ -50,7 +50,7 @@ export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponen
   ngBeforeInit() {
     super.ngBeforeInit();
      this.catalogName = 'Opp Details Sumary';
-    this._curService.setAPI('OpportunityDetailSumary', this.catalogName);
+    this._curService.setAPI('OpportunityDetailSumary', this.catalogName, this.loadName);
     this.refreshItemUrl = 'OpportunityDetailSumary/searchByDetail';
     this.sumProperties = 'opportunityDetailSumaryProperties'; 
   }

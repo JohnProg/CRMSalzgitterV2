@@ -1,15 +1,22 @@
-
+<ng-template [tdLoading]="loadName">
 <section *ngIf="isEditing">
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
 
 
-    <div layout-gt-sm="row" layout-lt-sm="column" layout-margin>
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
       <section flex-gt-sm="30">
-        <md-select class="cbxClass" #idMarket name="idMarket" flex required="true" placeholder="Select Market" multiple="true"  [(ngModel)]="marketSelected">
-          <md-option *ngFor="let i of notSelectedProducts" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+        <md2-select class="cbxClass" #idMarket name="idMarket" flex required="true" placeholder="Select Market" multiple="true"  [(ngModel)]="marketSelected">
+            <md2-select-header>               
+                <section layout-padding>
+                    <md-form-field>
+                        <input mdInput flex #smarket  placeholder="Search" maxlength="15"  >
+                      </md-form-field>
+                </section>
+             </md2-select-header>           
+          <md2-option *ngFor="let i of notSelectedProducts | nameDesc:smarket.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
-          </md-option>
-        </md-select>
+          </md2-option>
+        </md2-select>
       </section>
     </div>
   </form>
@@ -30,7 +37,15 @@
     </ng-template>
 
   </td-data-table>
-  <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-    (change)="change($event)">
+  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+    <span hide-xs>Rows per page:</span>
+    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <md-option *ngFor="let size of pagesArray" [value]="size">
+        {{size}}
+      </md-option>
+    </md-select>
+    <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
   </td-paging-bar>
 </section>
+
+</ng-template>

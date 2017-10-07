@@ -147,7 +147,15 @@
                 "routerlink": "typeopportunity",
                 "icon": "euro_symbol",
                 "displayName": "HOME.MENU.CATALOGS.TYPEOPPORTUNITY.DISPLAYNAME"
-              }              
+              },
+              {
+                "name": "status",
+                "tooltip": "HOME.MENU.CATALOGS.STATUS.TOOLTIP",
+                "active": "true",
+                "routerlink": "status",
+                "icon": "euro_symbol",
+                "displayName": "HOME.MENU.CATALOGS.STATUS.DISPLAYNAME"
+              }                           
       ]
 
     },
@@ -187,7 +195,15 @@
             "routerlink": "actionopp",
             "icon": "euro_symbol",
             "displayName": "HOME.MENU.OPTIONS.ACTIONOPP.DISPLAYNAME"
-          }                
+          },
+          {
+            "name": "doctype",
+            "tooltip": "HOME.MENU.OPTIONS.DOCTYPE.TOOLTIP",
+            "active": "true",
+            "routerlink": "doctype",
+            "icon": "euro_symbol",
+            "displayName": "HOME.MENU.OPTIONS.DOCTYPE.DISPLAYNAME"
+          }                               
       ]
     },
 

@@ -1,61 +1,116 @@
 <section *ngIf="!showEMail">
-
+    <ng-template [tdLoading]="loadName">
     <section *ngIf="isEditing">
         <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-      <section layout="column" flex="100" layout-margin>
-
-
-        <div layout-gt-sm="row" layout-lt-sm="column" flex>
-            <md-select class="cbxClass" #idAction name="idAction" flex required="true"   placeholder="Action" [(ngModel)]="itemEdit.idAction"  >
-                  <md-option *ngFor="let i of catActionsOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+      <section layout-gt-sm="row" layout-lt-md="column"  >
+          <section flex="100"  layout-margin layout-padding>
+        <section  flex>
+            <md2-select class="cbxClass" #idAction name="idAction" flex required="true"   placeholder="Action" [(ngModel)]="itemEdit.idAction" (change)="actionChange($event.value)"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #saction  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                        </section>
+                    </md2-select-header>                 
+                  <md2-option *ngFor="let i of catActionsOpp | nameDesc:saction.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>             
-        </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" flex>
-            <md-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"   placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
-                  <md-option *ngFor="let i of catResponsible" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                  </md2-option>
+            </md2-select>             
+        </section>
+        <section  flex>
+            <md2-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"   placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #sresponsible  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                        </section>
+                    </md2-select-header>               
+                  <md2-option *ngFor="let i of catResponsible | nameDesc:sresponsible.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>             
-        </div>
+                  </md2-option>
+            </md2-select>             
+        </section>
 
-        <div layout-gt-sm="row" layout-lt-sm="column" flex>
-          <md-radio-group #ToContact name="ToContact" [(ngModel)]="itemEdit.toContact">
-            <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
-            <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
-          </md-radio-group>
-        </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.toContact == 1">
-            <md-select class="cbxClass" #idContact name="idContact" flex [required]="itemEdit.toContact === 1"   placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
-                  <md-option *ngFor="let i of catContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+        <section flex >
+            <span>Email to:    </span> &nbsp; &nbsp;
+            <md-radio-group #eMailTo name="eMailTo" [(ngModel)]="itemEdit.toContact">
+              <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
+              <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
+              <md-radio-button value="3">{{ 'BOTH' | translate}}</md-radio-button>
+            </md-radio-group>
+          </section> 
+
+        <section  flex *ngIf="itemEdit.toContact == 1 || itemEdit.toContact == 3">
+            <md2-select class="cbxClass" #idContact name="idContact" flex [required]="true"   placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #scontact  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                        </section>
+                    </md2-select-header>                 
+                  <md2-option *ngFor="let i of catContact | nameDesc:scontact.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>            
-        </div>
-        <div layout-gt-sm="row" layout-lt-sm="column" flex *ngIf="itemEdit.toContact == 2">
-            <md-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex [required]="itemEdit.toContact === 2"   placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
-                  <md-option *ngFor="let i of catCustomerContact" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                  </md2-option>
+            </md2-select>            
+        </section>
+        <section  flex *ngIf="itemEdit.toContact == 2 || itemEdit.toContact == 3">
+            <md2-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex [required]="true"   placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
+                <md2-select-header>               
+                    <section layout-padding>
+                        <md-form-field>
+                            <input mdInput flex #scustcontact  placeholder="Search" maxlength="15"  >
+                          </md-form-field>
+                        </section>
+                    </md2-select-header>               
+                  <md2-option *ngFor="let i of catCustomerContact | nameDesc:scustcontact.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md-option>
-            </md-select>             
-        </div>
+                  </md2-option>
+            </md2-select>             
+        </section>
 
 
-        <div layout-gt-sm="row" layout-lt-sm="column">
-          <md-input-container flex class="">
-            <textarea mdInput flex #DNotes name="DNotes" maxlength="500" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
+        <section flex>
+          <md-form-field flex class="">
+            <textarea mdInput flex #DNotes name="DNotes" required="true" maxlength="500" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
             <md-hint align="end">{{DNotes.value.length}} / 500</md-hint>
-          </md-input-container>
-        </div>
+          </md-form-field>
+        </section>
+          </section>
       </section>
   </form>
 
+  <md2-dialog #confirmstatus name="confirmstatus">
+      <md2-dialog-title>Update Status</md2-dialog-title>
+      <md2-dialog-content>
+        <h1 class="md-title">Would you like to update Status?</h1>
+        <p class="md-body-2">This action will update the status</p>
+
+      </md2-dialog-content>
+      <md2-dialog-actions>
+          <section layout-align="start end" flex layout-padding>
+              <span flex></span>
+              <button md-raised-button color="warn" (click)="confirmstatus.close()" >Cancel</button>
+              <button md-raised-button (click)="noConfirm()"> No</button>
+              <button md-raised-button color="primary" (click)="updateConfirm()">Yes</button>
+          </section>
+
+      </md2-dialog-actions>
+    </md2-dialog>
+
+
+  <section flex="100"  layout-margin layout-padding>
       <crm-editorbasedialogdocument 
               [idDialog]="itemEdit.id" 
               [baseApi]="documentBaseApi"
               [parentField]="documentParentField"
+              [customer]="customer"
+              [docType]="docType"
+              [idDoc]="idParent"
               *ngIf="itemEdit.id > 0"></crm-editorbasedialogdocument>
+  </section>
     </section>
 
 
@@ -85,11 +140,17 @@
       </ng-template>
 
     </td-data-table>
-    <td-paging-bar [firstLast]="true" [pageSizeAll]="true" [pageSizes]="pagesArray" [pageSize]="pageSize" [total]="totalItems"
-      (change)="change($event)">
+    <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+      <span hide-xs>Rows per page:</span>
+      <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+        <md-option *ngFor="let size of pagesArray" [value]="size">
+          {{size}}
+        </md-option>
+      </md-select>
+      <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
     </td-paging-bar>
   </section>
-
+</ng-template>
 </section>
 
 

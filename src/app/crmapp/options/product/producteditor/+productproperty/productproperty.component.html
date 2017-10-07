@@ -1,3 +1,4 @@
+
 <section layout="row">
   <section flex="95"></section>
   <section flex="5">
@@ -7,6 +8,7 @@
 
   </section>
 </section>
+
 
 <section flex *ngIf="!isEditing">
   <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
@@ -27,19 +29,29 @@
 </section>
 
 <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-  <section flex layout="row">
-    <section flex="25"></section>
-    <section *ngIf="isEditing" flex="50">
-      <section layout="column" flex="100" layout-margin>
-        <md-input-container>
-          <input mdInput type="number" #POrder flex name="pOrder" [(ngModel)]="itemEdit.pOrder" required placeholder="Order" maxlength="150">
-        </md-input-container>
 
-        <md-select class="cbxClass" #idProperty name="idProperty" flex required="true" placeholder="Property" [(ngModel)]="itemEdit.idProperty">
-          <md-option *ngFor="let i of catProperties" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+  <section flex layout="row" *ngIf="isEditing">
+      <ng-template [tdLoading]="loadName">
+    <section flex="25"></section>
+    <section  flex="50">
+
+      <section layout="column" flex="100" layout-margin>
+        <md-form-field>
+          <input mdInput type="number" #POrder flex name="pOrder" [(ngModel)]="itemEdit.pOrder" required placeholder="Order" maxlength="150">
+        </md-form-field>
+
+        <md2-select class="cbxClass" #idProperty name="idProperty" flex required="true" placeholder="Property" [(ngModel)]="itemEdit.idProperty">
+            <md2-select-header>               
+                <section layout-padding>
+                  <md-form-field>
+                    <input mdInput flex #sproperty  placeholder="Search" maxlength="15"  >
+                    </md-form-field>
+                </section>
+               </md2-select-header>           
+          <md2-option *ngFor="let i of catProperties | nameDesc:sproperty.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.name }} [ {{i.description}} ]
-          </md-option>
-        </md-select>
+          </md2-option>
+        </md2-select>
         <md-checkbox #IsRequired flex name="IsRequired" [(ngModel)]="itemEdit.IsRequired">Required</md-checkbox>
       </section>
       <div layout="row" flex layout-align="end center">
@@ -51,7 +63,11 @@
           </button>
 
       </div>
+
     </section>
     <section flex="25"></section>
+  </ng-template>
   </section>
+
 </form>
+

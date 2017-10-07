@@ -52,7 +52,7 @@ export class CustomerdeliverypointComponent  extends CustomerbaseComponent {
     super.ngBeforeInit();
      this.catalogName = 'Delivery Point';
     this.catalog = 'CustomerDeliveryPoint';
-    this._curService.setAPI( this.catalog + '/', this.catalogName); 
+    this._curService.setAPI( this.catalog + '/', this.catalogName, this.loadName); 
   }
 
   ngOnInitClass() {

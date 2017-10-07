@@ -78,7 +78,11 @@
             "TYPEOPPORTUNITY": {
                 "DISPLAYNAME": "Type Opportunity",
                 "TOOLTIP": "Create Edit Type Opportunity"
-            }           
+            },
+            "STATUS": {
+                "DISPLAYNAME": "Status",
+                "TOOLTIP": "Create Edit Status"
+            }          
         },
         "OPTIONS": {
             "DISPLAYNAME": "Options",
@@ -97,7 +101,11 @@
             "ACTIONOPP": {
                 "TOOLTIP": "Create/Edit Actions Opp",
                 "DISPLAYNAME": "Opportunity Actions"
-            }                       
+            },
+            "DOCTYPE": {
+                "TOOLTIP": "Create/Edit Doc Type",
+                "DISPLAYNAME": "Opp. types"
+            }                                  
         },
         "OPPORTUNITY": {
             "DISPLAYNAME": "Opportunities",

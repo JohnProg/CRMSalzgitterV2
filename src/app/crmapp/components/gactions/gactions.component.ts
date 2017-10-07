@@ -78,6 +78,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.showCancelEvent = this._actions.showCancelEvent
       .subscribe((res) => {
+
         this.showCancel = res;
       });
 

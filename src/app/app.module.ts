@@ -1,7 +1,11 @@
 import { NgModule, Type } from '@angular/core';
 import { BrowserModule, Title }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+
+import { HttpModule }    from '@angular/http';
+
+
+import {HttpClientModule, HttpClient, HttpHandler} from '@angular/common/http';
 import { CovalentHttpModule, IHttpInterceptor } from '@covalent/http';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -22,13 +26,13 @@ import { MainmenuComponent } from './mainmenu/mainmenu.component';
 
 
 
+
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
-export function HttpLoaderFactory(http: Http) {
+export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, environment.baseHref + 'assets/i18n/', '-lang.json');
 }
-
 
 @NgModule({
   declarations: [
@@ -36,17 +40,21 @@ export function HttpLoaderFactory(http: Http) {
     routedComponents,
     MainmenuComponent,
 
+
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpModule,
+    HttpClientModule,
     CRMModule,
     TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
-                deps: [Http]
+                deps: [HttpClient]
             }
         }),
     CovalentHttpModule.forRoot({
@@ -54,11 +62,11 @@ export function HttpLoaderFactory(http: Http) {
         interceptor: RequestInterceptor, paths: ['**'],
       }],
     }),
-    Md2Module.forRoot(),
+    Md2Module,
   ], // modules needed to run this module
   providers: [
     httpInterceptorProviders,
-    Title,
+    Title
   ], // additional providers needed for this module
   entryComponents: [ ],
   bootstrap: [ AppComponent ],

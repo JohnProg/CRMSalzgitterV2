@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Title }     from '@angular/platform-browser';
 import { multi } from './data';
 import { AuthHelper } from '../crmapp/authHelper/authHelper';
+import { ActionsService } from '../crmapp/services/actions.services';
 @Component({
   selector: 'crm-dashboard',
   templateUrl: './dashboard.component.html',
@@ -25,14 +26,19 @@ export class DashboardComponent implements AfterViewInit  {
         private _route: ActivatedRoute,
         private _token: TokenService,
               private _confs: ConfigurationService,
-            private _auth: AuthHelper ) {
-
+            private _auth: AuthHelper,
+            public _actions: ActionsService, ) {
+     
   }
 
 
 
   ngAfterViewInit(): void {
-    this._titleService.setTitle( 'CRM Salzgitter' );
+    this._actions.updateTitle( 'CRM Dashboard' );
+    this._actions.showAdd(false);
+    this._actions.showCancel(false);
+    this._actions.showSearch(false);
+    
  
   }
 

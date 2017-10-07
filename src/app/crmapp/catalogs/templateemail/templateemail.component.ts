@@ -30,7 +30,7 @@ export class TemplateemailComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Template Email';
-    this._curService.setAPI('TemplateEmail/', this.catalogName);   
+    this._curService.setAPI('TemplateEmail/', this.catalogName, this.loadName);   
   }
 
   addColumns() {

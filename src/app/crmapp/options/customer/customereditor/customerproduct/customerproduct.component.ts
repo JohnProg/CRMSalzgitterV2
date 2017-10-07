@@ -52,7 +52,7 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
     super.ngBeforeInit();
      this.catalogName = 'Customer Products';
     this.catalog = 'CustomerProduct';
-    this._curService.setAPI( this.catalog + '/', this.catalogName); 
+    this._curService.setAPI( this.catalog + '/', this.catalogName, this.loadName); 
   }
   ngOnInitClass() {
     super.ngOnInitClass();

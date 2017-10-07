@@ -55,7 +55,9 @@ export class EditordetailsumaryComponent extends BaseComponent {
   sumProperties: string;
   total: number = 0;
   totalAmount: number = 0;
-
+  totalShipped: number = 0;
+  loadName: string = 'editprop.load';
+  
   ngBeforeInit() {
     super.ngBeforeInit();
     this.setTitle = false;
@@ -109,7 +111,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
     if (this._props !== undefined) {
 
       let pdet: EditorDetailSumaryProperty[] = new Array<EditorDetailSumaryProperty>();
-      debugger
+      
       this._props.forEach((c: ProductProperty) => {
         let p: EditorDetailSumaryProperty = new EditorDetailSumaryProperty();
         p.idParent = this.itemEdit.id;
@@ -177,6 +179,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
   afterLoadAll(itms: EditorDetailSumary[]) {
       this.total = 0;
       this.totalAmount = 0;
+      this.totalShipped = 0;
       if( itms !== undefined && itms.length > 0 && itms[0][this.sumProperties] !== undefined 
         && itms[0][this.sumProperties].length > 0) {
         this._pcolumns = new Array<ITdDataTableColumn>();
@@ -189,12 +192,16 @@ export class EditordetailsumaryComponent extends BaseComponent {
         itms.forEach( (t: EditorDetailSumary) => {
           this.total += t.quantity;
           this.totalAmount += t.amount;
+          this.totalShipped += t['qtyShipped'] || 0;
           t[this.sumProperties].forEach( (p: EditorDetailSumaryProperty) => {
               t['prop' + p.idProperty] = p.propertyValue;
           });
         });
 
         this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity', tooltip: '', numeric: true, format: NUMBER_FORMAT, sortable: false });
+        if( this.totalShipped > 0 ){
+          this._pcolumns.push(  { name: 'qtyShipped' ,  label: 'Ship Qty', tooltip: '', numeric: true, format: NUMBER_FORMAT, sortable: false });
+        }
         this._pcolumns.push(  { name: 'price' ,  label: 'Price', tooltip: '', numeric: true, format: CURRENCY_FORMAT, sortable: false  });
         this._pcolumns.push(  { name: 'amount' ,  label: 'Amount', tooltip: '', numeric: true, format: CURRENCY_FORMAT, sortable: false  });
         this._pcolumns.push(  { name: 'comment' ,  label: 'Comment', tooltip: '' });

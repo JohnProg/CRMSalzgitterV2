@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 
-import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../../services/catalog.service';
+import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT, DATE_FORMAT } from '../../../../services/catalog.service';
 import { ConfigurationService } from '../../../../services/configuration.service';
 
 import 'rxjs/add/operator/map';
@@ -43,11 +43,11 @@ export class CustomerdocumentComponent extends BaseComponent {
   itemEdit: CustomerDocument;
   sortBy: 'docName';
   files: any;
-
+  oneBase: string = environment.oneDriveBase;
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'Customer Document';
-    this._curService.setAPI('CustomerDocument', this.catalogName);    
+    this._curService.setAPI('CustomerDocument', this.catalogName, this.loadName);    
     //this._auth = auth;
   }
 
@@ -68,7 +68,7 @@ export class CustomerdocumentComponent extends BaseComponent {
 
   addColumns() {
     this.columns.push({ name: 'docTypeName', label: 'Doc. Type', tooltip: '' });
-    this.columns.push({ name: 'dateUploaded', label: 'Date', numeric: false,  sortable: false });
+    this.columns.push({ name: 'dateUploaded', label: 'Date', numeric: false, format: DATE_FORMAT });
     this.columns.push({ name: 'docName', label: 'Doc. Name' });
 
   }
@@ -81,27 +81,45 @@ export class CustomerdocumentComponent extends BaseComponent {
   }
 
   addEntity() {
-    this.checkOneDriveToke();
-    super.addEntity();
+    if( this.checkOneDriveToken() == true) {
+      super.addEntity();
+    }
   }
 
+  deleteEntity() {
 
+  }
   confirmDelete(item: CustomerDocument) {
-    this.itemEdit = item;
-    this._actions.deleteItemEvent.emit(  { title: 'Document', objId: this.objId });
+    if( this.checkOneDriveToken() == true) {
+      this.itemEdit = item;
+      this._actions.deleteItemEvent.emit(  { title: 'Document', objId: this.objId });     
+    }
+
   }
+
+  afterDelete(item: CustomerDocument) {
+    super.afterDelete(item);
+    let docid: string = this.itemEdit.docId;
+    this._one.doDelete(docid).end((err, res) => {
+      if (err) {
+          console.error(err)
+          return;
+      }
+    });
+  }
+
 
   submitForm(form) {
 
     if (this.files) {
 
-      let cname = this.customer.name.replace(/[^A-Z0-9]+/ig, "");
       let parent = this._one.getRootFolderInfo(environment.oneDriveRootCustomer);
+      let cname = this.removeSpeciaCharacters(this.customer.name);
       this._one.GetChildFolderInfo(parent.id, cname,
         (item: MicrosoftGraph.DriveItem) => {
           this._one.uploadFile(item.id, this.files,
             (itemCreated: MicrosoftGraph.DriveItem) => {
-              debugger
+              
               this.itemEdit.parentFolder = parent['id'];
               this.itemEdit.docId = itemCreated.id;
               this.itemEdit.docName = itemCreated.name;
@@ -119,7 +137,9 @@ export class CustomerdocumentComponent extends BaseComponent {
 
   
     downLoad(item: CustomerDocument) {
-        debugger
+      if( this.checkOneDriveToken() == true) {
+        this._one.downloadFile(item.docId, item.docName);
+      }
     }
 
   // afterCreate(item: CustomerDocument) {

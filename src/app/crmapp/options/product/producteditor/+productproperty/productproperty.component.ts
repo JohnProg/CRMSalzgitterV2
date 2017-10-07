@@ -55,13 +55,14 @@ export class ProductpropertyComponent extends BaseComponent   {
   // catalogName: string;
 
   itemEdit: ProductProperty;
-
+  loadName: string = 'productprop.load';
+  
   ngBeforeInit() {
     super.ngBeforeInit();
     this.setTitle = false;
     this.subEditor = true;
     this.catalogName = 'Product Properties';
-    this._curService.setAPI( 'ProductProperty/', this.catalogName);    
+    this._curService.setAPI( 'ProductProperty/', this.catalogName, this.loadName);    
   }
 
 

@@ -36,7 +36,7 @@ export class IncotermComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.catalogName = 'IncoTerm';
-    this._curService.setAPI('IncoTerm/', this.catalogName);   
+    this._curService.setAPI('IncoTerm/', this.catalogName, this.loadName);   
   }
 
 

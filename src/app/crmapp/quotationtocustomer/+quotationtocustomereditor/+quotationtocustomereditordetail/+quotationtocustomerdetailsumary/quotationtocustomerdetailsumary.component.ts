@@ -43,7 +43,7 @@ export class QuotationtocustomerdetailsumaryComponent extends Editordetailsumary
   ngBeforeInit() {
     super.ngBeforeInit();
      this.catalogName = 'Quotation to Customer Details Sumary';
-    this._curService.setAPI('QuotationToCustomerDetailSumary', this.catalogName);
+    this._curService.setAPI('QuotationToCustomerDetailSumary', this.catalogName, this.loadName);
     this.refreshItemUrl = 'QuotationToCustomerDetailSumary/searchByDetail';
     this.sumProperties = 'quotationToCustomerDetailSumaryProperties'; 
   }

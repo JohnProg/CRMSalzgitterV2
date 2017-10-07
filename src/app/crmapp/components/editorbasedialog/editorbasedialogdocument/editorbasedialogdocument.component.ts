@@ -21,10 +21,11 @@ import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 
-import {  BaseDocument } from '../../../model/index';
+import {  BaseDocument, Customer, DocType } from '../../../model/index';
 import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import * as MicrosoftGraph from "@microsoft/microsoft-graph-types"
 
 @Component({
   selector: 'crm-editorbasedialogdocument',
@@ -42,8 +43,12 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   itemEdit: BaseDocument;
   
   files: any;
+  @Input() customer: Customer;
+  @Input() docType: DocType;
+  @Input() idDoc: number;
 
-
+  loadName: string = 'document.load';
+  
   ngBeforeInit() {
     super.ngBeforeInit();
     this.subEditor = true;
@@ -53,7 +58,7 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
 
 
   ngOnInitClass() {
-    this._curService.setAPI(this.baseApi, this.catalogName);
+    this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
     this.entList = <Observable<BaseDocument[]>>this._curService.entList;
     this.initData();
   }
@@ -83,6 +88,11 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   }
 
 
+  addEntity() {
+    if( this.checkOneDriveToken() == true) {
+      super.addEntity();
+    }
+  }
 
   confirmDelete(item: BaseDocument) {
     this.itemEdit = item;
@@ -90,23 +100,32 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
   }
 
   submitForm(form) {
+    
+        if (this.files) {
+          this._one.loadItem = this.loadName;
+          let cname = this.removeSpeciaCharacters(this.customer.name);
+          let parent = this._one.getRootFolderInfo(this.docType.rootFolder);
+          this._one.GetChildFolderInfo(parent.id, cname,
+            (item: MicrosoftGraph.DriveItem) => {
 
-    if (this.files ) {
-      let reader: FileReader = new FileReader();
-      let t: string;
-      let tself = this;
-      reader.onloadend = function () {
-        t = reader.result;
-        tself.itemEdit.docName = tself.files.name;
-        tself.itemEdit.aData64 = t;
-        tself._curService.create(tself.itemEdit);
-      };
-      reader.readAsDataURL(this.files);
+              this._one.GetChildFolderInfo(item.id, this.idDoc.toString(),  (fitem: MicrosoftGraph.DriveItem) => {
 
-
-    }
-
-  }
+                  this._one.uploadFile(fitem.id, this.files,
+                    (itemCreated: MicrosoftGraph.DriveItem) => {
+                      
+                      this.itemEdit.parentFolder = fitem['id'];
+                      this.itemEdit.docId = itemCreated.id;
+                      this.itemEdit.docName = itemCreated.name;
+                      this._curService.create(this.itemEdit);
+                    },
+                    (itemCreated: MicrosoftGraph.DriveItem) => {
+                      debugger
+                    }
+                  );
+                });      
+            });
+        }
+      }
 
 
   afterCreate(item: BaseDocument) {
@@ -119,4 +138,20 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
     this.isEditing = false;
   }
 
+  afterDelete(item: BaseDocument) {
+    super.afterDelete(item);
+    let docid: string = this.itemEdit.docId;
+    this._one.doDelete(docid).end((err, res) => {
+      if (err) {
+          console.error(err)
+          return;
+      }
+    });
+  }
+
+  downLoad(item: BaseDocument) {
+    if( this.checkOneDriveToken() == true) {
+      this._one.downloadFile(item.docId, item.docName);
+    }
+  }
 }
