@@ -1,9 +1,9 @@
-<ng-template [tdLoading]="loadName">
-    <div layout-padding>
+<ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+    <div layout-margin>
         <div>
-            <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Country </button>
-            <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
-            <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
+            <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Country </button>
+            <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
+            <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
         
         </div>
 
@@ -13,18 +13,14 @@
   
       <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
         <section flex-gt-sm="30">
-          <md2-select class="cbxClass" #idCountry name="idCountry" flex required="true" placeholder="Select Country" multiple="true"  [(ngModel)]="countrySelected">
-              <md2-select-header>               
-                  <section layout-padding>
-                      <md-form-field>
-                          <input mdInput flex #scountry  placeholder="Search" maxlength="15"  >
-                        </md-form-field>
-                  </section>
-               </md2-select-header>           
-            <md2-option *ngFor="let i of notSelectedCountries | nameDesc:scountry.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            <mat-form-field>
+           <mat-select class="cbxClass" #idCountry name="idCountry" flex required="true" placeholder="Select Country" multiple="true"  [(ngModel)]="countrySelected">        
+            <mat-option *ngFor="let i of notSelectedCountries	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
               {{ i.nameDescription || i.name}}
-            </md2-option>
-          </md2-select>
+            </mat-option>
+          </mat-select>               
+            </mat-form-field>
+
         </section>
       </div>
     </form>
@@ -38,8 +34,8 @@
     <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
       <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
         <div layout="row" flex="5">
-          <button md-icon-button (click)="confirmDelete( row)">
-              <md-icon>delete</md-icon>
+          <button mat-icon-button (click)="confirmDelete( row)">
+              <mat-icon>delete</mat-icon>
             </button>
         </div>
       </ng-template>
@@ -47,11 +43,11 @@
     </td-data-table> 
      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
       <span hide-xs>Rows per page:</span>
-      <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-        <md-option *ngFor="let size of pagesArray" [value]="size">
+      <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+        <mat-option *ngFor="let size of pagesArray" [value]="size">
           {{size}}
-        </md-option>
-      </md-select>
+        </mat-option>
+      </mat-select>
       <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
     </td-paging-bar>
 

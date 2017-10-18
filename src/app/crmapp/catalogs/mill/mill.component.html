@@ -1,28 +1,28 @@
-<md-card>
+<mat-card>
   
   
-    <md-card-content>
+    <mat-card-content>
   
-        <ng-template [tdLoading]="loadName">
+        <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
   
             <section *ngIf="isEditing">
         <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate class="md-padding">
   
           <div layout="row" >
-            <md-form-field flex >
-              <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
-              <md-hint align="end">{{name.value.length}} / 150</md-hint>
+            <mat-form-field flex >
+              <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="150" />
+              <mat-hint align="end">{{name.value.length}} / 150</mat-hint>
   
-            </md-form-field >
+            </mat-form-field >
   
           </div>
       
           <div layout="row" >
-              <md-form-field  flex>
-                  <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="{{ 'DESCRIPTION' | translate}}"
+              <mat-form-field  flex>
+                  <input matInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="{{ 'DESCRIPTION' | translate}}"
                     maxlength="150">
-                  <md-hint align="end">{{description.value.length}} / 150</md-hint>
-                </md-form-field >
+                  <mat-hint align="end">{{description.value.length}} / 150</mat-hint>
+                </mat-form-field >
           </div>    
    
       </form>
@@ -38,14 +38,14 @@
         <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
           <ng-template tdDataTableTemplate="name" let-value="value" let-row="row"  let-column="column">
             <div layout="row">
-              <button md-button (click)="editEntity(row.id)">{{value}}</button>
+              <button mat-button (click)="editEntity(row.id)">{{value}}</button>
             </div>
           </ng-template>
           <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
             <div layout="row" flex="5">
   
-              <button md-icon-button (click)="confirmDelete( row)">
-              <md-icon>delete</md-icon>
+              <button mat-icon-button (click)="confirmDelete( row)">
+              <mat-icon>delete</mat-icon>
             </button>
             </div>
           </ng-template>
@@ -54,11 +54,11 @@
   
         <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
           <span hide-xs>Rows per page:</span>
-          <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-            <md-option *ngFor="let size of pagesArray" [value]="size">
+          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+            <mat-option *ngFor="let size of pagesArray" [value]="size">
               {{size}}
-            </md-option>
-          </md-select>
+            </mat-option>
+          </mat-select>
           <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
         </td-paging-bar>
   
@@ -67,7 +67,7 @@
       </section>
   
     </ng-template>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
   
        

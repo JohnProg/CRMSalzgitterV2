@@ -16,7 +16,6 @@ import {
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { MdSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductpropertyComponent } from '../producteditor/+productproperty/productproperty.component';
 

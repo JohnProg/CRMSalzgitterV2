@@ -1,4 +1,4 @@
-<ng-template [tdLoading]="loadName">
+<ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
 <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
   <section *ngIf="isEditing">
     <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
@@ -6,10 +6,10 @@
     </div>
     <td-expansion-panel-group>
       <td-expansion-panel *ngFor="let po of poDetails " [label]="'PO#: ' + po.po">
-        <md-card class="example-card" *ngFor="let pod of po.items " flex>
-          <md-card-header> 
-            <md-card-title>{{pod.itemDescription }} </md-card-title>
-            <md-card-subtitle>
+        <mat-card class="example-card" *ngFor="let pod of po.items " flex>
+          <mat-card-header> 
+            <mat-card-title>{{pod.itemDescription }} </mat-card-title>
+            <mat-card-subtitle>
                 {{ pod.sumaryDescription}} <br/>
                 <div layout-gt-sm="row" layout-lt-md="column">
                   <div flex-gt-sm="30" flex-lt-md="100">
@@ -25,27 +25,27 @@
               
                  
                 </div>
-             </md-card-subtitle>
-          </md-card-header>
+             </mat-card-subtitle>
+          </mat-card-header>
 
-          <md-card-content>
+          <mat-card-content>
 
 
             <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-              <md-form-field flex-gt-sm="30">
-                <input mdInput [name]="'qty' + pod.idDetailSum" [(ngModel)]="pod.qtyInShipping" placeholder="Ship Qty" currencyMask [options]="{ prefix: '', allowNegative : false}" >
-              </md-form-field>
+              <mat-form-field flex-gt-sm="30">
+                <input matInput [name]="'qty' + pod.idDetailSum" [(ngModel)]="pod.qtyInShipping" placeholder="Ship Qty" currencyMask [options]="{ prefix: '', allowNegative : false}" >
+              </mat-form-field>
 
-              <md-form-field flex-gt-sm="30">
-                <input mdInput [name]="'price' + pod.idDetailSum" [(ngModel)]="pod.priceSum" placeholder="Price" currencyMask [options]="{ allowNegative : false }">
-              </md-form-field>
-              <md-form-field flex-gt-sm="40">
-                <input mdInput [name]="'amount' + pod.idDetailSum"  disabled placeholder="Amount" value="{{ (pod.qtyInShipping * pod.priceSum) | currency }}" >
-              </md-form-field>
+              <mat-form-field flex-gt-sm="30">
+                <input matInput [name]="'price' + pod.idDetailSum" [(ngModel)]="pod.priceSum" placeholder="Price" currencyMask [options]="{ allowNegative : false }">
+              </mat-form-field>
+              <mat-form-field flex-gt-sm="40">
+                <input matInput [name]="'amount' + pod.idDetailSum"  disabled placeholder="Amount" value="{{ (pod.qtyInShipping * pod.priceSum) | currency }}" >
+              </mat-form-field>
             </div>
-          </md-card-content>
+          </mat-card-content>
 
-        </md-card>
+        </mat-card>
 
       </td-expansion-panel>
 
@@ -60,25 +60,25 @@
   
   <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
     <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
-        <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+        <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
     </ng-template>
     <ng-template tdDataTableTemplate="itemDescription" let-value="value" let-row="row" let-column="column">
-      <span [tooltip]="row.itemDescription">{{value | maxString}}</span>
+      <span [matTooltip]="row.itemDescription">{{value | maxString}}</span>
       </ng-template>
     <ng-template tdDataTableTemplate="sumaryDescription" let-value="value" let-row="row" let-column="column">
-        <span [tooltip]="row.sumaryDescription">{{value | maxString}}</span>
+        <span [matTooltip]="row.sumaryDescription">{{value | maxString}}</span>
         </ng-template>
       </td-data-table>
     
   <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
     <span hide-xs>Rows per page:</span>
-    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-      <md-option *ngFor="let size of pagesArray" [value]="size">
+    <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <mat-option *ngFor="let size of pagesArray" [value]="size">
         {{size}}
-      </md-option>
-    </md-select>
+      </mat-option>
+    </mat-select>
     <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
   </td-paging-bar>
 </section>

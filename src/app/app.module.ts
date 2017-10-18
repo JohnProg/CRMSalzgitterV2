@@ -18,13 +18,9 @@ import { routedComponents, AppRoutingModule } from './app-routing.module';
 
 import { CRMModule } from './crmapp/crm.module';
 
-import { Md2Module }  from 'md2';
 import { environment } from '../environments/environment';
 
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
-
-
-
 
 
 const httpInterceptorProviders: Type<any>[] = [
@@ -50,6 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpModule,
     HttpClientModule,
     CRMModule,
+    
     TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -61,8 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       interceptors: [{
         interceptor: RequestInterceptor, paths: ['**'],
       }],
-    }),
-    Md2Module,
+    })
   ], // modules needed to run this module
   providers: [
     httpInterceptorProviders,

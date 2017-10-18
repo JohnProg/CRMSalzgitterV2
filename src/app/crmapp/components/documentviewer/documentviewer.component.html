@@ -1,7 +1,7 @@
 
   <section *ngIf="!isEditing">
 
-      <ng-template [tdLoading]="loadName">
+      <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="dateUploaded" let-value="value" let-row="row"  let-column="column" >
           <div layout="row">
@@ -12,11 +12,11 @@
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
 
-            <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+            <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
-          <button md-icon-button (click)="downLoad( row)">
-            <md-icon>cloud_download</md-icon>
+          <button mat-icon-button (click)="downLoad( row)">
+            <mat-icon>cloud_download</mat-icon>
           </button>            
           </div>
         </ng-template>

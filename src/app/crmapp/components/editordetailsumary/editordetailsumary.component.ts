@@ -16,7 +16,7 @@ import {
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { MdSnackBar } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';
@@ -25,6 +25,8 @@ import { TCRMEntity, Property, ProductProperty,
       EditorDetailSumary, EditorDetailSumaryProperty } from '../../model/allmodels';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import {saveAs as importedSaveAs} from "file-saver";
+import * as request from 'superagent';
 
 
 @Component({
@@ -58,6 +60,11 @@ export class EditordetailsumaryComponent extends BaseComponent {
   totalShipped: number = 0;
   loadName: string = 'editprop.load';
   
+
+  uTemplate: boolean = false;
+  files: any;
+
+
   ngBeforeInit() {
     super.ngBeforeInit();
     this.setTitle = false;
@@ -198,13 +205,13 @@ export class EditordetailsumaryComponent extends BaseComponent {
           });
         });
 
-        this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity', tooltip: '', numeric: true, format: NUMBER_FORMAT, sortable: false });
+        this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity',  numeric: true, format: NUMBER_FORMAT, sortable: false });
         if( this.totalShipped > 0 ){
-          this._pcolumns.push(  { name: 'qtyShipped' ,  label: 'Ship Qty', tooltip: '', numeric: true, format: NUMBER_FORMAT, sortable: false });
+          this._pcolumns.push(  { name: 'qtyShipped' ,  label: 'Ship Qty', numeric: true, format: NUMBER_FORMAT, sortable: false });
         }
-        this._pcolumns.push(  { name: 'price' ,  label: 'Price', tooltip: '', numeric: true, format: CURRENCY_FORMAT, sortable: false  });
-        this._pcolumns.push(  { name: 'amount' ,  label: 'Amount', tooltip: '', numeric: true, format: CURRENCY_FORMAT, sortable: false  });
-        this._pcolumns.push(  { name: 'comment' ,  label: 'Comment', tooltip: '' });
+        this._pcolumns.push(  { name: 'price' ,  label: 'Price',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+        this._pcolumns.push(  { name: 'amount' ,  label: 'Amount',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+        //this._pcolumns.push(  { name: 'comment' ,  label: 'Comment' });
         this._columns.next(this._pcolumns);
 
 
@@ -248,4 +255,63 @@ export class EditordetailsumaryComponent extends BaseComponent {
     this.price = event;
     this.itemEdit.amount  = this.itemEdit.quantity * event;
   }  
+
+
+  getTemplate() {
+
+    //this._loadingService.register(this.loadName);
+    request
+    .get( this._confs.serverWithApiCustomUrl + 'OpportunityDetailSumary/getTemplate')
+    .set('Authorization', this._confs.getToken() )
+    .set('Content-Type', 'blob')
+    .query({ idDetail: this.idDetail.toString() })
+    .query({ idproduct: this.idProduct.toString() })
+    .query({ price: this.price.toString() })
+    .query({ maxQty: this.maxQty.toString() })
+    .responseType('blob')
+    .end( (err, res) => {
+      //this._loadingService.resolve(this.loadName);
+        if (err) {
+          return;
+        }
+        importedSaveAs( res.body, 'Sumary Data for detail ' + this.idDetail + '.xlsx');
+    });
+  }
+
+  uploadTemplate() {
+    this.uTemplate = !this.uTemplate;
+  }
+
+  
+
+
+  uploadFile() 
+  {
+
+    if (this.files) {
+      let token: string = this._confs.getToken();
+      
+      const data = new FormData();
+      data.append('file', this.files);
+
+
+        request.post(this._confs.serverWithApiCustomUrl + 'OpportunityDetailSumary/uploadTemplate')
+            //.set("Content-Type", this.files.type)
+            .set( 'Authorization', token )
+            .send(data)
+            .accept('json')
+            .end((err, response) => {
+              if (err) {
+                this._snackBarService.open(err.response.body.message, 'Ok');
+                
+                return;
+              }
+               this.refreshItems();
+              this.uTemplate = !this.uTemplate;
+                //this._loadingService.resolve(this.loadItem);
+            });
+      
+    }
+  //this._loadingService.register(this.loadItem);
+  }
 }

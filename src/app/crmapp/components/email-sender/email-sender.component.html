@@ -3,51 +3,48 @@
 
     <div layout-margin>
       <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
-          <ng-template [tdLoading]="loadName">
+          <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
         <section>
 
-          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
-            <md2-select flex options="allContacts" class="cbxClass" placeholder="Sent to" (change)="onContactChange($event.value)">
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #sallcontacts  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header> 
-              <md2-option class="selectable" *ngFor="let sto of allContacts  | nameDesc:sallcontacts.value	" [value]="sto.eMail" [disabled]="!sto.isActive || false">
+          <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+              <mat-form-field>
+             <mat-select flex options="allContacts" class="cbxClass" placeholder="Sent to" (change)="onContactChange($event.value)">
+
+              <mat-option class="selectable" *ngFor="let sto of allContacts  	" [value]="sto.eMail" [disabled]="!sto.isActive || false">
                 {{ sto.name }}
                 < {{sto.eMail}} >
-              </md2-option>
-            </md2-select>
+              </mat-option>
+            </mat-select>                 
+              </mat-form-field>
+
           </div>
-          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
             
-            <md-chip-list>
-              <md-chip *ngFor="let em of itemEdit.eMailTo; index as idx"> {{em.name}}
+            <mat-chip-list>
+              <mat-chip *ngFor="let em of itemEdit.eMailTo; index as idx"> {{em.name}}
                 <a (click)="deleteContact(idx)">
-                  <md-icon class="tc-red-700 md-caption">clear</md-icon>
+                  <mat-icon class="tc-red-700 md-caption">clear</mat-icon>
                 </a>
-              </md-chip>
-            </md-chip-list>
+              </mat-chip>
+            </mat-chip-list>
           </div>
-          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
-            <md-form-field flex>
-              <input mdInput placeholder="Subject" mdInput flex #eMailSubject name="eMailSubject" [(ngModel)]="itemEdit.eMailSubject">
-            </md-form-field>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+            <mat-form-field flex>
+              <input matInput placeholder="Subject" matInput flex #eMailSubject name="eMailSubject" [(ngModel)]="itemEdit.eMailSubject">
+            </mat-form-field>
           </div>
-          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
             <ckeditor #eMailBody flex="100" placeholder="Body" name="eMailBody" [(ngModel)]="itemEdit.eMailBody" debounce="500">
             </ckeditor>
           </div>
 
-          <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+          <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
             <h1 class="md-title">Documents added</h1>
-            <md-list>
-              <md-list-item *ngFor="let doc of itemEdit.emailAttachments">
-                <md-checkbox name="DocSelected" [(ngModel)]="doc.selected"> {{doc.docTypeName}} - {{doc.docName}} </md-checkbox>
-              </md-list-item>
-            </md-list>
+            <mat-list>
+              <mat-list-item *ngFor="let doc of itemEdit.emailAttachments">
+                <mat-checkbox name="DocSelected" [(ngModel)]="doc.selected"> {{doc.docTypeName}} - {{doc.docName}} </mat-checkbox>
+              </mat-list-item>
+            </mat-list>
 
           </div>
 
@@ -59,11 +56,11 @@
           <div td-toolbar-content layout="row" layout-align="start center" flex>
             <span flex></span>
 
-            <button md-mini-fab class="" (click)="cancelEdit()" aria-label="Cancel" >
-                <md-icon>undo</md-icon>
+            <button mat-mini-fab class="" (click)="cancelEdit()" aria-label="Cancel" >
+                <mat-icon>undo</mat-icon>
             </button> &nbsp;
-                <button md-mini-fab class="" (click)="sendEmail()" aria-label="SendEmail">
-                <md-icon>email</md-icon>
+                <button mat-mini-fab class="" (click)="sendEmail()" aria-label="SendEmail">
+                <mat-icon>email</mat-icon>
             </button>
 
           </div>

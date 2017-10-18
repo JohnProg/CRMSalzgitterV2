@@ -14,7 +14,7 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
 import { Apollo } from 'apollo-angular';
@@ -31,7 +31,9 @@ export interface IPChangeEventSorted extends IPageChangeEvent {
 
 export const NUMBER_FORMAT: any = (v: number) => (v || 0).toLocaleString();
 export const DECIMAL_FORMAT: any = (v: number) => (v || 0).toLocaleString();
-export const CURRENCY_FORMAT: any = (v: number ) =>  '$' + (v || 0).toLocaleString();
+export const CURRENCY_FORMAT: any = (v: number ) => {
+    return  '$' + (v || 0).toLocaleString()
+};
 export const DATE_FORMAT: any = (v: Date ) =>   v !== undefined ? moment(v).format(environment.dateFormat) : '';
 export const MAXSTRING_FORMAT: any = (v: string ) =>   {
   
@@ -122,7 +124,7 @@ export class CatalogService {
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
+    public _snackBarService: MatSnackBar,
     public _tableService: TdDataTableService,
     public apollo: Apollo
   ) {

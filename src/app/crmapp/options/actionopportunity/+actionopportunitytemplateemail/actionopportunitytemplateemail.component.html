@@ -1,71 +1,62 @@
 
- <ng-template [tdLoading]="loadName">
+ <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
       <section flex  *ngIf="isEditing">
           <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
         <section  flex layout-gt-sm="row" layout-lt-md="column"  >
 
           <section flex="25"> &nbsp; </section>
-          <section flex="50" layout-padding>
+          <section flex="50" layout-margin>
           <section  flex >
-              <md2-select class="cbxClass" #IdDocType name="IdDocType" flex required="true"  placeholder="Document Type" [(ngModel)]="itemEdit.idDocType" (change)="onDocTypeChange($event)"   >
-                  <md2-select-header>               
-                      <section layout-padding>
-                          <md-form-field>
-                              <input mdInput flex #sdoctype  placeholder="Search" maxlength="15"  >
-                            </md-form-field>
-                      </section>
-                   </md2-select-header> 
-                    <md2-option *ngFor="let i of catDocType | nameDesc:sdoctype.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+               <mat-select class="cbxClass" #IdDocType name="IdDocType" flex required="true"  placeholder="Document Type" [(ngModel)]="itemEdit.idDocType" (change)="onDocTypeChange($event)"   >
+
+                    <mat-option *ngFor="let i of catDocType " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                         {{ i.name }} - {{ i.description }}
-                    </md2-option>
-              </md2-select>                
+                    </mat-option>
+              </mat-select>                  
+              </mat-form-field>            
+               
             </section>        
           <section  flex >
-              <md2-select class="cbxClass" #idStatus name="idStatus" flex required="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
-                  <md2-select-header>               
-                      <section layout-padding>
-                          <md-form-field>
-                              <input mdInput flex #sstatus  placeholder="Search" maxlength="15"  >
-                            </md-form-field>
-                      </section>
-                   </md2-select-header>                 
-                    <md2-option *ngFor="let i of catStatus  | nameDesc:sstatus.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+               <mat-select class="cbxClass" #idStatus name="idStatus" flex required="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
+              
+                    <mat-option *ngFor="let i of catStatus  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                         {{ i.name }} - {{ i.description }}
-                    </md2-option>
-              </md2-select>                
+                    </mat-option>
+              </mat-select>                  
+              </mat-form-field>            
+               
             </section>  
 
           <div flex >
             <span>Email to:    </span> &nbsp; &nbsp;
-            <md-radio-group #eMailTo name="eMailTo" [(ngModel)]="itemEdit.eMailTo">
-              <md-radio-button value="1">{{ 'CONTACT' | translate}}</md-radio-button>
-              <md-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</md-radio-button>
-              <md-radio-button value="3">{{ 'BOTH' | translate}}</md-radio-button>
-            </md-radio-group>
+            <mat-radio-group #eMailTo name="eMailTo" [(ngModel)]="itemEdit.eMailTo">
+              <mat-radio-button value="1">{{ 'CONTACT' | translate}}</mat-radio-button>
+              <mat-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</mat-radio-button>
+              <mat-radio-button value="3">{{ 'BOTH' | translate}}</mat-radio-button>
+            </mat-radio-group>
           </div>   
           <section  flex >
-              <md2-select class="cbxClass" #idTemplateEmail name="idTemplateEmail" flex required="true"  placeholder="EMail template" [(ngModel)]="itemEdit.idTemplateEmail"  >
-                  <md2-select-header>               
-                      <section layout-padding>
-                          <md-form-field>
-                              <input mdInput flex #stemplatemail  placeholder="Search" maxlength="15"  >
-                            </md-form-field>
-                      </section>
-                   </md2-select-header>                 
-                    <md2-option *ngFor="let i of catEMail  | nameDesc:stemplatemail.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+              <mat-select class="cbxClass" #idTemplateEmail name="idTemplateEmail" flex required="true"  placeholder="EMail template" [(ngModel)]="itemEdit.idTemplateEmail"  >
+                
+                    <mat-option *ngFor="let i of catEMail  	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                         {{ i.name }} 
-                    </md2-option>
-              </md2-select>                
+                    </mat-option>
+              </mat-select>                    
+              </mat-form-field>            
+              
             </section>            
 
     
           <div layout="row" flex layout-align="end center">
-            <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
-                       <md-icon>highlight_off</md-icon>
+            <button mat-button type="button" class="mat-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
+                       <mat-icon>highlight_off</mat-icon>
                         </button>
-            <button md-button type="submit" class="md-icon-button md-primary"  [disabled]="!editform.valid"
+            <button mat-button type="submit" class="mat-icon-button md-primary"  [disabled]="!editform.valid"
               aria-label="Save Property">
-                       <md-icon>save</md-icon>
+                       <mat-icon>save</mat-icon>
               </button>
     
           </div>
@@ -82,8 +73,8 @@
   <section layout="row" >
     <section flex="95"></section>
     <section flex="5">
-      <button md-mini-fab class="md-mini md-primary" (click)="addEntity()" aria-label="Add" >
-          <md-icon>add</md-icon>
+      <button mat-mini-fab class="md-mini md-primary" (click)="addEntity()" aria-label="Add" >
+          <mat-icon>add</mat-icon>
         </button>
   
     </section>
@@ -92,13 +83,13 @@
         <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
           <ng-template tdDataTableTemplate="docTypeName" let-value="value" let-row="row"  let-column="column">
             <div layout="row">
-              <button md-button (click)="editEntity(row.id)">{{value}}</button>
+              <button mat-button (click)="editEntity(row.id)">{{value}}</button>
             </div>
           </ng-template>
           <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
             <div layout="row" flex="5">
-              <button md-icon-button (click)="confirmDelete( row)">
-              <md-icon>delete</md-icon>
+              <button mat-icon-button (click)="confirmDelete( row)">
+              <mat-icon>delete</mat-icon>
             </button>
             </div>
           </ng-template>
@@ -106,11 +97,11 @@
         </td-data-table>
         <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
           <span hide-xs>Rows per page:</span>
-          <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-            <md-option *ngFor="let size of pagesArray" [value]="size">
+          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+            <mat-option *ngFor="let size of pagesArray" [value]="size">
               {{size}}
-            </md-option>
-          </md-select>
+            </mat-option>
+          </mat-select>
           <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
         </td-paging-bar>
   

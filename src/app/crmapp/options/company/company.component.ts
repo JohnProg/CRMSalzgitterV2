@@ -10,7 +10,7 @@ import { BaseComponent } from '../../catalogs/base.component';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+
 import {  Company, Colony } from '../../model/allmodels';
 import { SelectcolonyComponent } from '../../components/index';
 

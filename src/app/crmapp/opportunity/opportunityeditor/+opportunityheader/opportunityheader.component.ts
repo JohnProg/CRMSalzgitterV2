@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { ReactiveFormsModule, NgForm } from '@angular/forms';
-import { MdSelect } from '@angular/material';
+import { MatSelect } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -20,7 +20,7 @@ import {
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { MdSnackBar } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import {TranslateService} from '@ngx-translate/core';

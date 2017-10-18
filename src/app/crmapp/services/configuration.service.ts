@@ -58,4 +58,8 @@ export class ConfigurationService {
        h.append('Access-Control-Allow-Origin', this.root);
        return h;
     }
+
+    public getToken() {
+        return this.tokenData.token_type + ' ' + this.tokenData.access_token;
+    }
 }

@@ -5,54 +5,54 @@
       [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' :  'over'"
       [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '230px' : '100%'">
 
-        <md-nav-list td-sidenav-content >
+        <mat-nav-list td-sidenav-content >
   
-            <a md-list-item md-ripple class="block relative" routerLink="/options/customer" >
-                <md-icon md-list-icon>dashboard</md-icon>
+            <a mat-list-item matRipple class="block relative" routerLink="/options/customer" >
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Go to Index
               </a> 
-            <a md-list-item md-ripple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
-                <md-icon md-list-icon>dashboard</md-icon>
+            <a mat-list-item matRipple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 {{ "HEADER" | translate}}
               </a>
           
-              <a md-list-item md-ripple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
+              <a mat-list-item matRipple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
                 *ngIf="idCustomer > 0">
-                <md-icon md-list-icon>dashboard</md-icon>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Contacts
               </a>
-              <a md-list-item md-ripple class="block relative" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
+              <a mat-list-item matRipple class="block relative" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
                 *ngIf="idCustomer > 0">
-                <md-icon md-list-icon>dashboard</md-icon>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Delivery Points
               </a>
-              <a md-list-item md-ripple class="block relative" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
+              <a mat-list-item matRipple class="block relative" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
                 *ngIf="idCustomer > 0">
-                <md-icon md-list-icon>dashboard</md-icon>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Documents
               </a>
-              <a md-list-item md-ripple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
+              <a mat-list-item matRipple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
                 *ngIf="idCustomer > 0">
-                <md-icon md-list-icon>dashboard</md-icon>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Markets
               </a>
-              <a md-list-item md-ripple class="block relative" (click)="linkClick(7) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
+              <a mat-list-item matRipple class="block relative" (click)="linkClick(7) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
                 *ngIf="idCustomer > 0">
-                <md-icon md-list-icon>dashboard</md-icon>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Sectors
               </a>
-              <a md-list-item md-ripple class="block relative" (click)="linkClick(8) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
+              <a mat-list-item matRipple class="block relative" (click)="linkClick(8) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
                 *ngIf="idCustomer > 0">
-                <md-icon md-list-icon>dashboard</md-icon>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
                 Products
               </a>
-            </md-nav-list>
+            </mat-nav-list>
 
         <div layout-gt-sm="row" flex tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-            <md-card flex>
-                <md-card-content>
-                    <button md-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
-                        <md-icon>arrow_back</md-icon>
+            <mat-card flex>
+                <mat-card-content>
+                    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+                        <mat-icon>arrow_back</mat-icon>
                     </button>
                   <crm-customereditorheader [idCustomer]="idCustomer" *ngIf="scrId == 1"></crm-customereditorheader>
                     <crm-customercontact [idCustomer]="idCustomer" *ngIf="scrId == 3" [customer]="customer"></crm-customercontact>
@@ -62,19 +62,19 @@
                     <crm-customermarket [idCustomer]="idCustomer" *ngIf="scrId == 6" [customer]="customer"></crm-customermarket>
                     <crm-customersector [idCustomer]="idCustomer" *ngIf="scrId == 7" [customer]="customer"></crm-customersector>
                     <crm-customerproduct [idCustomer]="idCustomer" *ngIf="scrId == 8" [customer]="customer"></crm-customerproduct> 
-                  </md-card-content>
-            </md-card>
+                  </mat-card-content>
+            </mat-card>
           </div>
       </td-layout-manage-list>
 
 
 <!-- 
-  <md-nav-list td-sidenav-content [tdLayoutNavListClose]="!_mediaService.query('gt-sm')">
+  <mat-nav-list td-sidenav-content [tdLayoutNavListClose]="!_mediaService.query('gt-sm')">
 
-  </md-nav-list>
+  </mat-nav-list>
  <div tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-    <md-card>
-        <md-card-content>
+    <mat-card>
+        <mat-card-content>
           <crm-customereditorheader [idCustomer]="idCustomer" *ngIf="scrId == 1"></crm-customereditorheader>
             <crm-customercontact [idCustomer]="idCustomer" *ngIf="scrId == 3" [customer]="customer"></crm-customercontact>
             <crm-customerdeliverypoint [idCustomer]="idCustomer" *ngIf="scrId == 4" [customer]="customer"></crm-customerdeliverypoint>
@@ -83,27 +83,27 @@
             <crm-customermarket [idCustomer]="idCustomer" *ngIf="scrId == 6" [customer]="customer"></crm-customermarket>
             <crm-customersector [idCustomer]="idCustomer" *ngIf="scrId == 7" [customer]="customer"></crm-customersector>
             <crm-customerproduct [idCustomer]="idCustomer" *ngIf="scrId == 8" [customer]="customer"></crm-customerproduct> 
-          </md-card-content>
-    </md-card>
+          </mat-card-content>
+    </mat-card>
   </div> -->
 
 <!-- 
 <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
   [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
-  <md-toolbar td-sidenav-content>
-    <button md-button routerLink="/options/customer">Go to Index</button>
-  </md-toolbar>
-  <md-nav-list td-sidenav-content>
+  <mat-toolbar td-sidenav-content>
+    <button mat-button routerLink="/options/customer">Go to Index</button>
+  </mat-toolbar>
+  <mat-nav-list td-sidenav-content>
 
 
 
-  </md-nav-list>
+  </mat-nav-list>
 
 
 
 
-  <md-card>
+  <mat-card>
    
-  </md-card>
+  </mat-card>
 
 </td-layout-manage-list> -->

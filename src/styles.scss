@@ -1,9 +1,10 @@
+
 // Custom style for loading elements without height
 .will-load {
     min-height: 80px;
 }
-// Href line height wasn't right for md-icon-button
-a[md-icon-button] {
+// Href line height wasn't right for mat-icon-button
+a[mat-icon-button] {
     line-height: 36px;
 }
 
@@ -22,26 +23,6 @@ td-layout-manage-list .mat-toolbar {
 }
 
 
- textarea.ng-valid[required], .ng-valid.required  {
-  border-bottom: 1px solid #42A948; /* green */
-}
- textarea.ng-invalid:not(form)  {
-  border-bottom: 1px solid #a94442; /* red */
-}
-
- md-select.ng-valid[required], .ng-valid.required  {
-  border-bottom: 1px solid #42A948; /* green */
-}
- md-select.ng-invalid:not(form)  {
-  border-bottom: 1px solid #a94442; /* red */
-}
-
-
-.mat-input-container {
-    width: 100%;
-}
-
-
 .mat-form-field {
     width: 100% !important;
 }
@@ -52,4 +33,8 @@ td-layout-manage-list .mat-toolbar {
     height: unset !important;
 }
 
+[layout-margin], [layout-margin] > [flex], [layout-margin] > [flex-gt-sm], [layout-margin] > [flex-md], [layout-margin] > [flex-lt-lg]
+{
+    margin: 4px !important;
+}
 

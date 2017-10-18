@@ -1,31 +1,31 @@
-<md-card flex>
+<mat-card flex>
 
-  <md-card-content>
-      <ng-template [tdLoading]="loadName">
+  <mat-card-content>
+      <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section *ngIf="isEditing">
 
         <div layout="row" >
-            <md-form-field flex>
-                <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150">
-                <md-hint align="end">{{name.value.length}} / 150</md-hint>
-              </md-form-field>
+            <mat-form-field flex>
+                <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150">
+                <mat-hint align="end">{{name.value.length}} / 150</mat-hint>
+              </mat-form-field>
           </div>
 
           <div layout="row" >
-              <md-form-field flex>
-                  <input mdInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="Description"
+              <mat-form-field flex>
+                  <input matInput #description flex name="description" [(ngModel)]="itemEdit.description" required placeholder="Description"
                     maxlength="150">
-                  <md-hint align="end">{{description.value.length}} / 150</md-hint>
-                </md-form-field>           
+                  <mat-hint align="end">{{description.value.length}} / 150</mat-hint>
+                </mat-form-field>           
               </div>
 
         <div flex="20">
             
-                        <md-form-field class="example-full-width">
-                          <input mdInput #aSign name="aSign" [(ngModel)]="itemEdit.aSign" required placeholder="Sign" value="" maxlength="50">
-                          <md-hint align="end">{{aSign.value.length}} / 50</md-hint>
-                        </md-form-field>
+                        <mat-form-field class="example-full-width">
+                          <input matInput #aSign name="aSign" [(ngModel)]="itemEdit.aSign" required placeholder="Sign" value="" maxlength="50">
+                          <mat-hint align="end">{{aSign.value.length}} / 50</mat-hint>
+                        </mat-form-field>
             
                       </div>
       </section>
@@ -36,15 +36,15 @@
       <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
           <div layout="row">
-            <button md-button (click)="editEntity(row.id)">{{value}}</button>
+            <button mat-button (click)="editEntity(row.id)">{{value}}</button>
           </div>
         </ng-template>
 
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
 
-            <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+            <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
           </div>
         </ng-template>
@@ -52,17 +52,17 @@
       </td-data-table>
       <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
         <span hide-xs>Rows per page:</span>
-        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-          <md-option *ngFor="let size of pagesArray" [value]="size">
+        <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <mat-option *ngFor="let size of pagesArray" [value]="size">
             {{size}}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
         <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
 
 
     </section>
   </ng-template>
-  </md-card-content>
+  </mat-card-content>
 
-</md-card>
+</mat-card>

@@ -5,18 +5,18 @@
     <td-search-box *ngIf="showSearch" #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="{{ 'SEARCHHERE' | translate }}" (searchDebounce)="search($event)">
     </td-search-box>
 
-    <button md-mini-fab class="" (click)="addItem()" aria-label="Add Item" *ngIf="showAdd">
-        <md-icon>add</md-icon>
+    <button mat-mini-fab class="" (click)="addItem()" aria-label="Add Item" *ngIf="showAdd">
+        <mat-icon>add</mat-icon>
     </button>
-    <button md-mini-fab class="" (click)="saveItem()" aria-label="Save Item" *ngIf="showSave">
-        <md-icon>save</md-icon>
+    <button mat-mini-fab class="" (click)="saveItem()" aria-label="Save Item" *ngIf="showSave">
+        <mat-icon>save</mat-icon>
     </button>
     &nbsp;
-    <button md-mini-fab class="" (click)="cancelEdit()" aria-label="Cancel" *ngIf="showCancel">
-        <md-icon>undo</md-icon>
+    <button mat-mini-fab class="" (click)="cancelEdit()" aria-label="Cancel" *ngIf="showCancel">
+        <mat-icon>undo</mat-icon>
     </button>
     &nbsp;    
-    <button md-mini-fab class="" (click)="sendEmail()" aria-label="SendEmail" *ngIf="showEMail">
-        <md-icon>email</md-icon>
+    <button mat-mini-fab class="" (click)="sendEmail()" aria-label="SendEmail" *ngIf="showEMail">
+        <mat-icon>email</mat-icon>
     </button>    
     </div>

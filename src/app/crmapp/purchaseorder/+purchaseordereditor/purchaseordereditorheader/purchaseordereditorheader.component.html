@@ -1,277 +1,274 @@
         <div layout-gt-sm="row" layout-lt-md="column" layout-padding *ngIf="idParent == 0">
           <section flex-gt-sm="35"  >
-            <md-form-field>
-              <input mdInput #idParent name="idParent" placeholder="Enter Quotation to Customer base" (change)="getFromOpp($event)">
-            </md-form-field>
+            <mat-form-field>
+              <input matInput #idParent name="idParent" placeholder="Enter Quotation to Customer base" (change)="getFromOpp($event)">
+            </mat-form-field>
           </section>
         </div>
 
 
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
 
-          <ng-template [tdLoading]="loadName">
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+          <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section flex-gt-sm="25" >
-            <md2-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #sresponsible  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>               
-                  <md2-option *ngFor="let i of catResponsible  | nameDesc:sresponsible.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              <mat-form-field>
+            <mat-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+             
+                  <mat-option *ngFor="let i of catResponsible  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>
+                  </mat-option>
+            </mat-select>                  
+              </mat-form-field>
+
 
           </section>
           <section  flex-gt-sm="25" >
-            <md2-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
-                  <md2-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              <mat-form-field>
+            <mat-select class="cbxClass" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
+                  <mat-option *ngFor="let i of catCurrencies" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>
+                  </mat-option>
+            </mat-select>                  
+              </mat-form-field>            
+
           </section>    
           <section  flex-gt-sm="25" >
-            <md2-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
-                  <md2-option *ngFor="let i of catStatus" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              <mat-form-field>
+             <mat-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
+                  <mat-option *ngFor="let i of catStatus" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select> 
+                  </mat-option>
+            </mat-select>                  
+              </mat-form-field>            
+
           </section>    
 
 
           <section  flex-gt-sm="15" >
-            <md2-datepicker  #dateCreated name="dateCreated" placeholder="Date Created" disabled="true" [(ngModel)]="itemEdit.dateCreated"></md2-datepicker>
+              <mat-form-field >
+                  <input matInput  [matDatepicker]="dateCreated" name="dateCreated" placeholder="Date Created" 
+				                  required="true" [(ngModel)]="itemEdit.dateCreated">
+                  <mat-datepicker-toggle matSuffix [for]="dateCreated"></mat-datepicker-toggle>
+                  <mat-datepicker #dateCreated></mat-datepicker>
+              </mat-form-field >   
           </section>                     
         </div>      
-        <div flex layout-gt-sm="row" layout-lt-md="column" layout-padding>
-          <md-form-field flex >
-            <textarea mdInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.oppNotes" ></textarea>
-             <md-hint flex align="end">{{oppNotes.value.length}} / 500</md-hint>
-          </md-form-field>         
+        <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin>
+          <mat-form-field flex >
+            <textarea matInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.oppNotes" ></textarea>
+             <mat-hint flex align="end">{{oppNotes.value.length}} / 500</mat-hint>
+          </mat-form-field>         
         </div>         
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
-            <md2-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #scustomer  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>               
-                  <md2-option *ngFor="let i of catCustomer  | nameDesc:scustomer.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+             <mat-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
+            
+                  <mat-option *ngFor="let i of catCustomer  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>   
+                  </mat-option>
+            </mat-select>                   
+              </mat-form-field>            
+ 
           </section>
           <section  flex-gt-sm="35" >
-            <md2-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #scustcontact  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>               
-                  <md2-option *ngFor="let i of catCustomerContact  | nameDesc:scustcontact.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+             <mat-select class="cbxClass" #idCustomerContact name="idCustomerContact" flex required="true"  placeholder="Customer Contact" [(ngModel)]="itemEdit.idCustomerContact"  >
+              
+                  <mat-option *ngFor="let i of catCustomerContact  	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>  
+                  </mat-option>
+            </mat-select>                  
+              </mat-form-field>            
+ 
           </section>
           <section  flex-gt-sm="30" >
-            <md2-select class="cbxClass" #idContact name="idContact" flex required="true"  placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #scontact  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>                
-                  <md2-option *ngFor="let i of catContact  | nameDesc:scontact.value		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+             <mat-select class="cbxClass" #idContact name="idContact" flex required="true"  placeholder="Contact" [(ngModel)]="itemEdit.idContact"  >
+              
+                  <mat-option *ngFor="let i of catContact  		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>  
+                  </mat-option>
+            </mat-select>                  
+              </mat-form-field>            
+ 
           </section>          
         </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section flex-gt-sm="35" >
-            <md2-select class="cbxClass" #idMarket name="idMarket" flex required="true"  placeholder="Market" [(ngModel)]="itemEdit.idMarket"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #smarket  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>                
-                  <md2-option *ngFor="let i of catMarket | nameDesc:smarket.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+           <mat-select class="cbxClass" #idMarket name="idMarket" flex required="true"  placeholder="Market" [(ngModel)]="itemEdit.idMarket"  >
+              
+                  <mat-option *ngFor="let i of catMarket" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select> 
+                  </mat-option>
+            </mat-select>                   
+              </mat-form-field>            
+ 
           </section>
           <section  flex-gt-sm="35" >
-            <md2-select class="cbxClass" #idSector name="idSector" flex required="true"  placeholder="Sector" [(ngModel)]="itemEdit.idSector"  >
-                    <md2-select-header>               
-                        <section layout-padding>
-                            <md-form-field>
-                                <input mdInput flex #ssector  placeholder="Search" maxlength="15"  >
-                              </md-form-field>
-                            </section>
-                        </md2-select-header>              
-                  <md2-option *ngFor="let i of catSector | nameDesc:ssector.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+            <mat-select class="cbxClass" #idSector name="idSector" flex required="true"  placeholder="Sector" [(ngModel)]="itemEdit.idSector"  >
+          
+                  <mat-option *ngFor="let i of catSector " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>  
+                  </mat-option>
+            </mat-select>                    
+              </mat-form-field>            
+
           </section>   
 
           <section  flex-gt-sm="30" >
-           <md2-select class="cbxClass" #idPort name="idPort" flex required="true"  placeholder="Port" [(ngModel)]="itemEdit.idPort"  >
-              <md2-select-header>               
-                  <section layout-padding>
-                      <md-form-field>
-                          <input mdInput flex #sport  placeholder="Search" maxlength="15"  >
-                        </md-form-field>
-                      </section>
-                  </md2-select-header>                
-                  <md2-option *ngFor="let i of catPort | nameDesc:sport.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+           <mat-select class="cbxClass" #idPort name="idPort" flex required="true"  placeholder="Port" [(ngModel)]="itemEdit.idPort"  >            
+                  <mat-option *ngFor="let i of catPort " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>   
+                  </mat-option>
+            </mat-select>                    
+              </mat-form-field>            
+ 
           </section>           
         </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
-            <md2-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #smill  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>                  
-                  <md2-option *ngFor="let i of catMill | nameDesc:smill.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              <mat-form-field>
+             <mat-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)"  >
+                 
+                  <mat-option *ngFor="let i of catMill " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select> 
+                  </mat-option>
+            </mat-select>                  
+              </mat-form-field>            
+
           </section>   
           <section  flex-gt-sm="35" >
-            <md2-select class="cbxClass" #idCountryOrigin name="idCountryOrigin" flex  placeholder="Country" [(ngModel)]="itemEdit.idCountryOrigin"   >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #scountry  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>                
-                  <md2-option *ngFor="let i of catCountry | nameDesc:scountry.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.idCountry">
+              <mat-form-field>
+            <mat-select class="cbxClass" #idCountryOrigin name="idCountryOrigin" flex  placeholder="Country" [(ngModel)]="itemEdit.idCountryOrigin"   >
+               
+                  <mat-option *ngFor="let i of catCountry " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.idCountry">
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select> 
+                  </mat-option>
+            </mat-select>                   
+              </mat-form-field>            
+
           </section>                    
           <section flex-gt-sm="30">
-            <md2-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
-                  <md2-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+            <mat-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
+                  <mat-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>  
+                  </mat-option>
+            </mat-select>                   
+              </mat-form-field>            
+ 
           </section>          
         </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section flex-gt-sm="25" >
-            <md2-select class="cbxClass" #idTransactionFlow name="idTransactionFlow" flex required="true"  placeholder="Transaction flow" [(ngModel)]="itemEdit.idTransactionFlow"  >
-                  <md2-option *ngFor="let i of catTransactionFlow" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+            <mat-select class="cbxClass" #idTransactionFlow name="idTransactionFlow" flex required="true"  placeholder="Transaction flow" [(ngModel)]="itemEdit.idTransactionFlow"  >
+                  <mat-option *ngFor="let i of catTransactionFlow" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>  
+                  </mat-option>
+            </mat-select>                    
+              </mat-form-field>            
+
           </section> 
           <section flex-gt-sm="25" >
-            <md2-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #sincoterm  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>                  
-                  <md2-option *ngFor="let i of catIncoTerm | nameDesc:sincoterm.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+            <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
+                
+                  <mat-option *ngFor="let i of catIncoTerm " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>  
+                  </mat-option>
+            </mat-select>                    
+              </mat-form-field>            
+
           </section>  
           <section flex-gt-sm="25" >
-           <md2-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true"  placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerm"  >
-              <md2-select-header>               
-                  <section layout-padding>
-                      <md-form-field>
-                          <input mdInput flex #slinerterm  placeholder="Search" maxlength="15"  >
-                        </md-form-field>
-                      </section>
-                  </md2-select-header>              
-                  <md2-option *ngFor="let i of catLinerTerm  | nameDesc:slinerterm.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+           <mat-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true"  placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerm"  >
+           
+                  <mat-option *ngFor="let i of catLinerTerm  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>    
+                  </mat-option>
+            </mat-select>                    
+              </mat-form-field>            
+  
           </section>   
           <section flex-gt-sm="25" >
-            <md-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.asImporter">{{'ASIMPORTER' | translate}}</md-slide-toggle>
+            <mat-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.asImporter">{{'ASIMPORTER' | translate}}</mat-slide-toggle>
           </section>                 
         </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding *ngIf="deliveryRequired">
-            <md2-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true"  placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint"  >
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #sdelivery  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                        </section>
-                    </md2-select-header>                
-                  <md2-option *ngFor="let i of catDeliveryPoint | nameDesc:sdelivery.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="deliveryRequired">
+            <mat-form-field>
+           <mat-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true"  placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint"  >
+                  <mat-option *ngFor="let i of catDeliveryPoint " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.cDPName }} 
-                  </md2-option>
-            </md2-select>       
+                  </mat-option>
+            </mat-select>                    
+            </mat-form-field>          
+    
         </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section flex-gt-sm="30" >
-            <md2-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
-                  <md2-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
+              <mat-form-field>
+            <mat-select class="cbxClass" #idTypeOpp name="idTypeOpp" flex required="true"  placeholder="Type Opportunity" [(ngModel)]="itemEdit.idTypeOpp"  >
+                  <mat-option *ngFor="let i of catTypeOpp" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
-                  </md2-option>
-            </md2-select>   
+                  </mat-option>
+            </mat-select>                     
+              </mat-form-field>            
+
           </section>           
 
           <section flex-gt-sm="35">
-            <md-form-field>
-              <input mdInput #smim flex name="smim" [(ngModel)]="itemEdit.smim" required="true" placeholder="SMIM" maxlength="50">
-              <md-hint align="end">{{smim.value.length}} / 50</md-hint>
-            </md-form-field>
+            <mat-form-field>
+              <input matInput #smim flex name="smim" [(ngModel)]="itemEdit.smim" required="true" placeholder="SMIM" maxlength="50">
+              <mat-hint align="end">{{smim.value.length}} / 50</mat-hint>
+            </mat-form-field>
           </section>
           <section flex-gt-sm="35">
-            <md-form-field>
-              <input mdInput #poNumber flex name="poNumber" [(ngModel)]="itemEdit.poNumber" required="true" placeholder="PO Number" maxlength="150">
-              <md-hint align="end">{{poNumber.value.length}} / 150</md-hint>
-            </md-form-field>
+            <mat-form-field>
+              <input matInput #poNumber flex name="poNumber" [(ngModel)]="itemEdit.poNumber" required="true" placeholder="PO Number" maxlength="150">
+              <mat-hint align="end">{{poNumber.value.length}} / 150</mat-hint>
+            </mat-form-field>
           </section>
 
 
         </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
-            <md2-datepicker  #OfferValidity name="OfferValidity" placeholder="Offer validity" required="true" [(ngModel)]="itemEdit.offerValidity"></md2-datepicker>
+              <mat-form-field >
+                  <input matInput  [matDatepicker]="offerValidity" name="OfferValidity" placeholder="Offer validity" 
+				                  required="true" [(ngModel)]="itemEdit.offerValidity">
+                  <mat-datepicker-toggle matSuffix [for]="offerValidity"></mat-datepicker-toggle>
+                  <mat-datepicker #offerValidity></mat-datepicker>
+              </mat-form-field >  
           </section>  
           <section  flex-gt-sm="35" >
-            <md2-datepicker  #ShipmentOffered name="ShipmentOffered" placeholder="Shipment Offered" required="true" [(ngModel)]="itemEdit.shipmentOffered"></md2-datepicker>
+              <mat-form-field >
+                  <input matInput  [matDatepicker]="ShipmentOffered" name="ShipmentOffered" placeholder="Shipment Offered" 
+				                  required="true" [(ngModel)]="itemEdit.shipmentOffered">
+                  <mat-datepicker-toggle matSuffix [for]="ShipmentOffered"></mat-datepicker-toggle>
+                  <mat-datepicker #ShipmentOffered></mat-datepicker>
+              </mat-form-field >              
           </section> 
         <section  flex-gt-sm="30" >
-            <md2-datepicker  #BookingDate name="BookingDate" placeholder="Booking Date"  [(ngModel)]="itemEdit.bookingDate"></md2-datepicker>
+            <mat-form-field >
+                <input matInput  [matDatepicker]="BookingDate" name="BookingDate" placeholder="Booking Date" 
+                         [(ngModel)]="itemEdit.bookingDate">
+                <mat-datepicker-toggle matSuffix [for]="BookingDate"></mat-datepicker-toggle>
+                <mat-datepicker #BookingDate></mat-datepicker>
+            </mat-form-field >              
           </section> 
         </div>        
-        <div flex layout-gt-sm="row" layout-lt-md="column" layout-padding>
-          <md-form-field flex >
-            <textarea mdInput flex="100"  #Comments name="Comments" maxlength="500"   placeholder="Comments " [(ngModel)]="itemEdit.comments" ></textarea>
-             <md-hint flex align="end">{{Comments.value.length}} / 500</md-hint>
-          </md-form-field>         
+        <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin>
+          <mat-form-field flex >
+            <textarea matInput flex="100"  #Comments name="Comments" maxlength="500"   placeholder="Comments " [(ngModel)]="itemEdit.comments" ></textarea>
+             <mat-hint flex align="end">{{Comments.value.length}} / 500</mat-hint>
+          </mat-form-field>         
         </div>   
       </ng-template>
       </form>

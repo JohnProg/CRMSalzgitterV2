@@ -11,7 +11,7 @@ import {
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { MdSnackBar } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 
 

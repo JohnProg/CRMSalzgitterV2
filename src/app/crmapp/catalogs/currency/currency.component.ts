@@ -8,7 +8,6 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
 
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';

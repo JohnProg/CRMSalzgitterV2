@@ -2,36 +2,36 @@
   <td-layout-manage-list #manageList [opened]="_mediaService.registerQuery('gt-sm') | async" [mode]="(_mediaService.registerQuery('gt-sm') | async) ? 'side' : 'push'"
     [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
 
-    <md-nav-list td-sidenav-content>
-        <a md-list-item md-ripple class="block relative" routerLink="/shipping">
-          <md-icon md-list-icon>dashboard</md-icon>
+    <mat-nav-list td-sidenav-content>
+        <a mat-list-item matRipple class="block relative" routerLink="/shipping">
+          <mat-icon mat-list-icon>dashboard</mat-icon>
           Go to Index
         </a>     
 
-      <a md-list-item md-ripple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
-        <md-icon md-list-icon>dashboard</md-icon>
+      <a mat-list-item matRipple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "HEADER" | translate}}
       </a>
-      <a md-list-item md-ripple class="block relative" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
-        <md-icon md-list-icon>dashboard</md-icon>
+      <a mat-list-item matRipple class="block relative" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "DETAILS" | translate}}
       </a>
-      <a md-list-item md-ripple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
-        <md-icon md-list-icon>insert_chart</md-icon>
+      <a mat-list-item matRipple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+        <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DIALOGS" | translate}}
       </a>
-      <a md-list-item md-ripple class="block relative" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
-        <md-icon md-list-icon>insert_chart</md-icon>
+      <a mat-list-item matRipple class="block relative" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+        <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DOCUMENTS" | translate}}
       </a>
 
-    </md-nav-list>
+    </mat-nav-list>
 
-    <md-card>
-      <md-card-content>
+    <mat-card>
+      <mat-card-content>
 
-          <button md-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
-              <md-icon>arrow_back</md-icon>
+          <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+              <mat-icon>arrow_back</mat-icon>
           </button>
           <crm-shippingeditorheader [idDoc]="idShipping"   *ngIf="scrId == 1" [quoteType]="quoteType"></crm-shippingeditorheader>
           <crm-shippingeditordetail [idShipping]="idShipping" [shipData]="shipping"   *ngIf="scrId == 2"></crm-shippingeditordetail>
@@ -51,7 +51,8 @@
   *ngIf="scrId == 4 "
   catName="Shipping Document "></crm-documentviewer>
     
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
 
   </td-layout-manage-list>
+

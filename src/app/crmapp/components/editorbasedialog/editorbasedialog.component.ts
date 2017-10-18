@@ -17,7 +17,7 @@ import {
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { MdSnackBar } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ import { BaseOrderDialog, Customer, DocType, findActionOppByType_Result  } from 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { EnumDocType } from '../../constants/index';
-import { Md2Dialog } from 'md2';
+
 
 const catQl = gql`
   query 
@@ -57,7 +57,7 @@ export class EditorbasedialogComponent extends BaseComponent {
     @Input() idCustomer: number;
     @Input() quoteType: EnumDocType;
    
-    @ViewChild('confirmstatus') confirmDialog: Md2Dialog;
+    //@ViewChild('confirmstatus') confirmDialog: Md2Dialog;
 
     sortBy: string = 'actionName';
     itemEdit: BaseOrderDialog;
@@ -201,7 +201,7 @@ export class EditorbasedialogComponent extends BaseComponent {
 
   confirmUpdateStatus() {
 
-    this.confirmDialog.open();
+   // this.confirmDialog.open();
 
   }
 

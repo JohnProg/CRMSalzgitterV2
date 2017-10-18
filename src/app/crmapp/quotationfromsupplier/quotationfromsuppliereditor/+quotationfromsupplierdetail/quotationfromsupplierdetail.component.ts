@@ -18,7 +18,7 @@ import {
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { MdSnackBar } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 //import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';

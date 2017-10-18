@@ -5,7 +5,7 @@ import { CurrencyPipe } from '@angular/common';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { CKEditorModule } from 'ng2-ckeditor';
-import { Md2Module }  from 'md2';
+
 import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '../shared/shared.module';
 import { CurrencyMaskModule } from "ng2-currency-mask";
@@ -281,17 +281,17 @@ import { AuthHelper } from './authHelper/authHelper';
     SharedModule,
     RouterModule,
     CKEditorModule,
-    Md2Module,
-    TextMaskModule,
+    //Md2Module,
+    //TextMaskModule,
     CurrencyMaskModule,
     ApolloModule.forRoot(provideClient),
   ], // modules needed to run this module
   exports: [
        SharedModule,
-       Md2Module,
+      // Md2Module,
        CKEditorModule,
        TranslateModule,
-       TextMaskModule
+       //TextMaskModule
   ],
   providers: [
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,

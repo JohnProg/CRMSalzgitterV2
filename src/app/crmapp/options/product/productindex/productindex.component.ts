@@ -7,7 +7,7 @@ import { ConfigurationService } from '../../../services/configuration.service';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+
 
 import { Product } from '../../../model/allmodels';
 import 'rxjs/add/operator/map';

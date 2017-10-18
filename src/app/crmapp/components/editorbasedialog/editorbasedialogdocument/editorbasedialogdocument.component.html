@@ -1,16 +1,16 @@
-<md-card flex>
-  <md-card-title>Documents</md-card-title>
-  <md-card-subtitle>
-    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Document </button>
-  </md-card-subtitle>
-  <md-card-content>
+<mat-card flex>
+  <mat-card-title>Documents</mat-card-title>
+  <mat-card-subtitle>
+    <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Document </button>
+  </mat-card-subtitle>
+  <mat-card-content>
 
    
 <section *ngIf="isEditing">
    <form #docForm="ngForm"  id="docForm" flex (ngSubmit)="submitForm(docForm)" novalidate>
-      <ng-template [tdLoading]="loadName">
-    <button  md-raised-button color="primary"  >Save </button>
-    <button md-raised-button color="secondary" (click)="cancelEdit()" >Cancel </button>
+      <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+    <button  mat-raised-button color="primary"  >Save </button>
+    <button mat-raised-button color="secondary" (click)="cancelEdit()" >Cancel </button>
 
 
     <section layout="column" flex="100" layout-margin>
@@ -19,25 +19,25 @@
           [(ngModel)]="itemEdit.idDocumentType"></crm-select>
       </div>
       <div layout-gt-sm="row" layout-lt-md="column" flex>
-        <md-form-field flex class="">
-          <textarea mdInput flex #DNotes name="DNotes" maxlength="150" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
-          <md-hint align="end">{{DNotes.value.length}} / 150</md-hint>
-        </md-form-field>
+        <mat-form-field flex class="">
+          <textarea matInput flex #DNotes name="DNotes" maxlength="150" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
+          <mat-hint align="end">{{DNotes.value.length}} / 150</mat-hint>
+        </mat-form-field>
       </div>
 
 
       <div layout-gt-sm="row" layout-lt-md="column" flex>
-        <md-form-field tdFileDrop  (fileDrop)="files = $event" (click)="fileInput.inputElement.click()"
+        <mat-form-field tdFileDrop  (fileDrop)="files = $event" (click)="fileInput.inputElement.click()"
           (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()" (keyup.backspace)="fileInput.clear()"
           flex>
-          <input mdInput placeholder="select or drop file" [value]="files?.length ? (files?.length + ' file') : files?.name" [disabled]="disabled"
+          <input matInput placeholder="select or drop file" [value]="files?.length ? (files?.length + ' file') : files?.name" [disabled]="disabled"
             readonly/>
-        </md-form-field>
-        <button md-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
-          <md-icon>cancel</md-icon>
+        </mat-form-field>
+        <button mat-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
+          <mat-icon>cancel</mat-icon>
         </button>
         <td-file-input class="push-left-sm push-right-sm" #fileInput name="fileInput" [(ngModel)]="files"  >
-          <md-icon>folder</md-icon>
+          <mat-icon>folder</mat-icon>
           <span class="text-upper">Browse...</span>
         </td-file-input>
       </div>
@@ -54,11 +54,11 @@
         </ng-template>        
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
-            <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+            <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
-          <button md-icon-button (click)="downLoad( row)">
-            <md-icon>cloud_download</md-icon>
+          <button mat-icon-button (click)="downLoad( row)">
+            <mat-icon>cloud_download</mat-icon>
           </button>          
           </div>
         </ng-template>
@@ -66,15 +66,15 @@
       </td-data-table>
       <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
         <span hide-xs>Rows per page:</span>
-        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-          <md-option *ngFor="let size of pagesArray" [value]="size">
+        <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <mat-option *ngFor="let size of pagesArray" [value]="size">
             {{size}}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
         <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
     </section>
 
-  </md-card-content>
+  </mat-card-content>
 
-</md-card>
+</mat-card>

@@ -5,7 +5,7 @@ import { CatalogComponent } from '../../catalogs/catalog.component';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService, TdSearchBoxComponent } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { MenuClass } from '../../model/menuclass';
 
@@ -26,7 +26,7 @@ export class ProductComponent    {
   constructor(
               public _loadingService: TdLoadingService,
               public _dialogService: TdDialogService,
-              public _snackBarService: MdSnackBar,
+              public _snackBarService: MatSnackBar,
               public media: TdMediaService,  
               public _actions: ActionsService,
                ) { 

@@ -2,8 +2,8 @@
 <section layout="row">
     <section flex="95"></section>
     <section flex="5">
-      <button md-mini-fab class="md-mini md-primary" (click)="addEntity()" aria-label="Add Status" *ngIf="!isEditing">
-          <md-icon>add</md-icon>
+      <button mat-mini-fab class="md-mini md-primary" (click)="addEntity()" aria-label="Add Status" *ngIf="!isEditing">
+          <mat-icon>add</mat-icon>
         </button>
   
     </section>
@@ -13,14 +13,14 @@
   <section flex *ngIf="!isEditing">
     <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
       <ng-template tdDataTableTemplate="pOrder" let-value="value" let-row="row" let-column="column">
-        <button md-button (click)="editEntity(row.id)">{{value}}</button>
+        <button mat-button (click)="editEntity(row.id)">{{value}}</button>
   
       </ng-template>
       <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
         <div layout="row" flex="5">
   
-          <button md-icon-button (click)="confirmDelete(row)">
-              <md-icon>delete</md-icon>
+          <button mat-icon-button (click)="confirmDelete(row)">
+              <mat-icon>delete</mat-icon>
             </button>
         </div>
       </ng-template>
@@ -31,34 +31,30 @@
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
   
     <section flex layout="row" *ngIf="isEditing">
-        <ng-template [tdLoading]="loadName">
+        <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
       <section flex="25"></section>
       <section  flex="50">
   
         <section layout="column" flex="100" layout-margin>
- 
-          <md2-select class="cbxClass" #idStatus name="idStatus" flex required="true" placeholder="Status" [(ngModel)]="itemEdit.idStatus">
-              <md2-select-header>               
-                  <section layout-padding>
-                    <md-form-field>
-                      <input mdInput flex #sstatus  placeholder="Search" maxlength="15"  >
-                      </md-form-field>
-                  </section>
-                 </md2-select-header>           
-            <md2-option *ngFor="let i of allStatus | nameDesc:sstatus.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            <mat-form-field>
+            <mat-select class="cbxClass" #idStatus name="idStatus" flex required="true" placeholder="Status" [(ngModel)]="itemEdit.idStatus">
+           
+            <mat-option *ngFor="let i of allStatus 	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
               {{ i.name }} [ {{i.description}} ]
-            </md2-option>
-          </md2-select>
-          <md-checkbox #allowChild flex name="allowChild" [(ngModel)]="itemEdit.allowChild">Allow Child</md-checkbox>
-          <md-checkbox #isEditable flex name="isEditable" [(ngModel)]="itemEdit.isEditable">Is Editable</md-checkbox>
+            </mat-option>
+          </mat-select>              
+            </mat-form-field>
+
+          <mat-checkbox #allowChild flex name="allowChild" [(ngModel)]="itemEdit.allowChild">Allow Child</mat-checkbox>
+          <mat-checkbox #isEditable flex name="isEditable" [(ngModel)]="itemEdit.isEditable">Is Editable</mat-checkbox>
           
         </section>
         <div layout="row" flex layout-align="end center">
-          <button md-button type="button" class="md-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
-                     <md-icon>highlight_off</md-icon>
+          <button mat-button type="button" class="mat-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
+                     <mat-icon>highlight_off</mat-icon>
                       </button>
-          <button md-button type="button" class="md-icon-button md-primary" (click)="saveEntity()" [disabled]="!editform.valid" aria-label="Save Property">
-                     <md-icon>save</md-icon>
+          <button mat-button type="button" class="mat-icon-button md-primary" (click)="saveEntity()" [disabled]="!editform.valid" aria-label="Save Property">
+                     <mat-icon>save</mat-icon>
             </button>
   
         </div>

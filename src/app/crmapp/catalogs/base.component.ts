@@ -12,7 +12,7 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
@@ -166,7 +166,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
+    public _snackBarService: MatSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
     public _ngZone: NgZone,

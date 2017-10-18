@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+
 import { EmailSenderComponent } from '../../components/email-sender/email-sender.component';
 
 import { BaseComponent } from '../../catalogs/base.component';

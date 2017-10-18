@@ -18,13 +18,13 @@ import {
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { MdSnackBar } from '@angular/material';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 import { OpportunitydetailsumaryComponent } from './+opportunitydetailsumary/opportunitydetailsumary.component';
 import {TranslateService} from '@ngx-translate/core';
 import { IDeleteEventModel } from '../../../model/deleteeventmodel';
-import { MdSelect } from '@angular/material';
+import { MatSelect } from '@angular/material';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

@@ -5,7 +5,7 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { ActionsService } from '../../services/actions.services';
 import { Subscription } from 'rxjs/Subscription';
 import { IDeleteEventModel } from '../../model/deleteeventmodel';
@@ -50,7 +50,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   showEMail: boolean = false;
   constructor(    public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
+    public _snackBarService: MatSnackBar,
     public media: TdMediaService,
     public _actions: ActionsService) { }
 

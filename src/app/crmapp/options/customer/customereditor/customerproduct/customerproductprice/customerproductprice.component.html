@@ -1,30 +1,39 @@
 <td-expansion-panel label="Prices" sublabel="" >
 
-    <ng-template [tdLoading]="loadName">
+    <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
 
       <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section *ngIf="isEditing">
 
 
-        <div layout-gt-sm="row" layout-lt-md="column" layout-padding>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
-            <md2-datepicker  #validFrom name="validFrom" placeholder="Valid from" required="true" [(ngModel)]="itemEdit.validFrom"></md2-datepicker>
+              <mat-form-field class="example-full-width">
+                  <input matInput  [matDatepicker]="validFrom" name="validFrom" placeholder="Valid from" required="true" [(ngModel)]="itemEdit.validFrom">
+                  <mat-datepicker-toggle matSuffix [for]="validFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #validFrom></mat-datepicker>
+              </mat-form-field >             
           </section>  
           <section  flex-gt-sm="35" >
-            <md2-datepicker  #validTo name="validTo" placeholder="Valid to" required="true" [(ngModel)]="itemEdit.validTo"></md2-datepicker>
+              <mat-form-field class="example-full-width">
+                  <input matInput  [matDatepicker]="validTo" name="validTo" placeholder="Valid to" required="true" 
+                  [(ngModel)]="itemEdit.validTo">
+                  <mat-datepicker-toggle matSuffix [for]="validTo"></mat-datepicker-toggle>
+                  <mat-datepicker #validTo></mat-datepicker>
+              </mat-form-field >             
           </section> 
         <section  flex-gt-sm="30" >
-                    <md-form-field class="md-icon-float" >
-            <input  mdInput  #price name="price" placeholder="Price" [(ngModel)]="itemEdit.price"  currencyMask  >
-          </md-form-field>  
+                    <mat-form-field class="mat-icon-float" >
+            <input  matInput  #price name="price" placeholder="Price" [(ngModel)]="itemEdit.price"  currencyMask  >
+          </mat-form-field>  
         </section> 
         </div>    
 
       </section>
     </form>
-    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Price </button>
-    <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
-    <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save </button>
+    <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Price </button>
+    <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
+    <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save </button>
 
 
     <section *ngIf="!isEditing">
@@ -33,8 +42,8 @@
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
           <div layout="row" flex="5">
 
-            <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+            <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
           </div>
         </ng-template>
@@ -42,11 +51,11 @@
       </td-data-table>
       <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
         <span hide-xs>Rows per page:</span>
-        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-          <md-option *ngFor="let size of pagesArray" [value]="size">
+        <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+          <mat-option *ngFor="let size of pagesArray" [value]="size">
             {{size}}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
         <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
 

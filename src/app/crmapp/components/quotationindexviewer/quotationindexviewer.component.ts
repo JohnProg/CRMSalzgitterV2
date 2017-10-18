@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChil
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';

@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+
 import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
 import {  EMailTemplate, AttachDocument, TCRMEntity, GenericList } from '../../model/allmodels';

@@ -7,7 +7,7 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { ActionsService } from '../services/actions.services';
 import { CurrencyComponent } from './currency/currency.component';
 
@@ -38,7 +38,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
+    public _snackBarService: MatSnackBar,
     public media: TdMediaService,
     public _actions: ActionsService) {
   }

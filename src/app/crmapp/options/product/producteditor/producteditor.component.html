@@ -1,9 +1,9 @@
 
 
 
-  <md-card>
-    <md-card-content>
-        <ng-template [tdLoading]="loadName">
+  <mat-card>
+    <mat-card-content>
+        <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
       <section layout-margin>
 
         <form #editform="ngForm"  flex (ngSubmit)="submitForm(form)">
@@ -14,16 +14,16 @@
           </section>
 
 
-          <md-form-field flex="60">
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150" />
-            <md-hint align="end">{{name.value.length}} / 150</md-hint>
-          </md-form-field>
+          <mat-form-field flex="60">
+            <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150" />
+            <mat-hint align="end">{{name.value.length}} / 150</mat-hint>
+          </mat-form-field>
         </section>
         <section layout-lt-md="column" layout="row" flex="100">
-          <md-form-field flex>
-            <input mdInput #description name="description" [(ngModel)]="itemEdit.description" required placeholder="Description" maxlength="150">
-            <md-hint align="end">{{description.value.length}} / 150</md-hint>
-          </md-form-field>
+          <mat-form-field flex>
+            <input matInput #description name="description" [(ngModel)]="itemEdit.description" required placeholder="Description" maxlength="150">
+            <mat-hint align="end">{{description.value.length}} / 150</mat-hint>
+          </mat-form-field>
 
         </section>
 </form>
@@ -37,5 +37,5 @@
       </section>
        
  </ng-template>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>

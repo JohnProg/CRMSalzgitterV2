@@ -1,50 +1,48 @@
-<ng-template [tdLoading]="loadName">
+<ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
 <section *ngIf="isEditing">
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-form-field flex-gt-sm="60">
-        <input mdInput #cdpName flex name="cdpName" [(ngModel)]="itemEdit.cdpName" required placeholder="{{ 'NAME' | translate}}"
+      <mat-form-field flex-gt-sm="60">
+        <input matInput #cdpName flex name="cdpName" [(ngModel)]="itemEdit.cdpName" required placeholder="{{ 'NAME' | translate}}"
           maxlength="150" />
-        <md-hint align="end">{{cdpName.value.length}} / 150</md-hint>
-      </md-form-field>
-
-        <md2-select class="cbxClass" flex-gt-sm="30" #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
-            <md2-select-header>               
-                <section layout-padding>
-                    <md-form-field>
-                        <input mdInput flex #sdelivtype  placeholder="Search" maxlength="15"  >
-                      </md-form-field>
-                </section>
-             </md2-select-header>           
-          <md2-option *ngFor="let i of catDelivType  | nameDesc:sdelivtype.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+        <mat-hint align="end">{{cdpName.value.length}} / 150</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select class="cbxClass" flex-gt-sm="30" #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
+          
+          <mat-option *ngFor="let i of catDelivType " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
-          </md2-option>
-        </md2-select>
-        <md-slide-toggle #isActive name="Active" flex-gt-sm="10" [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
+          </mat-option>
+        </mat-select>          
+      </mat-form-field>
+      <mat-form-field>
+         <mat-slide-toggle #isActive name="Active" flex-gt-sm="10" [(ngModel)]="itemEdit.isActive">Active</mat-slide-toggle>         
+      </mat-form-field>
+
     </div>
 
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-form-field  >
-        <input mdInput #cdpStreet name="cdpStreet" [(ngModel)]="itemEdit.cdpStreet" required placeholder="Street" maxlength="150" />
-        <md-hint align="end">{{cdpStreet.value.length}} / 150</md-hint>
-      </md-form-field>
+      <mat-form-field  >
+        <input matInput #cdpStreet name="cdpStreet" [(ngModel)]="itemEdit.cdpStreet" required placeholder="Street" maxlength="150" />
+        <mat-hint align="end">{{cdpStreet.value.length}} / 150</mat-hint>
+      </mat-form-field>
 
     </div>
     <crm-selectcolony name="zipcode" byType="1" [(ngModel)]="itemEdit.idColony" placeholder="Colony" ></crm-selectcolony>
 
  <div layout-gt-sm="row" layout-lt-md="row" layout-margin >
-          <md-form-field flex-gt-sm="20">
-            <input mdInput #cdpTelephone flex name="cdpTelephone" [(ngModel)]="itemEdit.cdpTelephone"  placeholder="Phone" maxlength="20"
+          <mat-form-field flex-gt-sm="20">
+            <input matInput #cdpTelephone flex name="cdpTelephone" [(ngModel)]="itemEdit.cdpTelephone"  placeholder="Phone" maxlength="20"
             />
-            <md-hint align="end">{{cdpTelephone.value.length}} / 20</md-hint>
-          </md-form-field>
-         <md-form-field flex-gt-sm="80">
-            <input mdInput #cdpContact flex name="cdpContact" [(ngModel)]="itemEdit.cdpContact" required placeholder="Contact Name" maxlength="150"
+            <mat-hint align="end">{{cdpTelephone.value.length}} / 20</mat-hint>
+          </mat-form-field>
+         <mat-form-field flex-gt-sm="80">
+            <input matInput #cdpContact flex name="cdpContact" [(ngModel)]="itemEdit.cdpContact" required placeholder="Contact Name" maxlength="150"
             />
-            <md-hint align="end">{{cdpContact.value.length}} / 150</md-hint>
-          </md-form-field>
+            <mat-hint align="end">{{cdpContact.value.length}} / 150</mat-hint>
+          </mat-form-field>
         </div>    
   </form>
 </section>
@@ -57,13 +55,13 @@
   <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
     <ng-template tdDataTableTemplate="cdpName" let-value="value" let-row="row" let-column="column">
       <div layout="row">
-        <button md-button (click)="customEditEntity(row.id, row.zipCode)">{{value}}</button>
+        <button mat-button (click)="customEditEntity(row.id, row.zipCode)">{{value}}</button>
       </div>
     </ng-template>
     <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
       <div layout="row" flex="5">
-        <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+        <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
       </div>
     </ng-template>
@@ -71,11 +69,11 @@
   </td-data-table>
   <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
     <span hide-xs>Rows per page:</span>
-    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-      <md-option *ngFor="let size of pagesArray" [value]="size">
+    <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <mat-option *ngFor="let size of pagesArray" [value]="size">
         {{size}}
-      </md-option>
-    </md-select>
+      </mat-option>
+    </mat-select>
     <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
   </td-paging-bar>
 </section>

@@ -2,7 +2,7 @@
            [sortBy]="sortBy" [sortOrder]="sortOrder"
            (sortChange)="getSorted($event)">
       <ng-template tdDataTableTemplate="Name" let-value="value" let-row="row" let-column="column">
-       <button md-button
+       <button mat-button
         md-ripple class="block relative" [routerLink]="['../edit', row.id]">
         {{value}}
       </button>
@@ -11,8 +11,8 @@
       <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
         <div layout="row" flex="5">
           
-          <button md-icon-button (click)="confirmDelete(confirmDialog, row)" >
-            <md-icon>delete</md-icon>
+          <button mat-icon-button (click)="confirmDelete(confirmDialog, row)" >
+            <mat-icon>delete</mat-icon>
           </button>
         </div>
       </ng-template>

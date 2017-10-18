@@ -1,53 +1,53 @@
-<ng-template [tdLoading]="loadName">
+<ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
 <section *ngIf="isEditing">
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-form-field flex-gt-sm="60">
-        <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250" />
-        <md-hint align="end">{{name.value.length}} / 250</md-hint>
-      </md-form-field>
-
-        <md2-select class="cbxClass" flex-gt-sm="30" #idPosition name="idPosition" flex required="true" placeholder="Position" [(ngModel)]="itemEdit.idPosition">
-            <md2-select-header>               
-                <section layout-padding>
-                    <md-form-field>
-                        <input mdInput flex #sposition  placeholder="Search" maxlength="15"  >
-                      </md-form-field>
-                </section>
-             </md2-select-header>           
-          <md2-option *ngFor="let i of catPosition | nameDesc:sposition.value" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+      <mat-form-field flex-gt-sm="60">
+        <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250" />
+        <mat-hint align="end">{{name.value.length}} / 250</mat-hint>
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="30">
+        <mat-select class="cbxClass"  #idPosition name="idPosition" flex required="true" placeholder="Position" [(ngModel)]="itemEdit.idPosition">
+        
+          <mat-option *ngFor="let i of catPosition " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
-          </md2-option>
-        </md2-select>
-        <md-slide-toggle #isActive name="Active" flex-gt-sm="10"  [(ngModel)]="itemEdit.isActive">Active</md-slide-toggle>
-    </div>
-
-    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-form-field flex-gt-sm="40">
-        <input mdInput #officePhone name="officePhone" [(ngModel)]="itemEdit.officePhone" required placeholder="Office Phone" maxlength="50" />
-        <md-hint align="end">{{officePhone.value.length}} / 50</md-hint>
-      </md-form-field>
-      <md-form-field flex-gt-sm="20">
-        <input mdInput #extension name="extension" [(ngModel)]="itemEdit.extension" required placeholder="Extension" maxlength="50" />
-        <md-hint align="end">{{extension.value.length}} / 50</md-hint>
-      </md-form-field>
-
-      <md-form-field flex-gt-sm="40">
-        <input mdInput #cellPhone flex name="cellPhone" [(ngModel)]="itemEdit.cellPhone" placeholder="Cell Phone" maxlength="50" />
-        <md-hint align="end">{{cellPhone.value.length}} / 50</md-hint>
-      </md-form-field>
+          </mat-option>
+        </mat-select>          
+      </mat-form-field>
+<section flex-gt-sm="10" layout-align="center center">
+        <mat-slide-toggle  #isActive name="Active"   [(ngModel)]="itemEdit.isActive">Active</mat-slide-toggle> 
+</section>
+         
+  
 
     </div>
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <md-form-field flex-gt-sm="50">
-        <input mdInput #email flex name="email" [(ngModel)]="itemEdit.email" placeholder="E-Mail" maxlength="250" />
-        <md-hint align="end">{{email.value.length}} / 250</md-hint>
-      </md-form-field>
-      <md-form-field flex-gt-sm="50">
-        <input mdInput #nickName flex name="nickName" [(ngModel)]="itemEdit.nickName" placeholder="Nickname" maxlength="150" />
-        <md-hint align="end">{{nickName.value.length}} / 150</md-hint>
-      </md-form-field>      
+      <mat-form-field flex-gt-sm="40">
+        <input matInput #officePhone name="officePhone" [(ngModel)]="itemEdit.officePhone" required placeholder="Office Phone" maxlength="50" />
+        <mat-hint align="end">{{officePhone.value.length}} / 50</mat-hint>
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="20">
+        <input matInput #extension name="extension" [(ngModel)]="itemEdit.extension" required placeholder="Extension" maxlength="50" />
+        <mat-hint align="end">{{extension.value.length}} / 50</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field flex-gt-sm="40">
+        <input matInput #cellPhone flex name="cellPhone" [(ngModel)]="itemEdit.cellPhone" placeholder="Cell Phone" maxlength="50" />
+        <mat-hint align="end">{{cellPhone.value.length}} / 50</mat-hint>
+      </mat-form-field>
+
+    </div>
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <mat-form-field flex-gt-sm="50">
+        <input matInput #email flex name="email" [(ngModel)]="itemEdit.email" placeholder="E-Mail" maxlength="250" />
+        <mat-hint align="end">{{email.value.length}} / 250</mat-hint>
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="50">
+        <input matInput #nickName flex name="nickName" [(ngModel)]="itemEdit.nickName" placeholder="Nickname" maxlength="150" />
+        <mat-hint align="end">{{nickName.value.length}} / 150</mat-hint>
+      </mat-form-field>      
     </div>
 
   </form>
@@ -61,13 +61,13 @@
   <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
     <ng-template tdDataTableTemplate="name" let-value="value" let-row="row" let-column="column">
       <div layout="row">
-        <button md-button (click)="editEntity(row.id)">{{value}}</button>
+        <button mat-button (click)="editEntity(row.id)">{{value}}</button>
       </div>
     </ng-template>
     <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
       <div layout="row" flex="5">
-        <button md-icon-button (click)="confirmDelete( row)">
-            <md-icon>delete</md-icon>
+        <button mat-icon-button (click)="confirmDelete( row)">
+            <mat-icon>delete</mat-icon>
           </button>
       </div>
     </ng-template>
@@ -75,11 +75,11 @@
   </td-data-table>
   <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
     <span hide-xs>Rows per page:</span>
-    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-      <md-option *ngFor="let size of pagesArray" [value]="size">
+    <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+      <mat-option *ngFor="let size of pagesArray" [value]="size">
         {{size}}
-      </md-option>
-    </md-select>
+      </mat-option>
+    </mat-select>
     <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
   </td-paging-bar>
 </section>

@@ -1,78 +1,67 @@
-
- <ng-template [tdLoading]="loadName">
-<form #editform="ngForm"  flex (ngSubmit)="submitForm(form)">
-
-
-        <div layout-gt-sm="row" layout-lt-md="column"  layout-margin >
-          <md-form-field flex-gt-sm="75">
-            <input mdInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250"
-            />
-            <md-hint align="end">{{name.value.length}} / 250</md-hint>
-          </md-form-field>
-
-            <md2-select class="cbxClass" flex-gt-sm="25"  #idResponsible name="idResponsible" flex required="true" placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible">
-                <md2-select-header>               
-                    <section layout-padding>
-                        <md-form-field>
-                            <input mdInput flex #sresponsible  placeholder="Search" maxlength="15"  >
-                          </md-form-field>
-                    </section>
-                 </md2-select-header>                
-              <md2-option *ngFor="let i of catResponsible  | nameDesc:sresponsible.value	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                {{ i.nameDescription || i.name}}
-              </md2-option>
-            </md2-select>
+<ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+  <form #editform="ngForm" flex (ngSubmit)="submitForm(form)">
 
 
-        </div>
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <md-form-field flex-gt-sm="35">
-            <input mdInput #street   name="street" [(ngModel)]="itemEdit.street" required placeholder="Street" maxlength="100"
-            />
-            <md-hint align="end">{{street.value.length}} / 100</md-hint>
-          </md-form-field>
-         <md-form-field flex-gt-sm="35">
-            <input mdInput #number  name="number" [(ngModel)]="itemEdit.number" required placeholder="Number" maxlength="50"
-            />
-            <md-hint align="end">{{number.value.length}} / 50</md-hint>
-          </md-form-field>
-          <section flex-gt-sm="30">
-            <md-slide-toggle #isAutomotive name="isAutomotive" [(ngModel)]="itemEdit.isAutomotive" >Automotive</md-slide-toggle>
-          </section>          
-        </div>
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <mat-form-field flex-gt-sm="75">
+        <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250"
+        />
+        <mat-hint align="end">{{name.value.length}} / 250</mat-hint>
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="25">
+        <mat-select class="cbxClass" #idResponsible name="idResponsible" flex required="true" placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible">
+          <mat-option *ngFor="let i of catResponsible  	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.nameDescription || i.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <mat-form-field flex-gt-sm="35">
+        <input matInput #street name="street" [(ngModel)]="itemEdit.street" required placeholder="Street" maxlength="100" />
+        <mat-hint align="end">{{street.value.length}} / 100</mat-hint>
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="35">
+        <input matInput #number name="number" [(ngModel)]="itemEdit.number" required placeholder="Number" maxlength="50" />
+        <mat-hint align="end">{{number.value.length}} / 50</mat-hint>
+      </mat-form-field>
+      <section flex-gt-sm="30">
+        <mat-slide-toggle #isAutomotive name="isAutomotive" [(ngModel)]="itemEdit.isAutomotive">Automotive</mat-slide-toggle>
+      </section>
+    </div>
 
-        <crm-selectcolony #ccolony id="ccolony" name="ccolony" byType="1" [(ngModel)]="itemEdit.idColony"></crm-selectcolony>
-        <div layout-gt-sm="row" layout-lt-sm="row" layout-margin >
-          <md-form-field flex-gt-sm="50">
-            <input mdInput #phone flex name="phone" [(ngModel)]="itemEdit.phone"  placeholder="Phone" maxlength="50"
-            />
-            <md-hint align="end">{{phone.value.length}} / 50</md-hint>
-          </md-form-field>
-         <md-form-field flex-gt-sm="50">
-            <input mdInput #rfc flex name="rfc" [(ngModel)]="itemEdit.rfc" required placeholder="RFC" maxlength="20"
-            />
-            <md-hint align="end">{{rfc.value.length}} / 20</md-hint>
-          </md-form-field>
-        </div>
+    <crm-selectcolony #ccolony id="ccolony" name="ccolony" byType="1" [(ngModel)]="itemEdit.idColony"></crm-selectcolony>
+    <div layout-gt-sm="row" layout-lt-sm="row" layout-margin>
+      
 
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
-          <md-form-field flex-gt-sm="25" >
-            <input mdInput #daysCredit flex name="daysCredit" [(ngModel)]="itemEdit.daysCredit"  placeholder="Days Credit" currencyMask [options]="{ prefix: '', allowNegative: false, precision: 0 }" 
-            />
-          </md-form-field>
-        <md-form-field flex-gt-sm="25" >
-            <input mdInput #limitCreditUSA flex name="limitCreditUSA" [(ngModel)]="itemEdit.limitCreditUSA"  placeholder="Limit Credit USA" currencyMask 
-            />
-          </md-form-field>
-        <md-form-field flex-gt-sm="25" >
-            <input mdInput #limitCreditGermany flex name="limitCreditGermany" [(ngModel)]="itemEdit.limitCreditGermany"  placeholder="Limit Credit Germany" currencyMask
-            />
-          </md-form-field>
-        <md-form-field flex-gt-sm="25" >
-            <input mdInput #interestRate flex name="interestRate" [(ngModel)]="itemEdit.interestRate"  placeholder="Interest Rate " currencyMask [options]="{ prefix: '', suffix: '%' }" 
-            />
-          </md-form-field>
-        </div>
+      <mat-form-field flex-gt-sm="50">
+        <input matInput #phone flex name="phone" [(ngModel)]="itemEdit.phone" placeholder="Phone" maxlength="50" />
+        <mat-hint align="end">{{phone.value.length}} / 50</mat-hint>
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="50">
+        <input matInput #rfc flex name="rfc" [(ngModel)]="itemEdit.rfc" required placeholder="RFC" maxlength="20" />
+        <mat-hint align="end">{{rfc.value.length}} / 20</mat-hint>
+      </mat-form-field>
+    </div>
 
-</form>
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <mat-form-field flex-gt-sm="25">
+        <input matInput #daysCredit flex name="daysCredit" [(ngModel)]="itemEdit.daysCredit" placeholder="Days Credit" currencyMask
+          [options]="{ prefix: '', allowNegative: false, precision: 0 }" />
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="25">
+        <input matInput #limitCreditUSA flex name="limitCreditUSA" [(ngModel)]="itemEdit.limitCreditUSA" placeholder="Limit Credit USA"
+          currencyMask />
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="25">
+        <input matInput #limitCreditGermany flex name="limitCreditGermany" [(ngModel)]="itemEdit.limitCreditGermany" placeholder="Limit Credit Germany"
+          currencyMask />
+      </mat-form-field>
+      <mat-form-field flex-gt-sm="25">
+        <input matInput #interestRate flex name="interestRate" [(ngModel)]="itemEdit.interestRate" placeholder="Interest Rate " currencyMask
+          [options]="{ prefix: '', suffix: '%' }" />
+      </mat-form-field>
+    </div>
+
+  </form>
 </ng-template>

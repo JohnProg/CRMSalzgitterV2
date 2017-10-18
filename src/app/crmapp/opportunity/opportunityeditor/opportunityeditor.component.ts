@@ -16,7 +16,7 @@ import {
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {TranslateService} from '@ngx-translate/core';
 
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
 import { CatalogComponent } from '../../catalogs/catalog.component';
@@ -38,10 +38,11 @@ export class OpportunityeditorComponent extends CatalogComponent {
   opp: Opportunity;
   @ViewChild(OpportunityheaderComponent) headercomp: OpportunityheaderComponent;
 
+  
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
-    public _snackBarService: MdSnackBar,
+    public _snackBarService: MatSnackBar,
     public _mediaService: TdMediaService,
     public _actions: ActionsService,
     public _ngZone: NgZone,

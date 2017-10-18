@@ -15,7 +15,6 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService,
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
 
 import { environment } from '../../../environments/environment';
 import { provideClient, client } from './apolo.client';

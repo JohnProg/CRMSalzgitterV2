@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+
 import { BaseComponent } from '../base.component';
 import { IncoTerm } from '../../model/allmodels';
 import {TranslateService} from '@ngx-translate/core';

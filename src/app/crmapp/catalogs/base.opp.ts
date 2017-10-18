@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
-import { MdSelect } from '@angular/material';
+import { MatSelect } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
@@ -13,7 +13,6 @@ import {
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
@@ -50,9 +49,9 @@ export const oppQl = gql`
 
 export class BaseOppComponent extends BaseComponent {
 
-  @ViewChild('idCustomerContact') custContactSelect: MdSelect;
-  @ViewChild('idIncoTerm') incoTermSelect: MdSelect;
-  @ViewChild('idCountryOrigin') countryOrigin: MdSelect;
+  @ViewChild('idCustomerContact') custContactSelect: MatSelect;
+  @ViewChild('idIncoTerm') incoTermSelect: MatSelect;
+  @ViewChild('idCountryOrigin') countryOrigin: MatSelect;
 
   @Input() idDoc: number = 0;
   deliveryRequired: boolean = false;
