@@ -42,7 +42,19 @@
 
     </form>
 
-        <crm-opportunitydetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idCustomerProduct]="itemEdit.idCustomerProduct" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" [price]="itemEdit.itemPrice" ></crm-opportunitydetailsumary>
+    
+        <crm-opportunitydetailsumary #dSumary name="dSumary" 
+        [idDetail]="itemEdit.id" 
+        [idCustomerProduct]="itemEdit.idCustomerProduct" 
+        [idProduct]="itemEdit.idProduct" 
+        *ngIf="isEditing && itemEdit.id > 0" 
+        (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" 
+        [price]="itemEdit.itemPrice"
+        catalogName="Opp Details Sumary"
+        baseController="OpportunityDetailSumary"
+        baseSearch="searchByDetail"
+        sumProperties="opportunityDetailSumaryProperties"
+        ></crm-opportunitydetailsumary>
       </section>
 
 

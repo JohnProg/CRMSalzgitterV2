@@ -55,11 +55,7 @@ export class CustomerdeliverypointComponent  extends CustomerbaseComponent {
     this._curService.setAPI( this.catalog + '/', this.catalogName, this.loadName); 
   }
 
-  ngOnInitClass() {
-    super.ngOnInitClass();
-    this.entList = <Observable<GetCustomerDeliverPoints_Result[]>>this._curService.entList;
 
-  }
 
 
 

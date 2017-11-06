@@ -53,9 +53,7 @@ export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
     this.dta = new Date(); 
   }
 
-  ngOnInitClass() {
-    this.entList = <Observable<QuotationToCustomer[]>>this._curService.entList;
-  }
+
 
 
 

@@ -50,9 +50,7 @@ export class OpportunityheaderComponent extends BaseOppComponent {
     
   }
 
-  ngOnInitClass() {
-    this.entList = <Observable<Opportunity[]>>this._curService.entList;
-  }
+
 
 
   initEntity() {

@@ -34,7 +34,7 @@ export class QuotationtocustomerindexviewerComponent  extends Quotationindexview
   catalogName: string ="Quotation to Customers";
   baseApi: string ="QuotationToCustomer/searchByQFS";
   parentDoc: number = 2;
-  parentRoute: string ="quotationtocustomer";  
+  itemRoute: string ="quotationtocustomer";  
 
   
 
@@ -49,7 +49,7 @@ export class QuotationtocustomerindexviewerComponent  extends Quotationindexview
   addColumns() {
     //super.addColumns();
     this.columns.push({ name: 'id', label: 'Quotation', tooltip: '' });
-    if( this.byType == 0  ) {
+    if( this.idParent == undefined || this.idParent === 0 ) {
       this.columns.push({ name: 'customerName', label: 'Customer' });
     }
     this.columns.push({ name: 'idQuotationFromSupplier', label: 'QFS' });

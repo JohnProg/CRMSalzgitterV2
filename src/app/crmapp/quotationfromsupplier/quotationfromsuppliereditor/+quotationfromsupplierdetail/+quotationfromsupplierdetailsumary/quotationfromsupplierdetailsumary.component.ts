@@ -37,13 +37,13 @@ export class QuotationfromsupplierdetailsumaryComponent extends Editordetailsuma
   itemEdit: QuotationFromSupplierDetailSumary;
 
 
-  ngBeforeInit() {
-    super.ngBeforeInit();
-    this.catalogName = 'Quotation from Supplier Details Sumary';
-    this._curService.setAPI('QuotationFromSupplierDetailSumary', this.catalogName, this.loadName);
-    this.refreshItemUrl = 'QuotationFromSupplierDetailSumary/searchByDetail';
-    this.sumProperties = 'quotationFromSupplierDetailSumaryProperties';  
-  }
+  // ngBeforeInit() {
+  //   super.ngBeforeInit();
+  //   this.catalogName = 'Quotation from Supplier Details Sumary';
+  //   this._curService.setAPI('QuotationFromSupplierDetailSumary', this.catalogName, this.loadName);
+  //   this.refreshItemUrl = 'QuotationFromSupplierDetailSumary/searchByDetail';
+  //   this.sumProperties = 'quotationFromSupplierDetailSumaryProperties';  
+  // }
 
     initEntity() {
     

@@ -50,14 +50,11 @@ export class EmailSenderComponent extends BaseComponent {
       this.idDialog = params.id;
       this.scrId = params.scrid;
     });  
-  }
-
-  ngOnInitClass() {
-    super.ngOnInitClass();
     this._curService.setAPI(this.baseApi + '/', this.catalogName, this.loadName);
     this.loadUrl = this.baseApi + '/getEMailData?iddialog=';
       this.setUserInfo();   
   }
+
 
 
   setUserInfo() {

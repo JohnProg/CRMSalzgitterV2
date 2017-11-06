@@ -45,9 +45,9 @@ export class OptionsComponent extends CatalogComponent  {
               public _snackBarService: MatSnackBar,
               public media: TdMediaService,  
               public _actions: ActionsService,
-              private _router: Router, ) { 
+              public _router: Router, public _route: ActivatedRoute ) { 
               
-              super(_loadingService, _dialogService, _snackBarService, media, _actions);
+              super(_loadingService, _dialogService, _snackBarService, media, _actions, _router, _route);
 
               }
 

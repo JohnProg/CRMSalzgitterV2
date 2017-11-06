@@ -82,6 +82,15 @@
 		parentFolder: string;
 	}
 
+	export class GetSimpleChartFromResponsible_Result extends TCRMEntity {
+		name: string;
+		value: number;
+	}
+
+	export class DashboardData extends TCRMEntity {
+		simpleChart: any;
+		docByStatusChart: any;
+	}
 	export class ActionOpportunity extends TCRMEntity {
 		description: string;
 		id: number;
@@ -1410,6 +1419,7 @@
 		offerValidity: Date;
 		oppNotes: string;
 		opportunity: Opportunity;
+		orderConfirmDate: Date;
 		poNumber: string;
 		port: Port;
 		purchaseOrderDetails: PurchaseOrderDetail[];
@@ -1588,6 +1598,7 @@
 		user: User;
 	}
 	export class QuotationToCustomerDetail extends TCRMEntity {
+		expectedProfit: number;
 		expenseSMIM_Cost: number;
 		expenseSupplierSide_Cost: number;
 		id: number;
@@ -1715,6 +1726,7 @@
 		idCurrency: number;
 		idCustomer: number;
 		idDeliveryPoint: number;
+		idDocType: number;
 		idIncoTerm: number;
 		idLinerTerm: number;		
 		idMill: number;

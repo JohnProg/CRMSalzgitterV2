@@ -36,11 +36,7 @@ export class ProductindexComponent extends BaseComponent  {
     this._curService.setAPI('Product/', this.catalogName, this.loadName);   
   }
 
-  ngOnInitClass() {
-    this.entList = <Observable<Product[]>>this._curService.entList;
-    this.initData();
-    this.reloadPaged();
-  }
+
 
   editEntity(id: number) {
 

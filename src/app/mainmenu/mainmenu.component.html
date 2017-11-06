@@ -1,7 +1,7 @@
 
 
 
-        <td-expansion-panel   *ngFor="let item of routes | async" [label]=" item.title | translate " [expand]="true">
+        <td-expansion-panel   *ngFor="let item of routes | async" [label]=" item.title | translate " >
 
 
                 <a mat-list-item matRipple   *ngFor="let mitem of item.childrens"

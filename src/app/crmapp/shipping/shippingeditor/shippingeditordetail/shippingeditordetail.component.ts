@@ -61,10 +61,7 @@ export class ShippingeditordetailComponent extends BaseComponent {
     this.itemEdit = new GetShippingDetails_Result();  
   }
 
-  ngOnInitClass() {
-    this.entList = <Observable<GetShippingDetails_Result[]>>this._curService.entList;
-    this.initData();
-  }
+
 
 
   loadData() {
@@ -86,9 +83,7 @@ export class ShippingeditordetailComponent extends BaseComponent {
   }
 
 
-  afterViewInit(): void {
-    this._actions.updateTitle('Details for Shipping ' + this.idShipping.toString());
-  }
+
 
   onDestroy() {
     if (this.propSubscription !== undefined) { this.propSubscription.unsubscribe(); }
@@ -136,10 +131,7 @@ export class ShippingeditordetailComponent extends BaseComponent {
     });
 
   }
-  afterLoadItem(itm: GetShippingDetails_Result) {
-    super.afterLoadItem(itm);
-    this._actions.updateTitle('Edit item ' + this.idShipping.toString());
-  }
+
 
   saveEntity() {
     

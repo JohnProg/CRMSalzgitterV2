@@ -19,13 +19,13 @@ import { Subscription } from 'rxjs/Subscription';
 
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
+import { CrmcustomdialogComponent, DialogResponse } from '../../components/crmcustomdialog/crmcustomdialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseOrderDialog, Customer, DocType, findActionOppByType_Result  } from '../../model/allmodels';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { EnumDocType } from '../../constants/index';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 const catQl = gql`
   query 
@@ -65,18 +65,15 @@ export class EditorbasedialogComponent extends BaseComponent {
     searchByUrl: string;
     customer: Customer;
     docType: DocType;
+    
   ngBeforeInit() {
     super.ngBeforeInit();
-    this.autoLoad = false;   
-  }
-
-
- ngOnInitClass() {
+    this.autoLoad = false;  
     this.catalogName = this.catName;
-    this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
-    this.entList = <Observable<BaseOrderDialog[]>>this._curService.entList;
-    this.initData();
+    this._curService.setAPI(this.baseApi, this.catalogName, this.loadName); 
+    this.setTitle = false;
   }
+
 
 
  initData() {
@@ -108,9 +105,6 @@ export class EditorbasedialogComponent extends BaseComponent {
     this.itemEdit.emailSended = false;
   }
 
-  afterViewInit(): void {
-    this._actions.updateTitle( this.catalogName + ' ' + this.idParent.toString());
-  }
 
   addColumns() {
      this.columns.push({ name: 'actionName', label: 'Action' });
@@ -201,18 +195,32 @@ export class EditorbasedialogComponent extends BaseComponent {
 
   confirmUpdateStatus() {
 
-   // this.confirmDialog.open();
+    let dialogRef = this._dialogService.open(CrmcustomdialogComponent, {
+      data: {      
+        title: 'Confirm Status Change',
+        body: 'Would you like to change the status?'
+      }
+    });
+    dialogRef.afterClosed().subscribe( (result: DialogResponse) => {
+      if( result == DialogResponse.No ) {
+          this.itemEdit.updateStatus = false;
+          this._curService.update(this.itemEdit);
+      } else if( result == DialogResponse.Yes ) {
+          
+          this.itemEdit.updateStatus = true;
+          this._curService.update(this.itemEdit);        
+      }
+    });
 
+    //DialogResponse
   }
 
   updateConfirm() {
-    this.itemEdit.updateStatus = true;
-    this._curService.update(this.itemEdit);
+
   }
 
   noConfirm() {
-    this.itemEdit.updateStatus = false;
-    this._curService.update(this.itemEdit);
+
   }
 
 }

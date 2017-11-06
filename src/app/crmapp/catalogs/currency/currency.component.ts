@@ -35,8 +35,7 @@ import gql from 'graphql-tag';
 @Component({
   selector: 'crm-currency',
   templateUrl: './currency.component.html',
-  styleUrls: ['./currency.component.scss'],
-  providers: [],
+  styleUrls: ['./currency.component.scss']
 
 })
 export class CurrencyComponent extends BaseComponent {
@@ -50,16 +49,12 @@ export class CurrencyComponent extends BaseComponent {
     this.catalogName = 'Currencies';
     this._curService.setAPI('Currency', this.catalogName, this.loadName);
   }
-  ngOnInitClass() {
-    this.entList = <Observable<Currency[]>>this._curService.entList;
-    this.initData();
-  }
+
+
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
   }
-
-
 
   addColumns() {
     super.addColumns();

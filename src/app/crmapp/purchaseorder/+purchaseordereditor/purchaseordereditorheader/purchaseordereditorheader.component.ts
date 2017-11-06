@@ -49,9 +49,7 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
     this.dta = new Date(); 
   }
 
-  ngOnInitClass() {
-    this.entList = <Observable<PurchaseOrder[]>>this._curService.entList;
-  }
+
 
 
   initEntity() {

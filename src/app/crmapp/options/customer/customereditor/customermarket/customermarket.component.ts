@@ -54,11 +54,7 @@ export class CustomermarketComponent extends CustomerbaseComponent {
     this._curService.setAPI( this.catalog + '/', this.catalogName, this.loadName); 
   }
 
-  ngOnInitClass() {
-    super.ngOnInitClass();
-    this.entList = <Observable<GetCustomerMarkets_Result[]>>this._curService.entList;
 
-  }
 
 
 

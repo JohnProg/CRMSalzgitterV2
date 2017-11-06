@@ -9,7 +9,7 @@
                 "tooltip": "HOME.MENU.CATALOGS.CURRENCY.TOOLTIP",
                 "active": "true",
                 "routerlink": "currency",
-                "icon": "euro_symbol",
+                "icon": "attach_money",
                 "displayName": "HOME.MENU.CATALOGS.CURRENCY.DISPLAYNAME"
               },
               {
@@ -155,7 +155,15 @@
                 "routerlink": "status",
                 "icon": "euro_symbol",
                 "displayName": "HOME.MENU.CATALOGS.STATUS.DISPLAYNAME"
-              }                           
+              },
+              {
+                "name": "properties",
+                "tooltip": "HOME.MENU.CATALOGS.PROPERTY.TOOLTIP",
+                "active": "true",
+                "routerlink": "properties",
+                "icon": "euro_symbol",
+                "displayName": "HOME.MENU.CATALOGS.PROPERTY.DISPLAYNAME"
+              }                                         
       ]
 
     },

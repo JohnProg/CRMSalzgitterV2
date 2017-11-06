@@ -69,23 +69,7 @@
       </section>
   </form>
 
-  <div #confirmstatus name="confirmstatus">
-      <h2 mat-dialog-title>Update Status</h2>
-      <mat-dialog-content>
-        <h1 class="md-title">Would you like to update Status?</h1>
-        <p class="md-body-2">This action will update the status</p>
 
-      </mat-dialog-content>
-      <mat-dialog-actions>
-          <section layout-align="start end" flex layout-margin>
-              <span flex></span>
-              <button mat-raised-button color="warn" (click)="confirmstatus.close()" >Cancel</button>
-              <button mat-raised-button (click)="noConfirm()"> No</button>
-              <button mat-raised-button color="primary" (click)="updateConfirm()">Yes</button>
-          </section>
-
-      </mat-dialog-actions>
-    </div>
 
 
   <section flex="100"  layout-margin layout-margin>

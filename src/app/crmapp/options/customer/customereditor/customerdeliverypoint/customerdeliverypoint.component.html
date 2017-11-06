@@ -8,17 +8,17 @@
           maxlength="150" />
         <mat-hint align="end">{{cdpName.value.length}} / 150</mat-hint>
       </mat-form-field>
-      <mat-form-field>
-        <mat-select class="cbxClass" flex-gt-sm="30" #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
+      <mat-form-field flex-gt-sm="30">
+        <mat-select class="cbxClass"  #idDeliveryType name="idDeliveryType" flex required="true" placeholder="Delivery Type" [(ngModel)]="itemEdit.idDeliveryType">
           
           <mat-option *ngFor="let i of catDelivType " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
           </mat-option>
         </mat-select>          
       </mat-form-field>
-      <mat-form-field>
+      
          <mat-slide-toggle #isActive name="Active" flex-gt-sm="10" [(ngModel)]="itemEdit.isActive">Active</mat-slide-toggle>         
-      </mat-form-field>
+      
 
     </div>
 

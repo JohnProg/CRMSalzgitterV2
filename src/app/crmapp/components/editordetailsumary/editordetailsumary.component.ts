@@ -54,13 +54,15 @@ export class EditordetailsumaryComponent extends BaseComponent {
   sortBy: string = 'itemDescription';
 
   refreshItemUrl: string;
-  sumProperties: string;
+  
   total: number = 0;
   totalAmount: number = 0;
   totalShipped: number = 0;
   loadName: string = 'editprop.load';
   
-
+  @Input() baseController: string;
+  @Input() baseSearch: string;
+  @Input() sumProperties: string;
   uTemplate: boolean = false;
   files: any;
 
@@ -75,9 +77,25 @@ export class EditordetailsumaryComponent extends BaseComponent {
     this.pdetails = this._pdetails.asObservable();
     this.handleScreenChange = false;
     this.subEditor = true;  
+
+
+    //this.catalogName = 'Opp Details Sumary';
+    this._curService.setAPI(this.baseController, this.catalogName, this.loadName);
+    this.refreshItemUrl = this.baseController + '/' + this.baseSearch;
+    //this.sumProperties = 'opportunityDetailSumaryProperties'; 
+    
   }
 
   
+  // ngBeforeInit() {
+  //   super.ngBeforeInit();
+  //    this.catalogName = 'Opp Details Sumary';
+  //   this._curService.setAPI('OpportunityDetailSumary', this.catalogName, this.loadName);
+  //   this.refreshItemUrl = 'OpportunityDetailSumary/searchByDetail';
+  //   this.sumProperties = 'opportunityDetailSumaryProperties'; 
+  // }
+
+
   loadData() {
     
     this.refreshItems();
@@ -187,6 +205,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
       this.total = 0;
       this.totalAmount = 0;
       this.totalShipped = 0;
+      
       if( itms !== undefined && itms.length > 0 && itms[0][this.sumProperties] !== undefined 
         && itms[0][this.sumProperties].length > 0) {
         this._pcolumns = new Array<ITdDataTableColumn>();
@@ -298,6 +317,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
         request.post(this._confs.serverWithApiCustomUrl + 'OpportunityDetailSumary/uploadTemplate')
             //.set("Content-Type", this.files.type)
             .set( 'Authorization', token )
+            .query({ iddetail: this.idDetail.toString() })
             .send(data)
             .accept('json')
             .end((err, response) => {

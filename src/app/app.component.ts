@@ -1,4 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, AfterViewInit, OnInit, OnDestroy, Input, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder  } from '@angular/http';
+import { ConfigurationService, ActionsService, TokenService } from './crmapp/services/index';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } from '@covalent/core';
+import { Subscription } from 'rxjs/Subscription';
+import {TranslateService} from '@ngx-translate/core';
+import { User } from './crmapp/model/allmodels';
+import { AuthHelper } from './crmapp/authHelper/authHelper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 
@@ -7,11 +18,46 @@ import { MatIconRegistry } from '@angular/material';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent   {
 
-  constructor(private _iconRegistry: MatIconRegistry,
+
+  userName: string = 'Test';
+  userEmail: string = 'MailTest';
+
+ isSmallScreen: boolean = false;
+ protected _querySubscriptionxs: Subscription;
+ protected _querySubscriptionsm: Subscription;
+ protected _querySubscriptionmd: Subscription;
+ protected _querySubscriptionlg: Subscription;
+ protected _updateUser: Subscription;
+
+ public updateUserInfo: EventEmitter<any>=new EventEmitter();
+
+
+  constructor(
+              private _router: Router, 
+              private _http: Http,
+              private _confs: ConfigurationService,
+              private _actions: ActionsService,
+              private _loadingService: TdLoadingService, 
+              private _mediaService: TdMediaService,
+              private _ngZone: NgZone,
+              private translate: TranslateService,
+              private _route: ActivatedRoute, 
+              private _token: TokenService,
+              private _auth: AuthHelper,
+              private _iconRegistry: MatIconRegistry,
               private _domSanitizer: DomSanitizer
 ) {
+
+          // this language will be used as a fallback when a translation isn't found in the current language
+          translate.setDefaultLang('en');
+          // the lang to use, if the lang isn't available, it will use the current loader to get them
+          translate.use('en');
+          
+          let t = this._auth;
+
+
     this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/teradata.svg'));
     this._iconRegistry.addSvgIconInNamespace('assets', 'github',

@@ -40,11 +40,7 @@ export class IncotermComponent extends BaseComponent {
   }
 
 
-  ngOnInitClass() {
 
-    this.initData();
-    this.entList = <Observable<IncoTerm[]>> this._curService.entList;
-  }
 
   addColumns() {
 

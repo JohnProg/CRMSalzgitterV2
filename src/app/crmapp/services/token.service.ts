@@ -51,7 +51,6 @@ export class TokenService {
     }
 
     getUserInfo() {
-
         return this._http.get(this._confs.serverWithApiCustomUrl + 'User/UserInfo',  { headers: this._confs.getHeaders() } )
         .map((res: Response) => res.json() )
         .subscribe( (user: any) => {

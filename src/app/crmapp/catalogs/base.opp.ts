@@ -56,7 +56,7 @@ export class BaseOppComponent extends BaseComponent {
   @Input() idDoc: number = 0;
   deliveryRequired: boolean = false;
   @Input() quoteType: EnumDocType;
-
+  
    loadCatalogs() {
     this._curService.loadQl(oppQl, { iddoc: this.quoteType })
     .subscribe(({data}) => {
@@ -91,9 +91,9 @@ export class BaseOppComponent extends BaseComponent {
     this._actions.showCancel(false);
     setTimeout( () => {
         if (this.idDoc > 0) {
-
         this.editEntity(this.idDoc);
-        this._actions.updateTitle('Edit ' + this.idDoc.toString());
+        
+        this._actions.updateTitle('Edit ' + this.catalogName + ' ' + this.idDoc.toString());
       } else {
         this._actions.updateTitle('Create ');
         this.addEntity();

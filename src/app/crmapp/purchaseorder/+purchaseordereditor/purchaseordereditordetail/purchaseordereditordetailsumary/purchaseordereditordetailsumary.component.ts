@@ -25,9 +25,10 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 
+
 @Component({
   selector: 'crm-purchaseordereditordetailsumary',
-  templateUrl: './purchaseordereditordetailsumary.component.html',
+  templateUrl: '../../../../components/editordetailsumary/editordetailsumary.component.html',
   styleUrls: ['./purchaseordereditordetailsumary.component.scss']
 })
 export class PurchaseordereditordetailsumaryComponent extends EditordetailsumaryComponent {
@@ -36,13 +37,13 @@ export class PurchaseordereditordetailsumaryComponent extends Editordetailsumary
   
 
 
-  ngBeforeInit() {
-    super.ngBeforeInit();
-    this.catalogName = 'Purchase Order Details Sumary';
-    this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName, this.loadName);
-    this.refreshItemUrl = 'PurchaseOrderDetailSumary/searchByDetail';
-    this.sumProperties = 'purchaseOrderDetailSumaryProperties';  
-  }
+  // ngBeforeInit() {
+  //   super.ngBeforeInit();
+  //   this.catalogName = 'Purchase Order Details Sumary';
+  //   this._curService.setAPI('PurchaseOrderDetailSumary', this.catalogName, this.loadName);
+  //   this.refreshItemUrl = 'PurchaseOrderDetailSumary/searchByDetail';
+  //   this.sumProperties = 'purchaseOrderDetailSumaryProperties';  
+  // }
 
   initEntity() {
     this.itemEdit = new PurchaseOrderDetailSumary() ;

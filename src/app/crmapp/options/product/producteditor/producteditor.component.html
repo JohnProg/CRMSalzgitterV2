@@ -27,10 +27,10 @@
 
         </section>
 </form>
-        <section layout-lt-md="column" layout="row" flex>
+        <section layout-lt-md="column" layout="row" flex *ngIf="itemEdit.id > 0">
 
 
-          <td-expansion-panel *ngIf="itemEdit.id > 0" label="Properties" flex (expanded)="expandProperties()">
+          <td-expansion-panel  label="Properties" flex (expanded)="expandProperties()">
             <crm-productproperty [idproduct]="itemEdit.id"></crm-productproperty>
           </td-expansion-panel>
         </section>

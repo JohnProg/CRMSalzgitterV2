@@ -54,13 +54,8 @@ export class EditorbasedialogdocumentComponent extends BaseComponent {
     this.subEditor = true;
     this.setTitle = false;
     this.catalogName = 'Dialog Document';   
-  }
-
-
-  ngOnInitClass() {
     this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
     this.entList = <Observable<BaseDocument[]>>this._curService.entList;
-    this.initData();
   }
 
 

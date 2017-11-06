@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
@@ -25,7 +25,7 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AuthHelper } from '../authHelper/authHelper';
 import * as moment from 'moment';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 export const cCurrencyMask = createNumberMask({
       allowDecimal: true
@@ -106,7 +106,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   totalItems: number;
   _totalItems: any;
 
-  catalogName: string;
+  @Input() catalogName: string;
 
   filteredData: any[];
   filteredTotal: number = 0;
@@ -165,7 +165,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   catEMail: TCRMEntity[];
   constructor( public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
+    public _dialogService: MatDialog,
     public _snackBarService: MatSnackBar,
     public _actions: ActionsService,
     public _mediaService: TdMediaService,
@@ -180,11 +180,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _one: OnedrivegraphService
     ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
-                       _dialogService,_snackBarService, _tableService, apollo);
+                       _dialogService,
+                       _snackBarService, _tableService, apollo);
                        
-    this.addColumns();
-    this.addActionColumn();
-    this.pageSize = this._confs.pageSize;
+
     this.objId = this._actions.newGuid();
   }
 
@@ -223,6 +222,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInitClass() {
     this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
+    this.addColumns();
+    this.addActionColumn();
     this.initData();
   }
 
@@ -230,6 +231,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit(): void {
+
+
+    this.pageSize = this._confs.pageSize;
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
 
@@ -255,7 +259,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onUpdateErrorEvent = this._curService.onUpdateErrorEmitter.subscribe(item => this.onUpdateError(item));
     this.onDeleteErrorEvent = this._curService.onDeleteErrorEmitter.subscribe(item => this.onDeleteError(item));
 
-
+    
     if (this.setTitle === true) {
       setTimeout( () => {
         

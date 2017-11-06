@@ -225,21 +225,23 @@
 
           <section flex-gt-sm="35">
             <mat-form-field>
-              <input matInput #smim flex name="smim" [(ngModel)]="itemEdit.smim" required="true" placeholder="SMIM" maxlength="50">
+              <input matInput #smim flex name="smim" [(ngModel)]="itemEdit.smim"  placeholder="SMI Ref" maxlength="50">
               <mat-hint align="end">{{smim.value.length}} / 50</mat-hint>
             </mat-form-field>
           </section>
           <section flex-gt-sm="35">
             <mat-form-field>
-              <input matInput #poNumber flex name="poNumber" [(ngModel)]="itemEdit.poNumber" required="true" placeholder="PO Number" maxlength="150">
+              <input matInput #poNumber flex name="poNumber" [(ngModel)]="itemEdit.poNumber"  placeholder="PO Number" maxlength="150">
               <mat-hint align="end">{{poNumber.value.length}} / 150</mat-hint>
             </mat-form-field>
           </section>
 
 
+          
+
         </div>
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <section  flex-gt-sm="35" >
+          <section  flex-gt-sm="25" >
               <mat-form-field >
                   <input matInput  [matDatepicker]="offerValidity" name="OfferValidity" placeholder="Offer validity" 
 				                  required="true" [(ngModel)]="itemEdit.offerValidity">
@@ -247,20 +249,28 @@
                   <mat-datepicker #offerValidity></mat-datepicker>
               </mat-form-field >  
           </section>  
-          <section  flex-gt-sm="35" >
+          <section  flex-gt-sm="25" >
               <mat-form-field >
-                  <input matInput  [matDatepicker]="ShipmentOffered" name="ShipmentOffered" placeholder="Shipment Offered" 
+                  <input matInput  [matDatepicker]="ShipmentOffered" name="ShipmentOffered" placeholder="Latest Shipment" 
 				                  required="true" [(ngModel)]="itemEdit.shipmentOffered">
                   <mat-datepicker-toggle matSuffix [for]="ShipmentOffered"></mat-datepicker-toggle>
                   <mat-datepicker #ShipmentOffered></mat-datepicker>
               </mat-form-field >              
           </section> 
-        <section  flex-gt-sm="30" >
+        <section  flex-gt-sm="25" >
             <mat-form-field >
                 <input matInput  [matDatepicker]="BookingDate" name="BookingDate" placeholder="Booking Date" 
                          [(ngModel)]="itemEdit.bookingDate">
                 <mat-datepicker-toggle matSuffix [for]="BookingDate"></mat-datepicker-toggle>
                 <mat-datepicker #BookingDate></mat-datepicker>
+            </mat-form-field >              
+          </section> 
+          <section  flex-gt-sm="25" >
+            <mat-form-field >
+                <input matInput  [matDatepicker]="orderConfirmDate" name="orderConfirmDate" [required]="itemEdit.smim != ''" placeholder="Order Confirm Date" 
+                         [(ngModel)]="itemEdit.orderConfirmDate">
+                <mat-datepicker-toggle matSuffix [for]="orderConfirmDate"></mat-datepicker-toggle>
+                <mat-datepicker #orderConfirmDate></mat-datepicker>
             </mat-form-field >              
           </section> 
         </div>        

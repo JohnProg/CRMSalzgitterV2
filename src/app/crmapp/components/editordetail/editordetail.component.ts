@@ -60,7 +60,10 @@ export class EditordetailComponent extends BaseComponent {
     ngBeforeInit() {
       super.ngBeforeInit();
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
-      this.itemEdit = new TCRMEntity();  
+      this.itemEdit = new TCRMEntity(); 
+       
+      this.setTitle = false;
+
     }
   
   
@@ -89,9 +92,6 @@ export class EditordetailComponent extends BaseComponent {
       return pparams;
     }
   
-    afterViewInit(): void {
-      this._actions.updateTitle( this.catalogName + ' ' + this.idOpp.toString());
-    }
   
     onDestroy() {
       if (this.propSubscription !== undefined) { this.propSubscription.unsubscribe(); }
@@ -108,7 +108,6 @@ export class EditordetailComponent extends BaseComponent {
   
     afterLoadItem(itm: TCRMEntity) {
       super.afterLoadItem(itm);
-      this._actions.updateTitle('Edit item ' + this.idOpp.toString());
     }
   
   
@@ -134,11 +133,17 @@ export class EditordetailComponent extends BaseComponent {
     qtyChange(event)  {
       this.itemEdit['itemQuantity'] = event;
       this.itemEdit['itemExtended']  = event * this.itemEdit['itemPrice'];
+      this.calculateOtherCosts();
     }
     priceChange(event)  {
       this.itemEdit['itemPrice'] = event;
       this.itemEdit['itemExtended']  = this.itemEdit['itemQuantity'] * event;
-    }  
+      this.calculateOtherCosts();
+    } 
+    
+    calculateOtherCosts() {
+
+    }
   
   
     productChange(event) {

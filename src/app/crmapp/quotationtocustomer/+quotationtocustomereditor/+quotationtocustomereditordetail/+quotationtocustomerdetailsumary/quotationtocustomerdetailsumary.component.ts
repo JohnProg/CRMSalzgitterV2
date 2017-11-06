@@ -33,20 +33,20 @@ import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-quotationtocustomerdetailsumary',
-  templateUrl: './quotationtocustomerdetailsumary.component.html',
+  templateUrl: '../../../../components/editordetailsumary/editordetailsumary.component.html',
   styleUrls: ['./quotationtocustomerdetailsumary.component.scss']
 })
 export class QuotationtocustomerdetailsumaryComponent extends EditordetailsumaryComponent {
 
   itemEdit: QuotationToCustomerDetailSumary;
 
-  ngBeforeInit() {
-    super.ngBeforeInit();
-     this.catalogName = 'Quotation to Customer Details Sumary';
-    this._curService.setAPI('QuotationToCustomerDetailSumary', this.catalogName, this.loadName);
-    this.refreshItemUrl = 'QuotationToCustomerDetailSumary/searchByDetail';
-    this.sumProperties = 'quotationToCustomerDetailSumaryProperties'; 
-  }
+  // ngBeforeInit() {
+  //   super.ngBeforeInit();
+  //    this.catalogName = 'Quotation to Customer Details Sumary';
+  //   this._curService.setAPI('QuotationToCustomerDetailSumary', this.catalogName, this.loadName);
+  //   this.refreshItemUrl = 'QuotationToCustomerDetailSumary/searchByDetail';
+  //   this.sumProperties = 'quotationToCustomerDetailSumaryProperties'; 
+  // }
 
   initEntity() {
     

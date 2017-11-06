@@ -96,8 +96,9 @@ import { CRMSelectComponent, GenericActionsComponent,
   EditordetailsumaryComponent, EditorbasedialogComponent,
   EditorbasedialogdocumentComponent,
   DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent,
-  NameDescPipe, MaxStringPipe, EditordetailComponent } from './components/index';
+  NameDescPipe, MaxStringPipe, EditordetailComponent, CrmcustomdialogComponent } from './components/index';
 
+  
 // Directives
 
 import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/index';
@@ -161,7 +162,6 @@ import { AuthHelper } from './authHelper/authHelper';
 
 
 
-
 @NgModule({
   declarations: [
 
@@ -171,14 +171,16 @@ import { AuthHelper } from './authHelper/authHelper';
     ActionoppComponent, 
     StateComponent,
     IncotermComponent,
-    CatalogComponent,
     TemplateemailComponent,
     BaseOppComponent,
     SelectcolonyComponent,
     EditordetailComponent,
     MillComponent,
     MillcountryComponent,
+    CrmcustomdialogComponent,
+    CatalogComponent,
     
+
     //Options
     OptionsComponent,
     CompanyComponent,
@@ -274,7 +276,9 @@ import { AuthHelper } from './authHelper/authHelper';
     ShippingeditorFromPOComponent,
     
     NameDescPipe,
-    MaxStringPipe,
+    MaxStringPipe
+    
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     TranslateModule,
@@ -291,16 +295,20 @@ import { AuthHelper } from './authHelper/authHelper';
       // Md2Module,
        CKEditorModule,
        TranslateModule,
+       GenericActionsComponent,
        //TextMaskModule
+       
+
   ],
   providers: [
     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
     OpportunityService, TokenService,
-    AuthGuard, AuthHelper, OnedrivegraphService,
+    AuthGuard, AuthHelper, OnedrivegraphService, 
   ], // additional providers needed for this module
-  entryComponents: [ ],
+  entryComponents: [ CrmcustomdialogComponent ],
 
   bootstrap: [  ],
+
 })
 export class CRMModule {}

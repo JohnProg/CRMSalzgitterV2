@@ -34,10 +34,10 @@ import { EnumDocType } from '../../constants/index';
 })
 export class OpportunityeditorComponent extends CatalogComponent {
 
-  idOpp: number = 0;
   opp: Opportunity;
   @ViewChild(OpportunityheaderComponent) headercomp: OpportunityheaderComponent;
 
+  itemRoute: string = 'opportunity';
   
   constructor(
     public _loadingService: TdLoadingService,
@@ -48,10 +48,12 @@ export class OpportunityeditorComponent extends CatalogComponent {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.Opportunity;
-    this._route.params.subscribe((params: { id: number }) => {
+    this._route.params.subscribe((params: any) => {
       this.idOpp = params.id;
+      if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
+      if( params['scrId'] != undefined)  this.parentScr = params.scrId;
     });
   }
 
@@ -72,5 +74,6 @@ export class OpportunityeditorComponent extends CatalogComponent {
     this.opp = itm;
     this.idOpp = itm.id;
     this.idCustomer = itm.idCustomer;
+    super.onItemLoaded(itm);
   }
 }

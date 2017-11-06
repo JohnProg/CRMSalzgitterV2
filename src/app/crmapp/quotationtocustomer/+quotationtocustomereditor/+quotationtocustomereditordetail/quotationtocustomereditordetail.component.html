@@ -28,33 +28,42 @@
 
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
             <mat-form-field  flex-gt-sm="25" >
-                <input   matInput  #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" (ngModelChange)="qtyChange($event)" />
+                <input   matInput  #ItemQuantity name="ItemQuantity"  placeholder="Quantity" [ngModel]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" (ngModelChange)="qtyChange($event)" />
               </mat-form-field>
               <mat-form-field  flex-gt-sm="25" >
-                <input  matInput   #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)"  />
+                <input  matInput   #ItemPrice  name="ItemPrice" placeholder="Material Cost" [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)"  />
               </mat-form-field>
-              <mat-form-field  flex-gt-sm="25" >
-                <input  matInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.itemExtended" currencyMask disabled/>
-              </mat-form-field>  
-          <mat-form-field class="mat-icon-float" flex-gt-sm="25">
-            <input  matInput  #SalePrice name="SalePrice" placeholder="Sale Price" [(ngModel)]="itemEdit.salePrice"  currencyMask  >
-          </mat-form-field>    
-                         
+              <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+                  <input  matInput  #expensePrice name="expensePrice" placeholder="Costs abroad" [(ngModel)]="itemEdit.expenseSupplierSide_Cost" (ngModelChange)="calculateOtherCosts()" currencyMask  >
+                </mat-form-field>   
+                <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+                  <input  matInput  #expensesmim name="expensesmim" placeholder="Domestic Costs" [(ngModel)]="itemEdit.expenseSMIM_Cost" (ngModelChange)="calculateOtherCosts()" currencyMask  >
+                </mat-form-field>                             
         </div> 
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
-          <mat-form-field class="mat-icon-float" flex-gt-sm="35">
-            <input  matInput  #expensePrice name="expensePrice" placeholder="Expense Price" [(ngModel)]="itemEdit.expenseSupplierSide_Cost"  currencyMask  >
-          </mat-form-field>   
-          <mat-form-field class="mat-icon-float" flex-gt-sm="35">
-            <input  matInput  #expensesmim name="expensesmim" placeholder="Expense SMIM Cost" [(ngModel)]="itemEdit.expenseSMIM_Cost"  currencyMask  >
-          </mat-form-field>           
-          <mat-form-field class="mat-icon-float" flex-gt-sm="30">
-            <input  matInput  #profit name="profit" placeholder="Profit" [(ngModel)]="itemEdit.profit"  currencyMask  [options]="{ prefix: '%', prefixPos: 'end'}" >
-          </mat-form-field>         
+
+        
+          <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+            <input  matInput  #profit name="profit" placeholder="Margin" [(ngModel)]="itemEdit.profit"  currencyMask  (ngModelChange)="calculateOtherCosts()"  [options]="{ prefix: '%', prefixPos: 'end'}" >
+          </mat-form-field>  
+          <mat-form-field  flex-gt-sm="25" >
+              <input  matInput    #ItemExtended name="ItemExtended" readonly placeholder="Total Cost" [(ngModel)]="itemEdit.itemExtended" currencyMask />
+            </mat-form-field>      
+          <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+              <input  matInput  #SalePrice name="SalePrice" placeholder="Sales Price" readonly [(ngModel)]="itemEdit.salePrice"  currencyMask  >
+            </mat-form-field>    
+            <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+                <input  matInput  #expectedProfit name="expectedProfit" placeholder="Expected Profit" readonly [(ngModel)]="itemEdit.expectedProfit"  currencyMask  >
+              </mat-form-field>    
         </div>           
 
     </form>
-        <crm-quotationtocustomerdetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.quantity" [price]="itemEdit.salePrice" ></crm-quotationtocustomerdetailsumary>
+        <crm-quotationtocustomerdetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" [price]="itemEdit.itemPrice"
+            catalogName="Quotation to Customer Details Sumary"
+            baseController="QuotationToCustomerDetailSumary"
+            baseSearch="searchByDetail"
+            sumProperties="quotationToCustomerDetailSumaryProperties"
+          ></crm-quotationtocustomerdetailsumary>
       </section>
 
 

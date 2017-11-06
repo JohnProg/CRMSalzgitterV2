@@ -17,7 +17,6 @@ export class ActionsService {
     public cancelEditEvent: EventEmitter<any>=new EventEmitter();
     public setEditEvent: EventEmitter<any>=new EventEmitter();
 
-
     public updateTitleEvent: EventEmitter<string>=new EventEmitter<string>();
     public searchEvent: EventEmitter<string>=new EventEmitter<string>();
     public showSearchEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
@@ -55,6 +54,12 @@ export class ActionsService {
       this._confs.userInfo = user;
       localStorage.setItem('userInfo', JSON.stringify(user));
       this.userInfoEvent.emit(user);
+    }
+
+    public emitUserInfo() {
+      let user = JSON.parse(localStorage.getItem('userInfo'));
+      this._confs.userInfo = user;
+      this.userInfoEvent.emit(this._confs.userInfo);
     }
     public addItem() {
       this.addItemEvent.emit();

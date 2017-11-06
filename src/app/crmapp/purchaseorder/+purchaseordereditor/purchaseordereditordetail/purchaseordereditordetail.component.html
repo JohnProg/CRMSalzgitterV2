@@ -43,7 +43,13 @@
 
 
     </form>
-        <crm-purchaseordereditordetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.Quantity" [price]="itemEdit.SalePrice" ></crm-purchaseordereditordetailsumary>
+        <crm-purchaseordereditordetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" [price]="itemEdit.salePrice"
+            catalogName="Purchase Order Details Sumary"
+            baseController="PurchaseOrderDetailSumary"
+            baseSearch="searchByDetail"
+            sumProperties="purchaseOrderDetailSumaryProperties"
+          
+          ></crm-purchaseordereditordetailsumary>
       </section>
 
 

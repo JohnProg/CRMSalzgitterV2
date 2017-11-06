@@ -39,6 +39,7 @@ export class ShippingeditorComponent extends CatalogComponent {
   byType: number = 0;
   shipping: Shipping;
   idPO: number;
+  itemRoute: string = 'shipping';
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -48,14 +49,23 @@ export class ShippingeditorComponent extends CatalogComponent {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.Shipping;
-    this._route.params.subscribe((params: { id: number }) => {
-       this.idShipping = params.id;
-      });
+    
   }
 
-
+  checkParams() {
+    this._route.params.subscribe((params: any) => {
+      
+      if( params != undefined) {
+      this.idShipping = params.id;
+      
+      if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
+      if( params['scrId'] != undefined)  this.parentScr = params.scrId;
+      if( params['moveToScr'] != undefined)  this.moveToScr = params.moveToScr == "true";
+      }
+    });
+  }
 
   doOnItemCreated(itm: Shipping) {
     
@@ -80,6 +90,14 @@ export class ShippingeditorComponent extends CatalogComponent {
   goToPO() {
     this._router.navigate(['/purchaseorder/edit', this.idPO]);
  }
+
+ goToInex() {
+//   if( this.parentRoute != undefined && this.parentScr != undefined) {
+//     this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idPO, {  parentRoute: this.parentRoute, scrId: this.parentScr, moveToScr: true  }]);
+//  }else {
+   this._router.navigate([ '/' + this.itemRoute]);
+ //}
+}
 }
 
 

@@ -39,12 +39,7 @@ export class DocumentviewerComponent extends BaseComponent {
  itemEdit: BaseDocument;
  loadName: string = 'docview.load';
  
- ngOnInitClass() {
-    this.catalogName = this.catName;
-    this._curService.setAPI( this.baseApi + '/', this.catalogName, this.loadName);
-    this.entList = <Observable<BaseDocument[]>>this._curService.entList;
-    this.initData();
-  }
+ setTitle: boolean = false;
 
  loadData() {
     let pparams = new URLSearchParams();

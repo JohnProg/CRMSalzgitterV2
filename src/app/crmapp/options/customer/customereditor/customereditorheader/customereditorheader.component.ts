@@ -54,12 +54,7 @@ export class CustomereditorheaderComponent extends BaseComponent {
   }
 
 
-  ngOnInitClass() {
-    this.entList = <Observable<Customer[]>>this._curService.entList;
-    this.initEntity();
 
-
-  }
 
   afterViewInit(): void {
 

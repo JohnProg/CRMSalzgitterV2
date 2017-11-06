@@ -41,7 +41,7 @@ export class PurchaseordereditorComponent extends CatalogComponent {
   idCustomer: number;
   po: PurchaseOrder;
   @ViewChild(PurchaseordereditorheaderComponent) headercomp: PurchaseordereditorheaderComponent;
-
+  itemRoute: string = 'purchaseorder';
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -51,7 +51,7 @@ export class PurchaseordereditorComponent extends CatalogComponent {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.PurchaseOrder;
     this._route.params.subscribe((params: { id: number }) => {
        this.idPurchase = params.id;
@@ -88,6 +88,14 @@ export class PurchaseordereditorComponent extends CatalogComponent {
      this._router.navigate(['/quotationfromsupplier/edit', this.idQFS]);
   }
 
+  goToInex() {
+    if( this.parentRoute != undefined && this.parentScr != undefined) {
+      this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idQTC, {  parentRoute: this.parentRoute, scrId: this.parentScr, moveToScr: true  }]);
+   }else {
+     this._router.navigate([ '/' + this.itemRoute]);
+   }
+  }
+
   onItemLoaded(itm: PurchaseOrder) {
     this.po = itm;
     this.idPurchase = itm.id;
@@ -95,6 +103,7 @@ export class PurchaseordereditorComponent extends CatalogComponent {
     this.idQFS = itm.idQuotationFromSupplier;
     this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
+    super.onItemLoaded(itm);
   }
 }
 

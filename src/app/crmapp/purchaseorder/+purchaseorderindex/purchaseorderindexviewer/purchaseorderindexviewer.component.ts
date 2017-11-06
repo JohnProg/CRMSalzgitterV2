@@ -35,17 +35,18 @@ export class PurchaseorderindexviewerComponent extends QuotationindexviewerCompo
   catalogName: string ="Purchase Orders";
   baseApi: string ="PurchaseOrder/searchBy";
   parentDoc: number = 3;
-  parentRoute: string ="purchaseorder";
+  itemRoute: string ="purchaseorder";
 
 
   addColumns() {
 
     //super.addColumns();
     this.columns.push({ name: 'id', label: 'Po #', tooltip: '' });
-    if( this.idParent == 0  ) {
+    if( this.idParent == undefined || this.idParent === 0 ) {
       this.columns.push({ name: 'customerName', label: 'Customer' });
+      this.columns.push({ name: 'idQuotationToCustomer', label: 'QTC' });
     }
-    this.columns.push({ name: 'idQuotationToCustomer', label: 'QTC' });
+    
     this.columns.push({ name: 'currencyName', label: 'Currency' });
     this.columns.push({ name: 'millName', label: 'Mill' });
     this.columns.push({ name: 'sstatusName', label: 'Status' });

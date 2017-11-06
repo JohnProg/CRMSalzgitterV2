@@ -36,7 +36,7 @@ export class ShippingindexviewerComponent extends QuotationindexviewerComponent 
   catalogName: string ="Shippings";
   baseApi: string ="Shipping/searchBy";
   parentDoc: number = 4;
-  parentRoute: string ="shipping";
+  itemRoute: string ="shipping";
 
 
 

@@ -45,10 +45,7 @@ export class QuotationtocustomereditordetailComponent extends EditordetailCompon
   catalogName: string = 'Quotation Details';
   baseSearch: string = 'searchByQuotation';
 
-  ngOnInitClass() {
-    this.entList = <Observable<QuotationToCustomerDetail[]>>this._curService.entList;
-    this.initData();
-  }
+
 
   getLoadParams(): URLSearchParams {
     let pparams = new URLSearchParams();
@@ -60,6 +57,12 @@ export class QuotationtocustomereditordetailComponent extends EditordetailCompon
     this.itemEdit = new QuotationToCustomerDetail() ;
     this.itemEdit.idQuotationToCustomer  = this.idOpp;
     this.itemEdit.idProduct = 0;
+  }
+
+  calculateOtherCosts() {
+       this.itemEdit.itemExtended = this.itemEdit.itemPrice + this.itemEdit.expenseSupplierSide_Cost + this.itemEdit.expenseSMIM_Cost;
+       this.itemEdit.salePrice = this.itemEdit.itemExtended > 0 ? this.itemEdit.itemExtended / ( 1 - this.itemEdit.profit) : 0;
+       this.itemEdit.expectedProfit = this.itemEdit.salePrice - this.itemEdit.itemExtended;
   }
 
 }

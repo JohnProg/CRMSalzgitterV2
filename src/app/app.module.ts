@@ -21,6 +21,8 @@ import { CRMModule } from './crmapp/crm.module';
 import { environment } from '../environments/environment';
 
 import { MainmenuComponent } from './mainmenu/mainmenu.component';
+import { CustomdialogcrmComponent } from './customdialogcrm/customdialogcrm.component';
+
 
 
 const httpInterceptorProviders: Type<any>[] = [
@@ -35,7 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     routedComponents,
     MainmenuComponent,
-
+    CustomdialogcrmComponent,
+    
 
 
   ], // directives, components, and pipes owned by this NgModule

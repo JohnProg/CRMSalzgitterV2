@@ -39,10 +39,7 @@ export class PurchaseordereditordetailComponent  extends EditordetailComponent {
   baseSearch: string = 'searchByPO';
 
 
-  ngOnInitClass() {
-    this.entList = <Observable<PurchaseOrderDetail[]>>this._curService.entList;
-    this.initData();
-  }
+
 
   getLoadParams(): URLSearchParams {
     let pparams = new URLSearchParams();

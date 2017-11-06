@@ -36,14 +36,20 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     catalogName: string;
     baseApi: string;
     parentDoc: number;
-    parentRoute: string;
-   
+    itemRoute: string;
 
-  
-    ngOnInitClass() {
+
+    @Input() parentRoute: string;
+    @Input() parentScreen: number = 5;
+    @Input() moveToScr: boolean = true;
+    
+    ngBeforeInit() {
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
-      super.ngOnInitClass();
+      if( this.idParent != undefined || this.idParent == 0) {
+        this.setTitle = false;
+      }
     }
+
 
 
     ngAfterViewInit() {
@@ -70,7 +76,12 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     }
   
     editEntity(id: number) {
-      this._router.navigate([ '/' + this.parentRoute + '/edit/' + id]);
+      
+      if( this.parentRoute != undefined) {
+         this._router.navigate([ '/' + this.itemRoute + '/edit/' + id, {  parentRoute: this.parentRoute, scrId: this.parentScreen, moveToScr: this.moveToScr   }]);
+      }else {
+        this._router.navigate([ '/' + this.itemRoute + '/edit/' + id]);
+      }
     }
   
   
@@ -79,9 +90,9 @@ export class QuotationindexviewerComponent extends BaseComponent  {
       
       if( this.byType == this.parentDoc && this.idParent > 0) {
         
-        this._router.navigate([  '/' + this.parentRoute + '/createfromquote/', this.idParent]);
+        this._router.navigate([  '/' + this.itemRoute + '/createfromquote/', this.idParent]);
       } else {
-        this._router.navigate(['/' + this.parentRoute + '/edit/', 0]);
+        this._router.navigate(['/' + this.itemRoute + '/edit/', 0]);
       }
     }
   

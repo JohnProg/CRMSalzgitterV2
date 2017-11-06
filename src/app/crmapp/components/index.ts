@@ -12,3 +12,4 @@ export * from './selectcolony/selectcolony.component';
 export * from './quotationindexviewer/quotationindexviewer.component';
 export * from './pipes/index';
 export * from './editordetail/editordetail.component';
+export * from './crmcustomdialog/crmcustomdialog.component';

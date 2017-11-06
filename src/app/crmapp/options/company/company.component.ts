@@ -47,10 +47,7 @@ export class CompanyComponent extends BaseComponent {
   }
 
 
-  ngOnInitClass() {
-    this.entList = <Observable<Company[]>>this._curService.entList;
-    this.initEntity();
-  }
+
 
   afterViewInit(): void {
 

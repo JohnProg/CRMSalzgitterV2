@@ -45,12 +45,6 @@ export class ProducteditorComponent extends BaseComponent {
   }
 
 
-  ngOnInitClass() {
-    this.entList = <Observable<getProductProperties_Result[]>>this._curService.entList;
-    this.initEntity();
-
-
-  }
 
   afterViewInit(): void {
       this.route.params.subscribe((params: { id: number }) => {

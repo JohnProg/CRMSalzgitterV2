@@ -41,10 +41,7 @@ export class StateComponent extends BaseComponent {
   }
 
 
-  ngOnInitClass() {
-    this.initData();
-    this.entList = <Observable<State[]>> this._curService.entList;
-  }
+
 
     editEntity( id: number ) {
       this.itemEdit = <State>this._curService.itemEdit;

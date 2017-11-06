@@ -28,7 +28,7 @@
 
       </form>
   
-      <td-expansion-panel *ngIf="itemEdit.id > 0" label="Status assigned" flex >
+      <td-expansion-panel *ngIf="itemEdit.id > 0" label="Status assigned" flex [expand]="true" >
           <crm-opptypestatus [idtype]="itemEdit.id" ></crm-opptypestatus>
         </td-expansion-panel>
        

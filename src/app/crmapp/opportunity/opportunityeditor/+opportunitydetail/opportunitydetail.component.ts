@@ -57,10 +57,7 @@ export class OpportunitydetailComponent extends EditordetailComponent {
   baseApi: string = 'OpportunityDetail';
   catalogName: string = 'Opportunity Details';
 
-  ngOnInitClass() {
-    this.entList = <Observable<OpportunityDetail[]>>this._curService.entList;
-    this.initData();
-  }
+
 
   initEntity() {
     this.itemEdit = new OpportunityDetail() ;

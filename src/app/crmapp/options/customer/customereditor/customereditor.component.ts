@@ -51,7 +51,7 @@ export class CustomereditorComponent extends CatalogComponent  {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
 
     this._route.params.subscribe((params: { id: number }) => {
        this.idCustomer = params.id;

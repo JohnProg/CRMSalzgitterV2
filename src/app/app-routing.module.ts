@@ -10,6 +10,7 @@ import { BaseComponent, CatalogComponent, CurrencyComponent,
 ActionoppComponent,  StateComponent, IncotermComponent,
 TemplateemailComponent, MillComponent } from './crmapp/catalogs/index';
 
+
 import { OptionsComponent, 
   CompanyComponent,
   ActionopportunityComponent, 
@@ -53,18 +54,20 @@ import { ShippingComponent, ShippingindexComponent, ShippingeditorComponent, Shi
 import { LoginComponent } from './crmapp/login/login.component';
 
 
+
 const routes: Routes = [
-  
+  { path: 'login', component: LoginComponent },
   //{ path: 'onedriveCallback', component: MainComponent },
   {
     path: '', component: MainComponent, 
     children: [
-        { path: 'login', component: LoginComponent },
+  
         {
           component: DashboardComponent,
           path: '',
           canActivate: [AuthGuard]
         },
+
         {
           path: 'catalogs', component: CatalogComponent,
           canActivate: [AuthGuard],
@@ -94,6 +97,7 @@ const routes: Routes = [
             { path: 'templateemail', component: TemplateemailComponent },
             { path: 'typeopportunity', component: BaseComponent, data: { baseapi: 'TypeOpportunity', catName: 'Type Opportunity' } },
             { path: 'status', component: BaseComponent, data: { baseapi: 'EstatusOpportunity', catName: 'Status' } },
+            { path: 'properties', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties' } },
             
           ]
         },
@@ -235,9 +239,10 @@ const routes: Routes = [
             { path: 'edit/:id', component: ShippingeditorComponent
             }
           ]
-        }                     
-    ]
-  }
+        }   
+  ]
+}   
+  
   
 ];
 
@@ -252,6 +257,6 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routedComponents: any[] = [
-    MainComponent, LoginComponent,
-    DashboardComponent, 
+  MainComponent, LoginComponent,
+  DashboardComponent
 ];

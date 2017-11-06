@@ -49,10 +49,7 @@ export class CustomerproductpriceComponent extends BaseComponent {
   }
   
 
-  ngOnInitClass() {
-    this.entList = <Observable<CustomerProductPrice[]>>this._curService.entList;
-    this.initData();
-  }
+
 
   initEntity() {
     this.itemEdit = new  CustomerProductPrice();
@@ -75,7 +72,7 @@ export class CustomerproductpriceComponent extends BaseComponent {
 
 
   editEntity(id: number) {
-    this._actions.updateTitle('Edit ' + this.catalogName);
+
     this.itemEdit = <CustomerProductPrice>this._curService.itemEdit;
     this._curService.load(id);
   }

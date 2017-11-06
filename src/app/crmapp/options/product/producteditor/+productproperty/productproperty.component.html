@@ -10,27 +10,11 @@
 </section>
 
 
-<section flex *ngIf="!isEditing">
-  <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
-    <ng-template tdDataTableTemplate="pOrder" let-value="value" let-row="row" let-column="column">
-      <button mat-button (click)="editEntity(row.id)">{{value}}</button>
 
-    </ng-template>
-    <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
-      <div layout="row" flex="5">
-
-        <button mat-icon-button (click)="confirmDelete(row)">
-            <mat-icon>delete</mat-icon>
-          </button>
-      </div>
-    </ng-template>
-
-  </td-data-table>
-</section>
-
+<section flex layout="row" *ngIf="isEditing">
 <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
 
-  <section flex layout="row" *ngIf="isEditing">
+
       <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
     <section flex="25"></section>
     <section  flex="50">
@@ -63,7 +47,28 @@
     </section>
     <section flex="25"></section>
   </ng-template>
-  </section>
+
 
 </form>
+</section>
+
+
+
+<section flex *ngIf="!isEditing">
+    <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+      <ng-template tdDataTableTemplate="pOrder" let-value="value" let-row="row" let-column="column">
+        <button mat-button (click)="editEntity(row.id)">{{value}}</button>
+  
+      </ng-template>
+      <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
+        <div layout="row" flex="5">
+  
+          <button mat-icon-button (click)="confirmDelete(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+      </ng-template>
+  
+    </td-data-table>
+  </section>
 

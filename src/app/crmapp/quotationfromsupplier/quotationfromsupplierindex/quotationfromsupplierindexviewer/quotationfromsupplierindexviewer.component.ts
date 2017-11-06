@@ -33,8 +33,7 @@ export class QuotationfromsupplierindexviewerComponent  extends Quotationindexvi
   catalogName: string = "Quotation from Supplier";
   baseApi: string = 'QuotationFromSupplier/searchByOpp';
   parentDoc: number = 1;
-  parentRoute: string = 'quotationfromsupplier';
-
+  itemRoute: string = 'quotationfromsupplier';
 
   getLoadParams(): URLSearchParams {
     let pparams = new URLSearchParams();
@@ -48,12 +47,14 @@ export class QuotationfromsupplierindexviewerComponent  extends Quotationindexvi
 
     //super.addColumns();
     this.columns.push({ name: 'id', label: 'Quotation', tooltip: '' });
-    if( this.idParent === 0 ) {
+    
+    if( this.idParent == undefined || this.idParent === 0 ) {
       this.columns.push({ name: 'customerName', label: 'Customer' });
+      this.columns.push({ name: 'idOpportunity', label: 'Opportunity' });
     }
-    this.columns.push({ name: 'idOpportunity', label: 'Opportunity' });
-    this.columns.push({ name: 'currencyName', label: 'Currency' });
-    //this.columns.push({ name: 'millName', label: 'Mill' });
+    
+    //this.columns.push({ name: 'currencyName', label: 'Currency' });
+    this.columns.push({ name: 'millName', label: 'Mill' });
     //this.columns.push({ name: 'portName', label: 'Port' });
     this.columns.push({ name: 'sstatusName', label: 'Status' });
     this.columns.push({ name: 'dateReceived', label: 'Date', numeric: false, format: DATE_FORMAT  });

@@ -40,10 +40,7 @@ export class QuotationfromsupplierdetailComponent extends EditordetailComponent 
   catalogName: string = 'Quotation Details';
   baseSearch: string = 'searchByQuotation';
   
-  ngOnInitClass() {
-    this.entList = <Observable<QuotationFromSupplierDetail[]>>this._curService.entList;
-    this.initData();
-  }
+
 
   getLoadParams(): URLSearchParams {
     let pparams = new URLSearchParams();

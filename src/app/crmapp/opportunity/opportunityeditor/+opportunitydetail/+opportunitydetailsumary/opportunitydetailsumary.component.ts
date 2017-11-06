@@ -47,13 +47,14 @@ export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponen
   
 
 
-  ngBeforeInit() {
-    super.ngBeforeInit();
-     this.catalogName = 'Opp Details Sumary';
-    this._curService.setAPI('OpportunityDetailSumary', this.catalogName, this.loadName);
-    this.refreshItemUrl = 'OpportunityDetailSumary/searchByDetail';
-    this.sumProperties = 'opportunityDetailSumaryProperties'; 
-  }
+  
+  // ngBeforeInit() {
+  //   super.ngBeforeInit();
+  //    this.catalogName = 'Opp Details Sumary';
+  //   this._curService.setAPI('OpportunityDetailSumary', this.catalogName, this.loadName);
+  //   this.refreshItemUrl = 'OpportunityDetailSumary/searchByDetail';
+  //   this.sumProperties = 'opportunityDetailSumaryProperties'; 
+  // }
 
   initEntity() {
     this.itemEdit = new OpportunityDetailSumary() ;

@@ -68,11 +68,7 @@ export class MillcountryComponent extends BaseComponent {
       this._curService.setAPI('MillCountry/', this.catalogName, this.loadName); 
     }
   
-    ngOnInitClass() {
-      super.ngOnInitClass();
-      this.entList = <Observable<getCountriesFromIdMill_Result[]>>this._curService.entList;
-  
-    }
+ 
   
     initEntity() {
       this.itemEdit = new  MillCountry();

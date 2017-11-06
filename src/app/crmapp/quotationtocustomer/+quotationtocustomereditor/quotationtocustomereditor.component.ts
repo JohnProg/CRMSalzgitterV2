@@ -33,13 +33,10 @@ import { EnumDocType } from '../../constants/index';
 })
 export class QuotationtocustomereditorComponent extends CatalogComponent {
 
-  idQuotation: number = 0;
   qts: QuotationToCustomer;
-  idOpp: number = 0;
-  idCustomer: number;
-  
+ 
   @ViewChild(QuotationtocustomereditorheaderComponent) headercomp: QuotationtocustomereditorheaderComponent;
-
+  itemRoute: string = 'quotationtocustomer';
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -49,11 +46,9 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.QuotationToCustomer;
-    this._route.params.subscribe((params: { id: number }) => {
-      this.idQuotation = params.id;
-    });
+    this.itemRoute = 'quotationtocustomer'
   }
 
 
@@ -70,7 +65,7 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
 
   doOnItemCreated(itm: QuotationToCustomer) {
     this.idQuotation = itm.id;
-    //this.idOpp = itm.idOpportunity;
+    this.idOpp = itm.idQuotationFromSupplier;
     this.idCustomer = itm.idCustomer;    
   }
 
@@ -81,7 +76,9 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
   onItemLoaded(itm: QuotationToCustomer) {
     this.qts = itm;
     this.idQuotation = itm.id;
+    this.idOpp = itm.idQuotationFromSupplier;
     this.idCustomer = this.qts.idCustomer;
+    super.onItemLoaded(itm);
   }
 }
 

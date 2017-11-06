@@ -47,9 +47,7 @@ export class ShippingeditorheaderComponent extends BaseOppComponent {
     this.singleEditor = true;  
   }
 
-  ngOnInitClass() {
-    this.entList = <Observable<Shipping[]>>this._curService.entList;
-  }
+
 
 
   initEntity() {

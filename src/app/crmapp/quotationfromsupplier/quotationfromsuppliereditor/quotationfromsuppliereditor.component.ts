@@ -33,13 +33,10 @@ import { EnumDocType } from '../../constants/index';
 })
 export class QuotationfromsuppliereditorComponent extends CatalogComponent {
 
-  idQuotation: number = 0;
   qts: QuotationFromSupplier;
-  idOpp: number = 0;
-  idCustomer: number;
-
+  
   @ViewChild(QuotationfromsupplierheaderComponent) headercomp: QuotationfromsupplierheaderComponent;
-
+  itemRoute: string = 'quotationfromsupplier';
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -49,12 +46,14 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
     public _ngZone: NgZone,
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions);
+    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.QuotationFromSupplier;
-    this._route.params.subscribe((params: { id: number }) => {
-      this.idQuotation = params.id;
-    });
+    this.itemRoute = 'quotationfromsupplier'
+
   }
+
+
+
 
   linkClick(scr: number ) : boolean {
     if( this.headercomp !== undefined){
@@ -77,13 +76,18 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
   }
 
   onItemLoaded(itm: QuotationFromSupplier) {
-    super.onItemLoaded(itm);
+
     
     this.qts = itm;
     this.idQuotation = itm.id;
     this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
+    super.onItemLoaded(itm);
   }
+
+
+
+  
 }
 
 
@@ -108,7 +112,9 @@ export class QuotationfromsuppliereditorFromOppComponent extends Quotationfromsu
     public _router: Router, public _route: ActivatedRoute,
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
+    
     this._route.params.subscribe((params: { id: number }) => {
+      
       this.idOpp = params.id;
     });
     this.idQuotation = 0;

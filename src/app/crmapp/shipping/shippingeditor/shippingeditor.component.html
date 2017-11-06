@@ -3,24 +3,24 @@
     [sidenavWidth]="(_mediaService.registerQuery('gt-xs') | async) ? '180px' : '100%'">
 
     <mat-nav-list td-sidenav-content>
-        <a mat-list-item matRipple class="block relative" routerLink="/shipping">
+        <a mat-list-item matRipple class="block relative" (click)="goToInex()">
           <mat-icon mat-list-icon>dashboard</mat-icon>
           Go to Index
         </a>     
 
-      <a mat-list-item matRipple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 1  }" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
         <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "HEADER" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2 }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
         <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "DETAILS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DIALOGS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DOCUMENTS" | translate}}
       </a>
@@ -42,7 +42,7 @@
           documentBaseApi="ShippingDialogDocument"
           documentParentField="idShippingDialog"
           *ngIf="scrId == 3 "
-          catName="Shipping dialog "
+          catName="Shipping dialog"
           [idCustomer]="idCustomer"
           [quoteType]="quoteType"
           ></crm-editorbasedialog>

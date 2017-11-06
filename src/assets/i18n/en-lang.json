@@ -82,7 +82,11 @@
             "STATUS": {
                 "DISPLAYNAME": "Status",
                 "TOOLTIP": "Create Edit Status"
-            }          
+            },
+            "PROPERTY": {
+                "DISPLAYNAME": "Properties",
+                "TOOLTIP": "Create Edit Properties"
+            }                       
         },
         "OPTIONS": {
             "DISPLAYNAME": "Options",

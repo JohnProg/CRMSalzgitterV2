@@ -43,12 +43,7 @@ export class OpptypeComponent extends BaseComponent {
     }
   
   
-    // ngOnInitClass() {
-    //   this.entList = <Observable<getProductProperties_Result[]>>this._curService.entList;
-    //   this.initEntity();
-  
-  
-    // }
+
   
   
   }

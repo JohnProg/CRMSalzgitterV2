@@ -53,9 +53,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
     this.singleEditor = true;
     this.dta = new Date(); 
   }
-  ngOnInitClass() {
-    this.entList = <Observable<QuotationFromSupplier[]>>this._curService.entList;
-  }
+
 
   initEntity() {
     this.itemEdit = new  QuotationFromSupplier();

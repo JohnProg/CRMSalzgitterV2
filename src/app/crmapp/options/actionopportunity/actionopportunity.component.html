@@ -25,7 +25,7 @@
 
     </form>
     <section layout-lt-md="column" layout="row" flex>
-      <td-expansion-panel *ngIf="itemEdit.id > 0" label="Extended Data" flex >
+      <td-expansion-panel *ngIf="itemEdit.id > 0" label="Extended Data" flex [expand]="true" >
         <crm-actionopportunitytemplateemail [idaction]="itemEdit.id"></crm-actionopportunitytemplateemail>
       </td-expansion-panel>
     </section>

@@ -29,9 +29,9 @@
           </section>  
           <section  flex-gt-sm="20" >
               <mat-form-field class="example-full-width">
-                  <input matInput  [matDatepicker]="ShipmentOffered" name="ShipmentOffered" placeholder="Shipment Offered" required="true" [(ngModel)]="itemEdit.shipmentOffered">
-                  <mat-datepicker-toggle matSuffix [for]="OfferValidity"></mat-datepicker-toggle>
-                  <mat-datepicker #OfferValidity></mat-datepicker>
+                  <input matInput  [matDatepicker]="ShipmentOffered" name="ShipmentOffered" placeholder="Latest Shipment" required="true" [(ngModel)]="itemEdit.shipmentOffered">
+                  <mat-datepicker-toggle matSuffix [for]="ShipmentOffered"></mat-datepicker-toggle>
+                  <mat-datepicker #ShipmentOffered></mat-datepicker>
               </mat-form-field >              
           </section>                   
           <section  flex-gt-sm="20" >

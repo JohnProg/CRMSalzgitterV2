@@ -53,11 +53,6 @@ export class CustomerdocumentComponent extends BaseComponent {
 
       
 
-  ngOnInitClass() {
-
-    this.entList = <Observable<GetCustomerDocuments_Result[]>>this._curService.entList;
-    this.initData();
-  }
 
 
   loadData() {

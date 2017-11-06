@@ -22,6 +22,8 @@ import gql from 'graphql-tag';
 import {  TCRMEntity, ReturnSaveRequest, QueryResponse } from '../model/index';
 import * as moment from 'moment';
 import { environment } from '../../../environments/environment';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 
 export interface IPChangeEventSorted extends IPageChangeEvent {
   sortBy: string;
@@ -123,7 +125,7 @@ export class CatalogService {
   constructor(public _http: Http, 
     public _confs: ConfigurationService,
     public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
+    public _dialogService: MatDialog,
     public _snackBarService: MatSnackBar,
     public _tableService: TdDataTableService,
     public apollo: Apollo

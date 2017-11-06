@@ -35,11 +35,6 @@ export class CustomerindexComponent  extends BaseComponent  {
   }
 
 
-  ngOnInitClass() {
-    this.entList = <Observable<Customer[]>>this._curService.entList;
-    this.initData();
-   // this.reloadPaged();
-  }
 
   editEntity(id: number) {
 
