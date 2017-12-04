@@ -41,7 +41,7 @@ export class PurchaseordereditorComponent extends CatalogComponent {
   idCustomer: number;
   po: PurchaseOrder;
   @ViewChild(PurchaseordereditorheaderComponent) headercomp: PurchaseordereditorheaderComponent;
-  itemRoute: string = 'purchaseorder';
+  
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -53,6 +53,8 @@ export class PurchaseordereditorComponent extends CatalogComponent {
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.PurchaseOrder;
+    this.itemRoute = 'purchaseorder';
+    this.parentRoute = 'quotationtocustomer';
     this._route.params.subscribe((params: { id: number }) => {
        this.idPurchase = params.id;
       });
@@ -89,8 +91,8 @@ export class PurchaseordereditorComponent extends CatalogComponent {
   }
 
   goToInex() {
-    if( this.parentRoute != undefined && this.parentScr != undefined) {
-      this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idQTC, {  parentRoute: this.parentRoute, scrId: this.parentScr, moveToScr: true  }]);
+    if(  this.parentScr != undefined) {
+      this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idQTC, {  scrId: this.parentScr, moveToScr: true  }]);
    }else {
      this._router.navigate([ '/' + this.itemRoute]);
    }
@@ -131,7 +133,7 @@ export class PurchaseordereditorFromQTSComponent extends PurchaseordereditorComp
 
     this._route.params.subscribe((params: { id: number, bytype: number }) => {
       this.idPurchase = 0;
-      this.idOpp = params.id;
+      this.idParent = params.id;
       this.byType = params.bytype;
       // switch(params.bytype) {
       //   case EnumDocType.Opportunity:
@@ -150,11 +152,12 @@ export class PurchaseordereditorFromQTSComponent extends PurchaseordereditorComp
 
   }
 
-
+  checkParams() {
+  }
   afterInit() {
     super.afterInit();
     
-    this.headercomp.loadFromOpp(this.idOpp);
+    this.headercomp.loadFromOpp(this.idParent);
   }
 }
 

@@ -1043,7 +1043,6 @@
 		platform: string;
 		productDescription: string;
 		productName: string;
-		salePrice: number;
 	}
 	export class GetQuotationToCustomerDialogDocumentIndex_Result extends TCRMEntity {
 		dateUploaded: Date;
@@ -1598,9 +1597,6 @@
 		user: User;
 	}
 	export class QuotationToCustomerDetail extends TCRMEntity {
-		expectedProfit: number;
-		expenseSMIM_Cost: number;
-		expenseSupplierSide_Cost: number;
 		id: number;
 		idCustomerProduct: number;
 		idProduct: number;
@@ -1610,23 +1606,26 @@
 		itemPrice: number;
 		itemQuantity: number;
 		product: Product;
-		profit: number;
 		quotationToCustomer: QuotationToCustomer;
 		quotationToCustomerDetailSumaries: QuotationToCustomerDetailSumary[];
-		salePrice: number;
-		salesPriceBased: number;
 	}
 	export class QuotationToCustomerDetailSumary extends EditorDetailSumary {
-		amount: number;
+		expectedProfit: number;
+		expenseSMIM_Cost: number;
+		expenseSupplierSide_Cost: number;
 		comment: string;
 		dateCreated: Date;
 		id: number;
 		idQuotationToCustomerDetail: number;
-		price: number;
+		itemPrice: number;
+		profit: number;		
 		quantity: number;
 		quotationToCustomerDetail: QuotationToCustomerDetail;
 		quotationToCustomerDetailSumaryProperties: QuotationToCustomerDetailSumaryProperty[];
+		salePrice: number;
+		salesPriceBased: number;
 	}
+	
 	export class QuotationToCustomerDetailSumaryProperty extends EditorDetailSumaryProperty {
 		idQuotationToCustomerDetailSumary: number;
 		quotationToCustomerDetailSumary: QuotationToCustomerDetailSumary;

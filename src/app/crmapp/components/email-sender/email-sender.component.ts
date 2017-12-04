@@ -64,14 +64,13 @@ export class EmailSenderComponent extends BaseComponent {
         }
   }
 
-
  afterViewInit(): void {
     this._actions.showAdd(false);
     this._actions.showSearch(false);
     this._actions.showSave(false);
     this._actions.showCancel(true);
     this._actions.showEmail(true);
-    this._actions.updateTitle( this.catalogName +  ' Send EMail ' );
+    this._actions.updateTitle( { action: 'Send E-Mail', title: this.catalogName , tparam: this.titleParam} );
 
     setTimeout(() => {
        if (this.idDialog > 0) {

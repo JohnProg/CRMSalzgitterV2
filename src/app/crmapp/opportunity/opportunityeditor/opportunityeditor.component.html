@@ -43,7 +43,9 @@
           <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
               <mat-icon>arrow_back</mat-icon>
           </button>
-        <crm-opportunityheader [idDoc]="idOpp" *ngIf="scrId == 1" [quoteType]="quoteType"></crm-opportunityheader>
+        <crm-opportunityheader [idDoc]="idOpp" *ngIf="scrId == 1"
+         [quoteType]="quoteType"
+         [itemRoute]="itemRoute"></crm-opportunityheader>
 
         <crm-opportunitydetail [idOpp]="idOpp" [idCustomer]="idCustomer"  *ngIf="scrId == 2 "></crm-opportunitydetail>
 

@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material';
 import { ActionsService } from '../../services/actions.services';
 import { Subscription } from 'rxjs/Subscription';
 import { IDeleteEventModel } from '../../model/deleteeventmodel';
+import { ICRMPageChangeEvent, ICatalogName } from '../../extensions';
+
 @Component({
   selector: 'crm-gactions',
   templateUrl: './gactions.component.html',
@@ -17,7 +19,11 @@ import { IDeleteEventModel } from '../../model/deleteeventmodel';
 export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
-  @Input() inpuParam1: any = '';;
+  @Input() inpuParam1: any = '';
+  maxTitle: number = 100;
+  screenSize: string;
+  catTitle: any;
+  oppTitles : {   [id: string]: ICatalogName; } = {};
   // private addEvent;
   // private searchEvent;
   // private saveEvent;editItemEvent
@@ -56,10 +62,10 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   ngOnInit() : void {
-
+    this.initTitles();
     this.updateTitleEvent = this._actions.updateTitleEvent
       .subscribe((res) => {
-        this.catalogTitle = res;
+        this.updateTitle(res);
       });
 
     this.showSearchEvent = this._actions.showSearchEvent
@@ -196,15 +202,83 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.showCancel = false;
   }
 
+  private updateTitle(res: any) {
+    
+  
+    let ttitle: string = '';
+    if( res != undefined) {
+      this.catTitle = res; 
+    }
+    if( this.catTitle ) {
+    let title: ICatalogName = this.oppTitles[this.catTitle.title];
+    if( title != undefined ) {
+      
+        let t: string = '';
+        if( this.screenSize == 'xs') {
+          t = title.namexs;
+        } else if( this.screenSize == 'sm') {
+          t = title.namesm;
+        } else if( this.screenSize == 'md') {
+          t = title.namemd;
+        }else if( this.screenSize == 'lg') {
+          t = title.namelg;
+        } else {
+          t = this.catTitle.defaultname;
+        }
+        
+        if( this.catTitle.action ) {
+          ttitle = this.catTitle.action + ' ';
+        }
+        ttitle +=  t;
+        if( this.catTitle.tparam ) {
+          ttitle +=  ' ' + this.catTitle.tparam;
+        } 
+    } else {
 
-  private screenSizeChange(e: any) {
+      if( this.catTitle.action ) {
+        ttitle = this.catTitle.action + ' ';
+      } 
 
+      title +=  this.catTitle.title;
+      if( this.catTitle.tparam ) {
+        ttitle +=   ' ' + this.catTitle.tparam;
+      } 
+       //this.catalogTitle = this.catTitle.title +  this.catTitle.tparam != undefined ? (' ' + this.catTitle.tparam) : '';
+    }
+
+    this.catalogTitle = ttitle;
+  }
+  }
+
+
+  private screenSizeChange(e: ICRMPageChangeEvent) {
+    if( e.screenSize) {
+      this.screenSize = e.screenSize;
+      if( e.screenSize == 'xs') {
+         this.maxTitle = 23;
+      } else if ( e.screenSize == 'sm') {
+         this.maxTitle = 50;
+      } else {
+       this.maxTitle = 100;
+      }
+      this.updateTitle(undefined);
+    }
   }
 
   private sendEmail() {
     this._actions.sendEMail();
   }
 
-
+ 
+  
+  initTitles() {
+    
+    this.oppTitles['OPP'] = { namexs: 'Opp', namesm: 'Opportunity', namemd: 'Opportunity', namelg: 'Opportunity', defaultname: 'Opportunity' };
+    this.oppTitles['QFS'] = { namexs: 'QFS', namesm: 'QFS', namemd: 'Q. From Supplier', namelg: 'Quotation from Supplier', defaultname: 'Quotation from Supplier' };
+    this.oppTitles['QTC'] = { namexs: 'QTC', namesm: 'QTC', namemd: 'Q. To Customer', namelg: 'Quotation To Customer', defaultname: 'Quotation To Customer' };
+    this.oppTitles['PO'] = { namexs: 'PO', namesm: 'P. Order', namemd: 'Q. From Supplier', namelg: 'Purchase Order', defaultname: 'Purchase Order' };
+    this.oppTitles['SHP'] = { namexs: 'SHP', namesm: 'SHP', namemd: 'Shipping', namelg: 'Shipping', defaultname: 'Shipping' };
+    
+  }
 
 }

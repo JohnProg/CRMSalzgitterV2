@@ -147,7 +147,6 @@ import {ShippingComponent, ShippingindexComponent,
   ShippingeditorheaderComponent,
   ShippingeditordetailComponent,
   ShippingeditorFromPOComponent
-
 } from './shipping/index';
 
 // Login
@@ -271,9 +270,9 @@ import { AuthHelper } from './authHelper/authHelper';
     ShippingindexComponent,
     ShippingindexviewerComponent,
     ShippingeditorComponent,
+    ShippingeditorFromPOComponent,
     ShippingeditorheaderComponent,
     ShippingeditordetailComponent,
-    ShippingeditorFromPOComponent,
     
     NameDescPipe,
     MaxStringPipe

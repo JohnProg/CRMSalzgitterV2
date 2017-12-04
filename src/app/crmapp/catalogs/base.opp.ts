@@ -16,7 +16,7 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
-import {  Opportunity, IncoTerm, TCRMEntity, GetStatusByDocType_Result } from '../model/index';
+import {  Opportunity, IncoTerm, TCRMEntity, GetStatusByDocType_Result, Customer } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 import { BaseComponent } from './base.component';
@@ -56,7 +56,9 @@ export class BaseOppComponent extends BaseComponent {
   @Input() idDoc: number = 0;
   deliveryRequired: boolean = false;
   @Input() quoteType: EnumDocType;
-  
+  @Input() itemRoute: string;
+
+  customer: Customer;
    loadCatalogs() {
     this._curService.loadQl(oppQl, { iddoc: this.quoteType })
     .subscribe(({data}) => {
@@ -84,25 +86,31 @@ export class BaseOppComponent extends BaseComponent {
   }
 
 
+  
   afterViewInit(): void {
-    this._actions.showAdd(false);
-    this._actions.showSearch(false);
-    this._actions.showSave(true);
-    this._actions.showCancel(false);
+    super.afterViewInit();
     setTimeout( () => {
-        if (this.idDoc > 0) {
-        this.editEntity(this.idDoc);
-        
-        this._actions.updateTitle('Edit ' + this.catalogName + ' ' + this.idDoc.toString());
+      
+      if (this.idDoc > 0) {
+        this.editEntity(this.idDoc);        
       } else {
-        this._actions.updateTitle('Create ');
+        this._actions.updateTitle({ action: 'Edit', title: this.catalogName , tparam: this.titleParam});
         this.addEntity();
       }    
     }, 50);
-
-
+    this._actions.showAdd(false);
+    this._actions.showSearch(false);
+    this._actions.showSave(true);
+    this._actions.showCancel(true);
   }
 
+  updateTitle() {
+    let txtcust: string =  this.idDoc.toString();
+    if( this.customer != undefined) {
+      txtcust += ' (Customer: ' + this.customer.name + ')';
+    }
+    this._actions.updateTitle( { action: 'Edit', title: this.catalogName , tparam: txtcust});
+  }
 
   afterLoadItem(item: TCRMEntity) {
     super.afterLoadItem(item);
@@ -112,6 +120,7 @@ export class BaseOppComponent extends BaseComponent {
     }
     this.setDeliveryRequired();
     this.setAllowChild();
+    this.updateTitle();
   }
 
 
@@ -120,7 +129,7 @@ export class BaseOppComponent extends BaseComponent {
     this.loadCustomerContact(event.value);
   }
 
-  afterLoadCustomerContact() {
+  afterLoadCustomerContact(data: any) {
     if( this.itemEdit.id == 0 && this.catCustomer != undefined) {
       let cust = this.catCustomer.find(o => o.id == this.itemEdit['idCustomer']);
       if( cust !== undefined) {
@@ -130,6 +139,9 @@ export class BaseOppComponent extends BaseComponent {
         this.itemEdit['idResponsible'] = cust.idResponsible;
       }
     }
+    
+    this.customer = data['customer'];
+    this.updateTitle();
   }
 
   onMillChange(event: any) {
@@ -170,8 +182,12 @@ export class BaseOppComponent extends BaseComponent {
    },500);
   }
   afterCreate(item: TCRMEntity) {
+    
     super.afterCreate(item);
     this.idDoc = item.id;
+    this.updateTitle();
     this.setAllowChild();
   }
+
+
 }

@@ -41,7 +41,7 @@ export class ShippingeditorheaderComponent extends BaseOppComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.itemEdit = new Shipping();
-    this.catalogName = 'Shipping';
+    this.catalogName = 'SHP';
     this.autoLoad = false;
     this._curService.setAPI('Shipping/', this.catalogName, this.loadName);
     this.singleEditor = true;  

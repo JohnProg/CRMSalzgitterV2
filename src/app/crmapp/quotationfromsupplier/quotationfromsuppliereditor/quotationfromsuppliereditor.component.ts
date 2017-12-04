@@ -49,7 +49,7 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.QuotationFromSupplier;
     this.itemRoute = 'quotationfromsupplier'
-
+    this.parentRoute = 'opportunity';
   }
 
 
@@ -65,6 +65,7 @@ export class QuotationfromsuppliereditorComponent extends CatalogComponent {
 
   doOnItemCreated(itm: QuotationFromSupplier) {
     this.qts = itm;
+    
     this.idQuotation = itm.id;
     this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
@@ -113,17 +114,20 @@ export class QuotationfromsuppliereditorFromOppComponent extends Quotationfromsu
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
     
-    this._route.params.subscribe((params: { id: number }) => {
-      
-      this.idOpp = params.id;
+    this._route.params.subscribe((params: { id: number }) => {    
+      this.idParent = params.id;
     });
+    
     this.idQuotation = 0;
   }
 
-
+  checkParams() {
+  }
+  
   afterInit() {
     super.afterInit();
-    this.headercomp.loadFromOpp(this.idOpp);
+    
+    this.headercomp.loadFromOpp(this.idParent);
   }
 }
 

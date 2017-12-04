@@ -24,26 +24,34 @@
         </div>  
 
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
-            <mat-form-field  flex-gt-sm="25" >
-              <input   matInput  #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" (ngModelChange)="qtyChange($event)" />
+            <mat-form-field  flex-gt-sm="33" >
+              <input   matInput  #ItemQuantity name="ItemQuantity"  placeholder="{{ 'QUANTITY' | translate}}" required [ngModel]="itemEdit.itemQuantity" currencyMask  [options]="{ prefix: ''}" (ngModelChange)="qtyChange($event)" />
             </mat-form-field>
-            <mat-form-field  flex-gt-sm="25" >
-              <input  matInput   #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)"  />
+            <mat-form-field  flex-gt-sm="33" >
+              <input  matInput   #ItemPrice  name="ItemPrice" placeholder="{{'PRICE' | translate}}" required [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)"  />
             </mat-form-field>
-            <mat-form-field  flex-gt-sm="25" >
-              <input  matInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.itemExtended" currencyMask disabled/>
+            <mat-form-field  flex-gt-sm="33" >
+              <input  matInput    #ItemExtended name="ItemExtended" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.itemExtended" currencyMask readonly/>
             </mat-form-field>  
-            <mat-form-field  flex-gt-sm="25">
+            <!-- <mat-form-field  flex-gt-sm="25">
                 <input  matInput  #SalePrice name="SalePrice" placeholder="Sale Price" [(ngModel)]="itemEdit.salePrice"  currencyMask  >
-              </mat-form-field>                      
+              </mat-form-field>                       -->
           </div> 
         </section>
     </form>
-        <crm-quotationfromsupplierdetailsumary #dSumary name="dSumary" [idDetail]="itemEdit.id" [idProduct]="itemEdit.idProduct" *ngIf="isEditing && itemEdit.id > 0" (onHasSumary)="hasSumary" [maxQty]="itemEdit.itemQuantity" 
+        <crm-quotationfromsupplierdetailsumary #dSumary name="dSumary" 
+          [idDetail]="itemEdit.id" 
+          [idCustomerProduct]="itemEdit.idCustomerProduct" 
+          [idProduct]="itemEdit.idProduct" 
+          *ngIf="isEditing && itemEdit.id > 0" 
+          (onHasSumary)="hasSumary()" 
+          [maxQty]="itemEdit.itemQuantity" 
+          (afterChange)="refreshItem()"
           [price]="itemEdit.salePrice" 
           catalogName="Quotation from Supplier Details Sumary"
           baseController="QuotationFromSupplierDetailSumary"
           baseSearch="searchByDetail"
+
           sumProperties="quotationFromSupplierDetailSumaryProperties"
           ></crm-quotationfromsupplierdetailsumary>
       </section>

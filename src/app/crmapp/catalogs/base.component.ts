@@ -26,6 +26,8 @@ import gql from 'graphql-tag';
 import { AuthHelper } from '../authHelper/authHelper';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { ICRMPageChangeEvent } from '../extensions';
+
 
 export const cCurrencyMask = createNumberMask({
       allowDecimal: true
@@ -42,6 +44,7 @@ export const cFloatPosMask = createNumberMask({
 const findCustCatalogsQl = gql`
   query 
         findCustCatalogs($custid: Int!) {
+            customer(sid: $custid) { id name }
             findCustomerContacts(custid: $custid) { id name isActive  } 
             findDeliveryPoint(custid: $custid) { id cDPName isActive  } 
         }
@@ -84,8 +87,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onItemCreated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   onItemLoaded: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  onCancelEdit: EventEmitter<TCRMEntity> = new EventEmitter<any>();
+  
   @ViewChild('editform') form: NgForm;
 
+  screenSize: string;
+  isXS: boolean = false;
   loadName: string = 'item.load';
   pageChange: Subscription;
   isEditing: boolean = false;
@@ -107,7 +114,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   _totalItems: any;
 
   @Input() catalogName: string;
-
+  @Input() titleParam: string;
   filteredData: any[];
   filteredTotal: number = 0;
   searchTerm: string = '';
@@ -204,8 +211,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     if ( this.handleScreenChange === true) {
-      this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: IPageChangeEvent) => {
-         // this.screenChange(e);
+      this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: ICRMPageChangeEvent) => {
+          this.screenChange(e);
       });
     }
 
@@ -259,14 +266,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onUpdateErrorEvent = this._curService.onUpdateErrorEmitter.subscribe(item => this.onUpdateError(item));
     this.onDeleteErrorEvent = this._curService.onDeleteErrorEmitter.subscribe(item => this.onDeleteError(item));
 
-    
-    if (this.setTitle === true) {
-      setTimeout( () => {
-        
-        this._actions.updateTitle(this.catalogName);       
-      }, 50);
+    this.updateTitle();
 
-    }
 
     if( this.subEditor == false) {
       this._actions.showAdd(true);
@@ -315,6 +316,15 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.afterViewInit();
   }
 
+  updateTitle() {
+    
+    if (this.setTitle === true) {
+      setTimeout( () => { 
+        this._actions.updateTitle( { action: undefined, title: this.catalogName , tparam: this.titleParam}  );       
+      }, 50);
+
+    }
+  }
   afterViewInit() {}
 
   ngOnDestroy() {
@@ -396,7 +406,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   editEntity(id: number) {
     if(this.setTitle === true) {
       this.translate.get('EDITCAT', {value: this.catalogName}).subscribe( (str: string) => {
-        this._actions.updateTitle( str );
+        this._actions.updateTitle( { action: 'Edit', title: str, tparam: this.titleParam} );
       });
     }
     
@@ -405,10 +415,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addEntity() {
     if (this.setTitle === true) {
-
-     this.translate.get('ADDCAT', {value: this.catalogName}).subscribe( (str: string) => {
-        this._actions.updateTitle( str );
-      });
+        this._actions.updateTitle( { action: 'Add', title: this.catalogName , tparam: this.titleParam} );
     }
     this.initEntity();
     this.itemEdit.id = 0;
@@ -422,9 +429,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   cancelEdit(): void {
     if(this.setTitle === true) {
-      this._actions.updateTitle(this.catalogName);
+      this._actions.updateTitle({ action: undefined, title: this.catalogName , tparam: this.titleParam});
     }
     this.isEditing = false;
+    this.onCancelEdit.emit(undefined);
   }
 
   submitForm(form) {
@@ -551,12 +559,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
      
   }
 
-  screenChange(e: IPageChangeEvent) {
+  screenChange(e: ICRMPageChangeEvent) {
     if (e !== undefined) {
-      if ( e.pageSize !== this.pageSize ) {
-
-        this.pageSize = e.pageSize;
-      }
+      this.screenSize = e.screenSize;
+      this.isXS = this.screenSize == 'xs';
+      // if ( e.pageSize !== this.pageSize ) {
+      //   this.pageSize = e.pageSize;
+      // }
     }
 
   }
@@ -589,7 +598,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     .subscribe(({data}) => {
       this.catCustomerContact = data['findCustomerContacts'];
       this.catDeliveryPoint = data['findDeliveryPoint'];
-      this.afterLoadCustomerContact();
+     
+      this.afterLoadCustomerContact(data);
     }, (error: Error) => {
       debugger
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
@@ -597,7 +607,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  afterLoadCustomerContact() {
+  afterLoadCustomerContact(data: any) {
 
   }
   loadCountryOrigin(idmill: number) {

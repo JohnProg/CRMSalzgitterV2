@@ -48,7 +48,7 @@
           <section  flex-gt-sm="15" >
               <mat-form-field >
                   <input matInput  [matDatepicker]="dateCreated" name="dateCreated" placeholder="Date Created" 
-				                  required="true" [(ngModel)]="itemEdit.dateCreated">
+				                   [(ngModel)]="itemEdit.dateCreated" disabled>
                   <mat-datepicker-toggle matSuffix [for]="dateCreated"></mat-datepicker-toggle>
                   <mat-datepicker #dateCreated></mat-datepicker>
               </mat-form-field >   
@@ -267,7 +267,7 @@
           </section> 
           <section  flex-gt-sm="25" >
             <mat-form-field >
-                <input matInput  [matDatepicker]="orderConfirmDate" name="orderConfirmDate" [required]="itemEdit.smim != ''" placeholder="Order Confirm Date" 
+                <input matInput  [matDatepicker]="orderConfirmDate" name="orderConfirmDate" [required]="itemEdit.smim != undefined && itemEdit.smim != ''" placeholder="Order Confirm Date" 
                          [(ngModel)]="itemEdit.orderConfirmDate">
                 <mat-datepicker-toggle matSuffix [for]="orderConfirmDate"></mat-datepicker-toggle>
                 <mat-datepicker #orderConfirmDate></mat-datepicker>

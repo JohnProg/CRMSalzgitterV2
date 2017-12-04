@@ -38,9 +38,13 @@
           <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
               <mat-icon>arrow_back</mat-icon>
           </button>
-        <crm-quotationfromsupplierheader [idDoc]="idQuotation"  *ngIf="scrId == 1" [quoteType]="quoteType"></crm-quotationfromsupplierheader>
+        <crm-quotationfromsupplierheader [idDoc]="idQuotation"  *ngIf="scrId == 1"
+         [quoteType]="quoteType"
+         [itemRoute]="itemRoute"></crm-quotationfromsupplierheader>
 
-        <crm-quotationfromsupplierdetail [idOpp]="idQuotation" [idCustomer]="idCustomer" *ngIf="scrId == 2 "></crm-quotationfromsupplierdetail>
+        <crm-quotationfromsupplierdetail [idOpp]="idQuotation" 
+        [idCustomer]="idCustomer" 
+        *ngIf="scrId == 2 "></crm-quotationfromsupplierdetail>
 
         <crm-documentviewer [idParent]="idQuotation" 
         baseApi="QuotationFromSupplierDocument" 

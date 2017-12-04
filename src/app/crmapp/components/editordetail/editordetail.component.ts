@@ -126,6 +126,7 @@ export class EditordetailComponent extends BaseComponent {
     }
   
     hasSumary(h: boolean) {
+      
       this.allowProduct = h || this.itemEdit.id === 0;
     }
 
@@ -155,5 +156,10 @@ export class EditordetailComponent extends BaseComponent {
       //this.itemEdit.idCustomerProduct = pid.id;
     }
   
+    refreshItem() {
+      
+     this.editEntity(this.itemEdit.id); 
+    }
+
   }
   

@@ -33,7 +33,7 @@ import {  QuotationindexviewerComponent } from '../../../components/index';
 })
 export class ShippingindexviewerComponent extends QuotationindexviewerComponent  {
 
-  catalogName: string ="Shippings";
+  catalogName: string ="SHP";
   baseApi: string ="Shipping/searchBy";
   parentDoc: number = 4;
   itemRoute: string ="shipping";

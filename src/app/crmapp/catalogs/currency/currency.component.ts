@@ -63,7 +63,7 @@ export class CurrencyComponent extends BaseComponent {
 
 
   editEntity(id: number) {
-    this._actions.updateTitle('Edit ' + this.catalogName);
+    this._actions.updateTitle({ action: 'Edit', title: this.catalogName , tparam: this.titleParam});
     this.itemEdit = <Currency>this._curService.itemEdit;
     this._curService.load(id);
 

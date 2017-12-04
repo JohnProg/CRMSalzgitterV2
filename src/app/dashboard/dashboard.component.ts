@@ -80,7 +80,7 @@ export class DashboardComponent implements AfterViewInit  {
 
 
   ngAfterViewInit(): void {
-    this._actions.updateTitle( 'CRM Dashboard' );
+    this._actions.updateTitle( { action: undefined, title: 'CRM Dashboard' , tparam: undefined} );
     this._actions.showAdd(false);
     this._actions.showCancel(false);
     this._actions.showSearch(false);

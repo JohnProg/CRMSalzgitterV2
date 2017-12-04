@@ -43,7 +43,7 @@ export class OpportunityheaderComponent extends BaseOppComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.itemEdit = new Opportunity();
-    this.catalogName = 'Opportunity';
+    this.catalogName = 'OPP';
     this.autoLoad = false;
     this._curService.setAPI('Opportunity/', this.catalogName, this.loadName);
     this.singleEditor = true;

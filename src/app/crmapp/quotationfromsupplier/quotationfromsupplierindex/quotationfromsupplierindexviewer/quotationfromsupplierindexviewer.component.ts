@@ -29,8 +29,9 @@ import {  QuotationindexviewerComponent } from '../../../components/index';
 })
 export class QuotationfromsupplierindexviewerComponent  extends QuotationindexviewerComponent  {
 
+
   
-  catalogName: string = "Quotation from Supplier";
+  catalogName: string = "QFS";
   baseApi: string = 'QuotationFromSupplier/searchByOpp';
   parentDoc: number = 1;
   itemRoute: string = 'quotationfromsupplier';

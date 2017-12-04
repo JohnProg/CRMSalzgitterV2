@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs/Subscription';
 import {TranslateService} from '@ngx-translate/core';
 import { User } from '../crmapp/model/allmodels';
 import { AuthHelper } from '../crmapp/authHelper/authHelper';
+import { ICRMPageChangeEvent } from '../crmapp/extensions';
+
 
 @Component({
   selector: 'crm-main',
@@ -94,7 +96,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         if (matches === true) {
           this._confs.pageSize = 5;
           this._confs.currentPage = 0;
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 5, maxPage: 0 }) );
+          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'xs', page: 1, pageSize: 5, maxPage: 0 }) );
 
           // this.change(undefined);
         }
@@ -108,7 +110,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         if (matches === true) {
           this._confs.pageSize = 8;
           this._confs.currentPage = 0;
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 8, maxPage: 0 }) );
+          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'sm', page: 1, pageSize: 8, maxPage: 0 }) );
 
           // this.change(undefined);
         }
@@ -123,7 +125,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         if (matches === true) {
           this._confs.pageSize = 10;
           this._confs.currentPage = 0;          
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 13, maxPage: 0 }) );
+          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'md', page: 1, pageSize: 13, maxPage: 0 }) );
 
           //this.change(undefined);
         }
@@ -138,7 +140,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         if (matches === true) {
           this._confs.pageSize = 13;
           this._confs.currentPage = 0;          
-          this._actions._screenSizeChangeEvent.next( ( <IPageChangeEvent>{ page: 1, pageSize: 10, maxPage: 0 }) );
+          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'lg', page: 1, pageSize: 10, maxPage: 0 }) );
 
         }
       });

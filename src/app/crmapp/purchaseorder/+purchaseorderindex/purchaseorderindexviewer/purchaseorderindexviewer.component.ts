@@ -32,7 +32,7 @@ import {  QuotationindexviewerComponent } from '../../../components/index';
 })
 export class PurchaseorderindexviewerComponent extends QuotationindexviewerComponent  {
 
-  catalogName: string ="Purchase Orders";
+  catalogName: string ="PO";
   baseApi: string ="PurchaseOrder/searchBy";
   parentDoc: number = 3;
   itemRoute: string ="purchaseorder";

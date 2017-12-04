@@ -32,8 +32,6 @@ import { ShippingeditorheaderComponent } from './shippingeditorheader/shippinged
 })
 export class ShippingeditorComponent extends CatalogComponent {
 
-
-  idShipping: number;
   scrId: number = 1;
   @ViewChild(ShippingeditorheaderComponent) headercomp: ShippingeditorheaderComponent;
   byType: number = 0;
@@ -51,25 +49,14 @@ export class ShippingeditorComponent extends CatalogComponent {
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.Shipping;
-    
+    this.itemRoute = 'shipping';
+    this.parentRoute = 'shipping';
   }
 
-  checkParams() {
-    this._route.params.subscribe((params: any) => {
-      
-      if( params != undefined) {
-      this.idShipping = params.id;
-      
-      if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
-      if( params['scrId'] != undefined)  this.parentScr = params.scrId;
-      if( params['moveToScr'] != undefined)  this.moveToScr = params.moveToScr == "true";
-      }
-    });
-  }
 
   doOnItemCreated(itm: Shipping) {
     
-    this.idShipping = itm.id;
+    this.idQuotation = itm.id;
     this.shipping = itm;
     this.idCustomer = this.shipping.idCustomer;
   }
@@ -81,7 +68,7 @@ export class ShippingeditorComponent extends CatalogComponent {
 
 
   onItemLoaded(itm: Shipping) {
-    this.idShipping = itm.id;
+    this.idQuotation = itm.id;
     this.shipping = itm;
     this.idCustomer = this.shipping.idCustomer;
   }
@@ -104,10 +91,9 @@ export class ShippingeditorComponent extends CatalogComponent {
 
 
 @Component({
-  selector: 'crm-shippingeditor',
+  selector: 'crm-shippingeditorfrompo',
   templateUrl: './shippingeditor.component.html',
-  styleUrls: ['./shippingeditor.component.scss'],
-  providers: [],
+  styleUrls: ['./shippingeditor.component.scss']
 })
 export class ShippingeditorFromPOComponent extends ShippingeditorComponent {
 
@@ -124,18 +110,34 @@ export class ShippingeditorFromPOComponent extends ShippingeditorComponent {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
 
     this._route.params.subscribe((params: { id: number, bytype: number }) => {
-      this.idShipping = 0;
+      //this.idPurchase = 0;
+      this.idParent = params.id;
       this.byType = params.bytype;
-      this.idPO = params.id;
+      // switch(params.bytype) {
+      //   case EnumDocType.Opportunity:
+      //        this.idOpp = params.id;
+      //        break;
+      //   case EnumDocType.QuotationFromSupplier:
+      //        this.idQFS = params.id;
+      //        break;
+      //   case EnumDocType.QuotationToCustomer:
+      //        this.idQTC = params.id;
+      //        break;
+      //   default:
+      //        break;
+      // }
     });
 
   }
 
-
-
+  checkParams() {
+  }
   afterInit() {
     super.afterInit();
-    this.headercomp.loadFromOpp(this.idPO);
+    
+    this.headercomp.loadFromOpp(this.idParent);
   }
 }
+
+
 

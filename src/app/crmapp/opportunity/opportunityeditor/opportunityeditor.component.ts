@@ -38,7 +38,7 @@ export class OpportunityeditorComponent extends CatalogComponent {
   @ViewChild(OpportunityheaderComponent) headercomp: OpportunityheaderComponent;
 
   itemRoute: string = 'opportunity';
-  
+  parentRoute = 'opportunity';
   constructor(
     public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
@@ -52,7 +52,7 @@ export class OpportunityeditorComponent extends CatalogComponent {
     this.quoteType = EnumDocType.Opportunity;
     this._route.params.subscribe((params: any) => {
       this.idOpp = params.id;
-      if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
+      //if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
       if( params['scrId'] != undefined)  this.parentScr = params.scrId;
     });
   }

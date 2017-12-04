@@ -35,7 +35,9 @@
           <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
               <mat-icon>arrow_back</mat-icon>
           </button>
-        <crm-purchaseordereditorheader [idDoc]="idPurchase"  *ngIf="scrId == 1" [quoteType]="quoteType"></crm-purchaseordereditorheader>
+        <crm-purchaseordereditorheader [idDoc]="idPurchase"  *ngIf="scrId == 1" 
+        [quoteType]="quoteType"
+        [itemRoute]="itemRoute"></crm-purchaseordereditorheader>
         <crm-purchaseordereditordetail [idOpp]="idPurchase" [idCustomer]="idCustomer" *ngIf="scrId == 2 "></crm-purchaseordereditordetail>
 
         <crm-documentviewer [idParent]="idPurchase" baseApi="PurchaseOrderDocument" *ngIf="scrId == 4 "></crm-documentviewer>

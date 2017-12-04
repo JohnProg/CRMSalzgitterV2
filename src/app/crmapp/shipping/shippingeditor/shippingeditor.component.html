@@ -12,15 +12,15 @@
         <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "HEADER" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2 }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2 }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "DETAILS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DIALOGS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idShipping > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DOCUMENTS" | translate}}
       </a>
@@ -33,9 +33,11 @@
           <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
               <mat-icon>arrow_back</mat-icon>
           </button>
-          <crm-shippingeditorheader [idDoc]="idShipping"   *ngIf="scrId == 1" [quoteType]="quoteType"></crm-shippingeditorheader>
-          <crm-shippingeditordetail [idShipping]="idShipping" [shipData]="shipping"   *ngIf="scrId == 2"></crm-shippingeditordetail>
-          <crm-editorbasedialog [idParent]="idShipping" 
+          <crm-shippingeditorheader [idDoc]="idQuotation"   *ngIf="scrId == 1" 
+          [quoteType]="quoteType"
+          [itemRoute]="itemRoute"></crm-shippingeditorheader>
+          <crm-shippingeditordetail [idShipping]="idQuotation" [shipData]="shipping"   *ngIf="scrId == 2"></crm-shippingeditordetail>
+          <crm-editorbasedialog [idParent]="idQuotation" 
           [baseApi]="'ShippingDialog'"
           parentField="idShipping"
 
@@ -47,7 +49,7 @@
           [quoteType]="quoteType"
           ></crm-editorbasedialog>
 
-  <crm-documentviewer [idParent]="idShipping" baseApi="ShippingDialogDocument" 
+  <crm-documentviewer [idParent]="idQuotation" baseApi="ShippingDialogDocument" 
   *ngIf="scrId == 4 "
   catName="Shipping Document "></crm-documentviewer>
     

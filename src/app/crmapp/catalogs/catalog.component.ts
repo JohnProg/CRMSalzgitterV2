@@ -32,6 +32,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
   scrId: number = 1;
   afterCreateItem: Subscription;
   afterItemLoaded: Subscription;
+  onCancelEdit: Subscription;
   idCustomer: number;
   catalogs: MenuClass[] = [
   ];
@@ -39,6 +40,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
 
   idQuotation: number = 0;
   idOpp: number;
+  idParent: number;
   itemRoute: string;
   parentRoute: string;
   parentScr: number = 5;
@@ -64,7 +66,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
       if( params != undefined) {
       this.idQuotation = params.id;
       
-      if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
+      //if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
       if( params['scrId'] != undefined)  this.parentScr = params.scrId;
       if( params['moveToScr'] != undefined)  this.moveToScr = params.moveToScr == "true";
       }
@@ -79,6 +81,8 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
      if (this.afterCreateItem !== undefined) { this.afterCreateItem.unsubscribe(); }
      if (this.afterItemLoaded !== undefined) { this.afterItemLoaded.unsubscribe(); }
+     if (this.onCancelEdit !== undefined) { this.onCancelEdit.unsubscribe(); }
+     
   }
   bindOnItemCreated() {
 
@@ -89,6 +93,9 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
         this.afterItemLoaded = this.headercomp.onItemLoaded.subscribe( (itm: TCRMEntity) => {
               this.onItemLoaded(itm);
         });
+        this.onCancelEdit = this.headercomp.onCancelEdit.subscribe( (p: any) => {
+          this.onCancel(p);
+       });      
       }
   }
 
@@ -105,16 +112,21 @@ export class CatalogComponent implements AfterViewInit, OnDestroy {
 
   afterOnItemLoaded() {
     
-    if( this.parentRoute != undefined && this.moveToScr == true ) {
+    if(  this.moveToScr == true ) {
       this.scrId = this.parentScr;
     }
   }
 
   goToInex() {
-    if( this.parentRoute != undefined && this.parentScr != undefined) {
-      this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idOpp, {  parentRoute: this.parentRoute, scrId: this.parentScr, moveToScr: true  }]);
+    if(  this.parentScr != undefined && this.idOpp > 0) {
+      this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idOpp, {   scrId: this.parentScr, moveToScr: true  }]);
    }else {
      this._router.navigate([ '/' + this.itemRoute]);
    }
+  }
+
+  onCancel(p: any) {
+    
+    this.goToInex();
   }
 }

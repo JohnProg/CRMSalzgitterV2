@@ -49,6 +49,7 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
     this.quoteType = EnumDocType.QuotationToCustomer;
     this.itemRoute = 'quotationtocustomer'
+    this.parentRoute = 'quotationfromsupplier';
   }
 
 
@@ -105,16 +106,19 @@ export class QuotationtocustomereditorFromQFSComponent extends Quotationtocustom
     translate: TranslateService) {
     super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
     this._route.params.subscribe((params: { id: number }) => {
-      this.idOpp = params.id;
+      
+      this.idParent = params.id;
     });
     this.idQuotation = 0;
   }
 
 
-
+  checkParams() {
+  }
   afterInit() {
     super.afterInit();
-    this.headercomp.loadFromOpp(this.idOpp);
+    
+    this.headercomp.loadFromOpp(this.idParent);
   }
 }
 

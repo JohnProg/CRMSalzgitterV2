@@ -4,11 +4,11 @@
         <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
   <div layout-margin>
           <div>
-              <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing && (total < maxQty) && (uTemplate == false)"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
+              <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing  && (uTemplate == false)"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
               <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
               <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
-              <button mat-raised-button color="primary" (click)="getTemplate()" *ngIf="(total < maxQty) && (uTemplate == false) && (isEditing == false)" >Get Template </button>
-              <button mat-raised-button color="primary" (click)="uploadTemplate()" *ngIf="(total < maxQty)  && (isEditing == false)" >Upload Template </button>
+              <button mat-raised-button color="primary" (click)="getTemplate()" *ngIf=" (uTemplate == false) && (isEditing == false)" >Get Template </button>
+              <button mat-raised-button color="primary" (click)="uploadTemplate()" *ngIf="(uTemplate == false)  && (isEditing == false)" >Upload Template </button>
           </div>
       <section *ngIf="isEditing" flex>
         <form #editform="ngForm" flex  (ngSubmit)="submitForm(form)">
@@ -33,7 +33,7 @@
               <input  matInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}"  (ngModelChange)="qtyChange($event)" >
             </mat-form-field>
             <mat-form-field flex="30">
-              <input  matInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [ngModel]="itemEdit.price" currencyMask  (ngModelChange)="priceChange($event)">
+              <input  matInput #Price name="Price"  placeholder="{{ 'PRICE' | translate}}" [ngModel]="itemEdit.price" currencyMask  (ngModelChange)="priceChange($event)">
             </mat-form-field>
             <mat-form-field flex="35">
               <input  matInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount" currencyMask disabled>

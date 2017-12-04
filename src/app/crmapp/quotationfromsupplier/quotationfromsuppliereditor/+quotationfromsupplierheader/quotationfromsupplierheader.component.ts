@@ -47,7 +47,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
      this.itemEdit = new QuotationFromSupplier();
-    this.catalogName = 'Quotation from Supplier';
+    this.catalogName = 'QFS';
     this.autoLoad = false;
     this._curService.setAPI('QuotationFromSupplier/', this.catalogName, this.loadName);
     this.singleEditor = true;

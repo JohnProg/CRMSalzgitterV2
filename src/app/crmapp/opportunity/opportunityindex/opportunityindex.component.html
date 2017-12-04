@@ -1,8 +1,7 @@
 
 
 
-  <mat-card>
-
+  <mat-card *ngIf="!isXS">
     <mat-card-content>
 
         <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay" >
@@ -18,7 +17,7 @@
         </td-paging-bar>
         
 
-        <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+        <td-data-table *ngIf="!isXS" [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
           <ng-template tdDataTableTemplate="id" let-value="value" let-row="row" let-column="column">
             <button mat-button matRipple class="block relative" [routerLink]="['edit', row.id]">
               {{value}}
@@ -42,4 +41,38 @@
     </mat-card-content>
 
   </mat-card>
+
+<div *ngIf="isXS"> 
+  <mat-card  >
+
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+          <span hide-xs>Rows per page:</span>
+          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+            <mat-option *ngFor="let size of pagesArray" [value]="size">
+              {{size}}
+            </mat-option>
+          </mat-select>
+          <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+        </td-paging-bar>
+<mat-list>
+
+      <mat-list-item *ngFor="let item of entList | async">
+
+          <a  mat-line [routerLink]="['edit', item.id]"> {{item.id}} </a>
+
+          <p mat-line> {{item.customerName}} </p>    
+          <p mat-line>
+              <span flex="50" >Created {{item.dateCreated | date}}</span>
+              <span flex="50"  >Status {{item.statusName}}</span>         
+          </p>      
+
+      </mat-list-item>
+
+
+  
+</mat-list>
+  </mat-card>
+
+</div>
+
 

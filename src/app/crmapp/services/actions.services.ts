@@ -5,7 +5,7 @@ import { IPageChangeEvent } from '@covalent/core';
 import { User } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ConfigurationService } from './configuration.service';
-
+import { ICRMPageChangeEvent } from '../extensions';
 @Injectable()
 export class ActionsService {
   
@@ -17,7 +17,7 @@ export class ActionsService {
     public cancelEditEvent: EventEmitter<any>=new EventEmitter();
     public setEditEvent: EventEmitter<any>=new EventEmitter();
 
-    public updateTitleEvent: EventEmitter<string>=new EventEmitter<string>();
+    public updateTitleEvent: EventEmitter<any>=new EventEmitter<any>();
     public searchEvent: EventEmitter<string>=new EventEmitter<string>();
     public showSearchEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
     public showAddEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
@@ -31,8 +31,8 @@ export class ActionsService {
  
 
 
-    _screenSizeChangeEvent: BehaviorSubject<IPageChangeEvent> =  <BehaviorSubject<IPageChangeEvent>>new BehaviorSubject({ page: 0, pageSize: 13 }); 
-    screenSizeChangeEvent: Observable<IPageChangeEvent> = this._screenSizeChangeEvent.asObservable();
+    _screenSizeChangeEvent: BehaviorSubject<ICRMPageChangeEvent> =  <BehaviorSubject<ICRMPageChangeEvent>>new BehaviorSubject({ page: 0, pageSize: 13 }); 
+    screenSizeChangeEvent: Observable<ICRMPageChangeEvent> = this._screenSizeChangeEvent.asObservable();
 
 
     public userInfoEvent: EventEmitter<User>=new EventEmitter<User>();
@@ -88,8 +88,9 @@ export class ActionsService {
       this.setEditEvent.emit(e);
     }
 
-    public updateTitle(atitle: string) {
-      this.updateTitleEvent.emit(atitle);
+    public updateTitle(title: any) {
+      
+      this.updateTitleEvent.emit({ action: title.action, title: title.title, tparam: title.tparam });
     }
 
 
@@ -121,7 +122,7 @@ export class ActionsService {
       this.showSideNavEvent.emit(ashow);
     }
 
-    public screenSizeChange(e: IPageChangeEvent) {
+    public screenSizeChange(e: ICRMPageChangeEvent) {
       this._screenSizeChangeEvent.next(e);
     }
 

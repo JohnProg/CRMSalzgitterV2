@@ -32,7 +32,9 @@
           <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
               <mat-icon>arrow_back</mat-icon>
           </button>
-        <crm-quotationtocustomereditorheader [idDoc]="idQuotation"  *ngIf="scrId == 1" [quoteType]="quoteType"></crm-quotationtocustomereditorheader>
+        <crm-quotationtocustomereditorheader [idDoc]="idQuotation"  *ngIf="scrId == 1" 
+        [quoteType]="quoteType"
+        [itemRoute]="itemRoute"></crm-quotationtocustomereditorheader>
 
         <crm-quotationtocustomereditordetail [idOpp]="idQuotation" [idCustomer]="idCustomer" *ngIf="scrId == 2 "></crm-quotationtocustomereditordetail>
 

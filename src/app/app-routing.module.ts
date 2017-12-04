@@ -230,12 +230,9 @@ const routes: Routes = [
               component: ShippingindexComponent,
             },
             {
-              path: 'from/:id',
-              component: ShippingindexComponent,
-            },
-            { 
-              path: 'createfromquote/:id', component: ShippingeditorFromPOComponent
-            },            
+              path: 'createfromquote/:id',
+              component: ShippingeditorFromPOComponent,
+            },           
             { path: 'edit/:id', component: ShippingeditorComponent
             }
           ]
@@ -245,6 +242,7 @@ const routes: Routes = [
   
   
 ];
+
 
 
 @NgModule({

@@ -42,7 +42,8 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
      this.itemEdit = new PurchaseOrder();
-    this.catalogName = 'Purchase Order';
+
+    this.catalogName = 'PO';
     this.autoLoad = false;
     this._curService.setAPI('PurchaseOrder/', this.catalogName, this.loadName);
     this.singleEditor = true;

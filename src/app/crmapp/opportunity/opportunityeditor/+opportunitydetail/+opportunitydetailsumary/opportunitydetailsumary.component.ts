@@ -43,7 +43,7 @@ export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponen
 
   itemEdit: OpportunityDetailSumary;
   allowPropEdit: boolean = true;
-  @Input() idCustomerProduct: number = 0;
+
   
 
 
@@ -91,7 +91,8 @@ export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponen
            }
         });
         this.itemEdit.quantity = this.maxQty - this.total;
-        this.itemEdit.price = this.price;
+        
+        this.itemEdit.price = this.itemEdit.price <= 0 ? this.price : this.itemEdit.price;
         this.itemEdit.amount = this.itemEdit.quantity * this.itemEdit.price;
         if(pdata.length > 0) {
            this.allowPropEdit = false;
@@ -103,5 +104,7 @@ export class OpportunitydetailsumaryComponent extends EditordetailsumaryComponen
       }
       ); 
   }
+
+
 
 }

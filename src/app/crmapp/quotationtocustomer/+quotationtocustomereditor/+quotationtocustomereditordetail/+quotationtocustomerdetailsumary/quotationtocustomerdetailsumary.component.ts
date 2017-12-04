@@ -33,7 +33,7 @@ import gql from 'graphql-tag';
 
 @Component({
   selector: 'crm-quotationtocustomerdetailsumary',
-  templateUrl: '../../../../components/editordetailsumary/editordetailsumary.component.html',
+  templateUrl: './quotationtocustomerdetailsumary.component.html',
   styleUrls: ['./quotationtocustomerdetailsumary.component.scss']
 })
 export class QuotationtocustomerdetailsumaryComponent extends EditordetailsumaryComponent {
@@ -71,5 +71,37 @@ export class QuotationtocustomerdetailsumaryComponent extends Editordetailsumary
       });
     });
  }
+
+
+  calculateOtherCosts() {
+    this.itemEdit.salesPriceBased = this.itemEdit.itemPrice + this.itemEdit.expenseSupplierSide_Cost + this.itemEdit.expenseSMIM_Cost;
+    this.itemEdit.salePrice = this.itemEdit.salesPriceBased > 0 ? this.itemEdit.salesPriceBased / ( 1 - this.itemEdit.profit) : 0;
+    this.itemEdit.expectedProfit = this.itemEdit.salePrice - this.itemEdit.salesPriceBased;
+  }
+
+  addOtherColumns() {
+    
+    this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity',  numeric: true, format: NUMBER_FORMAT, sortable: false });
+    this._pcolumns.push(  { name: 'itemPrice' ,  label: 'Mat. Cost',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+    this._pcolumns.push(  { name: 'expenseSupplierSide_Cost' ,  label: 'Cost Abroad',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+    this._pcolumns.push(  { name: 'expenseSMIM_Cost' ,  label: 'Dom. Cost',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+    this._pcolumns.push(  { name: 'profit' ,  label: 'Profit',  numeric: true, format: NUMBER_FORMAT, sortable: false  });
+    this._pcolumns.push(  { name: 'salesPriceBased' ,  label: 'Tot. Cost',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+    this._pcolumns.push(  { name: 'salePrice' ,  label: 'Price',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+    this._pcolumns.push(  { name: 'expectedProfit' ,  label: 'Exp. Profit',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+
+  }
+
+  qtyChange(event)  {
+    this.itemEdit.quantity = event;
+    //this.itemEdit.amount  = event * this.itemEdit.price;
+    this.calculateOtherCosts();
+  }
+  priceChange(event)  {
+    this.price = event;
+    this.itemEdit.itemPrice = event;
+    //this.itemEdit.amount  = this.itemEdit.quantity * event;
+    this.calculateOtherCosts();
+  }  
 
 }

@@ -35,7 +35,7 @@ export class OpportunityindexComponent extends BaseComponent  {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.sortBy = 'id';
-    this.catalogName = 'Opportunity';
+    this.catalogName = 'OPP';
     this._curService.setAPI('Opportunity/', this.catalogName, this.loadName);   
   }
 

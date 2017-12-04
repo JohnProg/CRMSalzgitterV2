@@ -31,7 +31,7 @@ import {  QuotationindexviewerComponent } from '../../../components/index';
 })
 export class QuotationtocustomerindexviewerComponent  extends QuotationindexviewerComponent  {
   
-  catalogName: string ="Quotation to Customers";
+  catalogName: string ="QTC";
   baseApi: string ="QuotationToCustomer/searchByQFS";
   parentDoc: number = 2;
   itemRoute: string ="quotationtocustomer";  

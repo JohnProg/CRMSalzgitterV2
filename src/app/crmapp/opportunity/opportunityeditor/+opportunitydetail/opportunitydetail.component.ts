@@ -68,4 +68,5 @@ export class OpportunitydetailComponent extends EditordetailComponent {
 
 
 
+
 }

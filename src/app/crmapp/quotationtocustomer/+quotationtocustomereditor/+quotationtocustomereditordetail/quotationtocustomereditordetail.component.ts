@@ -59,10 +59,6 @@ export class QuotationtocustomereditordetailComponent extends EditordetailCompon
     this.itemEdit.idProduct = 0;
   }
 
-  calculateOtherCosts() {
-       this.itemEdit.itemExtended = this.itemEdit.itemPrice + this.itemEdit.expenseSupplierSide_Cost + this.itemEdit.expenseSMIM_Cost;
-       this.itemEdit.salePrice = this.itemEdit.itemExtended > 0 ? this.itemEdit.itemExtended / ( 1 - this.itemEdit.profit) : 0;
-       this.itemEdit.expectedProfit = this.itemEdit.salePrice - this.itemEdit.itemExtended;
-  }
+
 
 }

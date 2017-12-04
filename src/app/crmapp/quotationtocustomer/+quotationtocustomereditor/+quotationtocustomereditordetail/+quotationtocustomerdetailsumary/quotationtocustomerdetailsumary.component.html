@@ -1,57 +1,105 @@
-<td-expansion-panel label="Sumary Detail" sublabel="Total quantity: {{total | number}}   " >
-<mat-card flex>
-  <mat-card-subtitle>
-    <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
-    <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
-    <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
-  </mat-card-subtitle>
-  <mat-card-content>
 
+<td-expansion-panel label="Sumary Detail" sublabel="Total quantity: {{total | number}} " [expand]="true" >
+  
+      <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+<div layout-margin>
+        <div>
+            <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing  && (uTemplate == false)"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
+            <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
+            <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
+            <button mat-raised-button color="primary" (click)="getTemplate()" *ngIf=" (uTemplate == false) && (isEditing == false)" >Get Template </button>
+            <button mat-raised-button color="primary" (click)="uploadTemplate()" *ngIf="(uTemplate == false)  && (isEditing == false)" >Upload Template </button>
+        </div>
     <section *ngIf="isEditing" flex>
       <form #editform="ngForm" flex  (ngSubmit)="submitForm(form)">
 
+      
+              <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+                <mat-form-field flex-gt-sm="25" flex-lt-md="100" *ngFor="let pc of pdetails | async; let idx = index; ">
+                    <input matInput flex [id]="pc.nameDescription" [name]="pc.nameDescription" maxlength="500" [placeholder]="pc.property.name" [required]="pc.isRequired" 
+                    [(ngModel)]="pc.propertyValue">
+                  <mat-hint align="end"> 500</mat-hint>
+    
+                </mat-form-field>
+              </div>
+  
+
+
+
+
         <section layout="row" flex="100" layout-margin>
-          <div flex="20" *ngFor="let pc of pdetails | async; let idx = index; ">
-            <mat-form-field>
-              <input matInput flex [name]="pc.NameDescription" maxlength="500" [placeholder]="pc.property.name" [required]="pc.isRequired" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="pc.propertyValue">
-              <mat-hint align="end"> 500</mat-hint>
-            </mat-form-field>
-          </div>
+
+          <mat-form-field flex-gt-sm="25">
+            <input  matInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}"  (ngModelChange)="qtyChange($event)" >
+          </mat-form-field>
+          <mat-form-field flex-gt-sm="25">
+            <input  matInput #ItemPrice name="ItemPrice"  placeholder="Material Cost" [ngModel]="itemEdit.itemPrice" currencyMask  (ngModelChange)="priceChange($event)">
+          </mat-form-field>
+          <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+            <input  matInput  #expensePrice name="expensePrice" placeholder="Costs abroad" [(ngModel)]="itemEdit.expenseSupplierSide_Cost" (ngModelChange)="calculateOtherCosts()" currencyMask  >
+          </mat-form-field>   
+          <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+            <input  matInput  #expensesmim name="expensesmim" placeholder="Domestic Costs" [(ngModel)]="itemEdit.expenseSMIM_Cost" (ngModelChange)="calculateOtherCosts()" currencyMask  >
+          </mat-form-field>   
 
         </section>
-        <section layout="row" flex="100" layout-margin>
-          <mat-form-field  flex-gt-xs="30">
-            <input  matInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}">
-          </mat-form-field>
-          <mat-form-field class="mat-icon-float" flex-gt-xs="30">
-            <input  matInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.price" currencyMask>
-          </mat-form-field>
-          <mat-form-field class="mat-icon-float" flex-gt-xs="35">
-            <input  matInput #Amount  name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount"  currencyMask>
-          </mat-form-field>
-
-        </section>
-
-        <div layout-gt-sm="row" layout-lt-md="column">
-          <mat-form-field flex class="">
-            <textarea matInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.comment"></textarea>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
+          
+                  
+                    <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+                      <input  matInput  #profit name="profit" placeholder="Margin" [(ngModel)]="itemEdit.profit"  currencyMask  (ngModelChange)="calculateOtherCosts()"  [options]="{ prefix: '%', prefixPos: 'end'}" >
+                    </mat-form-field>  
+                    <mat-form-field  flex-gt-sm="25" >
+                        <input  matInput    #salesPriceBased name="salesPriceBased" readonly placeholder="Total Cost" [(ngModel)]="itemEdit.salesPriceBased" currencyMask />
+                      </mat-form-field>      
+                    <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+                        <input  matInput  #SalePrice name="SalePrice" placeholder="Sales Price" readonly [(ngModel)]="itemEdit.salePrice"  currencyMask  >
+                      </mat-form-field>    
+                      <mat-form-field class="mat-icon-float" flex-gt-sm="25">
+                          <input  matInput  #expectedProfit name="expectedProfit" placeholder="Expected Profit"  [(ngModel)]="itemEdit.expectedProfit"  currencyMask readonly  >
+                        </mat-form-field>    
+                  </div> 
+        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+          <mat-form-field flex >
+            <textarea matInput flex #Comment name="Comment" required="true" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.comment"></textarea>
             <mat-hint align="end">{{Comment.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
 
       </form>
+     
     </section>
+    <section *ngIf="uTemplate" layout-margin>
+        
+                  <div layout-gt-sm="row" layout-lt-md="column" flex>
+                      <mat-form-field tdFileDrop  (fileDrop)="files = $event" (click)="fileInput.inputElement.click()"
+                        (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()" (keyup.backspace)="fileInput.clear()"
+                        flex>
+                        <input matInput placeholder="select or drop file" [value]="files?.length ? (files?.length + ' file') : files?.name" [disabled]="disabled"
+                          readonly/>
+                      </mat-form-field>
+                      <button mat-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                      <td-file-input class="push-left-sm push-right-sm" #fileInput name="fileInput" [(ngModel)]="files"  >
+                        <mat-icon>folder</mat-icon>
+                        <span class="text-upper">Browse...</span>
+                      </td-file-input>
+                      <span>
+                          <button mat-raised-button color="accent" [disabled]="!files" class="text-upper" (click)="uploadFile()">Submit</button>
+                        </span>
+                    </div>        
+              </section>        
 
 
-    <section flex *ngIf="!isEditing">
+    <section flex *ngIf="!isEditing && (uTemplate == false)">
 
       <td-data-table flex [columns]="pcolumns | async" [data]="entList | async" [sortable]="false">
         <ng-template *ngFor="let pc of (pcolumns | async)" [tdDataTableTemplate]="pc.name" let-value="value" let-row="row" let-column="column">
           <span flex>{{value}} </span>
         </ng-template>
         <ng-template tdDataTableTemplate="tActions" let-value="value" let-row="row" let-column="column">
-          <div layout="row" flex="5">
+          <div layout="row" flex="5" >
             <button mat-icon-button (click)="confirmDelete( row)">
             <mat-icon>delete</mat-icon>
           </button>
@@ -66,10 +114,11 @@
             {{size}}
           </mat-option>
         </mat-select>
-        <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+        <span hide-xs>{{pagingBarPageSize.range}} <span >of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
     </section>
-  </mat-card-content>
+  </div>
+  </ng-template>
 
-</mat-card>
+
 </td-expansion-panel>

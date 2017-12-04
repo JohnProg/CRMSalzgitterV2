@@ -33,7 +33,7 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     @Input() byType: number = 0;
     @Input() allowChild: boolean = true;
     sortBy: string = 'id';
-    catalogName: string;
+    //catalogName: string;
     baseApi: string;
     parentDoc: number;
     itemRoute: string;
@@ -44,8 +44,9 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     @Input() moveToScr: boolean = true;
     
     ngBeforeInit() {
+      
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
-      if( this.idParent != undefined || this.idParent == 0) {
+      if(this.idParent > 0) {
         this.setTitle = false;
       }
     }
@@ -77,8 +78,8 @@ export class QuotationindexviewerComponent extends BaseComponent  {
   
     editEntity(id: number) {
       
-      if( this.parentRoute != undefined) {
-         this._router.navigate([ '/' + this.itemRoute + '/edit/' + id, {  parentRoute: this.parentRoute, scrId: this.parentScreen, moveToScr: this.moveToScr   }]);
+      if( this.parentScreen != undefined) {
+         this._router.navigate([ '/' + this.itemRoute + '/edit/' + id, {  scrId: this.parentScreen, moveToScr: this.moveToScr   }]);
       }else {
         this._router.navigate([ '/' + this.itemRoute + '/edit/' + id]);
       }

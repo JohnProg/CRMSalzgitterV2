@@ -40,8 +40,9 @@ export class EditordetailsumaryComponent extends BaseComponent {
   @Input() maxQty: number = 0;
   @Input() price: number = 0;
   @Input() idProduct: number = 0;
+  @Input() idCustomerProduct: number = 0;
   @Output() onHasSumary: EventEmitter<any>= new EventEmitter();
-
+  @Output() afterChange: EventEmitter<any>= new EventEmitter();
    _columns: BehaviorSubject<ITdDataTableColumn[]>;
   pcolumns: Observable<ITdDataTableColumn[]>;
   _pcolumns: ITdDataTableColumn[];
@@ -190,17 +191,24 @@ export class EditordetailsumaryComponent extends BaseComponent {
  }
   afterCreate(itms: EditorDetailSumary[]) {
     this.afterLoadAll(itms);
+    
+    this.afterChange.emit();
   }
 
   afterUpdate(itms: EditorDetailSumary[]) {
     this.afterLoadAll(itms);
+    
+    this.afterChange.emit();
   }
 
 
   afterDelete(items: any) {
     this.afterLoadAll(items);
+    
+    this.afterChange.emit();
   }
 
+  
   afterLoadAll(itms: EditorDetailSumary[]) {
       this.total = 0;
       this.totalAmount = 0;
@@ -224,12 +232,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
           });
         });
 
-        this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity',  numeric: true, format: NUMBER_FORMAT, sortable: false });
-        if( this.totalShipped > 0 ){
-          this._pcolumns.push(  { name: 'qtyShipped' ,  label: 'Ship Qty', numeric: true, format: NUMBER_FORMAT, sortable: false });
-        }
-        this._pcolumns.push(  { name: 'price' ,  label: 'Price',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
-        this._pcolumns.push(  { name: 'amount' ,  label: 'Amount',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+        this.addOtherColumns();
         //this._pcolumns.push(  { name: 'comment' ,  label: 'Comment' });
         this._columns.next(this._pcolumns);
 
@@ -243,6 +246,14 @@ export class EditordetailsumaryComponent extends BaseComponent {
       this.isEditing = false;
 }
 
+addOtherColumns() {
+  this._pcolumns.push(  { name: 'quantity' ,  label: 'Quantity',  numeric: true, format: NUMBER_FORMAT, sortable: false });
+  if( this.totalShipped > 0 ){
+    this._pcolumns.push(  { name: 'qtyShipped' ,  label: 'Ship Qty', numeric: true, format: NUMBER_FORMAT, sortable: false });
+  }
+  this._pcolumns.push(  { name: 'price' ,  label: 'Price',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+  this._pcolumns.push(  { name: 'amount' ,  label: 'Amount',  numeric: true, format: CURRENCY_FORMAT, sortable: false  });
+}
 
 
 
@@ -269,18 +280,25 @@ export class EditordetailsumaryComponent extends BaseComponent {
   qtyChange(event)  {
     this.itemEdit.quantity = event;
     this.itemEdit.amount  = event * this.itemEdit.price;
+    this.calculateOtherCosts();
   }
   priceChange(event)  {
     this.price = event;
+    this.itemEdit.price = event;
     this.itemEdit.amount  = this.itemEdit.quantity * event;
+    this.calculateOtherCosts();
   }  
+
+  calculateOtherCosts() {
+    
+  }
 
 
   getTemplate() {
 
     //this._loadingService.register(this.loadName);
     request
-    .get( this._confs.serverWithApiCustomUrl + 'OpportunityDetailSumary/getTemplate')
+    .get( this._confs.serverWithApiCustomUrl + this.baseController + '/getTemplate')
     .set('Authorization', this._confs.getToken() )
     .set('Content-Type', 'blob')
     .query({ idDetail: this.idDetail.toString() })
@@ -314,7 +332,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
       data.append('file', this.files);
 
 
-        request.post(this._confs.serverWithApiCustomUrl + 'OpportunityDetailSumary/uploadTemplate')
+        request.post(this._confs.serverWithApiCustomUrl + this.baseController + '/uploadTemplate')
             //.set("Content-Type", this.files.type)
             .set( 'Authorization', token )
             .query({ iddetail: this.idDetail.toString() })
@@ -328,6 +346,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
               }
                this.refreshItems();
               this.uTemplate = !this.uTemplate;
+              this.afterChange.emit();
                 //this._loadingService.resolve(this.loadItem);
             });
       
