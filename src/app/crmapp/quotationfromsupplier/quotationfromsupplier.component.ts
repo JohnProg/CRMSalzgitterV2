@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AbstractRootMenuComponent } from '../components';
 @Component({
   selector: 'crm-quotationfromsupplier',
   templateUrl: './quotationfromsupplier.component.html',
   styleUrls: ['./quotationfromsupplier.component.scss']
 })
-export class QuotationfromsupplierComponent implements OnInit {
+export class QuotationfromsupplierComponent extends AbstractRootMenuComponent {
 
-  constructor() { }
 
-  ngOnInit() {
-  }
 
 }

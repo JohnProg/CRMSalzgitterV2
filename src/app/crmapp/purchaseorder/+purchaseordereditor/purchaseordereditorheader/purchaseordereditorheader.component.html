@@ -280,5 +280,18 @@
              <mat-hint flex align="end">{{Comments.value.length}} / 500</mat-hint>
           </mat-form-field>         
         </div>   
+
+        <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="itemEdit.purchaseOrderConfirmation != undefined">
+          
+          <label class="md-body-1">Order Confirmation: {{itemEdit.purchaseOrderConfirmation.id}}</label> 
+          <span flex></span>
+          <label class="md-body-1">Created: {{itemEdit.purchaseOrderConfirmation.dateCreated | date}}</label> 
+          <span *ngIf="itemEdit.purchaseOrderConfirmation.user != null">
+          <span flex></span>
+          <label class="md-body-1">Date Sended: {{itemEdit.purchaseOrderConfirmation.dateSended | date}}</label> 
+          <span flex></span>
+          <label class="md-body-1">Sended by: {{itemEdit.purchaseOrderConfirmation.user.name}}</label> 
+        </span>
+        </div>  
       </ng-template>
       </form>

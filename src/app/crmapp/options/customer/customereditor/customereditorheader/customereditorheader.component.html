@@ -3,34 +3,35 @@
 
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <mat-form-field flex-gt-sm="75">
+      <mat-form-field flex-gt-sm="50">
         <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250"
         />
         <mat-hint align="end">{{name.value.length}} / 250</mat-hint>
       </mat-form-field>
-      <mat-form-field flex-gt-sm="25">
+      <mat-form-field flex-gt-sm="35">
         <mat-select class="cbxClass" #idResponsible name="idResponsible" flex required="true" placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible">
           <mat-option *ngFor="let i of catResponsible  	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <section flex-gt-sm="15">
+        <mat-slide-toggle #isActive name="isActive" [(ngModel)]="itemEdit.isActive">Active</mat-slide-toggle>
+      </section>
     </div>
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-      <mat-form-field flex-gt-sm="35">
+      <mat-form-field flex-gt-sm="25">
         <input matInput #street name="street" [(ngModel)]="itemEdit.street" required placeholder="Street" maxlength="100" />
         <mat-hint align="end">{{street.value.length}} / 100</mat-hint>
       </mat-form-field>
-      <mat-form-field flex-gt-sm="35">
+      <mat-form-field flex-gt-sm="15">
         <input matInput #number name="number" [(ngModel)]="itemEdit.number" required placeholder="Number" maxlength="50" />
         <mat-hint align="end">{{number.value.length}} / 50</mat-hint>
       </mat-form-field>
-      <section flex-gt-sm="30">
-        <mat-slide-toggle #isAutomotive name="isAutomotive" [(ngModel)]="itemEdit.isAutomotive">Automotive</mat-slide-toggle>
-      </section>
+      <crm-selectcolony flex #ccolony id="ccolony" name="ccolony" byType="1" [(ngModel)]="itemEdit.idColony"></crm-selectcolony>
     </div>
 
-    <crm-selectcolony #ccolony id="ccolony" name="ccolony" byType="1" [(ngModel)]="itemEdit.idColony"></crm-selectcolony>
+    
     <div layout-gt-sm="row" layout-lt-sm="row" layout-margin>
       
 
@@ -42,6 +43,8 @@
         <input matInput #rfc flex name="rfc" [(ngModel)]="itemEdit.rfc" required placeholder="RFC" maxlength="20" />
         <mat-hint align="end">{{rfc.value.length}} / 20</mat-hint>
       </mat-form-field>
+
+
     </div>
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
@@ -63,5 +66,20 @@
       </mat-form-field>
     </div>
 
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+        <mat-form-field flex-gt-sm="15">
+            <mat-select class="cbxClass" #idCurrency name="idCurrency" flex required="true" placeholder="Currency" [(ngModel)]="itemEdit.idCurrency">
+              <mat-option *ngFor="let i of catCurrencies  	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+                {{ i.nameDescription || i.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <section flex-gt-sm="15">
+              <mat-slide-toggle #isTax name="isTax" [(ngModel)]="itemEdit.isTax">Apply Tax</mat-slide-toggle>
+            </section>
+            <section flex-gt-sm="15">
+                <mat-slide-toggle #isAutomotive name="isAutomotive" [(ngModel)]="itemEdit.isAutomotive">Automotive</mat-slide-toggle>
+              </section>
+      </div>
   </form>
 </ng-template>

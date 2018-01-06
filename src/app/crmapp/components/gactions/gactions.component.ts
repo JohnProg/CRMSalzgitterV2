@@ -65,6 +65,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.initTitles();
     this.updateTitleEvent = this._actions.updateTitleEvent
       .subscribe((res) => {
+        
         this.updateTitle(res);
       });
 
@@ -209,7 +210,9 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     if( res != undefined) {
       this.catTitle = res; 
     }
+    
     if( this.catTitle ) {
+      
     let title: ICatalogName = this.oppTitles[this.catTitle.title];
     if( title != undefined ) {
       
@@ -239,7 +242,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
         ttitle = this.catTitle.action + ' ';
       } 
 
-      title +=  this.catTitle.title;
+      ttitle +=  this.catTitle.title;
       if( this.catTitle.tparam ) {
         ttitle +=   ' ' + this.catTitle.tparam;
       } 
@@ -261,6 +264,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
       } else {
        this.maxTitle = 100;
       }
+
       this.updateTitle(undefined);
     }
   }

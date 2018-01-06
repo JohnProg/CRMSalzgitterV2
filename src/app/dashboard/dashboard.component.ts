@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Title }     from '@angular/platform-browser';
 import { AuthHelper } from '../crmapp/authHelper/authHelper';
 import { ActionsService } from '../crmapp/services/actions.services';
-import { ApolloClient, createNetworkInterface } from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import {  TCRMEntity, QueryResponse, DashboardData, GetSimpleChartFromResponsible_Result } from '../crmapp/model/index';
@@ -89,7 +89,7 @@ export class DashboardComponent implements AfterViewInit  {
     this.apollo.watchQuery<QueryResponse>({
       query: dashQL,
       variables:  { idresponsible: 4 }
-    }).subscribe(({data}) => {
+    }).valueChanges.subscribe(({data}) => {
       
       //let dash = (<DashboardData>data['getDashboard']);
       this._single.next( data['getSimpleDashboard']);

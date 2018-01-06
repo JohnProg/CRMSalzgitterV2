@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActionsService } from '../../services/actions.services';
+import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder  } from '@angular/http';
+import { ConfigurationService, ActionsService, TokenService } from '../../services/index';
 
 import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
-import { ConfigurationService } from '../../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -24,6 +24,8 @@ import { CatalogComponent } from '../../catalogs/catalog.component';
 import {  GetPurchaseOrder_Result, PurchaseOrder } from '../../model/index';
 import { EnumDocType } from '../../constants/index';
 import { PurchaseordereditorheaderComponent } from './purchaseordereditorheader/purchaseordereditorheader.component';
+import { AuthHelper } from '../../authHelper/authHelper';
+
 
 @Component({
   selector: 'crm-purchaseordereditor',
@@ -32,37 +34,36 @@ import { PurchaseordereditorheaderComponent } from './purchaseordereditorheader/
 })
 export class PurchaseordereditorComponent extends CatalogComponent {
 
+
   idQTC: number = 0;
   idQFS: number = 0;
   idOpp: number = 0;
   byType: number = 0;
   scrId: number = 1;
-  idPurchase: number = 0;
+  allowShippings: boolean = false;
+  //idPurchase: number = 0;
   idCustomer: number;
   po: PurchaseOrder;
   @ViewChild(PurchaseordereditorheaderComponent) headercomp: PurchaseordereditorheaderComponent;
   
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
+  doConstruct() {
+    super.doConstruct();
     this.quoteType = EnumDocType.PurchaseOrder;
     this.itemRoute = 'purchaseorder';
     this.parentRoute = 'quotationtocustomer';
-    this._route.params.subscribe((params: { id: number }) => {
-       this.idPurchase = params.id;
-      });
+    // this._route.params.subscribe((params: any) => {
+      
+
+    //    this.idPurchase = params.id;
+    //   });
   }
 
 
+
+
+
   doOnItemCreated(itm: PurchaseOrder) {
-    this.idPurchase = itm.id;
+    this.idQuotation = itm.id;
     this.idQTC = itm.idQuotationToCustomer;
     this.idQFS = itm.idQuotationFromSupplier;
     this.idOpp = itm.idOpportunity;
@@ -100,12 +101,25 @@ export class PurchaseordereditorComponent extends CatalogComponent {
 
   onItemLoaded(itm: PurchaseOrder) {
     this.po = itm;
-    this.idPurchase = itm.id;
+    this.idQuotation = itm.id;
     this.idQTC = itm.idQuotationToCustomer;
     this.idQFS = itm.idQuotationFromSupplier;
     this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
     super.onItemLoaded(itm);
+    this.allowShippings = itm.purchaseOrderConfirmation != null;
+    
+  }
+
+  onItemUpdated(itm: PurchaseOrder) {
+    super.onItemUpdated(itm);
+    this.allowShippings = itm.purchaseOrderConfirmation != null;
+  }
+
+  updateTotal(data) {
+    this.po.subtotal = data.subtotal;
+    this.po.taxAmount = data.subtotal * this.po.tax;
+    this.po.total = this.po.subtotal + this.po.taxAmount;
   }
 }
 
@@ -119,20 +133,11 @@ export class PurchaseordereditorComponent extends CatalogComponent {
 })
 export class PurchaseordereditorFromQTSComponent extends PurchaseordereditorComponent {
 
-
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
-
+  doConstruct() {
+    super.doConstruct();
+    debugger
     this._route.params.subscribe((params: { id: number, bytype: number }) => {
-      this.idPurchase = 0;
+      this.idQuotation = 0;
       this.idParent = params.id;
       this.byType = params.bytype;
       // switch(params.bytype) {
@@ -149,8 +154,9 @@ export class PurchaseordereditorFromQTSComponent extends PurchaseordereditorComp
       //        break;
       // }
     });
-
   }
+
+  
 
   checkParams() {
   }

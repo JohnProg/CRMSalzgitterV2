@@ -31,11 +31,11 @@ $theme: mat-light-theme($primary, $accent, $warn);
 // Active icon color in list nav
 mat-nav-list {
     [mat-list-item].active {
-        mat-icon[mat-list-avatar] {
+        mat-icon[matListAvatar] {
             background-color: mat-color($accent);
             color: mat-color($accent, default-contrast)
         }
-        mat-icon[mat-list-icon] {
+        mat-icon[matListIcon] {
             color: mat-color($accent);
         }
     }

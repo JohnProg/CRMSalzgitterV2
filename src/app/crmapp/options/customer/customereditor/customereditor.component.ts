@@ -42,21 +42,13 @@ export class CustomereditorComponent extends CatalogComponent  {
   customer: Customer;
 
 
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
-
+  doConstruct() {
+    super.doConstruct();
     this._route.params.subscribe((params: { id: number }) => {
-       this.idCustomer = params.id;
-      });
+      this.idCustomer = params.id;
+     });
   }
+
 
 
   doOnItemCreated(itm: Customer) {

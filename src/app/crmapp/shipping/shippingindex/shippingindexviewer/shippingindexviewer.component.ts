@@ -39,7 +39,6 @@ export class ShippingindexviewerComponent extends QuotationindexviewerComponent 
   itemRoute: string ="shipping";
 
 
-
   addColumns() {
 
     //super.addColumns();
@@ -53,5 +52,12 @@ export class ShippingindexviewerComponent extends QuotationindexviewerComponent 
     this.columns.push({ name: 'cdpName', label: 'Delivery Point' });
     this.columns.push({ name: 'userName', label: 'Created by' });
   }
+
+  ngAfterViewInit() {
+         super.ngAfterViewInit(); 
+         debugger
+         this._actions.showAdd(this.allowChild);
+  }
+
 
 }

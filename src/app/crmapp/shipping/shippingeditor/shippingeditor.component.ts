@@ -38,20 +38,15 @@ export class ShippingeditorComponent extends CatalogComponent {
   shipping: Shipping;
   idPO: number;
   itemRoute: string = 'shipping';
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
+
+
+  doConstruct() {
+    super.doConstruct();
     this.quoteType = EnumDocType.Shipping;
     this.itemRoute = 'shipping';
     this.parentRoute = 'shipping';
   }
+
 
 
   doOnItemCreated(itm: Shipping) {
@@ -85,6 +80,12 @@ export class ShippingeditorComponent extends CatalogComponent {
    this._router.navigate([ '/' + this.itemRoute]);
  //}
 }
+
+updateTotal(data) {
+  this.shipping.subtotal = data.subtotal;
+  this.shipping.taxAmount = data.subtotal * this.shipping.tax;
+  this.shipping.total = this.shipping.subtotal + this.shipping.taxAmount;
+}
 }
 
 
@@ -98,37 +99,16 @@ export class ShippingeditorComponent extends CatalogComponent {
 export class ShippingeditorFromPOComponent extends ShippingeditorComponent {
 
 
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
-
+  doConstruct() {
+    super.doConstruct();
     this._route.params.subscribe((params: { id: number, bytype: number }) => {
       //this.idPurchase = 0;
       this.idParent = params.id;
       this.byType = params.bytype;
-      // switch(params.bytype) {
-      //   case EnumDocType.Opportunity:
-      //        this.idOpp = params.id;
-      //        break;
-      //   case EnumDocType.QuotationFromSupplier:
-      //        this.idQFS = params.id;
-      //        break;
-      //   case EnumDocType.QuotationToCustomer:
-      //        this.idQTC = params.id;
-      //        break;
-      //   default:
-      //        break;
-      // }
     });
-
   }
+  
+
 
   checkParams() {
   }

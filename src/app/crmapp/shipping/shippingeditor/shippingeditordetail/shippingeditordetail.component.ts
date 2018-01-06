@@ -52,7 +52,7 @@ export class ShippingeditordetailComponent extends BaseComponent {
 
   poDetails: ShipPODetailModel[]; 
 
-
+  @Output() onUpdateTotal: EventEmitter<any> = new EventEmitter<any>();
 
   ngBeforeInit() {
     super.ngBeforeInit();
@@ -106,6 +106,12 @@ export class ShippingeditordetailComponent extends BaseComponent {
     this.itemEdit = new GetShippingDetails_Result() ;
     this.itemEdit.idShipping  = this.idShipping;
     this.itemEdit.id = 0;
+  }
+
+  initData() {
+  
+    super.initData();
+    this.bindParentTotal();
   }
 
 
@@ -167,5 +173,25 @@ export class ShippingeditordetailComponent extends BaseComponent {
 
   hasSumary(h: boolean) {
     this.allowProduct = h;
+  }
+
+  bindParentTotal() {
+
+     
+    let subtotal: number = 0;
+    this.entList.subscribe((items) => {
+      setTimeout(() => {
+         this.setTotal(items);
+       }, 1000);
+    });
+  }
+
+  setTotal(items) {
+    let subtotal: number = 0;
+    items.forEach((itm) => {
+          
+      subtotal += itm['extended'];
+    });
+    this.onUpdateTotal.emit({ subtotal: subtotal, setTotal: this.setTotal }); 
   }
 }

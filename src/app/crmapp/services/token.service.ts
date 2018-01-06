@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from './configuration.service';
 import { ActionsService } from './actions.services';
-import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
+
 
 @Injectable()
 export class TokenService {

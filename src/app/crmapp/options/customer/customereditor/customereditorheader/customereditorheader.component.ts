@@ -28,6 +28,7 @@ import { SelectcolonyComponent } from '../../../../components/index';
 export const custQl = gql`
   query {
     responsibles { id name isActive  }
+    currencies { id name }
   }
 `;
 
@@ -97,6 +98,7 @@ export class CustomereditorheaderComponent extends BaseComponent {
         this._curService.loadQl(custQl, undefined)
         .subscribe(({data}) => {
           this.catResponsible = data['responsibles'];
+          this.catCurrencies = data['currencies'];
         }, (error: Error) => {
           this._loadingService.resolve('');
           

@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractRootMenuComponent } from '../components';
 
 @Component({
-  selector: 'app-shipping',
+  selector: 'crm-shipping',
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.scss']
 })
-export class ShippingComponent implements OnInit {
+export class ShippingComponent extends AbstractRootMenuComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+ 
 }

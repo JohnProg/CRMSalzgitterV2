@@ -12,22 +12,29 @@
         <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "HEADER" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2 }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idPurchase > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2 }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>dashboard</mat-icon>
         {{ "DETAILS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idPurchase > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DIALOGS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idPurchase > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DOCUMENTS" | translate}}
       </a>
-      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 5  }" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idPurchase > 0">
+      <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 5  }" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
           <mat-icon mat-list-icon>insert_chart</mat-icon>
           Shippings
         </a>        
+
+        <section mat-list-item *ngIf="po != undefined">
+          <p> Subtotal: {{po.subtotal | currency}} </p>
+          <p> Tax: {{po.tax | percent}} </p>
+          <p> Tax Amount: {{po.taxAmount | currency}} </p>
+          <p> Total: {{po.total | currency}} </p>
+        </section>
     </mat-nav-list>
 
     <mat-card>
@@ -35,15 +42,16 @@
           <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
               <mat-icon>arrow_back</mat-icon>
           </button>
-        <crm-purchaseordereditorheader [idDoc]="idPurchase"  *ngIf="scrId == 1" 
+        <crm-purchaseordereditorheader [idDoc]="idQuotation"  *ngIf="scrId == 1" 
         [quoteType]="quoteType"
         [itemRoute]="itemRoute"></crm-purchaseordereditorheader>
-        <crm-purchaseordereditordetail [idOpp]="idPurchase" [idCustomer]="idCustomer" *ngIf="scrId == 2 "></crm-purchaseordereditordetail>
+        <crm-purchaseordereditordetail [idOpp]="idQuotation" [idCustomer]="idCustomer" 
+        *ngIf="scrId == 2 " (onUpdateTotal)="updateTotal($event)"></crm-purchaseordereditordetail>
 
-        <crm-documentviewer [idParent]="idPurchase" baseApi="PurchaseOrderDocument" *ngIf="scrId == 4 "></crm-documentviewer>
+        <crm-documentviewer [idParent]="idQuotation" baseApi="PurchaseOrderDocument" *ngIf="scrId == 4 "></crm-documentviewer>
 
 
-        <crm-editorbasedialog [idParent]="idPurchase" 
+        <crm-editorbasedialog [idParent]="idQuotation" 
                 [baseApi]="'PurchaseOrderDialog'"
                 parentField="idPurchaseOrder"
 
@@ -56,12 +64,13 @@
                 ></crm-editorbasedialog>
 
                 <crm-shippingindexviewer 
-                [idParent]="idPurchase" 
+                [idParent]="idQuotation" 
                 [byType]="quoteType"              
                 *ngIf="scrId == 5 "
                 parentRoute="purchaseorder"
                 parentScreen="5"
                 moveToScr="false"
+                [allowChild]="allowShippings"
                 ></crm-shippingindexviewer>
 
 

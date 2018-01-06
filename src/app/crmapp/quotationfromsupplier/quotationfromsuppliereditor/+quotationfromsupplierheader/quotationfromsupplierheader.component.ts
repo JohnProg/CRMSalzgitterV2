@@ -83,6 +83,7 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
         Object.assign(this.opp, data);
         this.itemEdit.idOpportunity = data.id;
         this.itemEdit.idCurrency = data.idCurrency;
+
         this.itemEdit.idPort = data.idPort;
         this.itemEdit.idUser = data.idUser;
         this.itemEdit.idIncoTerm = data.idIncoTerm;
@@ -96,6 +97,13 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
         this.itemEdit.idCustomer = data.idCustomer;
         this.itemEdit.creditDays = data.creditDays;
         this.itemEdit.interestRate = data.interestRate;
+        this.itemEdit.isAutomotive = data.isAutomotive;
+        this.itemEdit.subtotal = data.subtotal;
+        this.itemEdit.tax = data.tax;
+        this.itemEdit.taxAmount = data.taxAmount;
+        this.itemEdit.total = data.total;
+        
+
         this.idOpp = data.id;
         //this.setDeliverRequired();
       }, error => {

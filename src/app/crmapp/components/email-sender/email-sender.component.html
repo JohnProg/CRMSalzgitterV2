@@ -39,12 +39,18 @@
           </div>
 
           <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+
             <h1 class="md-title">Documents added</h1>
-            <mat-list>
-              <mat-list-item *ngFor="let doc of itemEdit.emailAttachments">
-                <mat-checkbox name="DocSelected" [(ngModel)]="doc.selected"> {{doc.docTypeName}} - {{doc.docName}} </mat-checkbox>
-              </mat-list-item>
-            </mat-list>
+            <br />
+            <div flex>
+              <mat-list>
+                <mat-list-item *ngFor="let doc of itemEdit.emailAttachments">
+                  <mat-checkbox name="DocSelected" [(ngModel)]="doc.selected">  </mat-checkbox>
+                  <a (click)="downloadAttachment(doc)">{{doc.docTypeName}} - {{doc.docName}}</a>
+                </mat-list-item>
+              </mat-list>
+            </div>
+
 
           </div>
 

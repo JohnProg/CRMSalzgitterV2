@@ -32,7 +32,7 @@ export const oppQl = gql`
     currencies { id name description aSign }
     responsibles { id name isActive  }
     findStatusByDocType(iddoc: $iddoc) { id name description allowChild isEditable idDocType }
-    customers { id name isAutomotive interestRate daysCredit idResponsible }
+    customers { id name isAutomotive interestRate daysCredit idResponsible idCurrency isTax }
     contacts { id name isActive }
     markets { id name description }
     sectors { id name description }
@@ -42,6 +42,7 @@ export const oppQl = gql`
     linerTerms { id name description }
     typeOpportunities { id name description }
     mills { id name description }
+    companies { taxAmount }
   }
 `;
 
@@ -57,7 +58,7 @@ export class BaseOppComponent extends BaseComponent {
   deliveryRequired: boolean = false;
   @Input() quoteType: EnumDocType;
   @Input() itemRoute: string;
-
+  
   customer: Customer;
    loadCatalogs() {
     this._curService.loadQl(oppQl, { iddoc: this.quoteType })
@@ -77,6 +78,7 @@ export class BaseOppComponent extends BaseComponent {
       this.catTypeOpp = data['typeOpportunities'];
       this.catPort = data['ports'];
       this.catMill = data['mills'];
+      this.catCompanies = data['companies'];
     }, (error: Error) => {
       this._loadingService.resolve('');
       
@@ -94,10 +96,10 @@ export class BaseOppComponent extends BaseComponent {
       if (this.idDoc > 0) {
         this.editEntity(this.idDoc);        
       } else {
-        this._actions.updateTitle({ action: 'Edit', title: this.catalogName , tparam: this.titleParam});
+        this._actions.updateTitle({ action: 'Add', title: this.catalogName , tparam: this.titleParam});
         this.addEntity();
       }    
-    }, 50);
+    }, 100);
     this._actions.showAdd(false);
     this._actions.showSearch(false);
     this._actions.showSave(true);
@@ -137,6 +139,12 @@ export class BaseOppComponent extends BaseComponent {
         this.itemEdit['creditDays'] = cust.daysCredit;
         this.itemEdit['interestRate'] = cust.interestRate;
         this.itemEdit['idResponsible'] = cust.idResponsible;
+        this.itemEdit['idCurrency'] = cust.idCurrency;
+        
+        if( cust.isTax == true) {
+          this.itemEdit['tax'] = this.getTax();
+        }
+
       }
     }
     

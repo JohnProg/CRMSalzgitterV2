@@ -40,8 +40,8 @@ export class QuotationindexviewerComponent extends BaseComponent  {
 
 
     @Input() parentRoute: string;
-    @Input() parentScreen: number = 5;
-    @Input() moveToScr: boolean = true;
+    @Input() parentScreen: number;
+    @Input() moveToScr: boolean = false;
     
     ngBeforeInit() {
       
@@ -78,7 +78,7 @@ export class QuotationindexviewerComponent extends BaseComponent  {
   
     editEntity(id: number) {
       
-      if( this.parentScreen != undefined) {
+      if( this.moveToScr == true) {
          this._router.navigate([ '/' + this.itemRoute + '/edit/' + id, {  scrId: this.parentScreen, moveToScr: this.moveToScr   }]);
       }else {
         this._router.navigate([ '/' + this.itemRoute + '/edit/' + id]);

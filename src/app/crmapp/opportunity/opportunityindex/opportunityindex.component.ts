@@ -36,6 +36,7 @@ export class OpportunityindexComponent extends BaseComponent  {
     super.ngBeforeInit();
     this.sortBy = 'id';
     this.catalogName = 'OPP';
+    
     this._curService.setAPI('Opportunity/', this.catalogName, this.loadName);   
   }
 
@@ -52,6 +53,7 @@ export class OpportunityindexComponent extends BaseComponent  {
     this.columns.push({ name: 'oppNotes', label: 'Project Name' });
     this.columns.push({ name: 'asImporter', label: 'IOR' });
     this.columns.push({ name: 'statusName', label: 'Status' });
+    this.columns.push({ name: 'totalformat', label: 'Total' });
     this.columns.push({ name: 'lastUpdated', label: 'Last Update', numeric: false, format: DATE_FORMAT });
   }
 

@@ -13,3 +13,7 @@ export * from './quotationindexviewer/quotationindexviewer.component';
 export * from './pipes/index';
 export * from './editordetail/editordetail.component';
 export * from './crmcustomdialog/crmcustomdialog.component';
+export * from './abstractrootmenu.component';
+export * from './mainmenu/mainmenu.component';
+
+

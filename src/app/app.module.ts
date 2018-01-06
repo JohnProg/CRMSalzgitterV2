@@ -20,7 +20,7 @@ import { CRMModule } from './crmapp/crm.module';
 
 import { environment } from '../environments/environment';
 
-import { MainmenuComponent } from './mainmenu/mainmenu.component';
+//import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { CustomdialogcrmComponent } from './customdialogcrm/customdialogcrm.component';
 
 
@@ -36,7 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     routedComponents,
-    MainmenuComponent,
+   // MainmenuComponent,
     CustomdialogcrmComponent,
     
 

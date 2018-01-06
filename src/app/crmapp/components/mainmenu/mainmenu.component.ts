@@ -1,15 +1,16 @@
 import { Component, NgZone, AfterViewInit, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-import { ConfigurationService, ActionsService, TokenService } from '../crmapp/services/index';
+import { ConfigurationService, ActionsService, TokenService } from '../../services/index';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
-import { User } from '../crmapp/model/allmodels';
-import { environment } from '../../environments/environment';
+import { User } from '../../model/allmodels';
+import { environment } from '../../../../environments/environment';
+
 
 @Component({
   selector: 'crm-mainmenu',
@@ -285,8 +286,8 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   ];
 
-  _routeList: BehaviorSubject<Object[]>;
-  routes: Observable<Object[]>;
+  _routeList: BehaviorSubject<Object[]> = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
+  routes: Observable<Object[]> = this._routeList.asObservable();
   userName: string;
   userEmail: string;
 
@@ -301,19 +302,18 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
     private translate: TranslateService,
     private _route: ActivatedRoute,
     private _token: TokenService
-  ) {
-    this._routeList = <BehaviorSubject<Object[]>>new BehaviorSubject([]);
-    this.routes = this._routeList.asObservable();
+  ) {   
   }
 
   ngOnInit() {
-
+    this._routeList.next(this.rtObject);
   }
 
 
 
   ngAfterViewInit() {
-    this._routeList.next(this.rtObject);
+    
+   
     // let h: Headers = new Headers();
     // h.append('Access-Control-Allow-Origin', this._confs.root);
     

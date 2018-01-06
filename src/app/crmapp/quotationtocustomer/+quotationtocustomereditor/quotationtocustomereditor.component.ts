@@ -37,16 +37,10 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
  
   @ViewChild(QuotationtocustomereditorheaderComponent) headercomp: QuotationtocustomereditorheaderComponent;
   itemRoute: string = 'quotationtocustomer';
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
+
+
+  doConstruct() {
+    super.doConstruct();
     this.quoteType = EnumDocType.QuotationToCustomer;
     this.itemRoute = 'quotationtocustomer'
     this.parentRoute = 'quotationfromsupplier';
@@ -81,6 +75,12 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
     this.idCustomer = this.qts.idCustomer;
     super.onItemLoaded(itm);
   }
+
+  updateTotal(data) {
+    this.qts.subtotal = data.subtotal;
+    this.qts.taxAmount = data.subtotal * this.qts.tax;
+    this.qts.total = this.qts.subtotal + this.qts.taxAmount;
+  }
 }
 
 
@@ -95,22 +95,15 @@ export class QuotationtocustomereditorComponent extends CatalogComponent {
 export class QuotationtocustomereditorFromQFSComponent extends QuotationtocustomereditorComponent {
 
 
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _ngZone, _router, _route, translate);
+  doConstruct() {
+    super.doConstruct();
     this._route.params.subscribe((params: { id: number }) => {
       
       this.idParent = params.id;
     });
     this.idQuotation = 0;
   }
+
 
 
   checkParams() {

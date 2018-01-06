@@ -10,9 +10,15 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SharedModule } from '../shared/shared.module';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
-import { ApolloClient, createNetworkInterface } from 'apollo-client';
-import { ApolloModule } from 'apollo-angular';
+
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { setContext } from 'apollo-link-context';
+
 import { environment } from '../../environments/environment';
+
 
 
 // services 
@@ -20,40 +26,40 @@ import { OpportunityService, ActionsService, CatalogService, OnedrivegraphServic
   ConfigurationService, TokenService } from './services/index';
 
 
-const networkInterface = createNetworkInterface({
-  uri: environment.server + 'api/graphql',
-});
+// const networkInterface = createNetworkInterface({
+//   uri: environment.server + 'api/graphql',
+// });
 
-networkInterface.use([
-  {
-    applyMiddleware(req, next) {
-      if (!req.options.headers) {
-        req.options.headers = {};  // Create the header object if needed.
-      }
-      // get the authentication token from local storage if it exists
-      let t = localStorage.getItem('tokendata');
-      if( t ) {
-          let tokenData = JSON.parse(t);
-          if( tokenData) {
-              req.options.headers.authorization = tokenData.token_type + ' ' + tokenData.access_token;
-          }
-      }    
+// networkInterface.use([
+//   {
+//     applyMiddleware(req, next) {
+//       if (!req.options.headers) {
+//         req.options.headers = {};  // Create the header object if needed.
+//       }
+//       // get the authentication token from local storage if it exists
+//       let t = localStorage.getItem('tokendata');
+//       if( t ) {
+//           let tokenData = JSON.parse(t);
+//           if( tokenData) {
+//               req.options.headers.authorization = tokenData.token_type + ' ' + tokenData.access_token;
+//           }
+//       }    
       
 
-      next();
-    }
-  }
-]);
+//       next();
+//     }
+//   }
+// ]);
 
-// by default, this client will send queries to `/graphql` (relative to the URL of your app)
-export const client: ApolloClient = new ApolloClient({ networkInterface });
-
-
+// // by default, this client will send queries to `/graphql` (relative to the URL of your app)
+// export const client: ApolloClient = new ApolloClient({ networkInterface });
 
 
-export function provideClient(): ApolloClient {
-  return client;
-}
+
+
+// export function provideClient(): ApolloClient {
+//   return client;
+// }
 
 
 
@@ -96,7 +102,8 @@ import { CRMSelectComponent, GenericActionsComponent,
   EditordetailsumaryComponent, EditorbasedialogComponent,
   EditorbasedialogdocumentComponent,
   DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent,
-  NameDescPipe, MaxStringPipe, EditordetailComponent, CrmcustomdialogComponent } from './components/index';
+  NameDescPipe, MaxStringPipe, EditordetailComponent, CrmcustomdialogComponent,
+  AbstractRootMenuComponent, MainmenuComponent  } from './components/index';
 
   
 // Directives
@@ -128,7 +135,7 @@ QuotationtocustomereditordetailComponent, QuotationtocustomerdetailsumaryCompone
  } from './quotationtocustomer/index';
 
 
-
+ 
 //Purchase Order
 import { PurchaseorderComponent,
    PurchaseorderindexComponent,
@@ -137,7 +144,7 @@ import { PurchaseorderComponent,
    PurchaseordereditordetailComponent,
    PurchaseordereditordetailsumaryComponent,
    PurchaseordereditorFromQTSComponent,
-
+   PurchaseorderdialogemailComponent,
    } from './purchaseorder/index';
 
 // Shipping
@@ -163,8 +170,8 @@ import { AuthHelper } from './authHelper/authHelper';
 
 @NgModule({
   declarations: [
-
-
+    AbstractRootMenuComponent, 
+    MainmenuComponent,
     BaseComponent,
     CurrencyComponent,
     ActionoppComponent, 
@@ -253,6 +260,7 @@ import { AuthHelper } from './authHelper/authHelper';
    PurchaseordereditordetailComponent,
    PurchaseordereditordetailsumaryComponent,
    PurchaseordereditorFromQTSComponent,
+   PurchaseorderdialogemailComponent,
 // Components
   // Cbx Components
     CRMSelectComponent, CrmselectchildComponent,
@@ -287,16 +295,19 @@ import { AuthHelper } from './authHelper/authHelper';
     //Md2Module,
     //TextMaskModule,
     CurrencyMaskModule,
-    ApolloModule.forRoot(provideClient),
+    HttpClientModule,
+    HttpLinkModule,
+    ApolloModule
   ], // modules needed to run this module
   exports: [
        SharedModule,
       // Md2Module,
-       CKEditorModule,
+      // CKEditorModule,
        TranslateModule,
        GenericActionsComponent,
        //TextMaskModule
-       
+       MainmenuComponent,
+       AbstractRootMenuComponent
 
   ],
   providers: [
@@ -310,4 +321,29 @@ import { AuthHelper } from './authHelper/authHelper';
   bootstrap: [  ],
 
 })
-export class CRMModule {}
+export class CRMModule {
+
+  constructor(
+    apollo: Apollo,
+    httpLink: HttpLink,
+    _conf: ConfigurationService
+  ) {
+    const http = httpLink.create({ uri:  environment.server + 'api/graphql' });
+
+    const middleware = setContext(() => ({
+      headers: new HttpHeaders().set('Authorization', _conf.getToken() )
+    }));
+
+
+
+    const cache = new InMemoryCache();
+    const link = middleware.concat(http);
+    apollo.create({
+       link: link,
+       cache: cache
+      //http
+    });
+  }
+
+
+}

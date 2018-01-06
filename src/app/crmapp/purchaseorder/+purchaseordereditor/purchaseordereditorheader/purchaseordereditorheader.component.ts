@@ -89,6 +89,7 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
         this.itemEdit.idOpportunity = data.idOpportunity;
         this.itemEdit.idQuotationFromSupplier = data.idQuotationFromSupplier;
         this.itemEdit.idQuotationToCustomer = data.idQuotationToCustomer;
+
         this.itemEdit.idDocType = data.idDocType;
         this.itemEdit.idStatus = data.idStatus;
         this.itemEdit.idResponsible = data.idResponsible;
@@ -114,8 +115,14 @@ export class PurchaseordereditorheaderComponent extends BaseOppComponent {
         this.itemEdit.shipmentOffered = data.shipmentOffered;
         this.itemEdit.creditDays = data.creditDays;
         this.itemEdit.interestRate = data.interestRate;
+        this.itemEdit.subtotal = data.subtotal;
+        this.itemEdit.tax = data.tax;
+        this.itemEdit.taxAmount = data.taxAmount;
+        this.itemEdit.total = data.total;
+        
         //this.countryOrigin.loadCustomDataFromId(this.itemEdit.idMill);
         this.idParent = data.idQuotationToCustomer;
+
 
         this.loadCountryOrigin(this.itemEdit.idMill);
         this.loadCustomerContact(this.itemEdit.idCustomer);

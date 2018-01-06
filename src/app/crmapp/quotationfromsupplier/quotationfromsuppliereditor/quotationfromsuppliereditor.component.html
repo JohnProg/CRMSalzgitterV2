@@ -26,6 +26,13 @@
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         Quotation to Customer
       </a>      
+      <section mat-list-item *ngIf="qts != undefined">
+        <p> Subtotal: {{qts.subtotal | currency}} </p>
+        <p> Tax: {{qts.tax | percent}} </p>
+        <p> Tax Amount: {{qts.taxAmount | currency}} </p>
+        <p> Total: {{qts.total | currency}} </p>
+      </section>
+	  
       <!-- <a mat-list-item matRipple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         Purchase Orders
@@ -44,7 +51,7 @@
 
         <crm-quotationfromsupplierdetail [idOpp]="idQuotation" 
         [idCustomer]="idCustomer" 
-        *ngIf="scrId == 2 "></crm-quotationfromsupplierdetail>
+        *ngIf="scrId == 2 " (onUpdateTotal)="updateTotal($event)"></crm-quotationfromsupplierdetail>
 
         <crm-documentviewer [idParent]="idQuotation" 
         baseApi="QuotationFromSupplierDocument" 

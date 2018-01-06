@@ -24,7 +24,12 @@
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         {{ "DOCUMENTS" | translate}}
       </a>
-
+      <section mat-list-item *ngIf="shipping != undefined">
+        <p> Subtotal: {{shipping.subtotal | currency}} </p>
+        <p> Tax: {{shipping.tax | percent}} </p>
+        <p> Tax Amount: {{shipping.taxAmount | currency}} </p>
+        <p> Total: {{shipping.total | currency}} </p>
+      </section>
     </mat-nav-list>
 
     <mat-card>
@@ -36,7 +41,8 @@
           <crm-shippingeditorheader [idDoc]="idQuotation"   *ngIf="scrId == 1" 
           [quoteType]="quoteType"
           [itemRoute]="itemRoute"></crm-shippingeditorheader>
-          <crm-shippingeditordetail [idShipping]="idQuotation" [shipData]="shipping"   *ngIf="scrId == 2"></crm-shippingeditordetail>
+          <crm-shippingeditordetail [idShipping]="idQuotation" [shipData]="shipping"   
+          *ngIf="scrId == 2"  (onUpdateTotal)="updateTotal($event)"></crm-shippingeditordetail>
           <crm-editorbasedialog [idParent]="idQuotation" 
           [baseApi]="'ShippingDialog'"
           parentField="idShipping"

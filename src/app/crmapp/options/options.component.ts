@@ -39,17 +39,7 @@ export class OptionsComponent extends CatalogComponent  {
     
   ];
 
-  constructor(
-              public _loadingService: TdLoadingService,
-              public _dialogService: TdDialogService,
-              public _snackBarService: MatSnackBar,
-              public media: TdMediaService,  
-              public _actions: ActionsService,
-              public _router: Router, public _route: ActivatedRoute ) { 
-              
-              super(_loadingService, _dialogService, _snackBarService, media, _actions, _router, _route);
 
-              }
 
 
 

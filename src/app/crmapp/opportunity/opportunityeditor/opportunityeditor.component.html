@@ -27,6 +27,14 @@
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         Quotation from Suppliers
       </a> 
+      
+      <section mat-list-item *ngIf="opp != undefined">
+        <p> Subtotal: {{opp.subtotal | currency}} </p>
+        <p> Tax: {{opp.tax | percent}} </p>
+        <p> Tax Amount: {{opp.taxAmount | currency}} </p>
+        <p> Total: {{opp.total | currency}} </p>
+      </section>
+      
       <!-- <a mat-list-item matRipple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         Quotation to Customers
@@ -47,7 +55,7 @@
          [quoteType]="quoteType"
          [itemRoute]="itemRoute"></crm-opportunityheader>
 
-        <crm-opportunitydetail [idOpp]="idOpp" [idCustomer]="idCustomer"  *ngIf="scrId == 2 "></crm-opportunitydetail>
+        <crm-opportunitydetail [idOpp]="idOpp" [idCustomer]="idCustomer"  *ngIf="scrId == 2 " (onUpdateTotal)="updateTotal($event)"></crm-opportunitydetail>
 
         <crm-editorbasedialog [idParent]="idOpp" 
                 [baseApi]="'OpportunityDialog'"

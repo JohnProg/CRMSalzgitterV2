@@ -34,9 +34,10 @@ export class OpportunitydialogemailComponent extends EmailSenderComponent {
 
 
    ngBeforeInit() {
-    super.ngBeforeInit();
+    
     this.catalogName = 'Opportunity Dialog';
     this.mainField = 'idOpportunity';
     this.baseApi = 'OpportunityDialog';  
+    super.ngBeforeInit();
   }
 }

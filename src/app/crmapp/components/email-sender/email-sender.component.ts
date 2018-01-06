@@ -21,6 +21,9 @@ import {  EMailTemplate, AttachDocument, TCRMEntity, GenericList } from '../../m
 import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import {saveAs as importedSaveAs} from "file-saver";
+import { debug } from 'util';
+
 
 
 @Component({
@@ -137,4 +140,15 @@ export class EmailSenderComponent extends BaseComponent {
      this.itemEdit.eMailTo.splice(idex, 1);
 
   }
+
+  downloadAttachment(doc) {
+    if(doc.docData.length > 0) {
+       let bl = this._curService.converBase64toBlob(doc.docData, doc.mimmeType)
+       importedSaveAs( bl, doc.docName);
+    }
+  }
+
+
+
+
 }

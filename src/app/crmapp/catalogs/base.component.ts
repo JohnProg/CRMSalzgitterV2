@@ -28,6 +28,8 @@ import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ICRMPageChangeEvent } from '../extensions';
 
+import 'rxjs/add/operator/map';
+
 
 export const cCurrencyMask = createNumberMask({
       allowDecimal: true
@@ -87,6 +89,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onItemCreated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   onItemLoaded: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
+  onItemUpdated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   onCancelEdit: EventEmitter<TCRMEntity> = new EventEmitter<any>();
   
   @ViewChild('editform') form: NgForm;
@@ -142,7 +145,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
    _curService: CatalogService;
   handleScreenChange: boolean = true;
 
-
+  catCompanies: TCRMEntity[];
   catDocType: TCRMEntity[];
   catStatus: GetStatusByDocType_Result[];
   catResponsible: TCRMEntity[];
@@ -198,6 +201,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ngBeforeInit();
     
     if( this.route.snapshot.data['catName'] !== undefined) {
+      
       let catName = this.route.snapshot.data['catName'];
       this.catalogName = catName;
    }
@@ -405,9 +409,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editEntity(id: number) {
     if(this.setTitle === true) {
-      this.translate.get('EDITCAT', {value: this.catalogName}).subscribe( (str: string) => {
-        this._actions.updateTitle( { action: 'Edit', title: str, tparam: this.titleParam} );
-      });
+
+        this._actions.updateTitle( { action: 'Edit', title: this.catalogName, tparam: this.titleParam} );
+
     }
     
     this._curService.load(id);
@@ -478,6 +482,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         
     }
     //this._curService.assignList(item.items);
+    this.onItemUpdated.emit(item);
+    
   }
 
   afterDelete(item: any) {
@@ -647,5 +653,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
        return t.replace(/[^A-Z0-9]+/ig, "");
     }
     return '';
+  }
+
+  getTax() {
+    let tax : number = 0;
+    if( this.catCompanies != undefined && this.catCompanies.length > 0) {
+      tax = this.catCompanies[0]['taxAmount'];
+    }
+    return tax;
   }
 }

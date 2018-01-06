@@ -25,7 +25,14 @@
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 5  }" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
         Purchase Orders
-      </a>       
+      </a>   
+      
+      <section mat-list-item *ngIf="qts != undefined">
+        <p> Subtotal: {{qts.subtotal | currency}} </p>
+        <p> Tax: {{qts.tax | percent}} </p>
+        <p> Tax Amount: {{qts.taxAmount | currency}} </p>
+        <p> Total: {{qts.total | currency}} </p>
+      </section>
     </mat-nav-list>
     <mat-card>
       <mat-card-content>
@@ -36,7 +43,8 @@
         [quoteType]="quoteType"
         [itemRoute]="itemRoute"></crm-quotationtocustomereditorheader>
 
-        <crm-quotationtocustomereditordetail [idOpp]="idQuotation" [idCustomer]="idCustomer" *ngIf="scrId == 2 "></crm-quotationtocustomereditordetail>
+        <crm-quotationtocustomereditordetail [idOpp]="idQuotation" [idCustomer]="idCustomer" 
+        *ngIf="scrId == 2 " (onUpdateTotal)="updateTotal($event)"></crm-quotationtocustomereditordetail>
 
         <crm-documentviewer [idParent]="idQuotation" baseApi="QuotationToCustomerDocument" 
         *ngIf="scrId == 4 "

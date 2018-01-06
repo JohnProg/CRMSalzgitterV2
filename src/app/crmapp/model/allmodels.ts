@@ -97,6 +97,9 @@
 		name: string;
 	}
 	export class ActionOpportunityDocType extends TCRMEntity {
+		actionClass: string;
+		afterEMailClass: string;
+		beforeEMailClass: string;
 		actionOpportunity: ActionOpportunity;
 		docType: DocType;
 		emailTo: number;
@@ -111,6 +114,7 @@
 	export class AttachDocument extends TCRMEntity {
 		dateUploaded: Date;
 		dNotes: string;
+		docData: any;
 		docId: string;
 		docName: string;
 		docType: number;
@@ -275,10 +279,12 @@
 		daysCredit: number;
 		id: number;
 		idColony: number;
+		idCurrency: number;
 		idResponsible: number;
 		interestRate: number;
 		isActive: boolean;
 		isAutomotive: boolean;
+		isTax: boolean;
 		limitCreditGermany: number;
 		limitCreditUSA: number;
 		name: string;
@@ -736,6 +742,10 @@
 		offerValidity: Date;
 		oppNotes: string;
 		shipmentOffered: Date;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 	}
 	export class GetFieldForShipping_Result extends TCRMEntity {
 		id: number;
@@ -800,6 +810,11 @@
 		pastDue: number;
 		responsibleName: string;
 		statusName: string;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
+		totalformat: string;
 		userName: string;
 	}
 	export class GetOpportunityDetails_Result extends TCRMEntity {
@@ -895,6 +910,11 @@
 		millName: string;
 		sMIM: string;
 		sstatusName: string;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
+		totalformat: string;
 	}
 	export class GetPurchaseOrderDetails_Result extends TCRMEntity {
 		id: number;
@@ -957,6 +977,11 @@
 		offerValidity: Date;
 		oppNotes: string;
 		shipmentOffered: Date;
+		isAutomotive: boolean;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 	}
 	export class getQuotationFromSupplier_Result extends TCRMEntity {
 		allowChild: boolean;
@@ -978,6 +1003,11 @@
 		millName: string;
 		portName: string;
 		sstatusName: string;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
+		totalformat: string;
 	}
 	export class GetQuotationFromSupplierDetails_Result extends TCRMEntity {
 		id: number;
@@ -992,7 +1022,6 @@
 		platform: string;
 		productDescription: string;
 		productName: string;
-		salePrice: number;
 	}
 	export class GetQuotationFromSupplierDialogDocumentIndex_Result extends TCRMEntity {
 		dateUploaded: Date;
@@ -1029,6 +1058,11 @@
 		isEditable: boolean;
 		millName: string;
 		sstatusName: string;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
+		totalformat: string;
 	}
 	export class GetQuotationToCustomerDetails_Result extends TCRMEntity {
 		id: number;
@@ -1128,6 +1162,11 @@
 		portName: string;
 		shipDate: Date;
 		statusName: string;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
+		totalformat: string;
 		userName: string;
 	}
 	export class getState_Result extends TCRMEntity  {
@@ -1264,6 +1303,10 @@
 		quotationFromSuppliers: QuotationFromSupplier[];
 		responsible: Responsible;
 		sector: Sector;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 		transactionFlow: TransactionFlow;
 		typeOpportunity: TypeOpportunity;
 		user: User;
@@ -1421,6 +1464,7 @@
 		orderConfirmDate: Date;
 		poNumber: string;
 		port: Port;
+		purchaseOrderConfirmation: PurchaseOrderConfirmation;
 		purchaseOrderDetails: PurchaseOrderDetail[];
 		purchaseOrderDialogs: PurchaseOrderDialog[];
 		quotationFromSupplier: QuotationFromSupplier;
@@ -1430,8 +1474,20 @@
 		shipmentOffered: Date;
 		shippingDetails: ShippingDetail[];
 		smim: string;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 		transactionFlow: TransactionFlow;
 		typeOpportunity: TypeOpportunity;
+		user: User;
+	}
+	export class PurchaseOrderConfirmation extends TCRMEntity {
+		dateCreated: Date;
+		dateSended: Date;
+		id: number;
+		idPurchaseOrder: number;
+		sendedBy: number;
 		user: User;
 	}
 	export class PurchaseOrderDetail extends TCRMEntity {
@@ -1515,6 +1571,10 @@
 		quotationToCustomers: QuotationToCustomer[];
 		quoteNotes: string;
 		shipmentOffered: Date;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 		transactionFlow: TransactionFlow;
 		typeOpportunity: TypeOpportunity;
 		user: User;
@@ -1532,7 +1592,6 @@
 		product: Product;
 		quotationFromSupplier: QuotationFromSupplier;
 		quotationFromSupplierDetailSumaries: QuotationFromSupplierDetailSumary[];
-		salePrice: number;
 	}
 	export class QuotationFromSupplierDetailSumary extends EditorDetailSumary {
 		amount: number;
@@ -1593,6 +1652,10 @@
 		quotationToCustomerDetails: QuotationToCustomerDetail[];
 		quoteNotes: string;
 		shipmentOffered: Date;
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 		typeOpportunity: TypeOpportunity;
 		user: User;
 	}
@@ -1740,6 +1803,10 @@
 		shipDate: Date;
 		shipNotes: string;
 		shippingDetails: ShippingDetail[];
+		subtotal: number;
+		tax: number;
+		taxAmount: number;
+		total: number;
 		user: User;
 		vesselName: string;
 	}

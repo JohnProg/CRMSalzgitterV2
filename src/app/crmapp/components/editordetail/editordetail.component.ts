@@ -55,15 +55,17 @@ export class EditordetailComponent extends BaseComponent {
   
     @ViewChild('idProduct') mdProduct: MatSelect;
   
+    @Output() onUpdateTotal: EventEmitter<any> = new EventEmitter<any>();
+    
+
     baseApi: string;  
     baseSearch: string = 'searchByOpp';
     ngBeforeInit() {
       super.ngBeforeInit();
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
       this.itemEdit = new TCRMEntity(); 
-       
       this.setTitle = false;
-
+      
     }
   
   
@@ -84,6 +86,7 @@ export class EditordetailComponent extends BaseComponent {
   
       this._curService.loadCustomAll( this.baseApi + '/' + this.baseSearch, this.getLoadParams() );
       this.initEntity();
+      this.bindParentTotal();
     }
   
     getLoadParams(): URLSearchParams {
@@ -110,19 +113,33 @@ export class EditordetailComponent extends BaseComponent {
       super.afterLoadItem(itm);
     }
   
-  
+    afterLoadAll(items) {
+      this.setTotal(items);
+    }
+
     confirmDelete(item:  TCRMEntity) {
       this.itemEdit = item;
       this._actions.deleteItem( { title: item['itemDescription'], objId: this.objId });
     }
   
+    afterDelete(itm) {
+      super.afterDelete(itm);
+ 
+      //this.setParentTotal();
+    }
+
+
     afterCreate(item: TCRMEntity) {
       
       Object.assign(this.itemEdit, item);
+
+      //this.setParentTotal();
     }
   
     afterUpdate(item: TCRMEntity) {
       Object.assign(this.itemEdit, item);
+
+      //this.setParentTotal();
     }
   
     hasSumary(h: boolean) {
@@ -157,8 +174,32 @@ export class EditordetailComponent extends BaseComponent {
     }
   
     refreshItem() {
-      
+
      this.editEntity(this.itemEdit.id); 
+    }
+
+    bindParentTotal() {
+
+     
+        let subtotal: number = 0;
+        this.entList.subscribe((items) => {
+          setTimeout(() => {
+             this.setTotal(items);
+           }, 1000);
+        });
+        
+        
+      
+
+    }
+
+    setTotal(items) {
+      let subtotal: number = 0;
+      items.forEach((itm) => {
+            
+        subtotal += itm['itemExtended'];
+      });
+      this.onUpdateTotal.emit({ subtotal: subtotal, setTotal: this.setTotal }); 
     }
 
   }

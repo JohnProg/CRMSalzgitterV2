@@ -23,11 +23,11 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 @Component({
-  selector: 'crm-quotationtocustomerdialogemail',
+  selector: 'crm-purchaseorderdialogemail',
   templateUrl: '../../components/email-sender/email-sender.component.html',
   styleUrls: ['../../components/email-sender/email-sender.component.scss']
 })
-export class QuotationtocustomerdialogemailComponent extends EmailSenderComponent {
+export class PurchaseorderdialogemailComponent extends EmailSenderComponent {
 
   idOpp: number = 0;
  
@@ -35,9 +35,9 @@ export class QuotationtocustomerdialogemailComponent extends EmailSenderComponen
 
    ngBeforeInit() {
    
-    this.catalogName = 'Quotation to Customer Dialog';
-    this.mainField = 'IdQuotationToCustomer';
-    this.baseApi = 'QuotationToCustomerDialog'; 
+    this.catalogName = 'Purchase Order Dialog';
+    this.mainField = 'IdPurchaseOrder';
+    this.baseApi = 'PurchaseOrderDialog'; 
     super.ngBeforeInit();
   }
 

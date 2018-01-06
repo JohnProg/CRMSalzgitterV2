@@ -47,9 +47,25 @@
               </mat-select>                    
               </mat-form-field>            
               
-            </section>            
-
-    
+            </section>    
+            <section  flex >
+              <mat-form-field>
+                <input matInput #actionClass flex name="actionClass" [(ngModel)]="itemEdit.actionClass"  placeholder="Action class" maxlength="250" />
+                <mat-hint align="end">{{actionClass.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </section>        
+            <section  flex >
+              <mat-form-field>
+                <input matInput #beforeEMailClass flex name="beforeEMailClass" [(ngModel)]="itemEdit.beforeEMailClass"  placeholder="Before EMail class" maxlength="250" />
+                <mat-hint align="end">{{beforeEMailClass.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </section>   
+            <section  flex >
+              <mat-form-field>
+                <input matInput #afterEMailClass flex name="afterEMailClass" [(ngModel)]="itemEdit.afterEMailClass"  placeholder="After EMail class" maxlength="250" />
+                <mat-hint align="end">{{afterEMailClass.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </section>     
           <div layout="row" flex layout-align="end center">
             <button mat-button type="button" class="mat-icon-button md-primary" (click)="cancelEdit()" aria-label="Cancel">
                        <mat-icon>highlight_off</mat-icon>

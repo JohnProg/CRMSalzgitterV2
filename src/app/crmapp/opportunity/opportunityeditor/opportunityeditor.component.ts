@@ -39,23 +39,19 @@ export class OpportunityeditorComponent extends CatalogComponent {
 
   itemRoute: string = 'opportunity';
   parentRoute = 'opportunity';
-  constructor(
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
-    public _mediaService: TdMediaService,
-    public _actions: ActionsService,
-    public _ngZone: NgZone,
-    public _router: Router, public _route: ActivatedRoute,
-    translate: TranslateService) {
-    super(_loadingService, _dialogService, _snackBarService, _mediaService, _actions, _router, _route);
+
+  doConstruct() {
+    super.doConstruct();
     this.quoteType = EnumDocType.Opportunity;
     this._route.params.subscribe((params: any) => {
       this.idOpp = params.id;
       //if( params['parentRoute'] != undefined) this.parentRoute = params.parentRoute;
       if( params['scrId'] != undefined)  this.parentScr = params.scrId;
     });
+
   }
+
+
 
   doOnItemCreated(itm: Opportunity) {
     this.opp = itm;
@@ -75,5 +71,11 @@ export class OpportunityeditorComponent extends CatalogComponent {
     this.idOpp = itm.id;
     this.idCustomer = itm.idCustomer;
     super.onItemLoaded(itm);
+  }
+
+  updateTotal(data) {
+    this.opp.subtotal = data.subtotal;
+    this.opp.taxAmount = data.subtotal * this.opp.tax;
+    this.opp.total = this.opp.subtotal + this.opp.taxAmount;
   }
 }

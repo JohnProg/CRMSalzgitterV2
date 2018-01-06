@@ -16,7 +16,7 @@ import {
 } from '@covalent/core';
 import { MatSnackBar } from '@angular/material';
 
-import { ApolloClient, createNetworkInterface } from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import {  TCRMEntity, ReturnSaveRequest, QueryResponse } from '../model/index';
@@ -577,7 +577,7 @@ export class CatalogService {
     this.apollo.watchQuery<QueryResponse>({
       query: query,
       variables: gvars
-    }).subscribe(({data}) => {
+    }).valueChanges.subscribe(({data}) => {
       
       this.dataStore.entities = <Array<TCRMEntity>>data[pname];
       let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
@@ -599,7 +599,7 @@ export class CatalogService {
     return this.apollo.watchQuery<QueryResponse>({
       query: query,
       variables: gvars
-    });
+    }).valueChanges;
     
     // .subscribe(({data}) => {
     //   let idx: number = 0;
@@ -614,6 +614,28 @@ export class CatalogService {
     // }
     // );
 
+  }
+
+
+  converBase64toBlob(content, contentType) {
+    contentType = contentType || '';
+    let sliceSize = 512;
+    let byteCharacters = window.atob(content); //method which converts base64 to binary
+    var byteArrays = [
+    ];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+      type: contentType
+    }); //statement which creates the blob
+    return blob;
   }
 
 }

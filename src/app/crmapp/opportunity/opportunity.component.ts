@@ -5,22 +5,17 @@ import { CatalogComponent } from '../catalogs/catalog.component';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService, TdSearchBoxComponent } from '@covalent/core';
-
-
 import { MenuClass } from '../model/menuclass';
-
-
-
 import { ActionsService } from '../services/actions.services';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { AbstractRootMenuComponent } from '../components';
 
 @Component({
   selector: 'crm-opportunity',
   templateUrl: './opportunity.component.html',
   styleUrls: ['./opportunity.component.scss']
 })
-export class OpportunityComponent   {
+export class OpportunityComponent extends AbstractRootMenuComponent  {
 
 
 
