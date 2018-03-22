@@ -10,19 +10,19 @@
 
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 1  }" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
         <mat-icon mat-list-icon>dashboard</mat-icon>
-        {{ "HEADER" | translate}}
+       Header
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2 }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>dashboard</mat-icon>
-        {{ "DETAILS" | translate}}
+       Details
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
-        {{ "DIALOGS" | translate}}
+        Dialogs
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idQuotation > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
-        {{ "DOCUMENTS" | translate}}
+       Documents
       </a>
       <section mat-list-item *ngIf="shipping != undefined">
         <p> Subtotal: {{shipping.subtotal | currency}} </p>
@@ -41,8 +41,11 @@
           <crm-shippingeditorheader [idDoc]="idQuotation"   *ngIf="scrId == 1" 
           [quoteType]="quoteType"
           [itemRoute]="itemRoute"></crm-shippingeditorheader>
+
           <crm-shippingeditordetail [idShipping]="idQuotation" [shipData]="shipping"   
           *ngIf="scrId == 2"  (onUpdateTotal)="updateTotal($event)"></crm-shippingeditordetail>
+
+          
           <crm-editorbasedialog [idParent]="idQuotation" 
           [baseApi]="'ShippingDialog'"
           parentField="idShipping"

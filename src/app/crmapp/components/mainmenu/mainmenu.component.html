@@ -1,12 +1,12 @@
 
 
 
-        <td-expansion-panel   *ngFor="let item of routes | async" [label]=" item.title | translate " >
+        <td-expansion-panel   *ngFor="let item of routes | async" [label]="item.title" >
 
 
                 <a mat-list-item matRipple   *ngFor="let mitem of item.childrens"
                  [routerLink]="[item.route + '/' + mitem.routerlink]">
-                    <mat-icon>{{mitem.icon}}</mat-icon>{{ mitem.displayName | translate}}</a>
+                    <mat-icon>{{mitem.icon}}</mat-icon>{{ mitem.displayName }}</a>
 
 
         </td-expansion-panel>

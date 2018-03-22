@@ -7,14 +7,18 @@ import { ConfigurationService } from '../../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../catalogs/base.component';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn,
+   } from '@covalent/core/data-table';
+
+import { TdSearchBoxComponent } from '@covalent/core/search';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 
 import {  Company, Colony } from '../../model/allmodels';
 import { SelectcolonyComponent } from '../../components/index';
 
-import {TranslateService} from '@ngx-translate/core';
+
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

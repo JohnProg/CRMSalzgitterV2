@@ -15,7 +15,7 @@ import { Currency } from '../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../base.component';
-import {TranslateService} from '@ngx-translate/core';
+
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 import { QueryResponse } from '../../model/queries/index';

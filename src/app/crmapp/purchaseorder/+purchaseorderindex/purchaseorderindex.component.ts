@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +20,7 @@ import { Product } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
 import { getQuotationFromSupplier_Result } from '../../model/allmodels';
 
-import {TranslateService} from '@ngx-translate/core';
+
 import { EnumDocType } from '../../constants/index';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -33,18 +36,11 @@ export class PurchaseorderindexComponent {
   @Input() idQTS: number = 0;
   @Input() idOpp: number = 0;
   byType: number = 0;
-  constructor( public _curService: CatalogService, public _confs: ConfigurationService,
-    public _loadingService: TdLoadingService,
-    public _dialogService: TdDialogService,
-    public _snackBarService: MatSnackBar,
+  constructor( 
     public _actions: ActionsService,
-    public _mediaService: TdMediaService,
     public _ngZone: NgZone,
     private _router: Router,
-    public _http: Http, 
-    public _tableService: TdDataTableService,
-    public _route: ActivatedRoute,
-    public translate: TranslateService) {
+    public _route: ActivatedRoute) {
 
     this._route.params.subscribe((params: { id: number, bytype: number }) => {
       this.byType = params.bytype;

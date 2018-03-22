@@ -2,66 +2,53 @@ import { NgModule, Type } from '@angular/core';
 import { BrowserModule, Title }  from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HttpModule }    from '@angular/http';
-
-
-import {HttpClientModule, HttpClient, HttpHandler} from '@angular/common/http';
 import { CovalentHttpModule, IHttpInterceptor } from '@covalent/http';
-
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { CovalentHighlightModule } from '@covalent/highlight';
+import { CovalentMarkdownModule } from '@covalent/markdown';
 
 import { AppComponent } from './app.component';
 import { RequestInterceptor } from '../config/interceptors/request.interceptor';
+import { MOCK_API } from '../config/api.config';
 
 import { routedComponents, AppRoutingModule } from './app-routing.module';
 
+import { SharedModule } from './shared/shared.module';
+
+import { USER_PROVIDER, USERS_API } from './users';
+
+
 import { CRMModule } from './crmapp/crm.module';
 
-import { environment } from '../environments/environment';
-
-//import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { CustomdialogcrmComponent } from './customdialogcrm/customdialogcrm.component';
-
 
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
-export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, environment.baseHref + 'assets/i18n/', '-lang.json');
+
+export function getAPI(): string {
+  return MOCK_API;
 }
+
 
 @NgModule({
   declarations: [
     AppComponent,
     routedComponents,
-   // MainmenuComponent,
     CustomdialogcrmComponent,
-    
-
-
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
-    HttpClientModule,
     CRMModule,
-    
-    TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
     CovalentHttpModule.forRoot({
       interceptors: [{
         interceptor: RequestInterceptor, paths: ['**'],
       }],
-    })
+    }),
+    CovalentHighlightModule,
+    CovalentMarkdownModule,
   ], // modules needed to run this module
   providers: [
     httpInterceptorProviders,

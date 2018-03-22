@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-import {TranslateService} from '@ngx-translate/core';
+
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';

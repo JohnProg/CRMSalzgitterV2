@@ -20,7 +20,7 @@
       </div>
       <div layout-gt-sm="row" layout-lt-md="column" flex>
         <mat-form-field flex class="">
-          <textarea matInput flex #DNotes name="DNotes" maxlength="150" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
+          <textarea matInput flex #DNotes name="DNotes" maxlength="150" placeholder="Notes" [(ngModel)]="itemEdit.dNotes"></textarea>
           <mat-hint align="end">{{DNotes.value.length}} / 150</mat-hint>
         </mat-form-field>
       </div>

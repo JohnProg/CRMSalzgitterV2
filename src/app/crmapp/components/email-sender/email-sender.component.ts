@@ -18,7 +18,7 @@ import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
 import {  EMailTemplate, AttachDocument, TCRMEntity, GenericList } from '../../model/allmodels';
 
-import {TranslateService} from '@ngx-translate/core';
+
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import {saveAs as importedSaveAs} from "file-saver";
@@ -109,6 +109,7 @@ export class EmailSenderComponent extends BaseComponent {
 
 
   cancelEdit(): void {
+    
      this._router.navigate([ '../../edit', this.itemEdit[this.mainField]], { relativeTo: this.route });
   }
 

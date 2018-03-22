@@ -1,5 +1,5 @@
 <mat-form-field>
- <mat-select class="cbxClass" flex [required]="required"  [placeholder]="placeholder | translate" [(ngModel)]="value" [disabled]="disabled" (change)="onChange($event.value)">
+ <mat-select class="cbxClass" flex [required]="required"  [placeholder]="placeholder" [(ngModel)]="value" [disabled]="disabled" (change)="onChange($event.value)">
       <mat-option *ngFor="let i of catList" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
         {{  i[fieldDisplay] || i.nameDescription || i.name}} 
       </mat-option>

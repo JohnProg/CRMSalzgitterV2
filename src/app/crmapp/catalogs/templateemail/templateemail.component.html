@@ -8,7 +8,7 @@
 
           <div layout="row" >
               <mat-form-field flex>
-                  <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="100" />
+                  <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="100" />
                   <mat-hint align="end">{{name.value.length}} / 100</mat-hint>
                 </mat-form-field>
             </div>
@@ -48,15 +48,17 @@
         </ng-template>
 
       </td-data-table>
-      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+                  [total]="_totalItems | async"  (change)="change($event)" >
         <span hide-xs>Rows per page:</span>
-        <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+        <mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
           <mat-option *ngFor="let size of pagesArray" [value]="size">
             {{size}}
           </mat-option>
         </mat-select>
         <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
       </td-paging-bar>
+
     </section>
 
   </ng-template>

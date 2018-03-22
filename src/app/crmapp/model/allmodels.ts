@@ -1155,11 +1155,13 @@
 		idDeliveryPoint: number;
 		idMill: number;
 		idPort: number;
+		idResponsible: number;
 		idStatus: number;
 		idUser: number;
 		isAutomotive: boolean;
 		millName: string;
 		portName: string;
+		responsibleName: string;
 		shipDate: Date;
 		statusName: string;
 		subtotal: number;
@@ -1793,6 +1795,7 @@
 		idLinerTerm: number;		
 		idMill: number;
 		idPort: number;
+		idResponsible: number;
 		idStatus: number;
 		idUser: number;
 		incoTerm: IncoTerm;

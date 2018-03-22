@@ -1,13 +1,17 @@
 import { Component, NgZone, AfterViewInit, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder  } from '@angular/http';
+import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { ConfigurationService, ActionsService, TokenService } from '../crmapp/services/index';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent  } from '@covalent/core';
+import { TdMediaService  } from '@covalent/core/media';
+import {  TdLoadingService } from '@covalent/core/loading';
+import {   TdDigitsPipe, IPageChangeEvent } from '@covalent/core';
+
+
+
 import { Subscription } from 'rxjs/Subscription';
-import {TranslateService} from '@ngx-translate/core';
 import { User } from '../crmapp/model/allmodels';
 import { AuthHelper } from '../crmapp/authHelper/authHelper';
 import { ICRMPageChangeEvent } from '../crmapp/extensions';
@@ -17,38 +21,30 @@ import { ICRMPageChangeEvent } from '../crmapp/extensions';
   selector: 'crm-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
-
 })
 export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
-   userName: string;
-   userEmail: string;
+  userName: string;
+  userEmail: string;
 
   isSmallScreen: boolean = false;
- 
+
   protected _querySubscriptionxs: Subscription;
   protected _querySubscriptionsm: Subscription;
   protected _querySubscriptionmd: Subscription;
   protected _querySubscriptionlg: Subscription;
 
 
-  constructor(private _router: Router, 
-              private _http: Http,
-              private _confs: ConfigurationService,
-              private _actions: ActionsService,
-              private _loadingService: TdLoadingService, 
-              private _mediaService: TdMediaService,
-              private _ngZone: NgZone,
-              private translate: TranslateService,
-              private _route: ActivatedRoute, 
-              private _token: TokenService,
-              private _auth: AuthHelper) {
-        // this language will be used as a fallback when a translation isn't found in the current language
-      translate.setDefaultLang('en');
-      // the lang to use, if the lang isn't available, it will use the current loader to get them
-      translate.use('en');
-      
-      let t = this._auth;
+  constructor(private _router: Router,
+    private _http: Http,
+    private _confs: ConfigurationService,
+    private _actions: ActionsService,
+    private _mediaService: TdMediaService,
+    private _ngZone: NgZone,
+    private _route: ActivatedRoute,
+    private _token: TokenService,
+    private _auth: AuthHelper) {
+    let t = this._auth;
   }
 
   logout(): void {
@@ -58,15 +54,15 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.setUserInfo();   
-      this.watchScreen();
+    this.setUserInfo();
+    this.watchScreen();
   }
 
   setUserInfo() {
-        if( this._confs.userInfo ) {
-          this.userName = this._confs.userInfo.name;
-          this.userEmail = this._confs.userInfo.eMail;
-        }
+    if (this._confs.userInfo) {
+      this.userName = this._confs.userInfo.name;
+      this.userEmail = this._confs.userInfo.eMail;
+    }
   }
 
   ngAfterViewInit() {
@@ -94,9 +90,9 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       this._ngZone.run(() => {
         this.isSmallScreen = matches;
         if (matches === true) {
-          this._confs.pageSize = 5;
+          this._confs._pageSize.next(5);
           this._confs.currentPage = 0;
-          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'xs', page: 1, pageSize: 5, maxPage: 0 }) );
+          this._actions._screenSizeChangeEvent.next((<ICRMPageChangeEvent>{ screenSize: 'xs', page: 1, pageSize: 5, maxPage: 0 }));
 
           // this.change(undefined);
         }
@@ -108,9 +104,9 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isSmallScreen = matches;
 
         if (matches === true) {
-          this._confs.pageSize = 8;
+          this._confs._pageSize.next(8);
           this._confs.currentPage = 0;
-          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'sm', page: 1, pageSize: 8, maxPage: 0 }) );
+          this._actions._screenSizeChangeEvent.next((<ICRMPageChangeEvent>{ screenSize: 'sm', page: 1, pageSize: 8, maxPage: 0 }));
 
           // this.change(undefined);
         }
@@ -123,9 +119,9 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isSmallScreen = matches;
 
         if (matches === true) {
-          this._confs.pageSize = 10;
-          this._confs.currentPage = 0;          
-          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'md', page: 1, pageSize: 13, maxPage: 0 }) );
+          this._confs._pageSize.next(10);
+          this._confs.currentPage = 0;
+          this._actions._screenSizeChangeEvent.next((<ICRMPageChangeEvent>{ screenSize: 'md', page: 1, pageSize: 13, maxPage: 0 }));
 
           //this.change(undefined);
         }
@@ -138,14 +134,12 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       this._ngZone.run(() => {
         this.isSmallScreen = matches;
         if (matches === true) {
-          this._confs.pageSize = 13;
-          this._confs.currentPage = 0;          
-          this._actions._screenSizeChangeEvent.next( ( <ICRMPageChangeEvent>{ screenSize: 'lg', page: 1, pageSize: 10, maxPage: 0 }) );
+          this._confs._pageSize.next(13);
+          this._confs.currentPage = 0;
+          this._actions._screenSizeChangeEvent.next((<ICRMPageChangeEvent>{ screenSize: 'lg', page: 1, pageSize: 10, maxPage: 0 }));
 
         }
       });
     });
   }
-
-
 }

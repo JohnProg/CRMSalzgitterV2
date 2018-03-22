@@ -10,11 +10,14 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../catalogs/base.component';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn,
+   } from '@covalent/core/data-table';
+
+import { TdSearchBoxComponent } from '@covalent/core/search';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
@@ -96,6 +99,7 @@ export class ActionopportunitytemplateemailComponent extends BaseComponent {
   }
 
   confirmDelete(item:  GetActionDoctType_Result) {
+    this.itemEdit.id = item.id;
     this._actions.deleteItemEvent.emit( { title: item.docTypeName, objId: this.objId } );
   }
 

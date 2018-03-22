@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,7 +20,7 @@ import { EnumDocType } from '../../constants/index';
 
 import { BaseComponent } from '../../catalogs/base.component';
 
-import {TranslateService} from '@ngx-translate/core';
+
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -44,7 +47,7 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     @Input() moveToScr: boolean = false;
     
     ngBeforeInit() {
-      
+      super.ngBeforeInit();
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
       if(this.idParent > 0) {
         this.setTitle = false;
@@ -65,6 +68,8 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     }
 
     loadData() {
+          this.isLoading = true;
+          
           this._curService.loadCustomAll(this.baseApi , this.getLoadParams());
           this.dataLoaded = true;
     }

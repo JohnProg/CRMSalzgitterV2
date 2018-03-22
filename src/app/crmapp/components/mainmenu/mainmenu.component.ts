@@ -5,9 +5,10 @@ import { ConfigurationService, ActionsService, TokenService } from '../../servic
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TdMediaService, TdLoadingService, TdDigitsPipe, IPageChangeEvent } from '@covalent/core';
+import { TdMediaService  } from '@covalent/core/media';
+
+
 import { Subscription } from 'rxjs/Subscription';
-import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../model/allmodels';
 import { environment } from '../../../../environments/environment';
 
@@ -22,33 +23,33 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
 
   rtObject: any = [
     {
-      title: "HOME.MENU.CATALOGS.DISPLAYNAME",
+      title: "Catalogs",
       route: "/catalogs",
       icon: "euro_symbol",
       childrens: [
         {
           name: "currency",
-          tooltip: "HOME.MENU.CATALOGS.CURRENCY.TOOLTIP",
+          tooltip: "Edit and create Currencies",
           active: "true",
           routerlink: "currency",
           icon: "attach_money",
-          displayName: "HOME.MENU.CATALOGS.CURRENCY.DISPLAYNAME"
+          displayName: "Currencies"
         },
         {
           "name": "colonytype",
-          "tooltip": "HOME.MENU.CATALOGS.COLONYTYPE.TOOLTIP",
+          "tooltip": "Edit and create Colony Types",
           "active": "true",
           "routerlink": "colonytype",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.COLONYTYPE.DISPLAYNAME"
+          "displayName": "Colony Type"
         },
         {
           "name": "country",
-          "tooltip": "HOME.MENU.CATALOGS.COUNTRY.TOOLTIP",
+          "tooltip": "Edit and create Countries",
           "active": "true",
           "routerlink": "country",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.COUNTRY.DISPLAYNAME"
+          "displayName": "Countries"
         },
         {
           "name": "department",
@@ -56,7 +57,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "department",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.DEPARTMENT.DISPLAYNAME"
+          "displayName": "Departments"
         },
         {
           "name": "documenttype",
@@ -64,7 +65,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "documenttype",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.DOCUMENTTYPE.DISPLAYNAME"
+          "displayName": "Document Types"
         },
         {
           "name": "family",
@@ -72,7 +73,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "family",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.FAMILY.DISPLAYNAME"
+          "displayName": "Families"
         },
         {
           "name": "linerterm",
@@ -80,7 +81,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "linerterm",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.LINERTERM.DISPLAYNAME"
+          "displayName": "LinerTerms"
         },
         {
           "name": "market",
@@ -88,7 +89,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "market",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.MARKET.DISPLAYNAME"
+          "displayName": "Markets"
         },
         {
           "name": "mill",
@@ -96,7 +97,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "mill",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.MILL.DISPLAYNAME"
+          "displayName": "Mills"
         },
         {
           "name": "organization",
@@ -104,7 +105,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "organization",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.ORGANIZATION.DISPLAYNAME"
+          "displayName": "Organizations"
         },
         {
           "name": "paymentterm",
@@ -112,7 +113,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "paymentterm",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.PAYMENTTERM.DISPLAYNAME"
+          "displayName": "Payment terms"
         },
         {
           "name": "port",
@@ -120,7 +121,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "port",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.PORT.DISPLAYNAME"
+          "displayName": "Ports"
         },
         {
           "name": "position",
@@ -128,7 +129,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "position",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.POSITION.DISPLAYNAME"
+          "displayName": "Positions"
         },
         {
           "name": "sector",
@@ -136,7 +137,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "sector",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.SECTOR.DISPLAYNAME"
+          "displayName": "Sctors"
         },
         {
           "name": "tender",
@@ -144,7 +145,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "tender",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.TENDER.DISPLAYNAME"
+          "displayName": "Tenders"
         },
         {
           "name": "transactionflow",
@@ -152,7 +153,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "transactionflow",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.TRANSACTIONFLOW.DISPLAYNAME"
+          "displayName": "Transcation Flow"
         },
         {
           "name": "templateemail",
@@ -160,7 +161,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "templateemail",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.TEMPLATEEMAIL.DISPLAYNAME"
+          "displayName": "E-Mail Templates"
         },
         {
           "name": "typeopportunity",
@@ -168,7 +169,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "typeopportunity",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.TYPEOPPORTUNITY.DISPLAYNAME"
+          "displayName": "Opportunity types"
         },
         {
           "name": "status",
@@ -176,7 +177,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "status",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.STATUS.DISPLAYNAME"
+          "displayName": "Status"
         },
         {
           "name": "properties",
@@ -184,13 +185,13 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "properties",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.CATALOGS.PROPERTY.DISPLAYNAME"
+          "displayName": "Properties"
         }
       ]
 
     },
     {
-      "title": "HOME.MENU.OPTIONS.DISPLAYNAME",
+      "title": "Options",
       "route": "/options",
       "icon": "euro_symbol",
       "childrens": [
@@ -200,7 +201,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "customer",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.OPTIONS.CUSTOMER.DISPLAYNAME"
+          "displayName": "Customer"
         },
         {
           "name": "products",
@@ -208,7 +209,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "products",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.OPTIONS.PRODUCT.DISPLAYNAME"
+          "displayName": "Products"
         },
         {
           "name": "company",
@@ -216,7 +217,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "company",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.OPTIONS.COMPANY.DISPLAYNAME"
+          "displayName": "Company"
         },
         {
           "name": "actionopp",
@@ -224,7 +225,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "actionopp",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.OPTIONS.ACTIONOPP.DISPLAYNAME"
+          "displayName": "Opportunity Action"
         },
         {
           "name": "doctype",
@@ -232,13 +233,13 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "doctype",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.OPTIONS.DOCTYPE.DISPLAYNAME"
+          "displayName": "Document Type"
         }
       ]
     },
 
     {
-      "title": "HOME.MENU.OPPORTUNITY.DISPLAYNAME",
+      "title": "Opportunity",
       "icon": "euro_symbol",
       "route": "",
       "childrens": [
@@ -248,7 +249,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "opportunity",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.OPPORTUNITY.OPPORTUNITY.DISPLAYNAME"
+          "displayName": "Opportunity"
         },
         {
           "name": "index",
@@ -256,7 +257,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "quotationfromsupplier",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.QUOTATIONFROMSUPPLIER.DISPLAYNAME"
+          "displayName": "Quotation from supplier"
         },
         {
           "name": "index",
@@ -264,7 +265,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "quotationtocustomer",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.QUOTATIONTOCUSTOMER.DISPLAYNAME"
+          "displayName": "Quotation to customer"
         },
         {
           "name": "index",
@@ -272,7 +273,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "purchaseorder",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.PURCHASEORDER.DISPLAYNAME"
+          "displayName": "Purchase Order"
         },
         {
           "name": "index",
@@ -280,7 +281,7 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
           "active": "true",
           "routerlink": "shipping",
           "icon": "euro_symbol",
-          "displayName": "HOME.MENU.SHIPPING.DISPLAYNAME"
+          "displayName": "Shipping"
         }
       ]
     }
@@ -296,10 +297,8 @@ export class MainmenuComponent implements AfterViewInit, OnInit, OnDestroy {
     private _http: Http,
     private _confs: ConfigurationService,
     private _actions: ActionsService,
-    private _loadingService: TdLoadingService,
     private _mediaService: TdMediaService,
     private _ngZone: NgZone,
-    private translate: TranslateService,
     private _route: ActivatedRoute,
     private _token: TokenService
   ) {   

@@ -14,7 +14,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 
-import {TranslateService} from '@ngx-translate/core';
+
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 import { Apollo } from 'apollo-angular';

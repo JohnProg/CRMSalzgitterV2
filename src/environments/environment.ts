@@ -21,9 +21,9 @@ export const environment: {
   } = {
   production: false,
   appBase: 'http://localhost:4200/',
-  //server: 'https://crmsalzgittermx.com/testservices/',
+  server: 'http://localhost:64997/',
   //server: 'http://localhost:64997/',
-  server: 'http://localhost/CRM.Salzgitter.Services/',
+  //server: 'http://localhost/CRM.Salzgitter.Services/',
   _secret: 'MsuUTgxpHzVyQmxiU8N1qBV',
   _clientId: '000000004C1D164D',
   _scopes:   'openid profile User.ReadWrite User.ReadBasic.All Files.ReadWrite.All',

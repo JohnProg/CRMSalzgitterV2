@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +20,7 @@ import { Product } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
 import { getQuotationFromSupplier_Result } from '../../model/allmodels';
 
-import {TranslateService} from '@ngx-translate/core';
+
 import { EnumDocType } from '../../constants/index';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

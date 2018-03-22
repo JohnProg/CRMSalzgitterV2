@@ -24,7 +24,6 @@ import { QuotationToCustomerDetailSumary, QuotationToCustomerDetailSumaryPropert
 
 
 
-import {TranslateService} from '@ngx-translate/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 

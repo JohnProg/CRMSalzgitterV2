@@ -4,9 +4,9 @@
 <mat-card flex>
   
   <mat-card-subtitle>
-    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
-    <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
-    <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
+    <button md-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing">  Add Sumary </button>
+    <button md-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
+    <button md-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save </button>
   </mat-card-subtitle>
   <mat-card-content>
 
@@ -25,20 +25,20 @@
         </section>
         <section layout="row" flex="100" layout-margin>
           <mat-form-field  flex-gt-xs="30">
-            <input  mdInput #ItemQuantity name="ItemQuantity" placeholder="{{ 'QUANTITY' | translate}}" [(ngModel)]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}">
+            <input  mdInput #ItemQuantity name="ItemQuantity" placeholder="Quantity" [(ngModel)]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}">
           </mat-form-field>
           <mat-form-field class="md-icon-float" flex-gt-xs="30">
-            <input  mdInput #Price name="Price" [max]="maxQty" placeholder="{{ 'PRICE' | translate}}" [(ngModel)]="itemEdit.price" currencyMask>
+            <input  mdInput #Price name="Price" [max]="maxQty" placeholder="Price" [(ngModel)]="itemEdit.price" currencyMask>
           </mat-form-field>
           <mat-form-field class="md-icon-float" flex-gt-xs="35">
-            <input  mdInput #Amount  name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount"  currencyMask>
+            <input  mdInput #Amount  name="Amount" placeholder="Total" [(ngModel)]="itemEdit.amount"  currencyMask>
           </mat-form-field>
 
         </section>
 
         <div layout-gt-sm="row" layout-lt-md="column">
           <mat-form-field flex class="">
-            <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.comment"></textarea>
+            <textarea mdInput flex #Comment name="Comment" maxlength="250" placeholder="Description" [(ngModel)]="itemEdit.comment"></textarea>
             <mat-hint align="end">{{Comment.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>

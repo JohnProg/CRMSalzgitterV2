@@ -56,7 +56,7 @@
         </div>      
         <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <mat-form-field flex >
-            <textarea matInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="{{ 'OPPDESCRIPTION' | translate }} " [(ngModel)]="itemEdit.oppNotes" ></textarea>
+            <textarea matInput flex="100"  #oppNotes name="oppNotes" maxlength="500" required  placeholder="Description" [(ngModel)]="itemEdit.oppNotes" ></textarea>
              <mat-hint flex align="end">{{oppNotes.value.length}} / 500</mat-hint>
           </mat-form-field>         
         </div>         
@@ -198,7 +198,7 @@
   
           </section>   
           <section flex-gt-sm="25" >
-            <mat-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.asImporter">{{'ASIMPORTER' | translate}}</mat-slide-toggle>
+            <mat-slide-toggle #asImporter name="asImporter"  [(ngModel)]="itemEdit.asImporter">As Importer</mat-slide-toggle>
           </section>                 
         </div>
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="deliveryRequired">
@@ -281,7 +281,7 @@
           </mat-form-field>         
         </div>   
 
-        <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="itemEdit.purchaseOrderConfirmation != undefined">
+        <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="itemEdit.asImporter == true && itemEdit.purchaseOrderConfirmation != undefined">
           
           <label class="md-body-1">Order Confirmation: {{itemEdit.purchaseOrderConfirmation.id}}</label> 
           <span flex></span>

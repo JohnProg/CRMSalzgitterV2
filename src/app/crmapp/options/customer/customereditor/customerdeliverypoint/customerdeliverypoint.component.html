@@ -4,7 +4,7 @@
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
       <mat-form-field flex-gt-sm="60">
-        <input matInput #cdpName flex name="cdpName" [(ngModel)]="itemEdit.cdpName" required placeholder="{{ 'NAME' | translate}}"
+        <input matInput #cdpName flex name="cdpName" [(ngModel)]="itemEdit.cdpName" required placeholder="Name"
           maxlength="150" />
         <mat-hint align="end">{{cdpName.value.length}} / 150</mat-hint>
       </mat-form-field>
@@ -67,15 +67,16 @@
     </ng-template>
 
   </td-data-table>
-  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
-    <span hide-xs>Rows per page:</span>
-    <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-      <mat-option *ngFor="let size of pagesArray" [value]="size">
-        {{size}}
-      </mat-option>
-    </mat-select>
-    <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
-  </td-paging-bar>
+  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+  [total]="_totalItems | async"  (change)="change($event)" >
+<span hide-xs>Rows per page:</span>
+<mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
+<mat-option *ngFor="let size of pagesArray" [value]="size">
+{{size}}
+</mat-option>
+</mat-select>
+<span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+</td-paging-bar>
 </section>
 
 </ng-template>

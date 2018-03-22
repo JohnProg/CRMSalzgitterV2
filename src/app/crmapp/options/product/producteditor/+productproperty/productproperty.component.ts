@@ -9,17 +9,19 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../../catalogs/base.component';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn,
+   } from '@covalent/core/data-table';
+
+import { TdSearchBoxComponent } from '@covalent/core/search';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import {TranslateService} from '@ngx-translate/core';
+
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 

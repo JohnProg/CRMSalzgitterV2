@@ -12,17 +12,18 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseOppComponent } from '../../../catalogs/index';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
-import {TranslateService} from '@ngx-translate/core';
+
 import {  OpportunityService } from '../../../services/oppservice.service';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -79,7 +80,8 @@ export class QuotationfromsupplierheaderComponent  extends BaseOppComponent {
     this._curService.loadItemObs('Opportunity', oid) 
       .map((response) => response.json())
         .subscribe( (data: Opportunity) => {
-        this.opp = new Opportunity();
+
+          this.opp = new Opportunity();
         Object.assign(this.opp, data);
         this.itemEdit.idOpportunity = data.id;
         this.itemEdit.idCurrency = data.idCurrency;

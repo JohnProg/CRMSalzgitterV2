@@ -22,10 +22,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
-import {TranslateService} from '@ngx-translate/core';
+
 import {  OpportunityService } from '../../../services/oppservice.service';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { debug } from 'util';
 
 
 @Component({
@@ -90,6 +91,8 @@ export class QuotationtocustomereditorheaderComponent extends BaseOppComponent {
         
         this.opp = new QuotationFromSupplier();
         Object.assign(this.opp, data);
+
+        this.itemEdit.id = 0;
         this.itemEdit.idQuotationFromSupplier = oid;
 
         this.itemEdit.idIncoTerm = data.idIncoTerm;

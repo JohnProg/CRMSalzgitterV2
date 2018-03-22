@@ -6,10 +6,12 @@ import * as request from 'superagent';
 import * as moment from 'moment';
 import {saveAs as importedSaveAs} from "file-saver";
 import {
-  TdLoadingService, TdDialogService
+ TdDialogService
 } from '@covalent/core';
 
-
+import {
+  TdLoadingService
+} from '@covalent/core/loading';
 @Injectable()
 export class OnedrivegraphService {
    

@@ -1,191 +1,200 @@
-      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
-          <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <div  flex-gt-sm="30" >
-              <mat-form-field >
-                  <input matInput  [matDatepicker]="shipDate" name="shipDate" placeholder="Date Created"  disabled="true"
-				  [(ngModel)]="itemEdit.shipDate">
-                  <mat-datepicker-toggle matSuffix [for]="shipDate"></mat-datepicker-toggle>
-                  <mat-datepicker #shipDate></mat-datepicker>
-              </mat-form-field >   
-          </div>   
-          
-          <div  flex-gt-sm="35" >
-              <mat-form-field>
-             <mat-select class="cbxClass" role="listbox" #idCurrency name="idCurrency" flex required="true"  placeholder="Currency" [(ngModel)]="itemEdit.idCurrency"  >
-
-                  <mat-option *ngFor="let i of catCurrencies " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                 
-              </mat-form-field>            
-
-          </div>    
-          <div  flex-gt-sm="35" >
-              <mat-form-field>
-             <mat-select class="cbxClass" #idStatus name="idStatus" flex disabled="true"  placeholder="Status" [(ngModel)]="itemEdit.idStatus"  >
-             
-                  <mat-option *ngFor="let i of catStatus 	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                  
-              </mat-form-field>            
-
-          </div>     
-
-                  
-        </div>      
- 
-        
-        
-
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-            <mat-form-field>
-            <mat-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
-           
-                  <mat-option *ngFor="let i of catCustomer " role="option" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                  
-            </mat-form-field>          
- 
-       </div>
-
-        <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <mat-form-field flex >
-            <textarea matInput flex="100"  #shipNotes name="shipNotes" maxlength="500" required  placeholder="Comments " [(ngModel)]="itemEdit.shipNotes" ></textarea>
-             <mat-hint flex align="end">{{shipNotes.value.length}} / 500</mat-hint>
-          </mat-form-field>         
-        </div>  
-        
-        
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <section  flex-gt-sm="30" >
-              <mat-form-field>
-          <mat-select class="cbxClass" #idPort name="idPort" flex required="true"  placeholder="Port" [(ngModel)]="itemEdit.idPort"  >
-           
-                  <mat-option *ngFor="let i of catPort " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                   
-              </mat-form-field>            
-   
-          </section>    
-         <section  flex-gt-sm="35" >
-            <mat-form-field>
-            <mat-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)"  >
-              
-                  <mat-option *ngFor="let i of catMill " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                 
-            </mat-form-field>           
-
-          </section>             
-          <section  flex-gt-sm="35" >
-              <mat-form-field>
-             <mat-select class="cbxClass" #idCountryOrigin name="idCountryOrigin" flex  placeholder="Country" [(ngModel)]="itemEdit.idCountryOrigin"   >
-
-                  <mat-option *ngFor="let i of catCountry " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.idCountry">
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                  
-              </mat-form-field>            
-
-          </section>           
-        </div>
-
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
-          <section flex-gt-sm="20" >
-              <mat-form-field>
-            <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
-             
-                  <mat-option *ngFor="let i of catIncoTerm" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                    
-              </mat-form-field>            
-
-          </section>  
-          <section flex-gt-sm="20" >
-              <mat-form-field>
-            <mat-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true"  placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerm"  >             
-                  <mat-option *ngFor="let i of catLinerTerm " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                    {{ i.nameDescription || i.name}} 
-                  </mat-option>
-            </mat-select>                   
-              </mat-form-field>            
-  
-          </section>  
-          <section flex-gt-sm="35">
-              <mat-form-field>
-                <input matInput #blNumber flex name="blNumber" [(ngModel)]="itemEdit.blNumber" required="true" placeholder="BL Number" maxlength="150">
-                <mat-hint align="end">{{blNumber.value.length}} / 150</mat-hint>
-              </mat-form-field>
-            </section>
-            <section flex-gt-sm="35">
-              <mat-form-field>
-                <input matInput #vesselName flex name="vesselName" [(ngModel)]="itemEdit.vesselName" required="true" placeholder="Vessel Name" maxlength="150">
-                <mat-hint align="end">{{vesselName.value.length}} / 150</mat-hint>
-              </mat-form-field>
-            </section>          
-
-        </div>
-
-        
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="deliveryRequired">
- 
-                <mat-form-field>
-                              <mat-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true"  placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint"  >
-              
-                                  <mat-option *ngFor="let i of catDeliveryPoint  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
-                                    {{ i.cDPName }} 
-                                  </mat-option>
-                            </mat-select>                    
-                </mat-form-field>
-   
- 
-        </div>
+<form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(form)" novalidate>
+  <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <div flex-gt-sm="15">
+        <mat-form-field>
+          <input matInput [matDatepicker]="shipDate" name="shipDate" placeholder="Date Created" disabled="true" [(ngModel)]="itemEdit.shipDate">
+          <mat-datepicker-toggle matSuffix [for]="shipDate"></mat-datepicker-toggle>
+          <mat-datepicker #shipDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <section flex-gt-sm="35" >
+        <mat-form-field>
+      <mat-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"  placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
+       
+            <mat-option *ngFor="let i of catResponsible  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}} 
+            </mat-option>
+      </mat-select>                  
+        </mat-form-field>
 
 
-        <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
-          <section  flex-gt-sm="30" >
-              <mat-form-field >
-                  <input matInput  [matDatepicker]="etd" name="etd" placeholder="ETD" 
-				  required="true" [(ngModel)]="itemEdit.etd">
-                  <mat-datepicker-toggle matSuffix [for]="etd"></mat-datepicker-toggle>
-                  <mat-datepicker #etd></mat-datepicker>
-              </mat-form-field >               
+    </section>
+      <div flex-gt-sm="25">
+        <mat-form-field>
+          <mat-select class="cbxClass" role="listbox" #idCurrency name="idCurrency" flex required="true" placeholder="Currency" [(ngModel)]="itemEdit.idCurrency">
 
-          </section> 
+            <mat-option *ngFor="let i of catCurrencies " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          <section  flex-gt-sm="35" >
-              <mat-form-field >
-                  <input matInput  [matDatepicker]="ETA" name="ETA" placeholder="ETA" 
-				  required="true" [(ngModel)]="itemEdit.eta">
-                  <mat-datepicker-toggle matSuffix [for]="ETA"></mat-datepicker-toggle>
-                  <mat-datepicker #ETA></mat-datepicker>
-              </mat-form-field >               
+      </div>
+      <div flex-gt-sm="25">
+        <mat-form-field>
+          <mat-select class="cbxClass" #idStatus name="idStatus" flex disabled="true" placeholder="Status" [(ngModel)]="itemEdit.idStatus">
 
-          </section> 
-          <section  flex-gt-sm="35" >
-              <mat-form-field >
-                  <input matInput  [matDatepicker]="blDate" name="blDate" placeholder="BL Date" 
-				   [(ngModel)]="itemEdit.shipmentOffered">
-                  <mat-datepicker-toggle matSuffix [for]="blDate"></mat-datepicker-toggle>
-                  <mat-datepicker #blDate></mat-datepicker>
-              </mat-form-field >               
+            <mat-option *ngFor="let i of catStatus 	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-          </section>  
- 
-        <section  flex-gt-sm="30" >
-            <mat-form-field >
-                <input matInput  [matDatepicker]="ada" name="ada" placeholder="ADA" 
-       [(ngModel)]="itemEdit.ada">
-                <mat-datepicker-toggle matSuffix [for]="ada"></mat-datepicker-toggle>
-                <mat-datepicker #ada></mat-datepicker>
-            </mat-form-field >   
-          </section> 
-        </div> 
-      </ng-template>
-      </form>
+      </div>
+
+
+    </div>
+
+
+
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <mat-form-field>
+        <mat-select class="cbxClass" #idCustomer name="idCustomer" flex required="true" placeholder="Customer" [(ngModel)]="itemEdit.idCustomer"
+          (change)="onCustomerChange($event)">
+
+          <mat-option *ngFor="let i of catCustomer " role="option" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.nameDescription || i.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <div flex layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <mat-form-field flex>
+        <textarea matInput flex="100" #shipNotes name="shipNotes" maxlength="500" required placeholder="Comments " [(ngModel)]="itemEdit.shipNotes"></textarea>
+        <mat-hint flex align="end">{{shipNotes.value.length}} / 500</mat-hint>
+      </mat-form-field>
+    </div>
+
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <section flex-gt-sm="30">
+        <mat-form-field>
+          <mat-select class="cbxClass" #idPort name="idPort" flex required="true" placeholder="Port" [(ngModel)]="itemEdit.idPort">
+
+            <mat-option *ngFor="let i of catPort " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </section>
+      <section flex-gt-sm="35">
+        <mat-form-field>
+          <mat-select class="cbxClass" #idMill name="idMill" flex placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)">
+
+            <mat-option *ngFor="let i of catMill " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </section>
+      <section flex-gt-sm="35">
+        <mat-form-field>
+          <mat-select class="cbxClass" #idCountryOrigin name="idCountryOrigin" flex placeholder="Country" [(ngModel)]="itemEdit.idCountryOrigin">
+
+            <mat-option *ngFor="let i of catCountry " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.idCountry">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </section>
+    </div>
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <section flex-gt-sm="20">
+        <mat-form-field>
+          <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true" placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm"
+            (change)="incoTermChange($event)">
+
+            <mat-option *ngFor="let i of catIncoTerm" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </section>
+      <section flex-gt-sm="20">
+        <mat-form-field>
+          <mat-select class="cbxClass" #idLinerTerm name="idLinerTerm" flex required="true" placeholder="Liner Terms" [(ngModel)]="itemEdit.idLinerTerm">
+            <mat-option *ngFor="let i of catLinerTerm " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+              {{ i.nameDescription || i.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </section>
+      <section flex-gt-sm="35">
+        <mat-form-field>
+          <input matInput #blNumber flex name="blNumber" [(ngModel)]="itemEdit.blNumber" required="true" placeholder="BL Number" maxlength="150">
+          <mat-hint align="end">{{blNumber.value.length}} / 150</mat-hint>
+        </mat-form-field>
+      </section>
+      <section flex-gt-sm="35">
+        <mat-form-field>
+          <input matInput #vesselName flex name="vesselName" [(ngModel)]="itemEdit.vesselName" required="true" placeholder="Vessel Name"
+            maxlength="150">
+          <mat-hint align="end">{{vesselName.value.length}} / 150</mat-hint>
+        </mat-form-field>
+      </section>
+
+    </div>
+
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin *ngIf="deliveryRequired">
+
+      <mat-form-field>
+        <mat-select class="cbxClass" #idDeliveryPoint name="idDeliveryPoint" flex required="true" placeholder="Delivery Point" [(ngModel)]="itemEdit.idDeliveryPoint">
+
+          <mat-option *ngFor="let i of catDeliveryPoint  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+            {{ i.cDPName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+    </div>
+
+
+    <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+      <section flex-gt-sm="30">
+        <mat-form-field>
+          <input matInput [matDatepicker]="etd" name="etd" placeholder="ETD" required="true" [(ngModel)]="itemEdit.etd">
+          <mat-datepicker-toggle matSuffix [for]="etd"></mat-datepicker-toggle>
+          <mat-datepicker #etd></mat-datepicker>
+        </mat-form-field>
+
+      </section>
+
+      <section flex-gt-sm="35">
+        <mat-form-field>
+          <input matInput [matDatepicker]="ETA" name="ETA" placeholder="ETA" required="true" [(ngModel)]="itemEdit.eta">
+          <mat-datepicker-toggle matSuffix [for]="ETA"></mat-datepicker-toggle>
+          <mat-datepicker #ETA></mat-datepicker>
+        </mat-form-field>
+
+      </section>
+      <section flex-gt-sm="35">
+        <mat-form-field>
+          <input matInput [matDatepicker]="blDate" name="blDate" placeholder="BL Date" [(ngModel)]="itemEdit.shipmentOffered">
+          <mat-datepicker-toggle matSuffix [for]="blDate"></mat-datepicker-toggle>
+          <mat-datepicker #blDate></mat-datepicker>
+        </mat-form-field>
+
+      </section>
+
+      <section flex-gt-sm="30">
+        <mat-form-field>
+          <input matInput [matDatepicker]="ada" name="ada" placeholder="ADA" [(ngModel)]="itemEdit.ada">
+          <mat-datepicker-toggle matSuffix [for]="ada"></mat-datepicker-toggle>
+          <mat-datepicker #ada></mat-datepicker>
+        </mat-form-field>
+      </section>
+    </div>
+  </ng-template>
+</form>

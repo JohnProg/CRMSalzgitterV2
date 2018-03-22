@@ -4,6 +4,8 @@ import * as moment from 'moment';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { User } from '../model/allmodels';
 
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ConfigurationService {
@@ -16,7 +18,11 @@ export class ConfigurationService {
     public root = environment._root;
     public hideDelayToast: number = 2000;
 
-    public pageSize: number = 5;
+
+    _pageSize: BehaviorSubject<number> = <BehaviorSubject<number>>new BehaviorSubject(5);
+    pageSize: Observable<number> = this._pageSize.asObservable();
+
+
     public currentPage: number = 0;
 
     

@@ -9,11 +9,13 @@ import { ConfigurationService } from './configuration.service';
 
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+
 import { MatSnackBar } from '@angular/material';
 
 import { ApolloClient } from 'apollo-client';
@@ -36,7 +38,7 @@ export const DECIMAL_FORMAT: any = (v: number) => (v || 0).toLocaleString();
 export const CURRENCY_FORMAT: any = (v: number ) => {
     return  '$' + (v || 0).toLocaleString()
 };
-export const DATE_FORMAT: any = (v: Date ) =>   v !== undefined ? moment(v).format(environment.dateFormat) : '';
+export const DATE_FORMAT: any = (v: Date ) =>   (v !== undefined && v !== null) ? moment(v).format(environment.dateFormat) : '';
 export const MAXSTRING_FORMAT: any = (v: string ) =>   {
   
   if( v === undefined || v === '') {
@@ -96,7 +98,7 @@ export class CatalogService {
   };
 
   _entList: BehaviorSubject<TCRMEntity[]>;
-  entList: Observable<TCRMEntity[]>
+  entList: Observable<TCRMEntity[]>;
 
   capi: string;
   fullapi: string;

@@ -13,7 +13,7 @@
               </a> 
             <a mat-list-item matRipple class="block relative" (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
                 <mat-icon mat-list-icon>dashboard</mat-icon>
-                {{ "HEADER" | translate}}
+                Header
               </a>
           
               <a mat-list-item matRipple class="block relative" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) "
@@ -56,12 +56,14 @@
                     </button>
                   <crm-customereditorheader [idCustomer]="idCustomer" *ngIf="scrId == 1"></crm-customereditorheader>
                     <crm-customercontact [idCustomer]="idCustomer" *ngIf="scrId == 3" [customer]="customer"></crm-customercontact>
-                    <crm-customerdeliverypoint [idCustomer]="idCustomer" *ngIf="scrId == 4" [customer]="customer"></crm-customerdeliverypoint>
+                    
+                      <crm-customerdeliverypoint [idCustomer]="idCustomer" *ngIf="scrId == 4" [customer]="customer"></crm-customerdeliverypoint>
               
                     <crm-customerdocument [idCustomer]="idCustomer" [customer]="customer" *ngIf="scrId == 5" [customer]="customer"></crm-customerdocument>
                     <crm-customermarket [idCustomer]="idCustomer" *ngIf="scrId == 6" [customer]="customer"></crm-customermarket>
                     <crm-customersector [idCustomer]="idCustomer" *ngIf="scrId == 7" [customer]="customer"></crm-customersector>
                     <crm-customerproduct [idCustomer]="idCustomer" *ngIf="scrId == 8" [customer]="customer"></crm-customerproduct> 
+  
                   </mat-card-content>
             </mat-card>
           </div>

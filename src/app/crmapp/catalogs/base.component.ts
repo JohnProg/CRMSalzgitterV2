@@ -7,13 +7,16 @@ import { ConfigurationService } from '../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+
+
 import { MatSnackBar } from '@angular/material';
-import {TranslateService} from '@ngx-translate/core';
+
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 import { TCRMEntity, Colony, Customer, GetStatusByDocType_Result, findActionOppByType_Result } from '../model/allmodels';
@@ -106,15 +109,22 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   currencyMask = cCurrencyMask;
   floatPosMask = cFloatPosMask;
   subEditor: boolean = false;
-  columns: ITdDataTableColumn[] = [
-  ];
+
 
 
   entList: Observable< TCRMEntity[]>;
   itemEdit:  TCRMEntity;
   curIndex: number;
+
+  
   totalItems: number;
   _totalItems: any;
+
+
+
+  columns: ITdDataTableColumn[] = [
+  ];
+
 
   @Input() catalogName: string;
   @Input() titleParam: string;
@@ -125,7 +135,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   currentPage: number = 0;
   dataLoaded: boolean = false;
 
-  pageSize: number = 5;
+  tPageSize: number;
+  pageSize: Observable<number>;
 
   sortBy: string = 'name';
   sortType: string = "ASC"
@@ -182,7 +193,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _ngZone: NgZone,
     public _http: Http, 
     public _tableService: TdDataTableService,
-    public translate: TranslateService,
     public route: ActivatedRoute,
     public apollo: Apollo,
     public _router: Router,
@@ -199,7 +209,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.ngBeforeInit();
-    
+    this.pageSize = this._confs.pageSize;
+    this.pageSize.subscribe( res => {
+      
+         this.tPageSize = res;
+    });
     if( this.route.snapshot.data['catName'] !== undefined) {
       
       let catName = this.route.snapshot.data['catName'];
@@ -228,7 +242,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngBeforeInit() {
 
-
   }
 
   ngOnInitClass() {
@@ -244,7 +257,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
 
 
-    this.pageSize = this._confs.pageSize;
+
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
 
@@ -353,7 +366,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.onDeleteErrorEvent !== undefined) { this.onDeleteErrorEvent.unsubscribe(); }
 
 
-    if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
+    // if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
     if ( this.handleScreenChange === true) {
         if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     }
@@ -379,10 +392,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.autoLoad === true) {
         this.loadData();
     }
-    this._totalItems = this._curService.totalItems.subscribe((total: number) => {
+    this._totalItems = this._curService.totalItems;
+    // .subscribe((total: number) => {
       
-      this.totalItems = total;
-    });
+    //   this.totalItems = total;
+    // });
     this.initEntity();
 
   }
@@ -390,10 +404,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   loadData() {
     
       if ( this.isLoading === false ) {
-
+        
         if ( this.dataLoaded === true ) {
           this.reloadPaged();
         } else {
+          this.isLoading = true;
           this._curService.loadAll(this.getPageParams(''));
           this.dataLoaded = true;
         }
@@ -494,14 +509,16 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   change(event: IPChangeEventSorted): void {
     if (event !== undefined  ) {
+      
       this.currentPage = event.page - 1;
-      this.pageSize = event.pageSize;
-      this._confs.pageSize = this.pageSize;
+      //this.pageSize = event.pageSize;
+      //this._confs._pageSize.next(5); //= this.pageSize;
       this.loadData();
     }
   }
 
   confirmDelete(item:  TCRMEntity) {
+    
     this.itemEdit = item;
     
     this._actions.deleteItemEvent.emit( { title: item.description || item.name || item[this.fieldDelete], objId: this.objId } );
@@ -509,14 +526,16 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   deleteConfirmed(e: IDeleteEventModel) {
     if( e.objId === this.objId) {
+      
       this.deleteEntity(this.itemEdit.id);
     }
   }
 
 
   getPageParams(sText: string) : IPChangeEventSorted {
+
     return {
-      page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+      page: this.currentPage, pageSize: this.tPageSize, sortBy: this.sortBy,
       sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
     } as IPChangeEventSorted;
   }
@@ -547,7 +566,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if( this.isLoading === false && this.singleEditor === false) {
       //this.isLoading = true;
       let p = {
-        page: this.currentPage, pageSize: this.pageSize, sortBy: this.sortBy,
+        page: this.currentPage, pageSize: this.tPageSize, sortBy: this.sortBy,
         sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
       } as IPChangeEventSorted;
       this.addParams(p);
@@ -590,6 +609,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   afterLoadAll(itms: TCRMEntity[]) {
+    
     this.isLoading = false;
     
 

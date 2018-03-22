@@ -11,17 +11,16 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../catalogs/base.component';
 import {  EditordetailComponent } from '../../../components/index';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
-import {TranslateService} from '@ngx-translate/core';
 import { IDeleteEventModel } from '../../../model/deleteeventmodel';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

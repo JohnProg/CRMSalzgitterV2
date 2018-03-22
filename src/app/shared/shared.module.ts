@@ -1,92 +1,69 @@
 import { NgModule, } from '@angular/core';
 import { CommonModule, } from '@angular/common';
+import { Http, HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { FlexLayoutModule, } from '@angular/flex-layout';
-import {
-  CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
-  CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
-  CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-  CovalentCommonModule, CovalentDialogsModule, CovalentExpansionPanelModule,
-  CovalentFileModule, CovalentChipsModule,
-} from '@covalent/core';
 
 
-import {CdkTableModule} from '@angular/cdk/table'
-import {OverlayModule} from '@angular/cdk/overlay';
+import { CovalentCommonModule } from '@covalent/core/common';
+import { CovalentSearchModule } from '@covalent/core/search';
+import { CovalentLayoutModule } from '@covalent/core/layout';
+import { CovalentDialogsModule } from '@covalent/core/dialogs';
+import { CovalentMediaModule } from '@covalent/core/media';
+import { CovalentLoadingModule } from '@covalent/core/loading';
+import { CovalentDataTableModule } from '@covalent/core/data-table';
+import { CovalentNotificationsModule } from '@covalent/core/notifications';
+import { CovalentMenuModule } from '@covalent/core/menu';
+import { CovalentPagingModule } from '@covalent/core/paging';
+import { CovalentFileModule } from '@covalent/core/file';
+import { CovalentChipsModule } from '@covalent/core/chips';
+import { CovalentStepsModule } from '@covalent/core/steps';
 
 
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
 
-import { NgxChartsModule, } from '@swimlane/ngx-charts';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { CovalentExpansionPanelModule } from '@covalent/core/expansion-panel';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatNativeDateModule} from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 const FLEX_LAYOUT_MODULES: any[] = [
   FlexLayoutModule,
 ];
 
+
 const ANGULAR_MODULES: any[] = [
-  FormsModule, ReactiveFormsModule,
+  FormsModule, ReactiveFormsModule, HttpModule, HttpClientModule,
 ];
 
 const MATERIAL_MODULES: any[] = [
-      // CDk
-      CdkTableModule,
-      OverlayModule,
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule
+  MatButtonModule, MatCardModule, MatIconModule,
+  MatListModule, MatDividerModule, MatMenuModule, MatTooltipModule,
+  MatSlideToggleModule, MatInputModule, MatCheckboxModule,
+  MatToolbarModule, MatSnackBarModule, MatSidenavModule,
+  MatTabsModule, MatSelectModule, MatRadioModule, MatDialogModule, MatChipsModule,
+  MatDatepickerModule, MatMomentDateModule, MatNativeDateModule
 ];
 
 const COVALENT_MODULES: any[] = [
@@ -109,20 +86,16 @@ const CHART_MODULES: any[] = [
     COVALENT_MODULES,
     CHART_MODULES,
     FLEX_LAYOUT_MODULES,
-    
   ],
   declarations: [
 
   ],
-  providers: [
-  ], // additional providers needed for this module  
   exports: [
     ANGULAR_MODULES,
     MATERIAL_MODULES,
     COVALENT_MODULES,
     CHART_MODULES,
     FLEX_LAYOUT_MODULES,
-    
-  ]
+  ],
 })
 export class SharedModule { }

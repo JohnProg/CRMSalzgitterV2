@@ -9,19 +9,19 @@
           </a>      
       <a mat-list-item matRipple class="block relative"  [ngClass]="{menuactive: scrId == 1  }"  (click)=" linkClick(1) && (!this._mediaService.query('gt-sm') && this.manageList.close()) ">
         <mat-icon mat-list-icon>dashboard</mat-icon>
-        {{ "HEADER" | translate}}
+         Header
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 2  }" (click)="linkClick(2) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <mat-icon mat-list-icon>dashboard</mat-icon>
-        {{ "DETAILS" | translate}}
+      Details
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 3  }" (click)="linkClick(3) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
-        {{ "DIALOGS" | translate}}
+        Dialogs
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 4  }" (click)="linkClick(4) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
-        {{ "DOCUMENTS" | translate}}
+        Documents
       </a>
       <a mat-list-item matRipple class="block relative" [ngClass]="{menuactive: scrId == 5  }" (click)="linkClick(5) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
         <mat-icon mat-list-icon>insert_chart</mat-icon>
@@ -29,10 +29,10 @@
       </a> 
       
       <section mat-list-item *ngIf="opp != undefined">
-        <p> Subtotal: {{opp.subtotal | currency}} </p>
-        <p> Tax: {{opp.tax | percent}} </p>
-        <p> Tax Amount: {{opp.taxAmount | currency}} </p>
-        <p> Total: {{opp.total | currency}} </p>
+        <a mat-list-item matRipple class="block relative"> Subtotal: {{opp.subtotal | currency}} </a>
+        <a mat-list-item matRipple class="block relative"> Tax: {{opp.tax | percent}} </a>
+        <a mat-list-item matRipple class="block relative"> Tax Amount: {{opp.taxAmount | currency}} </a>
+        <a mat-list-item matRipple class="block relative"> Total: {{opp.total | currency}} </a>
       </section>
       
       <!-- <a mat-list-item matRipple class="block relative" (click)="linkClick(6) && (!this._mediaService.query('gt-sm') && this.manageList.close()) " *ngIf="idOpp > 0">
@@ -73,7 +73,7 @@
         *ngIf="scrId == 4 "
         catName="Opportunity Document "></crm-documentviewer>
 
-        <crm-quotationfromsupplierindexviewer 
+       <crm-quotationfromsupplierindexviewer 
              [idParent]="idOpp" 
              [byType]="quoteType"              
              *ngIf="scrId == 5 "
@@ -82,7 +82,7 @@
              parentScreen="5"
              moveToScr="false"
              ></crm-quotationfromsupplierindexviewer>
-
+ <!-- 
         <crm-quotationtocustomerindexviewer 
                  [idParent]="idOpp" 
                  [byType]="quoteType" 
@@ -94,7 +94,7 @@
               [allowChild]="false"
               *ngIf="scrId == 7"></crm-purchaseorderindexviewer>
         
-         
+          -->
               
         
       </mat-card-content>

@@ -1,10 +1,14 @@
 import { Component, AfterViewInit, OnInit, Input, ViewChild, ContentChild, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+
+import { TdDialogService } from '@covalent/core/dialogs';
+
+import { TdLoadingService } from '@covalent/core/loading';
+
+import { TdMediaService } from '@covalent/core/media';
+
+
+
 import { MatSnackBar } from '@angular/material';
 import { ActionsService } from '../../services/actions.services';
 import { Subscription } from 'rxjs/Subscription';
@@ -280,7 +284,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.oppTitles['OPP'] = { namexs: 'Opp', namesm: 'Opportunity', namemd: 'Opportunity', namelg: 'Opportunity', defaultname: 'Opportunity' };
     this.oppTitles['QFS'] = { namexs: 'QFS', namesm: 'QFS', namemd: 'Q. From Supplier', namelg: 'Quotation from Supplier', defaultname: 'Quotation from Supplier' };
     this.oppTitles['QTC'] = { namexs: 'QTC', namesm: 'QTC', namemd: 'Q. To Customer', namelg: 'Quotation To Customer', defaultname: 'Quotation To Customer' };
-    this.oppTitles['PO'] = { namexs: 'PO', namesm: 'P. Order', namemd: 'Q. From Supplier', namelg: 'Purchase Order', defaultname: 'Purchase Order' };
+    this.oppTitles['PO'] = { namexs: 'PO', namesm: 'POrder', namemd: 'Purchase Order', namelg: 'Purchase Order', defaultname: 'Purchase Order' };
     this.oppTitles['SHP'] = { namexs: 'SHP', namesm: 'SHP', namemd: 'Shipping', namelg: 'Shipping', defaultname: 'Shipping' };
     
   }

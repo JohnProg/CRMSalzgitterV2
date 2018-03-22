@@ -14,7 +14,7 @@ import {
   TdLoadingService, TdDialogService, TdMediaService, TdLayoutManageListComponent 
 } from '@covalent/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {TranslateService} from '@ngx-translate/core';
+
 
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -110,8 +110,11 @@ export class QuotationtocustomereditorFromQFSComponent extends Quotationtocustom
   }
   afterInit() {
     super.afterInit();
+    setTimeout( () => {
+      
+      this.headercomp.loadFromOpp(this.idParent);
+    }, 300);
     
-    this.headercomp.loadFromOpp(this.idParent);
   }
 }
 

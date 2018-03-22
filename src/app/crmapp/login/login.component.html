@@ -5,12 +5,13 @@
   <div class="md-content" layout-padding flex>
     <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
       <div flex-gt-xs="50">
+          <form #loginForm="ngForm">
         <mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-top-lg']">
           <mat-card-title><mat-icon class="mat-icon-logo" svgIcon="assets:logocrm"></mat-icon> Login</mat-card-title>
           <mat-card-subtitle>sign in to CRM Salzgitter Mexico</mat-card-subtitle>
           <mat-divider></mat-divider>
           <mat-card-content>
-            <form #loginForm="ngForm">
+
 
               <div layout="row">
                 <mat-form-field flex> 
@@ -35,13 +36,14 @@
               <div layout="row">
                 {{errorMessage}}
               </div>
-            </form>
+
           </mat-card-content>
           <mat-divider></mat-divider>
           <mat-card-actions layout="row">
             <button flex mat-raised-button color="accent" [disabled]="!loginForm.form.valid" (click)="login()">Sign In</button>
           </mat-card-actions>
         </mat-card>
+      </form>
       </div>
     </div>    
   </div>

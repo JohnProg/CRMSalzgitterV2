@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input, ViewChild, ContentChild, NgZone } from '@angular/core';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +21,6 @@ import { EnumDocType } from '../../../constants/index';
 
 import { BaseComponent } from '../../../catalogs/base.component';
 
-import {TranslateService} from '@ngx-translate/core';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -50,12 +52,12 @@ export class ShippingindexviewerComponent extends QuotationindexviewerComponent 
     this.columns.push({ name: 'blNumber', label: 'BLNumber' });
     this.columns.push({ name: 'blDate', label: 'BL Date', numeric: false, format: DATE_FORMAT });
     this.columns.push({ name: 'cdpName', label: 'Delivery Point' });
-    this.columns.push({ name: 'userName', label: 'Created by' });
+    this.columns.push({ name: 'responsibleName', label: 'Responsible' });
   }
 
   ngAfterViewInit() {
          super.ngAfterViewInit(); 
-         debugger
+         
          this._actions.showAdd(this.allowChild);
   }
 

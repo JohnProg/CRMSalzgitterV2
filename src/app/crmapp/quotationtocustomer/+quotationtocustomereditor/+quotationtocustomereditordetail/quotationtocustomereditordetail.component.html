@@ -21,7 +21,7 @@
 
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin >
           <mat-form-field flex class="">
-            <textarea matInput flex #itemDescription name="itemDescription" maxlength="500"  placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.itemDescription" ></textarea>
+            <textarea matInput flex #itemDescription name="itemDescription" maxlength="500"  placeholder="Description" [(ngModel)]="itemEdit.itemDescription" ></textarea>
                   <mat-hint align="end">{{itemDescription.value.length}} / 150</mat-hint>
           </mat-form-field>         
         </div>  

@@ -2,8 +2,8 @@
     <div layout-margin>
         <div>
             <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Country </button>
-            <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
-            <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
+            <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
+            <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save</button>
         
         </div>
 
@@ -41,15 +41,17 @@
       </ng-template>
   
     </td-data-table> 
-     <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
-      <span hide-xs>Rows per page:</span>
-      <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-        <mat-option *ngFor="let size of pagesArray" [value]="size">
-          {{size}}
-        </mat-option>
-      </mat-select>
-      <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
-    </td-paging-bar>
+    <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+    [total]="_totalItems | async"  (change)="change($event)" >
+<span hide-xs>Rows per page:</span>
+<mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
+<mat-option *ngFor="let size of pagesArray" [value]="size">
+{{size}}
+</mat-option>
+</mat-select>
+<span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+</td-paging-bar>
+
 
 
   </section>

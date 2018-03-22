@@ -13,7 +13,6 @@ import { BaseComponent } from '../base.component';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import {TranslateService} from '@ngx-translate/core';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -31,6 +30,7 @@ export class ActionoppComponent extends BaseComponent {
   ngBeforeInit() {
     super.ngBeforeInit();
     this.sortBy = 'name';
+    
     this.catalogName = 'Action Opportunity';
     this._curService.setAPI('ActionOpportunity/', this.catalogName, this.loadName);   
   }

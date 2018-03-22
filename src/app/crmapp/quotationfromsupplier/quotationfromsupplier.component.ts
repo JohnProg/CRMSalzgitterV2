@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractRootMenuComponent } from '../components';
+import { CatalogComponent } from '../catalogs/catalog.component';
+
 @Component({
   selector: 'crm-quotationfromsupplier',
   templateUrl: './quotationfromsupplier.component.html',
   styleUrls: ['./quotationfromsupplier.component.scss']
 })
-export class QuotationfromsupplierComponent extends AbstractRootMenuComponent {
+export class QuotationfromsupplierComponent extends CatalogComponent {
 
 
 

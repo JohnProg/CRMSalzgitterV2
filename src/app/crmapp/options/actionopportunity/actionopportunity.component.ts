@@ -3,12 +3,13 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../services/actions.services';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn,
+   } from '@covalent/core/data-table';
 
+import { TdSearchBoxComponent } from '@covalent/core/search';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
@@ -16,7 +17,7 @@ import { Currency } from '../../model/allmodels';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from '../../catalogs/base.component';
-import {TranslateService} from '@ngx-translate/core';
+
 import { ActionopportunitytemplateemailComponent } from './+actionopportunitytemplateemail/actionopportunitytemplateemail.component';
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 

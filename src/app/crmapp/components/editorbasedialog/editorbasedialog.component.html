@@ -29,9 +29,9 @@
         <section flex >
             <span>Email to:    </span> &nbsp; &nbsp;
             <mat-radio-group #eMailTo name="eMailTo" [(ngModel)]="itemEdit.toContact">
-              <mat-radio-button value="1">{{ 'CONTACT' | translate}}</mat-radio-button>
-              <mat-radio-button value="2">{{ 'CUSTCONTACT' | translate}}</mat-radio-button>
-              <mat-radio-button value="3">{{ 'BOTH' | translate}}</mat-radio-button>
+              <mat-radio-button value="1">Contact</mat-radio-button>
+              <mat-radio-button value="2">Customer contact</mat-radio-button>
+              <mat-radio-button value="3">Both</mat-radio-button>
             </mat-radio-group>
           </section> 
 
@@ -61,7 +61,7 @@
 
         <section flex>
           <mat-form-field flex class="">
-            <textarea matInput flex #DNotes name="DNotes" required="true" maxlength="500" placeholder="{{ 'NOTES' | translate }}" [(ngModel)]="itemEdit.dNotes"></textarea>
+            <textarea matInput flex #DNotes name="DNotes" required="true" maxlength="500" placeholder="Notes" [(ngModel)]="itemEdit.dNotes"></textarea>
             <mat-hint align="end">{{DNotes.value.length}} / 500</mat-hint>
           </mat-form-field>
         </section>
@@ -89,6 +89,18 @@
 
   <section *ngIf="!isEditing">
 
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+      [total]="_totalItems | async"  (change)="change($event)" >
+<span hide-xs>Rows per page:</span>
+<mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
+<mat-option *ngFor="let size of pagesArray" [value]="size">
+{{size}}
+</mat-option>
+</mat-select>
+<span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+</td-paging-bar>
+
+
     <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
       <ng-template tdDataTableTemplate="actionName" let-value="value" let-row="row" let-column="column">
         <div layout="row">
@@ -111,15 +123,8 @@
       </ng-template>
 
     </td-data-table>
-    <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
-      <span hide-xs>Rows per page:</span>
-      <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-        <mat-option *ngFor="let size of pagesArray" [value]="size">
-          {{size}}
-        </mat-option>
-      </mat-select>
-      <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
-    </td-paging-bar>
+
+
   </section>
 </ng-template>
 </section>

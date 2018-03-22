@@ -3,7 +3,7 @@
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
       <mat-form-field flex-gt-sm="60">
-        <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250" />
+        <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="250" />
         <mat-hint align="end">{{name.value.length}} / 250</mat-hint>
       </mat-form-field>
       <mat-form-field flex-gt-sm="30">
@@ -73,14 +73,16 @@
     </ng-template>
 
   </td-data-table>
-  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
-    <span hide-xs>Rows per page:</span>
-    <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-      <mat-option *ngFor="let size of pagesArray" [value]="size">
-        {{size}}
-      </mat-option>
-    </mat-select>
-    <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
-  </td-paging-bar>
+      
+  <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+  [total]="_totalItems | async"  (change)="change($event)" >
+<span hide-xs>Rows per page:</span>
+<mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
+<mat-option *ngFor="let size of pagesArray" [value]="size">
+{{size}}
+</mat-option>
+</mat-select>
+<span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+</td-paging-bar>
 </section>
 </ng-template>

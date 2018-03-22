@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { TdLoadingService } from '@covalent/core';
+import { TdLoadingService } from '@covalent/core/loading';
 import { TokenService, ConfigurationService } from '../services/index';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 

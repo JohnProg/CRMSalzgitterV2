@@ -4,7 +4,7 @@
 
     <!-- <span> {{catalogTitle}} </span> -->
     <span flex></span>  
-    <td-search-box *ngIf="showSearch" #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="{{ 'SEARCHHERE' | translate }}" (searchDebounce)="search($event)">
+    <td-search-box *ngIf="showSearch" #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" (searchDebounce)="search($event)">
     </td-search-box>
 
     <button mat-mini-fab class="" (click)="addItem()" aria-label="Add Item" *ngIf="showAdd">

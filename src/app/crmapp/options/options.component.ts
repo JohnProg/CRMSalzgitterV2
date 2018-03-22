@@ -2,9 +2,18 @@ import { Component, AfterViewInit, ViewChild, ContentChild } from '@angular/core
 
 import { Title } from '@angular/platform-browser';
 import { CatalogComponent } from '../catalogs/catalog.component';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService, TdSearchBoxComponent } from '@covalent/core';
+
+
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn,
+   } from '@covalent/core/data-table';
+
+import { TdSearchBoxComponent } from '@covalent/core/search';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+         
+         
 import { MatSnackBar } from '@angular/material';
 
 import { MenuClass } from '../model/menuclass';

@@ -2,8 +2,7 @@ import { NgModule, Type } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CurrencyPipe } from '@angular/common';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 import { CKEditorModule } from 'ng2-ckeditor';
 
 import { TextMaskModule } from 'angular2-text-mask';
@@ -21,47 +20,12 @@ import { environment } from '../../environments/environment';
 
 
 
-// services 
+// // services 
 import { OpportunityService, ActionsService, CatalogService, OnedrivegraphService,
   ConfigurationService, TokenService } from './services/index';
 
-
-// const networkInterface = createNetworkInterface({
-//   uri: environment.server + 'api/graphql',
-// });
-
-// networkInterface.use([
-//   {
-//     applyMiddleware(req, next) {
-//       if (!req.options.headers) {
-//         req.options.headers = {};  // Create the header object if needed.
-//       }
-//       // get the authentication token from local storage if it exists
-//       let t = localStorage.getItem('tokendata');
-//       if( t ) {
-//           let tokenData = JSON.parse(t);
-//           if( tokenData) {
-//               req.options.headers.authorization = tokenData.token_type + ' ' + tokenData.access_token;
-//           }
-//       }    
-      
-
-//       next();
-//     }
-//   }
-// ]);
-
-// // by default, this client will send queries to `/graphql` (relative to the URL of your app)
-// export const client: ApolloClient = new ApolloClient({ networkInterface });
-
-
-
-
-// export function provideClient(): ApolloClient {
-//   return client;
-// }
-
-
+  // Directives
+ import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/index';
 
 
 //catalogs
@@ -97,18 +61,17 @@ import {
 
 // cbx Components
 
-import { CRMSelectComponent, GenericActionsComponent, 
+import { 
+   CRMSelectComponent, GenericActionsComponent, 
   CrmselectchildComponent, EmailSenderComponent,
   EditordetailsumaryComponent, EditorbasedialogComponent,
   EditorbasedialogdocumentComponent,
   DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent,
   NameDescPipe, MaxStringPipe, EditordetailComponent, CrmcustomdialogComponent,
-  AbstractRootMenuComponent, MainmenuComponent  } from './components/index';
+  MainmenuComponent  } from './components/index';
 
   
-// Directives
 
-import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/index';
 
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
@@ -153,7 +116,8 @@ import {ShippingComponent, ShippingindexComponent,
   ShippingeditorComponent, 
   ShippingeditorheaderComponent,
   ShippingeditordetailComponent,
-  ShippingeditorFromPOComponent
+  ShippingeditorFromPOComponent,
+  ShippingdialogemailComponent
 } from './shipping/index';
 
 // Login
@@ -170,7 +134,6 @@ import { AuthHelper } from './authHelper/authHelper';
 
 @NgModule({
   declarations: [
-    AbstractRootMenuComponent, 
     MainmenuComponent,
     BaseComponent,
     CurrencyComponent,
@@ -281,6 +244,7 @@ import { AuthHelper } from './authHelper/authHelper';
     ShippingeditorFromPOComponent,
     ShippingeditorheaderComponent,
     ShippingeditordetailComponent,
+    ShippingdialogemailComponent,
     
     NameDescPipe,
     MaxStringPipe
@@ -288,7 +252,6 @@ import { AuthHelper } from './authHelper/authHelper';
 
   ], // directives, components, and pipes owned by this NgModule
   imports: [
-    TranslateModule,
     SharedModule,
     RouterModule,
     CKEditorModule,
@@ -302,21 +265,24 @@ import { AuthHelper } from './authHelper/authHelper';
   exports: [
        SharedModule,
       // Md2Module,
-      // CKEditorModule,
-       TranslateModule,
-       GenericActionsComponent,
-       //TextMaskModule
-       MainmenuComponent,
-       AbstractRootMenuComponent
+       CKEditorModule,
+
+    
+      //  GenericActionsComponent,
+      //  //TextMaskModule
+        MainmenuComponent,
 
   ],
   providers: [
-    ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
-    CRMCurrencyPipe, CRMCurrencyFormatterDirective,
-    OpportunityService, TokenService,
-    AuthGuard, AuthHelper, OnedrivegraphService, 
+     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
+     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
+     CrmcustomdialogComponent,
+    // OpportunityService,
+     TokenService,
+     AuthGuard, AuthHelper,
+     OnedrivegraphService, 
   ], // additional providers needed for this module
-  entryComponents: [ CrmcustomdialogComponent ],
+  entryComponents: [ ], //CrmcustomdialogComponent ],
 
   bootstrap: [  ],
 
@@ -328,6 +294,8 @@ export class CRMModule {
     httpLink: HttpLink,
     _conf: ConfigurationService
   ) {
+  
+  
     const http = httpLink.create({ uri:  environment.server + 'api/graphql' });
 
     const middleware = setContext(() => ({

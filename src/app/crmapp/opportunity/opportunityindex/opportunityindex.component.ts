@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone } from '@angular/core';
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +20,7 @@ import { Product } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
 import { GetOpportunities } from '../../model/allmodels';
 
-import {TranslateService} from '@ngx-translate/core';
+
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -51,7 +54,7 @@ export class OpportunityindexComponent extends BaseComponent  {
     this.columns.push({ name: 'id', label: 'Opportunity', tooltip: '' });
     this.columns.push({ name: 'customerName', label: 'Customer Name' });
     this.columns.push({ name: 'oppNotes', label: 'Project Name' });
-    this.columns.push({ name: 'asImporter', label: 'IOR' });
+    this.columns.push({ name: 'asImporter', label: 'Imp. of R.' });
     this.columns.push({ name: 'statusName', label: 'Status' });
     this.columns.push({ name: 'totalformat', label: 'Total' });
     this.columns.push({ name: 'lastUpdated', label: 'Last Update', numeric: false, format: DATE_FORMAT });

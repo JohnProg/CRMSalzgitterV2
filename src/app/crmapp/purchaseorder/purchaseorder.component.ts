@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractRootMenuComponent } from '../components';
+import { CatalogComponent } from '../catalogs/catalog.component';
 
 
 @Component({
@@ -7,7 +7,7 @@ import { AbstractRootMenuComponent } from '../components';
   templateUrl: './purchaseorder.component.html',
   styleUrls: ['./purchaseorder.component.scss']
 })
-export class PurchaseorderComponent extends AbstractRootMenuComponent {
+export class PurchaseorderComponent extends CatalogComponent {
 
 
 

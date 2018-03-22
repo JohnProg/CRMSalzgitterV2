@@ -4,9 +4,9 @@
         <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
   <div layout-margin>
           <div>
-              <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing  && (uTemplate == false)"> {{ 'OPPORTUNITY.ADDSUMARY' | translate}} </button>
-              <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">{{ 'CANCEL' | translate}} </button>
-              <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">{{ 'SAVE' | translate}} </button>
+              <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing  && (uTemplate == false)"> Add Sumary</button>
+              <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
+              <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save</button>
               <button mat-raised-button color="primary" (click)="getTemplate()" *ngIf=" (uTemplate == false) && (isEditing == false)" >Get Template </button>
               <button mat-raised-button color="primary" (click)="uploadTemplate()" *ngIf="(uTemplate == false)  && (isEditing == false)" >Upload Template </button>
           </div>
@@ -30,20 +30,20 @@
           <section layout="row" flex="100" layout-margin>
   
             <mat-form-field flex="30">
-              <input  matInput #Quantity name="Quantity" placeholder="{{ 'QUANTITY' | translate}}" [ngModel]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}"  (ngModelChange)="qtyChange($event)" >
+              <input  matInput #Quantity name="Quantity" placeholder="Quantity" [ngModel]="itemEdit.quantity" currencyMask  [options]="{ prefix: ''}"  (ngModelChange)="qtyChange($event)" >
             </mat-form-field>
             <mat-form-field flex="30">
-              <input  matInput #Price name="Price"  placeholder="{{ 'PRICE' | translate}}" [ngModel]="itemEdit.price" currencyMask  (ngModelChange)="priceChange($event)">
+              <input  matInput #Price name="Price"  placeholder="Price" [ngModel]="itemEdit.price" currencyMask  (ngModelChange)="priceChange($event)">
             </mat-form-field>
             <mat-form-field flex="35">
-              <input  matInput #Amount name="Amount" placeholder="{{ 'TOTAL' | translate}}" [(ngModel)]="itemEdit.amount" currencyMask disabled>
+              <input  matInput #Amount name="Amount" placeholder="Total" [(ngModel)]="itemEdit.amount" currencyMask disabled>
             </mat-form-field>
   
           </section>
   
           <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
             <mat-form-field flex >
-              <textarea matInput flex #Comment name="Comment" required="true" maxlength="250" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="itemEdit.comment"></textarea>
+              <textarea matInput flex #Comment name="Comment" required="true" maxlength="250" placeholder="Description" [(ngModel)]="itemEdit.comment"></textarea>
               <mat-hint align="end">{{Comment.value.length}} / 250</mat-hint>
             </mat-form-field>
           </div>
@@ -89,15 +89,16 @@
           </ng-template>
   
         </td-data-table>
-        <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
-          <span hide-xs>Rows per page:</span>
-          <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
-            <mat-option *ngFor="let size of pagesArray" [value]="size">
-              {{size}}
-            </mat-option>
-          </mat-select>
-          <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
-        </td-paging-bar>
+        <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+        [total]="_totalItems | async"  (change)="change($event)" >
+<span hide-xs>Rows per page:</span>
+<mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
+<mat-option *ngFor="let size of pagesArray" [value]="size">
+  {{size}}
+</mat-option>
+</mat-select>
+<span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
+</td-paging-bar>
       </section>
     </div>
     </ng-template>

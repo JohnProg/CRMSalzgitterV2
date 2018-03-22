@@ -10,8 +10,7 @@
       "assets": [
         "assets",
         "data",
-        "favicon.ico",
-        "web.config"
+        "favicon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -22,8 +21,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "theme.scss",
-        "../node_modules/@covalent/core/common/platform.css"
+        "theme.scss"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js",
@@ -31,9 +29,11 @@
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
+        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "qa": "environments/environment.qa.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "local": "environments/environment.local.ts"
       }
     }
   ],

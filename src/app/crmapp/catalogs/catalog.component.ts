@@ -4,9 +4,13 @@ import { Title } from '@angular/platform-browser';
 
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
+  ITdDataTableSortChangeEvent, ITdDataTableColumn, TdDialogService
 } from '@covalent/core';
+
+import { TdLoadingService } from '@covalent/core/loading';
+
+import { TdMediaService } from '@covalent/core/media';
+
 import { MatSnackBar } from '@angular/material';
 import { ActionsService } from '../services/actions.services';
 import { CurrencyComponent } from './currency/currency.component';
@@ -17,7 +21,7 @@ import { BaseComponent } from './base.component';
 import { TCRMEntity } from '../model/index';
 import { EnumDocType } from '../constants/index';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractRootMenuComponent } from '../components';
+
 
 @Component({
   selector: 'crm-catalog',
@@ -25,7 +29,7 @@ import { AbstractRootMenuComponent } from '../components';
   styleUrls: ['./catalog.component.scss'],
   providers: [  ]
 })
-export class CatalogComponent extends AbstractRootMenuComponent   {
+export class CatalogComponent implements AfterViewInit, OnDestroy    {
 
   @ViewChild(BaseComponent) headercomp: BaseComponent;
 
@@ -47,11 +51,26 @@ export class CatalogComponent extends AbstractRootMenuComponent   {
   parentScr: number = 5;
   moveToScr: boolean = false;
 
+  constructor(
+    public _router: Router, 
+    public _actions: ActionsService,
+    public _loadingService: TdLoadingService, 
+    public _mediaService: TdMediaService,
+    public _route: ActivatedRoute) {
+      this.checkParams(); 
+      this.doConstruct();
+  }
+
+  doConstruct() {
+
+
+  }
+
   ngAfterViewInit() {
-    super.ngAfterViewInit()
-    this.checkParams();
     this.afterInit();
   }
+
+
 
   checkParams() {
     this._route.params.subscribe((params: any) => {
@@ -72,7 +91,7 @@ export class CatalogComponent extends AbstractRootMenuComponent   {
 
 
   ngOnDestroy() {
-    super.ngOnDestroy();
+
      if (this.afterCreateItem !== undefined) { this.afterCreateItem.unsubscribe(); }
      if (this.afterItemLoaded !== undefined) { this.afterItemLoaded.unsubscribe(); }
      if (this.onCancelEdit !== undefined) { this.onCancelEdit.unsubscribe(); }
@@ -121,7 +140,11 @@ export class CatalogComponent extends AbstractRootMenuComponent   {
     }
   }
 
+  afterOnItemUpdated(itm: TCRMEntity) {
 
+  }
+
+  
   goToInex() {
     if(  this.parentScr != undefined && this.idOpp > 0) {
       this._router.navigate([ '/' + this.parentRoute + '/edit/' + this.idOpp, {   scrId: this.parentScr, moveToScr: true  }]);

@@ -27,16 +27,14 @@ getDashboard($idresponsible: Int!)
 }
 `;
 
-
 @Component({
   selector: 'crm-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  viewProviders: [  ],
-  providers: []
+  viewProviders: [ ],
 })
 export class DashboardComponent implements AfterViewInit  {
- 
+
   // Simple Chart
   _single: BehaviorSubject<any>;
   single: Observable<any>;
@@ -107,6 +105,4 @@ export class DashboardComponent implements AfterViewInit  {
    
  
   }
-
-
 }

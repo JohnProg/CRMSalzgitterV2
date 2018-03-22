@@ -22,7 +22,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../../components/abstractvalueaccessor';
 
 import {  BaseDocument, Customer, DocType } from '../../../model/index';
-import {TranslateService} from '@ngx-translate/core';
+
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import * as MicrosoftGraph from "@microsoft/microsoft-graph-types"

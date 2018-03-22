@@ -27,9 +27,10 @@
   
       </td-data-table>
       
-      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize" [total]="totalItems" (change)="change($event)">
+      <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
+                  [total]="_totalItems | async"  (change)="change($event)" >
         <span hide-xs>Rows per page:</span>
-        <mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+        <mat-select [style.width.px]="50" [(ngModel)]="tPageSize">
           <mat-option *ngFor="let size of pagesArray" [value]="size">
             {{size}}
           </mat-option>

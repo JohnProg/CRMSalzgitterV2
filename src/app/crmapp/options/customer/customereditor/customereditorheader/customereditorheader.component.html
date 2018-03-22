@@ -4,7 +4,7 @@
 
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
       <mat-form-field flex-gt-sm="50">
-        <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="{{ 'NAME' | translate}}" maxlength="250"
+        <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="250"
         />
         <mat-hint align="end">{{name.value.length}} / 250</mat-hint>
       </mat-form-field>

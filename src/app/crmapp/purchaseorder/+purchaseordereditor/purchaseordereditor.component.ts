@@ -8,13 +8,11 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../catalogs/base.component';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService, TdLayoutManageListComponent 
-} from '@covalent/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {TranslateService} from '@ngx-translate/core';
 
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -107,13 +105,13 @@ export class PurchaseordereditorComponent extends CatalogComponent {
     this.idOpp = itm.idOpportunity;
     this.idCustomer = itm.idCustomer;
     super.onItemLoaded(itm);
-    this.allowShippings = itm.purchaseOrderConfirmation != null;
+    this.allowShippings = itm.asImporter == true && itm.purchaseOrderConfirmation != null;
     
   }
 
   onItemUpdated(itm: PurchaseOrder) {
     super.onItemUpdated(itm);
-    this.allowShippings = itm.purchaseOrderConfirmation != null;
+    this.allowShippings = itm.asImporter == true && itm.purchaseOrderConfirmation != null;
   }
 
   updateTotal(data) {

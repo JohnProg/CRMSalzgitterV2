@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { CrmcustomdialogComponent, DialogResponse } from '../../components/crmcustomdialog/crmcustomdialog.component';
-import { TranslateService } from '@ngx-translate/core';
+
 import { BaseOrderDialog, Customer, DocType, findActionOppByType_Result  } from '../../model/allmodels';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -95,7 +95,7 @@ export class EditorbasedialogComponent extends BaseComponent {
         let pparams = new URLSearchParams();
         pparams.set('iddialog', '0');
         pparams.set('idparent', this.idParent.toString());
-        this._curService.loadCustomAll(this.baseApi + '/searchBy', pparams, this.pageSize);
+        this._curService.loadCustomAll(this.baseApi + '/searchBy', pparams, this.tPageSize);
         this.dataLoaded = true;
   }
 
@@ -152,6 +152,7 @@ export class EditorbasedialogComponent extends BaseComponent {
  
   sendEmail() {
     this.showEMail = true;
+    
     this._router.navigate([ '../../sendemail', this.itemEdit.id], { relativeTo: this.route });
   }
 

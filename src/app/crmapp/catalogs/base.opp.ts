@@ -8,12 +8,14 @@ import { ConfigurationService } from '../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {
-  IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
-  ITdDataTableSortChangeEvent, ITdDataTableColumn,
-  TdLoadingService, TdDialogService, TdMediaService
-} from '@covalent/core';
-import {TranslateService} from '@ngx-translate/core';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+
+
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
 import {  Opportunity, IncoTerm, TCRMEntity, GetStatusByDocType_Result, Customer } from '../model/index';
@@ -111,6 +113,7 @@ export class BaseOppComponent extends BaseComponent {
     if( this.customer != undefined) {
       txtcust += ' (Customer: ' + this.customer.name + ')';
     }
+    
     this._actions.updateTitle( { action: 'Edit', title: this.catalogName , tparam: txtcust});
   }
 

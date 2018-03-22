@@ -19,7 +19,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractValueAccessor } from '../../components/abstractvalueaccessor';
-import {TranslateService} from '@ngx-translate/core';
+
 
 import { TCRMEntity, Property, ProductProperty, 
       EditorDetailSumary, EditorDetailSumaryProperty } from '../../model/allmodels';

@@ -18,7 +18,7 @@ import { EmailSenderComponent } from '../../components/email-sender/email-sender
 import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
 import {  TCRMEntity } from '../../model/allmodels';
-import {TranslateService} from '@ngx-translate/core';
+
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
@@ -36,7 +36,7 @@ export class QuotationtocustomerdialogemailComponent extends EmailSenderComponen
    ngBeforeInit() {
    
     this.catalogName = 'Quotation to Customer Dialog';
-    this.mainField = 'IdQuotationToCustomer';
+    this.mainField = 'idQuotationToCustomer';
     this.baseApi = 'QuotationToCustomerDialog'; 
     super.ngBeforeInit();
   }

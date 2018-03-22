@@ -14,7 +14,7 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 
 import { State } from '../../model/allmodels';
-import {TranslateService} from '@ngx-translate/core';
+
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -65,7 +65,7 @@ export class StateComponent extends BaseComponent {
     }
 
       reloadPaged(sText: string = undefined) {
-        let p = { page: this.currentPage, pageSize: this.pageSize, sortBy : this.sortBy, sortType: this.sortType, 
+        let p = { page: this.currentPage, pageSize: this.tPageSize, sortBy : this.sortBy, sortType: this.sortType, 
                   sText: undefined, maxPage: 0, total: 0, fromRow: 0, toRow: 0 } as IPChangeEventSorted;
 
         this._curService.getCustomPaged(p, 'GetPaged', [
