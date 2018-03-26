@@ -22,6 +22,7 @@ import { CRMModule } from './crmapp/crm.module';
 import { CustomdialogcrmComponent } from './customdialogcrm/customdialogcrm.component';
 
 
+
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
 ];
@@ -36,6 +37,9 @@ export function getAPI(): string {
     AppComponent,
     routedComponents,
     CustomdialogcrmComponent,
+    
+    
+
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     AppRoutingModule,

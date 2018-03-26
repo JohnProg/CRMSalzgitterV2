@@ -19,6 +19,8 @@
                   <mat-hint align="end">{{eMailSubject.value.length}} / 250</mat-hint>
                   </mat-form-field>
               </div>
+ 
+
 
           <div layout-gt-sm="row"  >
               <ckeditor #eMailBody flex="100" placeholder="Body" name="eMailBody" [(ngModel)]="itemEdit.eMailBody"  debounce="500">
@@ -27,6 +29,10 @@
 
   
     </form>
+<br />
+    <div layout-gt-sm="row"  >
+     <crm-templateemaildocument  flex [idTemplate]="itemEdit.id"> </crm-templateemaildocument>
+    </div>  
   </section>
 
     <section *ngIf="!isEditing">

@@ -12,6 +12,8 @@ import {
 import {
   TdLoadingService
 } from '@covalent/core/loading';
+import { AttachDocument, EMailTemplate } from '../../model';
+import { debug } from 'util';
 @Injectable()
 export class OnedrivegraphService {
    
@@ -136,6 +138,31 @@ export class OnedrivegraphService {
     });
    }
 
+   downloadFileForEmail( mail: EMailTemplate, adoc : AttachDocument, fnc: any) {
+    this._loadingService.register(this.loadItem);
+    this.token = this._confs.oneDriveToken;
+     request.get(environment.oneDriveBase + 'me/drive/items/' + adoc.docId + '/content' )
+
+     .set( 'Authorization', 'Bearer ' + this.token.access_token )    
+     .responseType('blob')
+     .end((err, res) => {
+      this._loadingService.resolve(this.loadItem);
+      if (err) {
+         return;
+      }
+      
+      var reader = new FileReader();
+      reader.readAsDataURL(res.body); 
+      reader.onloadend = function() {
+          adoc.docData = reader.result;     
+          var alld  = mail.emailAttachments.filter(att => att.docData != null );
+          if( alld.length == mail.emailAttachments.length) {
+            
+            fnc();
+          }
+      }
+    });
+   }
 
    initOneDrive() {
     this.doRequest('me/drive/root/children')

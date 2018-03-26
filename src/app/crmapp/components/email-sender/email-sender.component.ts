@@ -10,9 +10,14 @@ import { ConfigurationService } from '../../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
-import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
-         ITdDataTableSortChangeEvent, ITdDataTableColumn, 
-         TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {  IPageChangeEvent } from '@covalent/core';
+import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
+
+import { TdDialogService } from '@covalent/core/dialogs';
+import { TdLoadingService } from '@covalent/core/loading';
+import { TdMediaService } from '@covalent/core/media';
+import { DialogOverviewResponsiblePswDialog } from '../responsiblepsw/responsiblepsw.component';
 
 import { BaseComponent } from '../../catalogs/base.component';
 import { Subscription } from 'rxjs/Subscription';
@@ -79,7 +84,7 @@ export class EmailSenderComponent extends BaseComponent {
        if (this.idDialog > 0) {
         this.editEntity(this.idDialog);
       }
-    }, 1000);
+    }, 500);
 
   }
 
@@ -113,13 +118,54 @@ export class EmailSenderComponent extends BaseComponent {
      this._router.navigate([ '../../edit', this.itemEdit[this.mainField]], { relativeTo: this.route });
   }
 
-
+  userPsw: string = '';
+  savepsw: boolean = false;
   sendEmail() {
-    this._curService.customPost(this.baseApi + '/sendEmail', this.itemEdit).subscribe((t: any) => {
-      this.cancelEdit();
-    });
+    if( this._confs.responsiblePassword == '') {
+      let dialogRef = this._dialogService.open(DialogOverviewResponsiblePswDialog, {
+        //width: '250px',
+        data: { rsppsw: this.userPsw, savepsw: this.savepsw }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        
+        this.userPsw = result.rsppsw;
+        this.savepsw = result.savepsw;
+        if( this.userPsw != '' && this.userPsw != undefined) {
+          this.itemEdit.responsiblePassword = this.userPsw;
+          if( this.savepsw == true ) {
+            this._confs.responsiblePassword = this.userPsw;
+          }
+          this.setAttachments( () => {
+            this.performSendEMail();
+          });
+        }
+      });
+    } else {
+      this.itemEdit.responsiblePassword = this._confs.responsiblePassword;
+      this.setAttachments( () => {
+        this.performSendEMail();
+      });
+    }
   }
 
+  performSendEMail( ) {
+
+   
+    this._loadingService.register(this.loadName);
+    this._curService.customPost(this.baseApi + '/sendEmail', this.itemEdit )
+    //.map((response) => response.json())
+    .subscribe((response) => {
+      var resp = response.json();
+      this._loadingService.resolve(this.loadName);
+      this._confs.responsiblePassword = this.userPsw;
+      this.cancelEdit();
+    }, (error) => {
+      var resp = error.json();
+      this._loadingService.resolve(this.loadName);
+      this._confs.responsiblePassword = '';
+      this._snackBarService.open(resp.message, 'Ok');
+    });
+  }
 
   onContactChange(name: string) {
 
@@ -142,8 +188,26 @@ export class EmailSenderComponent extends BaseComponent {
 
   }
 
+  setAttachments(fnc) {
+
+    
+      if( this.checkOneDriveToken() == true) {
+        this.itemEdit.emailAttachments.forEach( item => {
+          if( item.fromOneDrive == true ) {
+             this._one.downloadFileForEmail(this.itemEdit , item, fnc);
+          }
+        });
+        
+        
+      }
+  }
+
   downloadAttachment(doc) {
-    if(doc.docData.length > 0) {
+
+    if( doc.fromOneDrive == true ) {
+      alert('Downloading from OneDrive'); 
+    } else if(doc.docData.length > 0) 
+    {
        let bl = this._curService.converBase64toBlob(doc.docData, doc.mimmeType)
        importedSaveAs( bl, doc.docName);
     }

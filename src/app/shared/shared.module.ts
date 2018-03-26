@@ -43,6 +43,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatNativeDateModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
@@ -63,7 +65,8 @@ const MATERIAL_MODULES: any[] = [
   MatSlideToggleModule, MatInputModule, MatCheckboxModule,
   MatToolbarModule, MatSnackBarModule, MatSidenavModule,
   MatTabsModule, MatSelectModule, MatRadioModule, MatDialogModule, MatChipsModule,
-  MatDatepickerModule, MatMomentDateModule, MatNativeDateModule
+  MatDatepickerModule, MatMomentDateModule, MatNativeDateModule,
+  MatExpansionModule
 ];
 
 const COVALENT_MODULES: any[] = [

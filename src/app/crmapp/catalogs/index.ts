@@ -8,3 +8,4 @@ export * from './templateemail/templateemail.component';
 export * from './base.opp';
 export * from './mill/mill.component'
 export * from './mill/millcountry/millcountry.component'
+export * from './templateemail/templateemaildocument/templateemaildocument.component';

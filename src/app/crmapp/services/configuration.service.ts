@@ -17,7 +17,7 @@ export class ConfigurationService {
     public serverWithApiCustomUrl = this.server + this.apiCsutomUrl;
     public root = environment._root;
     public hideDelayToast: number = 2000;
-
+    public responsiblePassword: string = '';
 
     _pageSize: BehaviorSubject<number> = <BehaviorSubject<number>>new BehaviorSubject(5);
     pageSize: Observable<number> = this._pageSize.asObservable();

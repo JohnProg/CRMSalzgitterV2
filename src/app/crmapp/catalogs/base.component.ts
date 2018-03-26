@@ -174,7 +174,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   catTypeOpp: TCRMEntity[];
   catMill: TCRMEntity[];
   catCountry: TCRMEntity[];
- 
+  catDocumentType: TCRMEntity[];
   catProduct: TCRMEntity[];
   catActionsOpp: findActionOppByType_Result[];
   catDeliveryPoint: TCRMEntity[];
@@ -477,6 +477,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   afterCreate(item: any) {
     Object.assign(this.itemEdit, item.item);
+    
     if(this.singleEditor === false) {
       this._actions.cancelEditEvent.emit();
       this.isEditing = false;

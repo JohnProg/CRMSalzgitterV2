@@ -125,6 +125,7 @@
 		idDocumentType: number;
 		idParent: number;
 		parentFolder: string;
+		fromOneDrive: boolean;
 	}
 	export class Bank extends TCRMEntity {
 		description: string;
@@ -466,17 +467,23 @@
 		eMailCC: GenericList[];
 		eMailSubject: string;
 		eMailTo: GenericList[];
+		idAction: number;
 		idCustomer: number;
 		idDialog: number;
+		idDocType: number;
 		idOpportunity: number;
 		idPurchase: number;
 		idQuotationFromSupplier: number;
 		idQuotationToCustomer: number;
+		idQuote: number;
 		idResponsible: number;
+		idShipping: number;
 		isSent: boolean;
 		listIdDocuments: number[];
 		oneDriveDocs: string[];
 		oneDriveDocsName: string[];
+		responsiblePassword: string;
+		savePsw: boolean;
 	}
 	export class EstatusOpportunity extends TCRMEntity {
 		actionOpportunities: ActionOpportunity[];
@@ -1188,6 +1195,13 @@
 		isEditable: boolean;
 		name: string;
 	}
+	export class GetTemplateMailDocuments_Result extends TCRMEntity {
+		description: string;
+		id: number;
+		idDocumentType: number;
+		idTemplate: number;
+		name: string;
+	}
 	export class getUsers_Result extends TCRMEntity {
 		firstName: string;
 		id: number;
@@ -1750,7 +1764,6 @@
 		quotationFromSupplierDialogs: QuotationFromSupplierDialog[];
 		quotationToCustomerDialogs: QuotationToCustomerDialog[];
 		responsibleTargets: ResponsibleTarget[];
-		rspPassword: string;
 		rspUserCredential: string;
 		user: User;
 	}
@@ -1896,12 +1909,21 @@
 	}
 	export class TemplateEMail extends TCRMEntity {
 		actionOpportunityDocTypes: ActionOpportunityDocType[];
-		documentTypes: DocumentType[];
 		eMailBody: string;
 		eMailSubject: string;
 		id: number;
 		name: string;
+		templateMailDocuments: TemplateMailDocument[];
 	}
+
+	export class TemplateMailDocument extends TCRMEntity {
+		documentType: DocumentType;
+		id: number;
+		idDocumentType: number;
+		idTemplate: number;
+		templateEMail: TemplateEMail;
+	}
+
 	export class Tender extends TCRMEntity {
 		description: string;
 		id: number;

@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Responsible Mail Password</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="E-Mail password" [(ngModel)]="rsppsw" type="password" value="">
+  </mat-form-field>
+  <mat-checkbox class="" [(ngModel)]="savepsw">Save my password for this session</mat-checkbox>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="{rsppsw : rsppsw, savepsw : savepsw }">Ok</button>
+</mat-dialog-actions>

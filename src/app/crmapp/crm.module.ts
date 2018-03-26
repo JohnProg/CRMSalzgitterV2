@@ -31,7 +31,7 @@ import { OpportunityService, ActionsService, CatalogService, OnedrivegraphServic
 //catalogs
 import { BaseComponent, CatalogComponent, CurrencyComponent,  
   ActionoppComponent, StateComponent, IncotermComponent,
-  TemplateemailComponent, BaseOppComponent, MillComponent, MillcountryComponent
+  TemplateemailComponent, TemplateemaildocumentComponent, BaseOppComponent, MillComponent, MillcountryComponent
  } from './catalogs/index';
 
 
@@ -68,11 +68,9 @@ import {
   EditorbasedialogdocumentComponent,
   DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent,
   NameDescPipe, MaxStringPipe, EditordetailComponent, CrmcustomdialogComponent,
-  MainmenuComponent  } from './components/index';
+  MainmenuComponent, DialogOverviewResponsiblePswDialog, EmailSenderDialogComponent  } from './components/index';
 
   
-
-
 // Opportunity
 import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent, OpportunitydetailComponent,
         OpportunityheaderComponent,  
@@ -148,8 +146,9 @@ import { AuthHelper } from './authHelper/authHelper';
     MillcountryComponent,
     CrmcustomdialogComponent,
     CatalogComponent,
-    
-
+    DialogOverviewResponsiblePswDialog,
+    EmailSenderDialogComponent,
+    TemplateemaildocumentComponent,
     //Options
     OptionsComponent,
     CompanyComponent,
@@ -282,7 +281,13 @@ import { AuthHelper } from './authHelper/authHelper';
      AuthGuard, AuthHelper,
      OnedrivegraphService, 
   ], // additional providers needed for this module
-  entryComponents: [ ], //CrmcustomdialogComponent ],
+  entryComponents: [
+
+
+   CrmcustomdialogComponent,
+   DialogOverviewResponsiblePswDialog,
+   EmailSenderDialogComponent
+  ],
 
   bootstrap: [  ],
 

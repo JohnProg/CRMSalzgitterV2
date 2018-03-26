@@ -38,21 +38,20 @@
             </ckeditor>
           </div>
 
-          <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
+              <td-expansion-panel label="Documents added"  expand="true">
+                  <div flex>
+                      <mat-list>
+                        <mat-list-item *ngFor="let doc of itemEdit.emailAttachments">
+                          <mat-checkbox name="DocSelected" [(ngModel)]="doc.selected">  </mat-checkbox> &nbsp;
+                          <a (click)="downloadAttachment(doc)">{{doc.docTypeName}} - {{doc.docName}}</a>
+                        </mat-list-item>
+                      </mat-list>
+                    </div>
+        
 
-            <h1 class="md-title">Documents added</h1>
-            <br />
-            <div flex>
-              <mat-list>
-                <mat-list-item *ngFor="let doc of itemEdit.emailAttachments">
-                  <mat-checkbox name="DocSelected" [(ngModel)]="doc.selected">  </mat-checkbox>
-                  <a (click)="downloadAttachment(doc)">{{doc.docTypeName}} - {{doc.docName}}</a>
-                </mat-list-item>
-              </mat-list>
-            </div>
+              </td-expansion-panel>
 
 
-          </div>
 
         </section>
       </ng-template>

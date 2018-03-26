@@ -14,5 +14,6 @@ export * from './pipes/index';
 export * from './editordetail/editordetail.component';
 export * from './crmcustomdialog/crmcustomdialog.component';
 export * from './mainmenu/mainmenu.component';
-
+export * from './responsiblepsw/responsiblepsw.component';
+export * from './email-sender/email-sender-dialog/email-sender-dialog.component';
 
