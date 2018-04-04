@@ -46,8 +46,8 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
  
 
   private showEmailEvent: Subscription;
-
-
+  private showFilterButtonEvent: Subscription;
+  
   
   catalogTitle: string;
   deleteDescription: string;
@@ -58,6 +58,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   showSideNav: boolean = true;
   showCancelEdit: boolean = true;
   showEMail: boolean = false;
+  showFilterPanel: boolean = false;
   constructor(    public _loadingService: TdLoadingService,
     public _dialogService: TdDialogService,
     public _snackBarService: MatSnackBar,
@@ -126,6 +127,11 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
       .subscribe((e: boolean) => {
         this.showEMail = e;
       });
+      this.showFilterButtonEvent = this._actions.showFilterButtonEvent
+      .subscribe((e: boolean) => {
+        this.showFilterPanel = e;
+      });
+      
     this.afterInit();
   }
 
@@ -147,7 +153,8 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
     if (this.deleteItemEvent !== undefined) { this.deleteItemEvent.unsubscribe(); }
     if (this.setEditEvent !== undefined) { this.setEditEvent.unsubscribe(); }
-
+    if (this.showFilterButtonEvent !== undefined) { this.showFilterButtonEvent.unsubscribe(); }
+    
   }
 
 
@@ -289,4 +296,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     
   }
 
+  showFilterPanelFnc() {
+    this._actions.showFilterPanel();
+  }
 }

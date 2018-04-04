@@ -36,6 +36,7 @@ export class PurchaseorderindexComponent {
   @Input() idQTS: number = 0;
   @Input() idOpp: number = 0;
   byType: number = 0;
+  docType: number = 4;
   constructor( 
     public _actions: ActionsService,
     public _ngZone: NgZone,

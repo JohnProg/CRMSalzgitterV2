@@ -12,7 +12,8 @@ export const environment: {
     dateFormat: string,
     oneDriveBase: string ,
     oneDriveRootCustomer: string,
-    rootDocBase: string
+    rootDocBase: string,
+    layoutColor: string
         } = {
   
     production: true,
@@ -28,6 +29,7 @@ export const environment: {
     dateFormat: 'YYYY.MM.DD',
     oneDriveBase: 'https://graph.microsoft.com/v1.0/',
     oneDriveRootCustomer: 'CustomerDocumentV2',
-    rootDocBase: 'QA'
+    rootDocBase: 'QA',
+    layoutColor: 'accent'
   };
   

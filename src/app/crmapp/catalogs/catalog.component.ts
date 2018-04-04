@@ -21,6 +21,7 @@ import { BaseComponent } from './base.component';
 import { TCRMEntity } from '../model/index';
 import { EnumDocType } from '../constants/index';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment.qa';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy    {
 
   @ViewChild(BaseComponent) headercomp: BaseComponent;
 
+  layoutColor: string;
   scrId: number = 1;
   afterCreateItem: Subscription;
   afterItemLoaded: Subscription;
@@ -59,6 +61,7 @@ export class CatalogComponent implements AfterViewInit, OnDestroy    {
     public _route: ActivatedRoute) {
       this.checkParams(); 
       this.doConstruct();
+      this.layoutColor = environment.layoutColor;
   }
 
   doConstruct() {

@@ -11,6 +11,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class DialogOverviewResponsiblePswDialog {
 
+  rsppsw: string;
+  savepsw: boolean;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewResponsiblePswDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }

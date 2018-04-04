@@ -35,7 +35,7 @@ export class ShippingindexComponent  {
 
 
   @Input() idPo: number = 0;
-
+  docType: number = 5;
  constructor( public _route: ActivatedRoute, 
             public _actions: ActionsService,) {
 

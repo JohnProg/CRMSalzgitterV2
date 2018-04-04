@@ -29,6 +29,7 @@ import { getQuotationFromSupplier_Result } from '../../model/allmodels';
 export class QuotationtocustomerindexComponent  {
 
   @Input() idQFS: number = 0;
+  docType: number = 3;
   constructor( 
     public _actions: ActionsService,
 

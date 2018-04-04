@@ -1,6 +1,7 @@
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
+    <div td-toolbar-content layout="row" layout-align="start center" flex  >
+    <span> {{catalogTitle | maxString:maxTitle}} </span>
 
-        <span> {{catalogTitle | maxString:maxTitle}} </span>
+    
 
     <!-- <span> {{catalogTitle}} </span> -->
     <span flex></span>  
@@ -20,5 +21,8 @@
     &nbsp;    
     <button mat-mini-fab class="" (click)="sendEmail()" aria-label="SendEmail" *ngIf="showEMail">
         <mat-icon>email</mat-icon>
-    </button>    
+    </button>   
+    <button mat-mini-fab class="" (click)="showFilterPanelFnc()" aria-label="Show Filter Panel" *ngIf="showFilterPanel">
+            <mat-icon>filter</mat-icon>
+        </button>  
     </div>

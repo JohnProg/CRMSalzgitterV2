@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, NgZone, OnInit, OnDestroy  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfigurationService, TokenService } from '../crmapp/services/index';
+import { ConfigurationService, TokenService, SharedataService } from '../crmapp/services/index';
 import { TdMediaService, TdLoadingService, TdDigitsPipe  } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,19 +10,21 @@ import { ActionsService } from '../crmapp/services/actions.services';
 import { ApolloClient } from 'apollo-client';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {  TCRMEntity, QueryResponse, DashboardData, GetSimpleChartFromResponsible_Result } from '../crmapp/model/index';
+import {  TCRMEntity, QueryResponse, DashboardData, GetSimpleChartFromResponsible_Result, Opportunity, GetBaseQuote_Result } from '../crmapp/model/index';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { debug } from 'util';
+import { environment } from '../../environments/environment';
 
 export const dashQL = gql`
 query 
 getDashboard($idresponsible: Int!)
 {
   getSimpleDashboard(idresponsible: $idresponsible) { 
-     name value 
+     name value  idDocType
   }
   getStatusDashboard(idresponsible: $idresponsible) { 
-    name maxScale series { name value }
+    name maxScale idDocType series { name value idStatus }
   }
 }
 `;
@@ -35,6 +37,7 @@ getDashboard($idresponsible: Int!)
 })
 export class DashboardComponent implements AfterViewInit  {
 
+  layoutColor: string;
   // Simple Chart
   _single: BehaviorSubject<any>;
   single: Observable<any>;
@@ -56,7 +59,11 @@ export class DashboardComponent implements AfterViewInit  {
   showYAxisLabel: boolean = true;
   yAxisLabel: string = 'Sales';
     // line, area
-    autoScale: boolean = true;
+  autoScale: boolean = true;
+
+  simpleValues: any;
+  statusValues: any;
+  
 
 
   constructor(private _titleService: Title,
@@ -66,7 +73,9 @@ export class DashboardComponent implements AfterViewInit  {
               private _confs: ConfigurationService,
             private _auth: AuthHelper,
             public _actions: ActionsService,
-            public apollo: Apollo ) {
+            public apollo: Apollo,
+          public _shared: SharedataService ) {
+        this.layoutColor = environment.layoutColor;
         this._single = <BehaviorSubject<any>>new BehaviorSubject([]);
         this.single = this._single.asObservable();
 
@@ -90,12 +99,14 @@ export class DashboardComponent implements AfterViewInit  {
     }).valueChanges.subscribe(({data}) => {
       
       //let dash = (<DashboardData>data['getDashboard']);
-      this._single.next( data['getSimpleDashboard']);
 
-      let st = data['getStatusDashboard'];
-      this.statusScale = st['maxScale'];
+      this.simpleValues = data['getSimpleDashboard'];
+      this._single.next( this.simpleValues );
 
-      this._byStatus.next(st);
+      this.statusValues = data['getStatusDashboard'];
+      this.statusScale = this.statusValues['maxScale'];
+
+      this._byStatus.next(this.statusValues);
 
 
     }, (error: Error) => {
@@ -105,4 +116,40 @@ export class DashboardComponent implements AfterViewInit  {
    
  
   }
+
+  docTypeSelect(event) {
+    
+    let t = this.simpleValues.filter(att => att.name == event.name )[0];
+    let url = this.getRouteFromId(t.idDocType);
+    this._router.navigate([ '/' + url]);
+  }
+
+  statusSelect(event) {
+    let s = this.statusValues.filter(att => att.name == event.series )[0];
+    let t = s.series.filter(att => att.name == event.name )[0];
+    let url = this.getRouteFromId(s.idDocType);
+    let opp = new GetBaseQuote_Result();
+    opp.listStatus = t.idStatus;
+    this._shared.search = opp;
+    this._shared.loadField = "listStatus";
+    this._router.navigate([ '/' + url]);
+  }
+
+
+  getRouteFromId(id: number) {
+    switch(id) {
+      case 1: 
+        return 'opportunity';
+      case 2: 
+        return 'quotationfromsupplier';
+      case 3: 
+        return 'quotationtocustomer';
+      case 4: 
+        return 'purchaseorder';
+      case 5: 
+        return 'shipping';
+    }
+  }
 }
+
+

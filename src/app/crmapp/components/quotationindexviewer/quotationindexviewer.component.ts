@@ -48,6 +48,7 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     
     ngBeforeInit() {
       super.ngBeforeInit();
+      this.autoLoad = false;
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
       if(this.idParent > 0) {
         this.setTitle = false;
@@ -55,18 +56,14 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     }
 
 
-
-    ngAfterViewInit() {
- 
-      super.ngAfterViewInit();
-
+    afterViewInit() {
+      super.afterViewInit();
+      this._actions.showFilterButton(true);  
       if( this.byType > 0 && this.byType != this.parentDoc && this.allowChild == false ){
         this._actions.showAdd(false);
       } 
-     
-  
-    }
-
+   }
+ 
     loadData() {
           this.isLoading = true;
           
@@ -103,6 +100,33 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     }
   
   
+    loadFromServer() {
+    
+      var sh = this._shared;
+      if(sh.loadField != '') {
+        
+        this._curService.customSearch( this.itemRoute + '/searchByOpp', sh.search);
+        sh.loadField = '';
+      } else {
+         //this._curService.loadAll(this.getPageParams(''));
+     
+      }
+     
+    }
+  
+    loadFromFilter(event) {
+      
+      this._curService.customSearch( this.itemRoute + '/searchByOpp', event);
+    }
+
+    afterLoadAll(itms: any) {
+    
+      this.isLoading = false;
+      if( this.autoHideFilterPanel == true) {
+          this._actions.showFilterPanel();
+      }
+  
+    }
 
   
   }

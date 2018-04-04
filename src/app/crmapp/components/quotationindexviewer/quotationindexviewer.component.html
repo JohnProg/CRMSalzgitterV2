@@ -1,3 +1,6 @@
+<crm-filteropp (onLoadData)="loadFromFilter($event)" [idDocType]="byType"></crm-filteropp>
+
+
 <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
       
   <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  

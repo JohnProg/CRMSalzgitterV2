@@ -17,7 +17,8 @@ export const environment: {
   dateFormat: string,
   oneDriveBase: string,
   oneDriveRootCustomer: string,
-  rootDocBase: string
+  rootDocBase: string,
+  layoutColor: string
   } = {
   production: false,
   appBase: 'http://localhost:4200/',
@@ -34,5 +35,6 @@ export const environment: {
   dateFormat: 'YYYY.MM.DD',
   oneDriveBase: 'https://graph.microsoft.com/beta/',
   oneDriveRootCustomer: 'CustomerDocumentV2',
-  rootDocBase: 'DEV'
+  rootDocBase: 'DEV',
+  layoutColor: 'accent'
 };

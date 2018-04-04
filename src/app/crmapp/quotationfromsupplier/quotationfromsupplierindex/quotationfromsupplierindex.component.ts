@@ -30,6 +30,7 @@ import { getQuotationFromSupplier_Result } from '../../model/allmodels';
 export class QuotationfromsupplierindexComponent   {
 
   @Input() idOpp: number = 0;
+  docType: number = 2;
   constructor( 
     public _route: ActivatedRoute) {
 

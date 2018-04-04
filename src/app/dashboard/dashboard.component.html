@@ -1,7 +1,7 @@
-<td-layout-nav>
+<td-layout-nav [color]="layoutColor">
 
 
-    <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <div td-toolbar-content layout="row" layout-align="center center" flex >
         <button mat-icon-button td-menu-button tdLayoutToggle>
                           <mat-icon>menu</mat-icon>
                         </button>
@@ -10,7 +10,9 @@
     </div>
     <div flex layout="column">
         <div layout="row" class="pull-bottom-md pull-right-md">
-            <ngx-charts-number-card [scheme]="colorScheme" [results]="single | async">
+            <ngx-charts-number-card [scheme]="colorScheme" [results]="single | async"
+            (select)="docTypeSelect($event)"
+            >
             </ngx-charts-number-card>
         </div>
         <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
@@ -29,7 +31,7 @@
                             [showXAxisLabel]="false"
                             [showYAxisLabel]="showYAxisLabel"
                             [xAxisLabel]="xAxisLabel"
-                           
+                            (select)="statusSelect($event)"
                            
                             >
 

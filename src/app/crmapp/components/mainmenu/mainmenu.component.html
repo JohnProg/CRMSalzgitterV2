@@ -1,17 +1,10 @@
+<a mat-list-item matRipple  [routerLink]="[ '/']">
+        <mat-icon>home</mat-icon>Home</a>
+<td-expansion-panel *ngFor="let item of routes | async" [label]="item.title">
 
 
-
-        <td-expansion-panel   *ngFor="let item of routes | async" [label]="item.title" >
-
-
-                <a mat-list-item matRipple   *ngFor="let mitem of item.childrens"
-                 [routerLink]="[item.route + '/' + mitem.routerlink]">
-                    <mat-icon>{{mitem.icon}}</mat-icon>{{ mitem.displayName }}</a>
+        <a mat-list-item matRipple *ngFor="let mitem of item.childrens" [routerLink]="[item.route + '/' + mitem.routerlink]">
+                <mat-icon>{{mitem.icon}}</mat-icon>{{ mitem.displayName }}</a>
 
 
-        </td-expansion-panel>
-
-
-
-
- 
+</td-expansion-panel>

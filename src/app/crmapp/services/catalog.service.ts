@@ -180,6 +180,27 @@ export class CatalogService {
   }
 
 
+  public customSearch(url: string, cparams: any) {
+    this._http.put(this.apiCustom  + url, cparams, this.options)
+    .subscribe((response) => {
+      
+      var resp = response.json();
+      this.dataStore.entities = resp;
+      let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
+      this._entList.next(t);
+      this._loadingService.resolve(this.loadName);
+
+        this.changeTotal(this.dataStore.entities.length);
+        this.afterLoadAllEvent.next(this.dataStore.entities);    
+    }, (error) => {
+      var resp = error.json();
+      this._loadingService.resolve(this.loadName);
+      this._confs.responsiblePassword = '';
+      this._snackBarService.open(resp.message, 'Ok');
+    });
+  }
+
+
   loadCustomAll( url: string,  cparams: URLSearchParams, pageSize: number = 0, customHandle: boolean = false) {
     console.log('registering ' + this.loadName);
     this._loadingService.register(this.loadName);
@@ -439,7 +460,6 @@ export class CatalogService {
         this.onUpdateErrorEmitter.emit(error);
       });
   }
-
 
 
   remove(entId: number, customHandle: boolean = false ) {

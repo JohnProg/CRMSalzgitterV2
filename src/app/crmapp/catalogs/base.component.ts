@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Subscription } from 'rxjs/Subscription';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
-import { CatalogService, IPChangeEventSorted, OnedrivegraphService } from '../services/index';
+import { CatalogService, IPChangeEventSorted, OnedrivegraphService, SharedataService } from '../services/index';
 import { ConfigurationService } from '../services/configuration.service';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -79,6 +79,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   private screenSizeChangeEvent: Subscription;
   private cancelEditEvent;
   private sendEmailEvent: Subscription;
+  
+  private showFilterPanelSubs: Subscription;
 
   private afterLoadEvent: Subscription;
   private afterCreateEvent: Subscription;
@@ -94,7 +96,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   onItemLoaded: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   onItemUpdated: EventEmitter<TCRMEntity> = new EventEmitter<TCRMEntity>();
   onCancelEdit: EventEmitter<TCRMEntity> = new EventEmitter<any>();
-  
+
+
+
   @ViewChild('editform') form: NgForm;
 
   screenSize: string;
@@ -115,7 +119,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   entList: Observable< TCRMEntity[]>;
   itemEdit:  TCRMEntity;
   curIndex: number;
-
+  showFilter: boolean = false;
   
   totalItems: number;
   _totalItems: any;
@@ -155,7 +159,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   objId: string;
    _curService: CatalogService;
   handleScreenChange: boolean = true;
-
+  autoHideFilterPanel: boolean = true;
+  
   catCompanies: TCRMEntity[];
   catDocType: TCRMEntity[];
   catStatus: GetStatusByDocType_Result[];
@@ -197,7 +202,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public apollo: Apollo,
     public _router: Router,
     public _auth: AuthHelper,
-    public _one: OnedrivegraphService
+    public _one: OnedrivegraphService,
+    public _shared: SharedataService
     ) {
     this._curService = new CatalogService(_http, _confs, _loadingService, 
                        _dialogService,
@@ -278,7 +284,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
     this.afterDeleteEvent = this._curService.afterDeleteEmitter.subscribe(item => this.afterDelete(item));
 
-
+  
     this.onCreateErrorEvent = this._curService.onCreateErrorEmitter.subscribe(item => this.onCreateError(item));
     this.onUpdateErrorEvent = this._curService.onUpdateErrorEmitter.subscribe(item => this.onUpdateError(item));
     this.onDeleteErrorEvent = this._curService.onDeleteErrorEmitter.subscribe(item => this.onDeleteError(item));
@@ -292,7 +298,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this._actions.showSave(false);
       this._actions.showCancel(false);
       this._actions.showEmail(false);
-
+      this._actions.showFilterButton(false);
           this.editItemEvent = this._actions.editItemEvent.subscribe( (id: number) => {
           this.editEntity(id);
         } )
@@ -315,6 +321,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       () => console.log('recived data') //removed dot                    
       );
 
+    this.showFilterPanelSubs = this._actions.showFilterPanelEvent.subscribe( () => {
+        this.showFilterPanel();
+    });
     this.searchEvent = this._actions.searchEvent
       .subscribe((res) => {
          
@@ -364,8 +373,8 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.onCreateErrorEvent !== undefined) { this.onCreateErrorEvent.unsubscribe(); }
     if (this.onUpdateErrorEvent !== undefined) { this.onUpdateErrorEvent.unsubscribe(); }
     if (this.onDeleteErrorEvent !== undefined) { this.onDeleteErrorEvent.unsubscribe(); }
-
-
+    if (this.showFilterPanelSubs !== undefined) { this.showFilterPanelSubs.unsubscribe(); }
+    
     // if (this._totalItems !== undefined) { this._totalItems.unsubscribe(); }
     if ( this.handleScreenChange === true) {
         if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
@@ -409,10 +418,14 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
           this.reloadPaged();
         } else {
           this.isLoading = true;
-          this._curService.loadAll(this.getPageParams(''));
+          this.loadFromServer();
           this.dataLoaded = true;
         }
       }
+  }
+
+  loadFromServer() {
+    this._curService.loadAll(this.getPageParams(''));
   }
 
   initEntity() {
@@ -682,5 +695,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       tax = this.catCompanies[0]['taxAmount'];
     }
     return tax;
+  }
+
+  showFilterPanel() {
+    
+    this.showFilter = !this.showFilter;
   }
 }

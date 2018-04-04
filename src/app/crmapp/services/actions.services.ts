@@ -16,6 +16,7 @@ export class ActionsService {
     public deleteItemConfirmedEvent: EventEmitter<IDeleteEventModel>=new EventEmitter();
     public cancelEditEvent: EventEmitter<any>=new EventEmitter();
     public setEditEvent: EventEmitter<any>=new EventEmitter();
+    
 
     public updateTitleEvent: EventEmitter<any>=new EventEmitter<any>();
     public searchEvent: EventEmitter<string>=new EventEmitter<string>();
@@ -29,8 +30,11 @@ export class ActionsService {
     public showEmailEvent: EventEmitter<boolean>=new EventEmitter<boolean>();
     public sendEmailEvent: EventEmitter<any>=new EventEmitter<any>();
  
+    public showFilterPanelEvent: EventEmitter<any>=new EventEmitter();
+    public showFilterButtonEvent: EventEmitter<any>=new EventEmitter();
+    
 
-
+    public showEmailEventButton: EventEmitter<boolean>=new EventEmitter<boolean>();
     _screenSizeChangeEvent: BehaviorSubject<ICRMPageChangeEvent> =  <BehaviorSubject<ICRMPageChangeEvent>>new BehaviorSubject({ page: 0, pageSize: 13 }); 
     screenSizeChangeEvent: Observable<ICRMPageChangeEvent> = this._screenSizeChangeEvent.asObservable();
 
@@ -64,7 +68,6 @@ export class ActionsService {
     public addItem() {
       this.addItemEvent.emit();
     }
-
 
     public saveItem() {
       this.saveItemEvent.emit();
@@ -100,9 +103,19 @@ export class ActionsService {
     }
 
 
+   
     public showSearch(ashow: boolean) {
       this.showSearchEvent.emit(ashow);
     }
+
+    public showFilterPanel() {
+      this.showFilterPanelEvent.emit();
+    }
+
+    public showFilterButton(e: boolean) {
+      this.showFilterButtonEvent.emit(e);
+    }
+
 
     public showAdd(ashow: boolean) {
       this.showAddEvent.emit(ashow);

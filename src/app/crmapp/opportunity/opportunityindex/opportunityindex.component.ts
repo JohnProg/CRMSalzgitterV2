@@ -16,7 +16,7 @@ import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, DATE_FORMAT } fro
 import { ActionsService } from '../../services/actions.services';
 import { ConfigurationService } from '../../services/configuration.service';
 
-import { Product } from '../../model/allmodels';
+import { Product, GetBaseQuote_Result } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
 import { GetOpportunities } from '../../model/allmodels';
 
@@ -34,15 +34,39 @@ import gql from 'graphql-tag';
 })
 export class OpportunityindexComponent extends BaseComponent  {
 
-
+  idDocType: number = 1;
   ngBeforeInit() {
     super.ngBeforeInit();
     this.sortBy = 'id';
     this.catalogName = 'OPP';
-    
+    this.autoLoad = false;
     this._curService.setAPI('Opportunity/', this.catalogName, this.loadName);   
   }
 
+
+  afterViewInit() {
+     this._actions.showFilterButton(true);  
+  }
+
+
+  loadFromServer() {
+    
+    var sh = this._shared;
+    if(sh.loadField != '') {
+      
+      this._curService.customSearch( 'Opportunity/searchOpp', sh.search);
+      sh.loadField = '';
+    } else {
+       //this._curService.loadAll(this.getPageParams(''));
+   
+    }
+   
+  }
+
+  loadFromFilter(event) {
+    
+    this._curService.customSearch( 'Opportunity/searchOpp', event);
+  }
 
   editEntity(id: number) {
     this._router.navigate(['opportunity/edit/' + id]);
@@ -64,4 +88,17 @@ export class OpportunityindexComponent extends BaseComponent  {
     
     this._router.navigate(['opportunity/edit/0']);
   }
+
+  afterLoadAll(itms: any) {
+    
+    this.isLoading = false;
+    if( this.autoHideFilterPanel == true) {
+        this._actions.showFilterPanel();
+    }
+
+  }
+
+
+
+
 }

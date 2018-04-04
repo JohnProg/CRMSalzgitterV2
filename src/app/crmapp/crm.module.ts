@@ -19,10 +19,9 @@ import { setContext } from 'apollo-link-context';
 import { environment } from '../../environments/environment';
 
 
-
 // // services 
 import { OpportunityService, ActionsService, CatalogService, OnedrivegraphService,
-  ConfigurationService, TokenService } from './services/index';
+  ConfigurationService, TokenService, SharedataService } from './services/index';
 
   // Directives
  import { CRMCurrencyPipe, CRMCurrencyFormatterDirective } from './directives/index';
@@ -68,7 +67,8 @@ import {
   EditorbasedialogdocumentComponent,
   DocumentviewerComponent,SelectcolonyComponent, QuotationindexviewerComponent,
   NameDescPipe, MaxStringPipe, EditordetailComponent, CrmcustomdialogComponent,
-  MainmenuComponent, DialogOverviewResponsiblePswDialog, EmailSenderDialogComponent  } from './components/index';
+  MainmenuComponent, DialogOverviewResponsiblePswDialog, EmailSenderDialogComponent,
+  FilteroppComponent  } from './components/index';
 
   
 // Opportunity
@@ -122,9 +122,6 @@ import {ShippingComponent, ShippingindexComponent,
 import { AuthGuard } from './_guards/auth.guard';
 
 
-
-import * as moment from 'moment';
-
 import { AuthHelper } from './authHelper/authHelper';
 
 
@@ -149,6 +146,7 @@ import { AuthHelper } from './authHelper/authHelper';
     DialogOverviewResponsiblePswDialog,
     EmailSenderDialogComponent,
     TemplateemaildocumentComponent,
+    FilteroppComponent,
     //Options
     OptionsComponent,
     CompanyComponent,
@@ -280,6 +278,9 @@ import { AuthHelper } from './authHelper/authHelper';
      TokenService,
      AuthGuard, AuthHelper,
      OnedrivegraphService, 
+     SharedataService,
+
+
   ], // additional providers needed for this module
   entryComponents: [
 

@@ -134,7 +134,7 @@ export class MainComponent implements AfterViewInit, OnInit, OnDestroy {
       this._ngZone.run(() => {
         this.isSmallScreen = matches;
         if (matches === true) {
-          this._confs._pageSize.next(13);
+          this._confs._pageSize.next(10);
           this._confs.currentPage = 0;
           this._actions._screenSizeChangeEvent.next((<ICRMPageChangeEvent>{ screenSize: 'lg', page: 1, pageSize: 10, maxPage: 0 }));
 

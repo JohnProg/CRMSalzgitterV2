@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import { TdLoadingService } from '@covalent/core/loading';
 import { TokenService, ConfigurationService } from '../services/index';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'crm-login',
@@ -16,13 +17,19 @@ export class LoginComponent {
   password: string;
   loginError: boolean = false;
   errorMessage: string;
+  layoutColor: string;
   constructor(private _router: Router,
               private _loadingService: TdLoadingService,
               private _token: TokenService,
-              private _confs: ConfigurationService) {}
+              private _confs: ConfigurationService) {
+    //            debugger
+    this.layoutColor = environment.layoutColor;
+
+  }
 
   login(): void {
     this._loadingService.register();
+
     this._token.login(this.username, this.password)
     .subscribe( (res: any) => {
        this._confs.tokenData = res;

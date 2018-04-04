@@ -81,6 +81,23 @@ const CHART_MODULES: any[] = [
   NgxChartsModule,
 ];
 
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const CRM_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -100,5 +117,8 @@ const CHART_MODULES: any[] = [
     CHART_MODULES,
     FLEX_LAYOUT_MODULES,
   ],
+  providers: [
+    {provide: MAT_DATE_FORMATS, useValue: CRM_FORMATS},
+  ]
 })
 export class SharedModule { }

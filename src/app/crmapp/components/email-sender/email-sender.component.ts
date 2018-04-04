@@ -152,7 +152,7 @@ export class EmailSenderComponent extends BaseComponent {
 
    
     this._loadingService.register(this.loadName);
-    this._curService.customPost(this.baseApi + '/sendEmail', this.itemEdit )
+    this._curService.customUpdate(this.baseApi + '/sendEmail',    this.itemEdit )
     //.map((response) => response.json())
     .subscribe((response) => {
       var resp = response.json();
@@ -192,11 +192,15 @@ export class EmailSenderComponent extends BaseComponent {
 
     
       if( this.checkOneDriveToken() == true) {
-        this.itemEdit.emailAttachments.forEach( item => {
-          if( item.fromOneDrive == true ) {
-             this._one.downloadFileForEmail(this.itemEdit , item, fnc);
-          }
-        });
+        if( this.itemEdit.emailAttachments.length > 0) {
+          this.itemEdit.emailAttachments.forEach( item => {
+            if( item.fromOneDrive == true ) {
+              this._one.downloadFileForEmail(this.itemEdit , item, fnc);
+            }
+          });
+        } else {
+          this.performSendEMail();
+        }
         
         
       }

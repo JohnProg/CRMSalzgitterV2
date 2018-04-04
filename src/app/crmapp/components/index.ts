@@ -16,4 +16,5 @@ export * from './crmcustomdialog/crmcustomdialog.component';
 export * from './mainmenu/mainmenu.component';
 export * from './responsiblepsw/responsiblepsw.component';
 export * from './email-sender/email-sender-dialog/email-sender-dialog.component';
+export * from './filteropp/filteropp.component';
 
