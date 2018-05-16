@@ -2,13 +2,9 @@ import { Component, NgZone, AfterViewInit, OnInit, OnDestroy, Input } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { ConfigurationService, ActionsService, TokenService } from '../../services/index';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { Observable ,  BehaviorSubject ,  Subscription } from 'rxjs';
 import { TdMediaService  } from '@covalent/core/media';
-
-
-import { Subscription } from 'rxjs/Subscription';
 import { User } from '../../model/allmodels';
 import { environment } from '../../../../environments/environment';
 

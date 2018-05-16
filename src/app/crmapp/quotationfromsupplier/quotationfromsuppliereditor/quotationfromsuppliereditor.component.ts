@@ -4,15 +4,13 @@ import { ActionsService } from '../../services/actions.services';
 
 import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+
+import { Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import { BaseComponent } from '../../catalogs/base.component';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { MatSnackBar } from '@angular/material';

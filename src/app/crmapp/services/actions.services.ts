@@ -1,6 +1,5 @@
 import {Component, Injectable,Input,Output,EventEmitter} from '@angular/core'
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 import { IPageChangeEvent } from '@covalent/core';
 import { User } from '../model/index';
 import { IDeleteEventModel } from '../model/deleteeventmodel';

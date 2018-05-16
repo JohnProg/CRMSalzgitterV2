@@ -16,7 +16,7 @@ import { ActionsService } from '../services/actions.services';
 import { CurrencyComponent } from './currency/currency.component';
 
 import { MenuClass } from '../model/menuclass';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { TCRMEntity } from '../model/index';
 import { EnumDocType } from '../constants/index';

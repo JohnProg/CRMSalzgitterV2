@@ -17,13 +17,13 @@ export const environment: {
       } = {
 
   production: true,
-   server: 'https://crmsalzgittermx.com/services/',
-   appBase: 'https://crmsalzgittermx.com/v2/',
+   server: 'https://crmsalzgittermx.com/v2/services/',
+   appBase: 'https://crmsalzgittermx.com/v2/crm/',
   _secret: 'jstCnZtZR2WN7XPzVxY8cw3',
   _clientId: '00000000401F4494',
   _scopes:   'openid profile User.ReadWrite User.ReadBasic.All Files.ReadWrite.All', //"user.read 0mail.read",
-  _redirectUrl: 'https://crmsalzgittermx.com/v2',
-  _root: 'https://crmsalzgittermx.com/v2/',
+  _redirectUrl: 'https://crmsalzgittermx.com/v2/crm/',
+  _root: 'https://crmsalzgittermx.com/v2/crm/',
   GRAPH_RESOURCE: 'https://graph.microsoft.com',
   baseHref: '/v2/',
   dateFormat: 'YYYY.MM.DD',

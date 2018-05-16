@@ -2,15 +2,13 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Title } from '@angular/platform-browser';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+
+import { Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Router, ActivatedRoute } from '@angular/router';
 

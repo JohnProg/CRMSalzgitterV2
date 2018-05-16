@@ -5,8 +5,8 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -15,7 +15,7 @@ import { CatalogService, IPChangeEventSorted } from '../../services/catalog.serv
 import { ActionsService } from '../../services/actions.services';
 import { ConfigurationService } from '../../services/configuration.service';
 
-import {  GetPurchaseOrder_Result, PurchaseOrder, TCRMEntity } from '../../model/index';
+import {  GetPurchaseOrder_Result, GetBaseQuote_Result, PurchaseOrder, TCRMEntity } from '../../model/index';
 import { EnumDocType } from '../../constants/index';
 
 import { BaseComponent } from '../../catalogs/base.component';
@@ -40,25 +40,28 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     baseApi: string;
     parentDoc: number;
     itemRoute: string;
-
+    parentSearchField: string = "idOpportunity";
 
     @Input() parentRoute: string;
     @Input() parentScreen: number;
     @Input() moveToScr: boolean = false;
-    
+
     ngBeforeInit() {
+    
       super.ngBeforeInit();
-      this.autoLoad = false;
+      
+      this.autoLoad = this.idParent > 0;
+      
+      this.setTitle = this.idParent == 0;
+      
       this._curService.setAPI(this.baseApi, this.catalogName, this.loadName);
-      if(this.idParent > 0) {
-        this.setTitle = false;
-      }
+
     }
 
 
     afterViewInit() {
       super.afterViewInit();
-      this._actions.showFilterButton(true);  
+      this._actions.showFilterButton(this.idParent == 0);  
       if( this.byType > 0 && this.byType != this.parentDoc && this.allowChild == false ){
         this._actions.showAdd(false);
       } 
@@ -66,16 +69,16 @@ export class QuotationindexviewerComponent extends BaseComponent  {
  
     loadData() {
           this.isLoading = true;
-          
-          this._curService.loadCustomAll(this.baseApi , this.getLoadParams());
+          let b = new GetBaseQuote_Result();
+
+          this._curService.customSearch( this.baseApi, this.getLoadParams());
           this.dataLoaded = true;
     }
   
-    getLoadParams(): URLSearchParams {
-      let pparams = new URLSearchParams();
-      pparams.set('idquote', this.idParent.toString());
-      pparams.set('bytype', this.byType.toString());
-      return pparams;
+    getLoadParams(): GetBaseQuote_Result {
+      let ffilter = new GetBaseQuote_Result();
+      ffilter[this.parentSearchField] = this.idParent;
+      return ffilter;
     }
   
     editEntity(id: number) {
@@ -107,6 +110,7 @@ export class QuotationindexviewerComponent extends BaseComponent  {
         
         this._curService.customSearch( this.itemRoute + '/searchByOpp', sh.search);
         sh.loadField = '';
+
       } else {
          //this._curService.loadAll(this.getPageParams(''));
      
@@ -115,17 +119,11 @@ export class QuotationindexviewerComponent extends BaseComponent  {
     }
   
     loadFromFilter(event) {
-      
       this._curService.customSearch( this.itemRoute + '/searchByOpp', event);
     }
 
     afterLoadAll(itms: any) {
-    
       this.isLoading = false;
-      if( this.autoHideFilterPanel == true) {
-          this._actions.showFilterPanel();
-      }
-  
     }
 
   

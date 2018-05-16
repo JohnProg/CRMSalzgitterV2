@@ -66,7 +66,7 @@
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
               <mat-form-field>
-           <mat-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)"  >
+           <mat-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (selectionChange)="onMillChange($event)"  >
  
                   <mat-option *ngFor="let i of catMill " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
@@ -113,7 +113,7 @@
           </section> 
           <section flex-gt-sm="25" >
               <mat-form-field>
-             <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
+             <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (selectionChange)="incoTermChange($event)"  >
 
                   <mat-option *ngFor="let i of catIncoTerm " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 

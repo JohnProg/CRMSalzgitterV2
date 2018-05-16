@@ -25,6 +25,7 @@ export const environment: {
   server: 'http://localhost:64997/',
   //server: 'http://localhost:64997/',
   //server: 'http://localhost/CRM.Salzgitter.Services/',
+  //server: 'https://crmsalzgittermx.com/qa/testservices/',
   _secret: 'MsuUTgxpHzVyQmxiU8N1qBV',
   _clientId: '000000004C1D164D',
   _scopes:   'openid profile User.ReadWrite User.ReadBasic.All Files.ReadWrite.All',

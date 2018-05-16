@@ -2,13 +2,10 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Title } from '@angular/platform-browser';
 import { ActionsService } from '../../../services/actions.services';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription ,  Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../services/catalog.service';
 import { ConfigurationService } from '../../../services/configuration.service';
 import { OpportunityDetail, Opportunity, GetCustomerProductData_Result } from '../../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { BaseComponent } from '../../../catalogs/base.component';
 import {  EditordetailComponent } from '../../../components/index';
 import {  IPageChangeEvent } from '@covalent/core';
@@ -17,7 +14,6 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Router, ActivatedRoute } from '@angular/router';

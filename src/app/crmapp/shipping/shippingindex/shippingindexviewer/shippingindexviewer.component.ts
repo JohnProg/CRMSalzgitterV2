@@ -6,8 +6,8 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';

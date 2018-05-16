@@ -14,8 +14,8 @@ import { TdMediaService } from '@covalent/core/media';
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { Currency } from '../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { BaseComponent } from '../../catalogs/base.component';
 
 import { ActionopportunitytemplateemailComponent } from './+actionopportunitytemplateemail/actionopportunitytemplateemail.component';

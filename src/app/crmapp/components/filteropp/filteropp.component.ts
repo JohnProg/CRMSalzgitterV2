@@ -6,8 +6,8 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable ,  Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -19,7 +19,6 @@ import { ConfigurationService } from '../../services/configuration.service';
 import { Product, GetBaseQuote_Result } from '../../model/allmodels';
 import { BaseComponent } from '../../catalogs/base.component';
 import { GetOpportunities } from '../../model/allmodels';
-import { Subscription } from 'rxjs/Subscription';
 
 
 import { Apollo } from 'apollo-angular';

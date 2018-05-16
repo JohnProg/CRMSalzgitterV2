@@ -3,10 +3,7 @@ import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -35,10 +32,10 @@ import {  QuotationindexviewerComponent } from '../../../components/index';
 export class PurchaseorderindexviewerComponent extends QuotationindexviewerComponent  {
 
   catalogName: string ="PO";
-  baseApi: string ="PurchaseOrder/searchBy";
+  baseApi: string ="PurchaseOrder/searchByOpp";
   parentDoc: number = 3;
   itemRoute: string ="purchaseorder";
-
+  parentSearchField: string = "idQuotationToCustomer";
 
   addColumns() {
 

@@ -6,9 +6,8 @@ import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular
 import { CatalogService, IPChangeEventSorted, CURRENCY_FORMAT, NUMBER_FORMAT } from '../../../../services/catalog.service';
 import { ConfigurationService } from '../../../../services/configuration.service';
 import { OpportunityDetailSumary, OpportunityDetailSumaryProperty, Property, TCRMEntity, ProductProperty, EditorDetailSumaryProperty } from '../../../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+
+import { Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import { BaseComponent } from '../../../../catalogs/base.component';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
@@ -16,7 +15,6 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Router, ActivatedRoute } from '@angular/router';

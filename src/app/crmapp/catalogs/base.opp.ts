@@ -1,13 +1,10 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, Input } from '@angular/core';
 import { MatSelect } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription ,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { CatalogService, IPChangeEventSorted } from '../services/catalog.service';
 import { ConfigurationService } from '../services/configuration.service';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 
@@ -98,6 +95,7 @@ export class BaseOppComponent extends BaseComponent {
       if (this.idDoc > 0) {
         this.editEntity(this.idDoc);        
       } else {
+        
         this._actions.updateTitle({ action: 'Add', title: this.catalogName , tparam: this.titleParam});
         this.addEntity();
       }    
@@ -113,8 +111,9 @@ export class BaseOppComponent extends BaseComponent {
     if( this.customer != undefined) {
       txtcust += ' (Customer: ' + this.customer.name + ')';
     }
-    
-    this._actions.updateTitle( { action: 'Edit', title: this.catalogName , tparam: txtcust});
+    if(this.catalogName != undefined ) {
+       this._actions.updateTitle( { action: 'Edit', title: this.catalogName , tparam: txtcust});
+    }
   }
 
   afterLoadItem(item: TCRMEntity) {
@@ -130,6 +129,7 @@ export class BaseOppComponent extends BaseComponent {
 
 
   onCustomerChange(event: any) {
+    
     this.itemEdit['idCustomerContact'] = undefined;
     this.loadCustomerContact(event.value);
   }
@@ -156,6 +156,7 @@ export class BaseOppComponent extends BaseComponent {
   }
 
   onMillChange(event: any) {
+    debugger
     this.itemEdit['idCountryOrigin'] = undefined;
     this.loadCountryOrigin(event.value);
   }

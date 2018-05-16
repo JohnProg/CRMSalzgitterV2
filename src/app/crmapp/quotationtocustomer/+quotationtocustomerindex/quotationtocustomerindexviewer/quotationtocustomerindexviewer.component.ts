@@ -4,8 +4,8 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -16,7 +16,7 @@ import { ConfigurationService } from '../../../services/configuration.service';
 
 import { Product } from '../../../model/allmodels';
 import { BaseComponent } from '../../../catalogs/base.component';
-import { getQuotationFromSupplier_Result } from '../../../model/allmodels';
+import { getQuotationFromSupplier_Result, GetBaseQuote_Result } from '../../../model/allmodels';
 
 
 import { Apollo } from 'apollo-angular';
@@ -33,19 +33,13 @@ import {  QuotationindexviewerComponent } from '../../../components/index';
 export class QuotationtocustomerindexviewerComponent  extends QuotationindexviewerComponent  {
   
   catalogName: string ="QTC";
-  baseApi: string ="QuotationToCustomer/searchByQFS";
+  baseApi: string ="QuotationToCustomer/searchByOpp";
   parentDoc: number = 2;
   itemRoute: string ="quotationtocustomer";  
-
+  parentSearchField: string = "idQuotationFromSupplier";
   
 
 
-  getLoadParams(): URLSearchParams {
-    let pparams = new URLSearchParams();
-    pparams.set('idquote', this.byType === EnumDocType.QuotationFromSupplier ?  this.idParent.toString() : '0');
-    pparams.set('idopp', this.byType == EnumDocType.Opportunity ? this.idParent.toString() : '0');
-    return pparams;
-  }
 
   addColumns() {
     //super.addColumns();

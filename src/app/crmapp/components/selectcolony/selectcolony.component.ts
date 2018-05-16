@@ -3,8 +3,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { AbstractValueAccessor  } from '../abstractvalueaccessor';
 
 import { Apollo } from 'apollo-angular';

@@ -7,8 +7,8 @@ import { ActionsService } from '../../services/actions.services';
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable ,  Subscription } from 'rxjs';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 
          TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
@@ -16,7 +16,6 @@ import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
 import { EmailSenderComponent } from '../../components/email-sender/email-sender.component';
 
 import { BaseComponent } from '../../catalogs/base.component';
-import { Subscription } from 'rxjs/Subscription';
 import {  TCRMEntity } from '../../model/allmodels';
 
 import { Apollo } from 'apollo-angular';

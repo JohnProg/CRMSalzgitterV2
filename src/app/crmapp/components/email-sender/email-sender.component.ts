@@ -7,10 +7,8 @@ import { ActionsService } from '../../services/actions.services';
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable ,  BehaviorSubject ,  Subscription } from 'rxjs';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 
@@ -20,7 +18,6 @@ import { TdMediaService } from '@covalent/core/media';
 import { DialogOverviewResponsiblePswDialog } from '../responsiblepsw/responsiblepsw.component';
 
 import { BaseComponent } from '../../catalogs/base.component';
-import { Subscription } from 'rxjs/Subscription';
 import {  EMailTemplate, AttachDocument, TCRMEntity, GenericList } from '../../model/allmodels';
 
 

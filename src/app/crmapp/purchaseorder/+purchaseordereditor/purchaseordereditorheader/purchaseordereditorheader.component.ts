@@ -8,15 +8,13 @@ import { ConfigurationService } from '../../../services/configuration.service';
 import { QuotationToCustomer, PurchaseOrder, IncoTerm,
          GetFieldForPurchaseOrder_Result, TCRMEntity } from '../../../model/allmodels';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+
+import { Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import { BaseOppComponent } from '../../../catalogs/index';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Router, ActivatedRoute } from '@angular/router';

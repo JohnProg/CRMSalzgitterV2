@@ -2,7 +2,7 @@ import { Component, AfterViewInit, NgZone, OnInit, OnDestroy  } from '@angular/c
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfigurationService, TokenService, SharedataService } from '../crmapp/services/index';
 import { TdMediaService, TdLoadingService, TdDigitsPipe  } from '@covalent/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription ,  Observable ,  BehaviorSubject } from 'rxjs';
 
 import { Title }     from '@angular/platform-browser';
 import { AuthHelper } from '../crmapp/authHelper/authHelper';
@@ -10,9 +10,11 @@ import { ActionsService } from '../crmapp/services/actions.services';
 import { ApolloClient } from 'apollo-client';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+
+import {map} from 'rxjs/operators';
+
+
 import {  TCRMEntity, QueryResponse, DashboardData, GetSimpleChartFromResponsible_Result, Opportunity, GetBaseQuote_Result } from '../crmapp/model/index';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { debug } from 'util';
 import { environment } from '../../environments/environment';
 
@@ -85,7 +87,7 @@ export class DashboardComponent implements AfterViewInit  {
   }
 
 
-
+  private querySubscription: Subscription;
   ngAfterViewInit(): void {
     this._actions.updateTitle( { action: undefined, title: 'CRM Dashboard' , tparam: undefined} );
     this._actions.showAdd(false);
@@ -93,13 +95,13 @@ export class DashboardComponent implements AfterViewInit  {
     this._actions.showSearch(false);
 
     
-    this.apollo.watchQuery<QueryResponse>({
-      query: dashQL,
+    var querySubscription = this.apollo.query<QueryResponse>(
+      {
+      query: dashQL,  
       variables:  { idresponsible: 4 }
-    }).valueChanges.subscribe(({data}) => {
+      }
+     ).subscribe(({data}) => {
       
-      //let dash = (<DashboardData>data['getDashboard']);
-
       this.simpleValues = data['getSimpleDashboard'];
       this._single.next( this.simpleValues );
 
@@ -109,10 +111,7 @@ export class DashboardComponent implements AfterViewInit  {
       this._byStatus.next(this.statusValues);
 
 
-    }, (error: Error) => {
-      //this._loadingService.resolve('');
-    }
-    );   
+    });   
    
  
   }

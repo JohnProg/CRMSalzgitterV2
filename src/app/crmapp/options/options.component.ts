@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { CatalogComponent } from '../catalogs/catalog.component';
 
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn,
    } from '@covalent/core/data-table';

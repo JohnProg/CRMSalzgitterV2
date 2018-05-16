@@ -3,7 +3,7 @@ import { CommonModule, } from '@angular/common';
 import { Http, HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
-import { FlexLayoutModule, } from '@angular/flex-layout';
+//import { FlexLayoutModule, } from '@angular/flex-layout';
 
 
 import { CovalentCommonModule } from '@covalent/core/common';
@@ -50,9 +50,9 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-const FLEX_LAYOUT_MODULES: any[] = [
-  FlexLayoutModule,
-];
+// const FLEX_LAYOUT_MODULES: any[] = [
+//   FlexLayoutModule,
+// ];
 
 
 const ANGULAR_MODULES: any[] = [
@@ -105,7 +105,7 @@ export const CRM_FORMATS = {
     MATERIAL_MODULES,
     COVALENT_MODULES,
     CHART_MODULES,
-    FLEX_LAYOUT_MODULES,
+   // FLEX_LAYOUT_MODULES,
   ],
   declarations: [
 
@@ -115,7 +115,7 @@ export const CRM_FORMATS = {
     MATERIAL_MODULES,
     COVALENT_MODULES,
     CHART_MODULES,
-    FLEX_LAYOUT_MODULES,
+   // FLEX_LAYOUT_MODULES,
   ],
   providers: [
     {provide: MAT_DATE_FORMATS, useValue: CRM_FORMATS},

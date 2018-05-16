@@ -1,7 +1,7 @@
         <div layout-gt-sm="row" layout-lt-md="column" layout-padding *ngIf="idParent == 0">
           <section flex-gt-sm="35"  >
             <mat-form-field>
-              <input matInput #idParent name="idParent" placeholder="Enter Quotation to Customer base" (change)="getFromOpp($event)">
+              <input matInput #idParent name="idParent" placeholder="Enter Quotation to Customer base" (selectionChange)="getFromOpp($event)">
             </mat-form-field>
           </section>
         </div>
@@ -63,7 +63,7 @@
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
               <mat-form-field>
-             <mat-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (change)="onCustomerChange($event)"  >
+             <mat-select class="cbxClass" #idCustomer name="idCustomer" flex required="true"  placeholder="Customer" [(ngModel)]="itemEdit.idCustomer" (selectionChange)="onCustomerChange($event)"  >
             
                   <mat-option *ngFor="let i of catCustomer  " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 
@@ -133,7 +133,7 @@
         <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
           <section  flex-gt-sm="35" >
               <mat-form-field>
-             <mat-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (change)="onMillChange($event)"  >
+             <mat-select class="cbxClass" #idMill name="idMill" flex  placeholder="Mill" [(ngModel)]="itemEdit.idMill" (selectionChange)="onMillChange($event)"  >
                  
                   <mat-option *ngFor="let i of catMill " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
@@ -177,7 +177,7 @@
           </section> 
           <section flex-gt-sm="25" >
               <mat-form-field>
-            <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (change)="incoTermChange($event)"  >
+            <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true"  placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm" (selectionChange)="incoTermChange($event)"  >
                 
                   <mat-option *ngFor="let i of catIncoTerm " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id" >
                     {{ i.nameDescription || i.name}} 

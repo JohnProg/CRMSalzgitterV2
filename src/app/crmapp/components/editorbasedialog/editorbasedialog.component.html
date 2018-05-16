@@ -4,18 +4,15 @@
         <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
       <section layout-gt-sm="row" layout-lt-md="column"  >
           <section flex="100"  layout-margin layout-margin>
-        <section  flex>
-            <mat-form-field>
-            <mat-select class="cbxClass" #idAction name="idAction" flex required="true"   placeholder="Action" [(ngModel)]="itemEdit.idAction" (change)="actionChange($event.value)"  >               
+            <mat-form-field flex>
+            <mat-select class="cbxClass" #idAction name="idAction" flex required="true"   placeholder="Action" [(ngModel)]="itemEdit.idAction" (selectionChange)="actionChange($event.value)"  >               
                   <mat-option *ngFor="let i of catActionsOpp " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
                     {{ i.nameDescription || i.name}} 
                   </mat-option>
             </mat-select>                 
             </mat-form-field>
             
-        </section>
-        <section  flex>
-            <mat-form-field>
+            <mat-form-field flex>
             <mat-select class="cbxClass" #idResponsible name="idResponsible" flex required="true"   placeholder="Responsible" [(ngModel)]="itemEdit.idResponsible"  >
             
                   <mat-option *ngFor="let i of catResponsible " [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
@@ -24,16 +21,13 @@
             </mat-select>                    
             </mat-form-field>
          
-        </section>
 
-        <section flex >
             <span>Email to:    </span> &nbsp; &nbsp;
             <mat-radio-group #eMailTo name="eMailTo" [(ngModel)]="itemEdit.toContact">
               <mat-radio-button value="1">Contact</mat-radio-button>
               <mat-radio-button value="2">Customer contact</mat-radio-button>
               <mat-radio-button value="3">Both</mat-radio-button>
             </mat-radio-group>
-          </section> 
 
         <section  flex *ngIf="itemEdit.toContact == 1 || itemEdit.toContact == 3">
             <mat-form-field>

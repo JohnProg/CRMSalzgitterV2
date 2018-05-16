@@ -8,16 +8,14 @@ import { ConfigurationService } from '../../../services/configuration.service';
 import { QuotationFromSupplier, QuotationToCustomer, IncoTerm, TCRMEntity, GetQFSFields_Result } from '../../../model/index';
 //import {  OpportunityService } from '../../oppservice.service';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+
+import { Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import { BaseOppComponent } from '../../../catalogs/index';
 import {
   IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder,
   ITdDataTableSortChangeEvent, ITdDataTableColumn,
   TdLoadingService, TdDialogService, TdMediaService
 } from '@covalent/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Router, ActivatedRoute } from '@angular/router';

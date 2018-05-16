@@ -5,7 +5,7 @@
 
       <mat-form-field flex-gt-sm="35">
         <mat-select class="cbxClass" #idCustomer name="idCustomer"  required="true" placeholder="Customer" [(ngModel)]="itemEdit.idCustomer"
-          (change)="onCustomerChange($event)">
+          (selectionChange)="onCustomerChange($event)">
 
           <mat-option *ngFor="let i of catCustomer 		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
@@ -130,7 +130,7 @@
 
       <mat-form-field flex-gt-sm="25">
         <mat-select class="cbxClass" #idIncoTerm name="idIncoTerm" flex required="true" placeholder="Inco Terms" [(ngModel)]="itemEdit.idIncoTerm"
-          (change)="incoTermChange($event)">
+          (selectionChange)="incoTermChange($event)">
 
           <mat-option *ngFor="let i of catIncoTerm  		" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}

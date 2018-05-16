@@ -6,11 +6,11 @@
       <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
 
           <section *ngIf="isEditing">
-      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate class="md-padding">
+      <form #editform="ngForm"  id="editform" flex (ngSubmit)="submitForm(editform)" novalidate >
 
         <div layout="row" >
           <mat-form-field flex >
-            <input matInput #name flex name="name" [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150" />
+            <input matInput  flex name="name"  #name [(ngModel)]="itemEdit.name" required placeholder="Name" maxlength="150" />
             <mat-hint align="end">{{name.value.length}} / 150</mat-hint>
 
           </mat-form-field >

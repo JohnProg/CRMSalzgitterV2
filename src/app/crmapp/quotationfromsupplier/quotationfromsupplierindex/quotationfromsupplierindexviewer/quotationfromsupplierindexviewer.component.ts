@@ -6,8 +6,8 @@ import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEven
 import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
 
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
@@ -18,7 +18,7 @@ import { ConfigurationService } from '../../../services/configuration.service';
 
 import { Product } from '../../../model/allmodels';
 import { BaseComponent } from '../../../catalogs/base.component';
-import { getQuotationFromSupplier_Result } from '../../../model/allmodels';
+import { getQuotationFromSupplier_Result, GetBaseQuote_Result } from '../../../model/allmodels';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -37,15 +37,11 @@ export class QuotationfromsupplierindexviewerComponent  extends Quotationindexvi
   baseApi: string = 'QuotationFromSupplier/searchByOpp';
   parentDoc: number = 1;
   itemRoute: string = 'quotationfromsupplier';
-
-  getLoadParams(): URLSearchParams {
-    let pparams = new URLSearchParams();
-    pparams.set('idopp', this.idParent > 0 ? this.idParent.toString() : '0');
-    pparams.set('idtype', '0');
-    return pparams;
-  }
-
   
+
+
+
+
   addColumns() {
 
     //super.addColumns();
@@ -63,5 +59,8 @@ export class QuotationfromsupplierindexviewerComponent  extends Quotationindexvi
     this.columns.push({ name: 'dateReceived', label: 'Date', numeric: false, format: DATE_FORMAT  });
     this.columns.push({ name: 'asImporter', label: 'As Importer' });
   }
+
+
+
 
 }

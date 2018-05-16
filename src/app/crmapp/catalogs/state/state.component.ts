@@ -6,8 +6,8 @@ import { ActionsService } from '../../services/actions.services';
 
 import { CatalogService, IPChangeEventSorted } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { BaseComponent } from '../base.component';
 import { IPageChangeEvent, TdDataTableService, TdDataTableSortingOrder, 
          ITdDataTableSortChangeEvent, ITdDataTableColumn, 

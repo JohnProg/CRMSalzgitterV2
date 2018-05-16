@@ -6,20 +6,16 @@ import { CurrencyPipe } from '@angular/common';
 import { CKEditorModule } from 'ng2-ckeditor';
 
 import { TextMaskModule } from 'angular2-text-mask';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from './shared/shared.module';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
 
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloModule, Apollo } from 'apollo-angular';
-import { setContext } from 'apollo-link-context';
+
 
 import { environment } from '../../environments/environment';
 
 
-// // services 
+// // // services 
 import { OpportunityService, ActionsService, CatalogService, OnedrivegraphService,
   ConfigurationService, TokenService, SharedataService } from './services/index';
 
@@ -230,8 +226,8 @@ import { AuthHelper } from './authHelper/authHelper';
     EditorbasedialogdocumentComponent,
     DocumentviewerComponent,
     QuotationindexviewerComponent,
-    // Directives
-    CRMCurrencyPipe, CRMCurrencyFormatterDirective,
+     //Directives
+     CRMCurrencyPipe, CRMCurrencyFormatterDirective,
 
 // Shipping
     ShippingComponent,
@@ -252,29 +248,20 @@ import { AuthHelper } from './authHelper/authHelper';
     SharedModule,
     RouterModule,
     CKEditorModule,
-    //Md2Module,
-    //TextMaskModule,
     CurrencyMaskModule,
-    HttpClientModule,
-    HttpLinkModule,
-    ApolloModule
+
   ], // modules needed to run this module
   exports: [
        SharedModule,
-      // Md2Module,
        CKEditorModule,
 
-    
-      //  GenericActionsComponent,
-      //  //TextMaskModule
-        MainmenuComponent,
+       MainmenuComponent,
 
   ],
   providers: [
      ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
      CRMCurrencyPipe, CRMCurrencyFormatterDirective,
      CrmcustomdialogComponent,
-    // OpportunityService,
      TokenService,
      AuthGuard, AuthHelper,
      OnedrivegraphService, 
@@ -295,29 +282,6 @@ import { AuthHelper } from './authHelper/authHelper';
 })
 export class CRMModule {
 
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink,
-    _conf: ConfigurationService
-  ) {
   
-  
-    const http = httpLink.create({ uri:  environment.server + 'api/graphql' });
-
-    const middleware = setContext(() => ({
-      headers: new HttpHeaders().set('Authorization', _conf.getToken() )
-    }));
-
-
-
-    const cache = new InMemoryCache();
-    const link = middleware.concat(http);
-    apollo.create({
-       link: link,
-       cache: cache
-      //http
-    });
-  }
-
 
 }

@@ -8,7 +8,7 @@
 
             <div layout-gt-sm="row" layout-lt-md="column" flex  layout-margin >
                 <mat-form-field>
-                 <mat-select class="cbxClass" #idCustomerProduct name="idCustomerProduct" flex required="true" [disabled]="!allowProduct"  placeholder="Product" [(ngModel)]="itemEdit.idCustomerProduct" (change)="productChange($event.value)"  >
+                 <mat-select class="cbxClass" #idCustomerProduct name="idCustomerProduct" flex required="true" [disabled]="!allowProduct"  placeholder="Product" [(ngModel)]="itemEdit.idCustomerProduct" (selectionChange)="productChange($event.value)"  >
            
                       <mat-option *ngFor="let i of productData" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id"  > 
                         {{ i.productName  }} {{ i.platform != null ? ' [Platform: ' + i.platform + ']': '' }}

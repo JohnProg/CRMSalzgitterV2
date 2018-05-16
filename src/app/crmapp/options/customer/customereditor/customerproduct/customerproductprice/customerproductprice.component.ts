@@ -15,8 +15,8 @@ import { TdMediaService } from '@covalent/core/media';
 import { CatalogService, CURRENCY_FORMAT, DATE_FORMAT } from '../../../../../services/catalog.service';
 import { ConfigurationService } from '../../../../../services/configuration.service';
 import { CustomerProductPrice, TCRMEntity } from '../../../../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { BaseComponent } from '../../../../../catalogs/base.component';
 
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';

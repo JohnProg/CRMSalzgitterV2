@@ -8,7 +8,7 @@
 
           <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
               <mat-form-field>
-             <mat-select flex options="allContacts" class="cbxClass" placeholder="Sent to" (change)="onContactChange($event.value)">
+             <mat-select flex options="allContacts" class="cbxClass" placeholder="Sent to" (selectionChange)="onContactChange($event.value)">
 
               <mat-option class="selectable" *ngFor="let sto of allContacts  	" [value]="sto.eMail" [disabled]="!sto.isActive || false">
                 {{ sto.name }}

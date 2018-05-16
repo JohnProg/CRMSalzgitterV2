@@ -12,8 +12,8 @@ import {
 import { CatalogService } from '../../services/catalog.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { Currency } from '../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { BaseComponent } from '../base.component';
 
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';

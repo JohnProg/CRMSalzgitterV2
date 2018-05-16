@@ -11,9 +11,10 @@ import { TdMediaService } from '@covalent/core/media';
 
 import { MatSnackBar } from '@angular/material';
 import { ActionsService } from '../../services/actions.services';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { IDeleteEventModel } from '../../model/deleteeventmodel';
 import { ICRMPageChangeEvent, ICatalogName } from '../../extensions';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'crm-gactions',
@@ -48,7 +49,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
   private showEmailEvent: Subscription;
   private showFilterButtonEvent: Subscription;
   
-  
+  layoutColor: string;
   catalogTitle: string;
   deleteDescription: string;
   showSearch: boolean = true;
@@ -63,7 +64,10 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
     public _dialogService: TdDialogService,
     public _snackBarService: MatSnackBar,
     public media: TdMediaService,
-    public _actions: ActionsService) { }
+    public _actions: ActionsService) { 
+       this.layoutColor = environment.layoutColor;
+
+    }
 
 
   ngOnInit() : void {
@@ -260,7 +264,7 @@ export class GenericActionsComponent implements OnInit, AfterViewInit, OnDestroy
        //this.catalogTitle = this.catTitle.title +  this.catTitle.tparam != undefined ? (' ' + this.catTitle.tparam) : '';
     }
 
-    this.catalogTitle = ttitle;
+    this.catalogTitle = ttitle != 'undefined' ? ttitle : this.catalogTitle ;
   }
   }
 

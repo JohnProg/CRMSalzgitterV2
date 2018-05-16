@@ -1,14 +1,12 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable, EventEmitter } from '@angular/core';
 
 import { Response, Http, Headers, RequestOptions, URLSearchParams, QueryEncoder } from '@angular/http';
 import { RESTService, HttpInterceptorService } from '@covalent/http';
 
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable ,  Observer ,  BehaviorSubject } from 'rxjs';
 import { ConfigurationService } from './configuration.service';
-
-import 'rxjs/add/operator/map';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 
@@ -204,8 +202,8 @@ export class CatalogService {
   loadCustomAll( url: string,  cparams: URLSearchParams, pageSize: number = 0, customHandle: boolean = false) {
     console.log('registering ' + this.loadName);
     this._loadingService.register(this.loadName);
-    this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams, headers: this.headers })
-      .map((response) => response.json()).subscribe((result) => {
+    this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams, headers: this.headers }).pipe(
+      map((response) => response.json())).subscribe((result) => {
         this.dataStore.entities = result;
         
         this.changeTotal(this.dataStore.entities.length);
@@ -231,8 +229,8 @@ export class CatalogService {
 
 
   loadCustomAllObs( url: string,  cparams: URLSearchParams, customHandle: boolean = false) {
-    return this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams, headers: this.headers })
-      .map((response) => response.json());
+    return this._http.get(this._confs.serverWithApiCustomUrl + url, { search: cparams, headers: this.headers }).pipe(
+      map((response) => response.json()));
   }
 
   customQuery(pfunc: string, cparams: TCRMEntity[]) {
@@ -240,8 +238,8 @@ export class CatalogService {
     cparams.forEach( (element) => {
       pparams.set(element.name, element.description);
     });
-    return this._http.get(this.fullapi + pfunc, { search: pparams, headers: this.headers })
-      .map( (response) => response.json());
+    return this._http.get(this.fullapi + pfunc, { search: pparams, headers: this.headers }).pipe(
+      map( (response) => response.json()));
   }
 
   getPaged(p: IPChangeEventSorted) {
@@ -278,8 +276,8 @@ export class CatalogService {
       });
     }
     this._loadingService.register(this.loadName);
-    return this._http.get(this._confs.serverWithApiCustomUrl + action, { search: pparams, headers: this.headers })
-      .map((response) => response.json()).subscribe((result) => {
+    return this._http.get(this._confs.serverWithApiCustomUrl + action, { search: pparams, headers: this.headers }).pipe(
+      map((response) => response.json())).subscribe((result) => {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);
         this.changeTotal(result.Total);
@@ -310,8 +308,8 @@ export class CatalogService {
   loadFromUrl(url: string) {
     // return this._http.get( this.fullapi + id).map(response => response.json());
     this._loadingService.register(this.loadName);
-     this._http.get(this._confs.serverWithApiCustomUrl + url, this.options)
-      .map((response) => response.json())
+     this._http.get(this._confs.serverWithApiCustomUrl + url, this.options).pipe(
+      map((response) => response.json()))
       .subscribe( (data: TCRMEntity) => {
       Object.assign(this.itemEdit, data);
       this.afterLoadEmmiterEvent(this.itemEdit);
@@ -326,8 +324,8 @@ export class CatalogService {
     console.log('Register ' + this.loadName);
     this._loadingService.register(this.loadName);
 
-    this._rest.create( entity)
-      .map((response) => response.json())
+    this._rest.create( entity).pipe(
+      map((response) => response.json()))
       .subscribe( (data: ReturnSaveRequest) => {
 
         console.log('Resolve ' + this.loadName);
@@ -354,8 +352,8 @@ export class CatalogService {
 
   createArray(entity: any, customHandle: boolean = false) {
     this._loadingService.register(this.loadName);
-    this._rest.create( entity)
-      .map((response) => response.json())
+    this._rest.create( entity).pipe(
+      map((response) => response.json()))
       .subscribe( (data: ReturnSaveRequest) => {
         this._loadingService.resolve(this.loadName);
 
@@ -405,8 +403,8 @@ export class CatalogService {
     // }
 
 
-    this._http.post(this.apiCustom + url, JSON.stringify(fileToUpload), this.options)
-      .map((response) => response.json())
+    this._http.post(this.apiCustom + url, JSON.stringify(fileToUpload), this.options).pipe(
+      map((response) => response.json()))
       .subscribe( (data: ReturnSaveRequest) => {
         
         if(customHandle === false ) {
@@ -500,8 +498,8 @@ export class CatalogService {
         pparams.set(element.name, element.description);
       });
     }
-    this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams, headers: this.headers })
-      .map((response) => response.json()).subscribe((data) => {
+    this._http.get(this._confs.serverWithApiUrl + catalog, { search: pparams, headers: this.headers }).pipe(
+      map((response) => response.json())).subscribe((data) => {
         Object.assign(catList, <TCRMEntity[]>data);
       }, (error) => {
         this._loadingService.resolve('users.list');
@@ -517,8 +515,8 @@ export class CatalogService {
         pparams.set(element.name, element.description);
       });
     }
-    this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams, headers: this.headers })
-      .map((response) => response.json()).subscribe((data) => {
+    this._http.get(this._confs.serverWithApiCustomUrl + catalog, { search: pparams, headers: this.headers }).pipe(
+      map((response) => response.json())).subscribe((data) => {
         Object.assign(catList, <TCRMEntity[]>data);
       }, (error) => {
         this._loadingService.resolve('users.list');
@@ -596,10 +594,10 @@ export class CatalogService {
 // GraphQL
    gResponse: any;
    getAllQl( query, gvars, pname, cparams: IPChangeEventSorted, customHandle: boolean = false ) {
-    this.apollo.watchQuery<QueryResponse>({
+    this.apollo.query<QueryResponse>({
       query: query,
       variables: gvars
-    }).valueChanges.subscribe(({data}) => {
+    }).subscribe(({data}) => {
       
       this.dataStore.entities = <Array<TCRMEntity>>data[pname];
       let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
@@ -618,10 +616,10 @@ export class CatalogService {
   loadQl(query: any, gvars: any) { //, pname: string[],  catList: TCRMEntity[]) {
     // return this._http.get( this.fullapi + id).map(response => response.json());
 
-    return this.apollo.watchQuery<QueryResponse>({
+    return this.apollo.query<QueryResponse>({
       query: query,
       variables: gvars
-    }).valueChanges;
+    });
     
     // .subscribe(({data}) => {
     //   let idx: number = 0;

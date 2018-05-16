@@ -4,8 +4,7 @@ import * as moment from 'moment';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { User } from '../model/allmodels';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable ,  BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ConfigurationService {

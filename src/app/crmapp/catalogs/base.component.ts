@@ -1,12 +1,9 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, ContentChild, NgZone, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription ,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { CatalogService, IPChangeEventSorted, OnedrivegraphService, SharedataService } from '../services/index';
 import { ConfigurationService } from '../services/configuration.service';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
 
@@ -31,7 +28,7 @@ import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ICRMPageChangeEvent } from '../extensions';
 
-import 'rxjs/add/operator/map';
+
 
 
 export const cCurrencyMask = createNumberMask({
@@ -288,7 +285,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onCreateErrorEvent = this._curService.onCreateErrorEmitter.subscribe(item => this.onCreateError(item));
     this.onUpdateErrorEvent = this._curService.onUpdateErrorEmitter.subscribe(item => this.onUpdateError(item));
     this.onDeleteErrorEvent = this._curService.onDeleteErrorEmitter.subscribe(item => this.onDeleteError(item));
-
+    
     this.updateTitle();
 
 
@@ -446,6 +443,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addEntity() {
+    
     if (this.setTitle === true) {
         this._actions.updateTitle( { action: 'Add', title: this.catalogName , tparam: this.titleParam} );
     }
@@ -460,6 +458,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   cancelEdit(): void {
+    
     if(this.setTitle === true) {
       this._actions.updateTitle({ action: undefined, title: this.catalogName , tparam: this.titleParam});
     }
@@ -468,6 +467,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   submitForm(form) {
+   
     if ( form.valid &&  this.beforeSave() === true) {
       if (this.itemEdit.id > 0) {
         this._curService.update(this.itemEdit);

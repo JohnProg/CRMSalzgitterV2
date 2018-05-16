@@ -13,8 +13,8 @@ import { TdLoadingService } from '@covalent/core/loading';
 import { TdMediaService } from '@covalent/core/media';
 
 import { Customer } from '../../../model/allmodels';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { BaseComponent } from '../../../catalogs/base.component';
 import { Router, ActivatedRoute } from '@angular/router';
 

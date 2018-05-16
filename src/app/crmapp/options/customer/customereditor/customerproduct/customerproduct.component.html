@@ -5,7 +5,7 @@
         <section flex-gt-sm="75">
             <mat-form-field>
            <mat-select class="cbxClass" #idProducts name="idProducts" flex required="true" placeholder="Select Product" [(ngModel)]="itemEdit.idProduct"
-            (change)="changeProduct($event)">
+            (selectionChange)="changeProduct($event)">
 
             <mat-option *ngFor="let i of catProduct  	" [disabled]="i.isActive != undefined ? !i.isActive : false"
               [value]="i.id">

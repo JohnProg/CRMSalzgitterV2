@@ -1,24 +1,18 @@
 import { Component, NgZone, AfterViewInit, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Response, RequestOptions, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
-import { ConfigurationService, ActionsService, TokenService } from '../crmapp/services/index';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+ import { ConfigurationService, ActionsService, TokenService } from './crmapp/services/index';
+
+import { Observable ,  BehaviorSubject ,  Subscription } from 'rxjs';
 import { TdMediaService  } from '@covalent/core/media';
 import {  TdLoadingService } from '@covalent/core/loading';
 import {   TdDigitsPipe, IPageChangeEvent } from '@covalent/core';
-
-
-
-import { Subscription } from 'rxjs/Subscription';
-import { User } from '../crmapp/model/allmodels';
-import { AuthHelper } from '../crmapp/authHelper/authHelper';
-import { ICRMPageChangeEvent } from '../crmapp/extensions';
-
+import { User } from './crmapp/model/allmodels';
+import { AuthHelper } from './crmapp/authHelper/authHelper';
+import { ICRMPageChangeEvent } from './crmapp/extensions';
 
 @Component({
-  selector: 'crm-main',
+  selector: 'qs-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
