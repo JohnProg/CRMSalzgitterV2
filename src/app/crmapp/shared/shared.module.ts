@@ -44,9 +44,17 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatNativeDateModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -66,7 +74,11 @@ const MATERIAL_MODULES: any[] = [
   MatToolbarModule, MatSnackBarModule, MatSidenavModule,
   MatTabsModule, MatSelectModule, MatRadioModule, MatDialogModule, MatChipsModule,
   MatDatepickerModule, MatMomentDateModule, MatNativeDateModule,
-  MatExpansionModule
+  MatExpansionModule, 
+
+  MatAutocompleteModule, MatStepperModule, MatTreeModule,
+  MatBadgeModule, MatProgressSpinnerModule, MatProgressBarModule,
+  MatPaginatorModule, MatSortModule
 ];
 
 const COVALENT_MODULES: any[] = [
@@ -118,7 +130,13 @@ export const CRM_FORMATS = {
    // FLEX_LAYOUT_MODULES,
   ],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: CRM_FORMATS},
+  
+      
+      {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+
+      {provide: MAT_DATE_FORMATS, useValue: CRM_FORMATS},
+    
+    
   ]
 })
 export class SharedModule { }

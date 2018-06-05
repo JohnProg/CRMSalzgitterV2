@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MainComponent } from './main.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainComponent } from '../main.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
-import { AuthGuard } from './crmapp/_guards/auth.guard';
+import { AuthGuard } from './_guards/auth.guard';
 
-import { BaseComponent, CatalogComponent, CurrencyComponent, 
+import { BaseComponent, BaseComponentQL, CatalogComponent, CurrencyComponent, 
     ActionoppComponent,  StateComponent, IncotermComponent,
-    TemplateemailComponent, MillComponent } from './crmapp/catalogs/index';
+    TemplateemailComponent, MillComponent } from './catalogs/index';
 
 
 import { OptionsComponent, 
@@ -22,11 +22,11 @@ import { OptionsComponent,
       CustomereditorComponent,
       OpptypeComponent,  
   
-  } from './crmapp/options/index';
+  } from './options/index';
   
   import { OpportunityComponent, OpportunityindexComponent, OpportunityeditorComponent,
   OpportunitydetailComponent, OpportunityheaderComponent, 
-   OpportunitydialogemailComponent } from './crmapp/opportunity/index';
+   OpportunitydialogemailComponent } from './opportunity/index';
   
   
   // Quotation to supplier
@@ -35,25 +35,25 @@ import { OptionsComponent,
       QuotationfromsuppliereditorComponent, QuotationfromsupplierdialogemailComponent,
       QuotationfromsuppliereditorFromOppComponent
     
-   } from './crmapp/quotationfromsupplier/index';
+   } from './quotationfromsupplier/index';
   
   //Quotation to Customer
   import { QuotationtocustomerComponent,
     QuotationtocustomerindexComponent, QuotationtocustomereditorComponent,
     QuotationtocustomereditorFromQFSComponent, QuotationtocustomerdialogemailComponent
-   } from './crmapp/quotationtocustomer/index';
+   } from './quotationtocustomer/index';
   
   // Purchase Order
   import {
      PurchaseorderComponent, PurchaseorderindexComponent,
      PurchaseordereditorComponent, PurchaseordereditorFromQTSComponent, PurchaseorderdialogemailComponent
-  } from './crmapp/purchaseorder/index';
+  } from './purchaseorder/index';
   
   //shippings
  import { ShippingComponent, ShippingindexComponent, ShippingeditorComponent, 
-         ShippingeditorFromPOComponent, ShippingdialogemailComponent } from './crmapp/shipping/index';
+         ShippingeditorFromPOComponent, ShippingdialogemailComponent } from './shipping/index';
   
-  import { LoginComponent } from './crmapp/login/login.component';
+  import { LoginComponent } from './login/login.component';
   
   
 
@@ -77,30 +77,30 @@ const routes: Routes = [
                 children: [
               
               
-                  { path: 'currency', component: CurrencyComponent },
-                  { path: 'colonytype', component: BaseComponent, data: { baseapi: 'ColonyType', catName: 'Colony Type' } },
-                  { path: 'department', component: BaseComponent, data: { baseapi: 'Department', catName: 'Department' } },
-                  { path: 'documenttype', component: BaseComponent, data: { baseapi: 'DocumentType', catName: 'Document Type' } },
-                  { path: 'family', component: BaseComponent, data: { baseapi: 'Family', catName: 'Families' } },
-                  { path: 'linerterm', component: BaseComponent, data: { baseapi: 'LinerTerm', catName: 'Liner Term' } },
-                  { path: 'market', component: BaseComponent, data: { baseapi: 'Market', catName: 'Market' } },
-                  { path: 'mill', component: MillComponent },
-                  { path: 'organization', component: BaseComponent, data: { baseapi: 'Organization', catName: 'Organization' } },
-                  { path: 'paymentterm', component: BaseComponent, data: { baseapi: 'PaymentTerm', catName: 'Payment Term' } },
-                  { path: 'port', component: BaseComponent, data: { baseapi: 'Port', catName: 'Port' } },
-                  { path: 'position', component: BaseComponent, data: { baseapi: 'Position', catName: 'Position' } },
-                  { path: 'property', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties' } },
-                  { path: 'sector', component: BaseComponent, data: { baseapi: 'Sector', catName: 'Sector' } },
-                  { path: 'tender', component: BaseComponent, data: { baseapi: 'Tender', catName: 'Tender' } },
-                  { path: 'actionopp', component: ActionoppComponent, data: { baseapi: 'ActionOpportunity', catName: 'Opportunity Action' } },
-                  { path: 'country', component: BaseComponent, data: { baseapi: 'Country', catName: 'Country' } },
+                  { path: 'currency', component: CurrencyComponent, data: { catName: 'Currencies', optql: 'currency' } },
+                  { path: 'colonytype', component: BaseComponent, data: { baseapi: 'ColonyType', catName: 'Colony Type', optql: 'colonytype' } },
+                  { path: 'department', component: BaseComponent, data: { baseapi: 'Department', catName: 'Department', optql: 'department' } },
+                  { path: 'documenttype', component: BaseComponent, data: { baseapi: 'DocumentType', catName: 'Document Type', optql: 'documenttype' } },
+                  { path: 'family', component: BaseComponent, data: { baseapi: 'Family', catName: 'Families', optql: 'family' } },
+                  { path: 'linerterm', component: BaseComponent, data: { baseapi: 'LinerTerm', catName: 'Liner Term', optql: 'linerterm' } },
+                  { path: 'market', component: BaseComponent, data: { baseapi: 'Market', catName: 'Market', optql: 'market' } },
+                  { path: 'mill', component: MillComponent, data: {  catName: 'Mills', optql: 'mill' }  },
+                  { path: 'organization', component: BaseComponent, data: { baseapi: 'Organization', catName: 'Organization', optql: 'organization' } },
+                  { path: 'paymentterm', component: BaseComponent, data: { baseapi: 'PaymentTerm', catName: 'Payment Term', optql: 'paymentterm' } },
+                  { path: 'port', component: BaseComponent, data: { baseapi: 'Port', catName: 'Port', optql: 'port' } },
+                  { path: 'position', component: BaseComponent, data: { baseapi: 'Position', catName: 'Position', optql: 'position' } },
+                  { path: 'property', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties', optql: 'property' } },
+                  { path: 'sector', component: BaseComponent, data: { baseapi: 'Sector', catName: 'Sector', optql: 'sector' } },
+                  { path: 'tender', component: BaseComponent, data: { baseapi: 'Tender', catName: 'Tender', optql: 'tender' } },
+                  { path: 'actionopp', component: ActionoppComponent, data: { baseapi: 'ActionOpportunity', catName: 'Opportunity Action', optql: 'actionopportunity' } },
+                  { path: 'country', component: BaseComponent, data: { baseapi: 'Country', catName: 'Country', optql: 'country' } },
                   { path: 'state', component: StateComponent },
                   { path: 'incoterm', component: IncotermComponent },
-                  { path: 'transactionflow', component: BaseComponent, data: { baseapi: 'TransactionFlow', catName: 'Transaction Flow' } },
+                  { path: 'transactionflow', component: BaseComponent, data: { baseapi: 'TransactionFlow', catName: 'Transaction Flow', optql: 'transactionflow' } },
                   { path: 'templateemail', component: TemplateemailComponent },
-                  { path: 'typeopportunity', component: BaseComponent, data: { baseapi: 'TypeOpportunity', catName: 'Type Opportunity' } },
-                  { path: 'status', component: BaseComponent, data: { baseapi: 'EstatusOpportunity', catName: 'Status' } },
-                  { path: 'properties', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties' } },
+                  { path: 'typeopportunity', component: BaseComponent, data: { baseapi: 'TypeOpportunity', catName: 'Type Opportunity', optql: 'typeopportunity' } },
+                  { path: 'status', component: BaseComponent, data: { baseapi: 'EstatusOpportunity', catName: 'Status', optql: 'status' } },
+                  { path: 'properties', component: BaseComponent, data: { baseapi: 'Property', catName: 'Properties', optql: 'property' } },
                   
                 ]
               },

@@ -37,5 +37,5 @@ export const environment: {
   oneDriveBase: 'https://graph.microsoft.com/beta/',
   oneDriveRootCustomer: 'CustomerDocumentV2',
   rootDocBase: 'DEV',
-  layoutColor: 'accent'
+  layoutColor: 'warn'
 };

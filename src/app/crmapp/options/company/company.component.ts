@@ -98,6 +98,7 @@ export class CompanyComponent extends BaseComponent {
   }
 
   uploadFile(ffiles: FileList | File) {
+    
     if (ffiles instanceof FileList) {
       
     } else {

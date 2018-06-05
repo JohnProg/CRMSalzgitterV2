@@ -369,16 +369,19 @@
 			super();
 			this.customerProductExtended = new CustomerProductExtended();
 		}
+		comments: string;
 		id: number;
 		idCustomer: number;
 		idProduct: number;
 		isAutomotive: boolean;
+		salesTons: number;
 		customerProductExtended: CustomerProductExtended;
 		customerProductProperties: CustomerProductProperty[];
 	}
 	export class CustomerProductExtended extends TCRMEntity {
 		buyerName: string;
 		customerName: string;
+		comments: string;
 		eau: number;
 		idCustomerProduct: number;
 		partNumberBuyer: string;
@@ -387,6 +390,7 @@
 		prodDescription: string;
 	}	
 	export class CustomerProductPrice extends TCRMEntity {
+		comments: string;
 		customerProduct: CustomerProduct;
 		id: number;
 		idCustomerProduct: number;
@@ -395,6 +399,7 @@
 		validTo: Date;
 	}	
 	export class CustomerProductProperty extends TCRMEntity {
+		comments: string;
 		id: number;
 		idCustomerProduct: number;
 		idProperty: number;
@@ -737,7 +742,7 @@
 		idCountry: number;
 		idState: number;
 		legalResponsible: string;
-		logo: number[];
+		logo: string;
 		number: string;
 		phone: string;
 		stateDescription: string;
@@ -755,6 +760,12 @@
 		description: string;
 		id: number;
 		idCountry: number;
+		name: string;
+	}
+	export class GetProductsFromIdMill extends TCRMEntity {
+		description: string;
+		id: number;
+		idProduct: number;
 		name: string;
 	}
 	export class getCustomerContactList_Result extends TCRMEntity {
@@ -1417,6 +1428,12 @@
 		idMill: number;
 		idCountry: number;
 	}
+	export class MillProduct extends TCRMEntity {
+		id: number;
+		idMill: number;
+		idProduct: number;
+	}
+
 	export class Opportunity extends TCRMEntity {
 		asImporter: boolean;
 		comments: string;

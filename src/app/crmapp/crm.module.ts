@@ -16,7 +16,7 @@ import { environment } from '../../environments/environment';
 
 
 // // // services 
-import { OpportunityService, ActionsService, CatalogService, OnedrivegraphService,
+import { OpportunityService, ActionsService, CatalogService, CRMQLQueries, OnedrivegraphService,
   ConfigurationService, TokenService, SharedataService } from './services/index';
 
   // Directives
@@ -24,9 +24,10 @@ import { OpportunityService, ActionsService, CatalogService, OnedrivegraphServic
 
 
 //catalogs
-import { BaseComponent, CatalogComponent, CurrencyComponent,  
+import { BaseComponent, BaseComponentQL, CatalogComponent, CurrencyComponent,  
   ActionoppComponent, StateComponent, IncotermComponent,
-  TemplateemailComponent, TemplateemaildocumentComponent, BaseOppComponent, MillComponent, MillcountryComponent
+  TemplateemailComponent, TemplateemaildocumentComponent, BaseOppComponent, 
+  MillComponent, MillcountryComponent, MillproductComponent
  } from './catalogs/index';
 
 
@@ -127,6 +128,7 @@ import { AuthHelper } from './authHelper/authHelper';
   declarations: [
     MainmenuComponent,
     BaseComponent,
+    BaseComponentQL,
     CurrencyComponent,
     ActionoppComponent, 
     StateComponent,
@@ -137,6 +139,7 @@ import { AuthHelper } from './authHelper/authHelper';
     EditordetailComponent,
     MillComponent,
     MillcountryComponent,
+    MillproductComponent,
     CrmcustomdialogComponent,
     CatalogComponent,
     DialogOverviewResponsiblePswDialog,
@@ -259,14 +262,14 @@ import { AuthHelper } from './authHelper/authHelper';
 
   ],
   providers: [
-     ActionsService, CatalogService, ConfigurationService, CurrencyPipe,
+     ActionsService, CatalogService,  ConfigurationService, CurrencyPipe,
      CRMCurrencyPipe, CRMCurrencyFormatterDirective,
      CrmcustomdialogComponent,
      TokenService,
      AuthGuard, AuthHelper,
      OnedrivegraphService, 
      SharedataService,
-
+     CRMQLQueries
 
   ], // additional providers needed for this module
   entryComponents: [

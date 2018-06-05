@@ -73,7 +73,7 @@
                     <span class="text-upper">Browse...</span>
                 </td-file-input>
                 </section>
-                 <section flex-gt-sm="55" >
+                 <section flex-gt-sm="55" *ngIf="itemEdit.logo != undefined" >
                     <img [src]="'data:image/jpg;base64,'+ itemEdit.logo"  /> 
                  </section>  
             </div>

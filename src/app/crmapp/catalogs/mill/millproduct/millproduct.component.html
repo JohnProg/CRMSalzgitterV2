@@ -1,4 +1,12 @@
 <ng-template [tdLoading]="loadName" tdLoadingStrategy="overlay">
+  <div layout-margin>
+      <div>
+          <button mat-raised-button color="accent" class="text-upper" (click)="addEntity()" *ngIf="!isEditing"> Add Product </button>
+          <button mat-raised-button color="secondary" (click)="cancelEdit()" *ngIf="isEditing">Cancel </button>
+          <button mat-raised-button color="primary" (click)="saveEntity()" *ngIf="isEditing">Save</button>
+      
+      </div>
+
 <section *ngIf="isEditing">
   <form #editform="ngForm" id="editform" flex (ngSubmit)="submitForm(editform)" novalidate>
 
@@ -6,13 +14,12 @@
     <div layout-gt-sm="row" layout-lt-md="column" layout-margin>
       <section flex-gt-sm="30">
           <mat-form-field>
-         <mat-select class="cbxClass" #idMarket name="idMarket" flex required="true" placeholder="Select Market" multiple="true"  [(ngModel)]="marketSelected">
-      
-          <mat-option *ngFor="let i of notSelectedProducts 	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
+         <mat-select class="cbxClass" #idProduct name="idProduct" flex required="true" placeholder="Select Product" multiple="true"  [(ngModel)]="productSelected">        
+          <mat-option *ngFor="let i of notSelectedProducts	" [disabled]="i.isActive != undefined ? !i.isActive : false" [value]="i.id">
             {{ i.nameDescription || i.name}}
           </mat-option>
-        </mat-select>             
-          </mat-form-field>        
+        </mat-select>               
+          </mat-form-field>
 
       </section>
     </div>
@@ -33,7 +40,7 @@
       </div>
     </ng-template>
 
-  </td-data-table>
+  </td-data-table> 
       
   <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
   [total]="totalItems | async"  (change)="change($event)" >
@@ -41,6 +48,9 @@
 
 <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>
 </td-paging-bar>
-</section>
 
+
+
+</section>
+</div>
 </ng-template>

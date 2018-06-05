@@ -41,7 +41,7 @@ export class TokenService {
                 password: pass,
         };
         let body: string = this.encodeParams(params);
-        debugger
+        
         return this._http.post(this._confs.TOKEN_ENDPOINT, body, this.options ).pipe(
         map((res: Response) => res.json() ));
         // .subscribe( (res: any) => {

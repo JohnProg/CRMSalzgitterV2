@@ -22,7 +22,7 @@ export class LoginComponent {
               private _loadingService: TdLoadingService,
               private _token: TokenService,
               private _confs: ConfigurationService) {
-    //            debugger
+               
     this.layoutColor = environment.layoutColor;
 
   }

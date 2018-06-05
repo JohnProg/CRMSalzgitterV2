@@ -6,7 +6,7 @@ import { RequestInterceptor } from '../config/interceptors/request.interceptor';
 import { MOCK_API } from '../config/api.config';
 import { AppComponent } from './app.component';
 
-import { routedComponents, AppRoutingModule } from './app-routing.module';
+import { routedComponents, AppRoutingModule } from './crmapp/app-routing.module';
 
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
@@ -18,6 +18,7 @@ import { ApolloLink, concat } from 'apollo-link';
 import { environment } from '../environments/environment';
 import { CRMModule } from './crmapp/crm.module';
 import {  ConfigurationService } from './crmapp/services/index';
+
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
@@ -32,6 +33,7 @@ export function getAPI(): string {
   declarations: [
     AppComponent,
     routedComponents,
+
 
     //CustomdialogcrmComponent,
   ], // directives, components, and pipes owned by this NgModule

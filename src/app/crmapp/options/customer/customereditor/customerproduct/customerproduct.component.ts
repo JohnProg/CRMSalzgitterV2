@@ -64,7 +64,7 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
   }
 
   addColumns() {
-        this.columns.push({ name: 'productName', label: 'Material', tooltip: '' });
+    this.columns.push({ name: 'productName', label: 'Material', tooltip: '' });
     this.columns.push({ name: 'platform', label: 'Platform', tooltip: '' });
 
 
@@ -124,7 +124,7 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
 
   changeProduct(event) {
     
-      if( this.itemEdit.idProduct && this.itemEdit.isAutomotive == true  ) {
+      if( this.itemEdit.idProduct > 0 && this.itemEdit.isAutomotive == true  ) {
          this.getProperties();
       } else {
         this.itemEdit.customerProductProperties = undefined;
@@ -155,6 +155,9 @@ export class CustomerproductComponent  extends CustomerbaseComponent {
      
      if( itm.customerProductExtended === null ) itm.customerProductExtended = new CustomerProductExtended();
      super.afterLoadItem(itm);
+     if( itm.customerProductProperties.length <= 0) {
+       this.getProperties();
+     }
   }
 
 }

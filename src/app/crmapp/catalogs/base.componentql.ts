@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChild, Cont
 import { Subscription ,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Response, Http, Headers, URLSearchParams, QueryEncoder } from '@angular/http';
 import { NgForm } from '@angular/forms';
-import { CatalogService, IPChangeEventSorted, OnedrivegraphService, SharedataService } from '../services/index';
+import { CatalogService, CRMQLQueries, IPChangeEventSorted, OnedrivegraphService, SharedataService } from '../services/index';
 import { ConfigurationService } from '../services/configuration.service';
 import {  IPageChangeEvent } from '@covalent/core';
 import { TdDataTableService, TdDataTableSortingOrder, ITdDataTableSortChangeEvent, ITdDataTableColumn } from '@covalent/core/data-table';
@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { Router, ActivatedRoute, Params, Data } from '@angular/router';
 
-import { TCRMEntity, Colony, Customer, GetStatusByDocType_Result, findActionOppByType_Result } from '../model/allmodels';
+import { TCRMEntity, Colony, Customer, MarketInputQL, GetStatusByDocType_Result, findActionOppByType_Result } from '../model';
 import { IDeleteEventModel } from '../model/deleteeventmodel';
 import { ActionsService } from '../services/actions.services';
 
@@ -27,37 +27,11 @@ import { AuthHelper } from '../authHelper/authHelper';
 import * as moment from 'moment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { ICRMPageChangeEvent } from '../extensions';
+import 'rxjs/add/operator/map';
 
 
 
 
-export const cCurrencyMask = createNumberMask({
-      allowDecimal: true
-    });
-
-  // Allow float greather o equal to 0
-export const cFloatPosMask = createNumberMask({
-      prefix: '',
-      suffix: '', // This will put the dollar sign at the end, with a space.
-      allowDecimal: true
-    });
-
-
-const findCustCatalogsQl = gql`
-  query 
-        findCustCatalogs($custid: Int!) {
-            customer(sid: $custid) { id name }
-            findCustomerContacts(custid: $custid) { id name isActive  } 
-            findDeliveryPoint(custid: $custid) { id cDPName isActive  } 
-        }
-`;
-
-const findCountryByMill = gql`
-  query 
-        findCountryByMill($idmill: Int!) {
-            findCountryByMill(idmill: $idmill) { id name description idCountry } 
-        }
-`;
 
 @Component({
   selector: 'crm-component',
@@ -65,7 +39,12 @@ const findCountryByMill = gql`
   styleUrls: ['./base.component.scss'],
   providers: [],
 })
-export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BaseComponentQL implements OnInit, AfterViewInit, OnDestroy {
+
+   
+
+  optql: any;
+
   gQuery: any;
   private addEvent;
   private searchEvent;
@@ -107,19 +86,26 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   setTitle: boolean = true;
   isSmallScreen: boolean = false;
 
-  currencyMask = cCurrencyMask;
-  floatPosMask = cFloatPosMask;
+  // currencyMask = cCurrencyMask;
+  // floatPosMask = cFloatPosMask;
   subEditor: boolean = false;
 
 
 
-  entList: Observable< TCRMEntity[]>;
-  itemEdit:  TCRMEntity;
+  public dataStore: {
+    entities: TCRMEntity[]
+  };
+  itemEdit: TCRMEntity;
+
+  _entList: BehaviorSubject<TCRMEntity[]>;
+  entList: Observable<any>;
+   
+
   curIndex: number;
   showFilter: boolean = false;
   
-  totalItems: Observable<number>;
- 
+  _totalItems: BehaviorSubject<number> = new BehaviorSubject(0);
+  totalItems: Observable<number> = this._totalItems.asObservable();
 
 
 
@@ -135,6 +121,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   fromRow: number = 1;
   currentPage: number = 0;
   dataLoaded: boolean = false;
+
 
   tPageSize: number;
   pageSize: Observable<number>;
@@ -154,7 +141,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   autoLoad: boolean = true;
   isLoading: boolean = false;
   objId: string;
-   _curService: CatalogService;
   handleScreenChange: boolean = true;
   autoHideFilterPanel: boolean = true;
   
@@ -200,39 +186,34 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public _router: Router,
     public _auth: AuthHelper,
     public _one: OnedrivegraphService,
-    public _shared: SharedataService
+    public _shared: SharedataService,
+    public _crmqueries: CRMQLQueries
     ) {
-    this._curService = new CatalogService(_http, _confs, _loadingService, 
-                       _dialogService,
-                       _snackBarService, _tableService, apollo);
-                       
     this.objId = this._actions.newGuid();
+    this.dataStore = { entities: [] };
+    this._entList = <BehaviorSubject<TCRMEntity[]>>new BehaviorSubject([]);
+    this.entList =  this._entList.asObservable();
+    
   }
 
   ngOnInit() {
     this.ngBeforeInit();
     this.pageSize = this._confs.pageSize;
-    
-    this.totalItems = this._curService.totalItems;
-    
     this.pageSize.subscribe( res => {
-      
          this.tPageSize = res;
     });
+
     if( this.route.snapshot.data['catName'] !== undefined) {
-      
       let catName = this.route.snapshot.data['catName'];
       this.catalogName = catName;
    }
    
-    if( this.route.snapshot.data['baseapi'] !== undefined ) {
-      let baseapi = this.route.snapshot.data['baseapi'];
-      this._curService.setAPI(baseapi + '/', this.catalogName, this.loadName);
+   if( this.route.snapshot.data['optql'] !== undefined) {
+     
+    let cql = this.route.snapshot.data['optql'];
+    this.optql = this._crmqueries[cql];
     }
-    
-
-
-
+   
     if ( this.handleScreenChange === true) {
       this.screenSizeChangeEvent = this._actions.screenSizeChangeEvent.subscribe( (e: ICRMPageChangeEvent) => {
           this.screenChange(e);
@@ -250,7 +231,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInitClass() {
-    this.entList = <Observable<TCRMEntity[]>>this._curService.entList;
     this.addColumns();
     this.addActionColumn();
     this.initData();
@@ -260,9 +240,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   ngAfterViewInit(): void {
-
-
-
     // broadcast to all listener observables when loading the page
     this._mediaService.broadcast();
 
@@ -274,20 +251,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       () => console.log('recived data') //removed dot
       );
 
-
-
-      // Service events
-    this.afterLoadEvent = this._curService.afterLoadEmitter.subscribe(item => this.afterLoadItem(item));
-    this.afterCreateEvent = this._curService.afterCreateEmitter.subscribe(item => this.afterCreate(item));
-    this.afterUpdateEvent = this._curService.afterUpdateEmitter.subscribe(item => this.afterUpdate(item));
-    this.afterLoadAllEvent = this._curService.afterLoadAllEvent.subscribe(item => this.afterLoadAll(item));
-    this.afterDeleteEvent = this._curService.afterDeleteEmitter.subscribe(item => this.afterDelete(item));
-
-  
-    this.onCreateErrorEvent = this._curService.onCreateErrorEmitter.subscribe(item => this.onCreateError(item));
-    this.onUpdateErrorEvent = this._curService.onUpdateErrorEmitter.subscribe(item => this.onUpdateError(item));
-    this.onDeleteErrorEvent = this._curService.onDeleteErrorEmitter.subscribe(item => this.onDeleteError(item));
-    
+ 
     this.updateTitle();
 
 
@@ -308,12 +272,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     this.saveEvent = this._actions.saveItemEvent.subscribe( (save) => {
-      
        this.saveEntity();
     });
     this.addEvent = this._actions.addItemEvent
       .subscribe((res) => {
-
         this.addEntity();
       },
       err => console.log(err),   //removed dot
@@ -325,7 +287,6 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.searchEvent = this._actions.searchEvent
       .subscribe((res) => {
-         
         this.search(res);
       },
       err => console.log(err),   //removed dot
@@ -361,20 +322,11 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.editItemEvent !== undefined) { this.editItemEvent.unsubscribe(); }
 
     if (this.cancelEditEvent !== undefined) { this.cancelEditEvent.unsubscribe(); }
-    if (this.afterLoadEvent !== undefined) { this.afterLoadEvent.unsubscribe(); }
-    if (this.afterCreateEvent !== undefined) { this.afterCreateEvent.unsubscribe(); }
-    if (this.afterUpdateEvent !== undefined) { this.afterUpdateEvent.unsubscribe(); }
-    if (this.afterLoadAllEvent !== undefined) { this.afterLoadAllEvent.unsubscribe(); }
+
     if (this.sendEmailEvent !== undefined) { this.sendEmailEvent.unsubscribe(); }
-    if (this.afterDeleteEvent !== undefined) { this.afterDeleteEvent.unsubscribe(); }
 
-
-    if (this.onCreateErrorEvent !== undefined) { this.onCreateErrorEvent.unsubscribe(); }
-    if (this.onUpdateErrorEvent !== undefined) { this.onUpdateErrorEvent.unsubscribe(); }
-    if (this.onDeleteErrorEvent !== undefined) { this.onDeleteErrorEvent.unsubscribe(); }
     if (this.showFilterPanelSubs !== undefined) { this.showFilterPanelSubs.unsubscribe(); }
     
-
     if ( this.handleScreenChange === true) {
         if (this.screenSizeChangeEvent !== undefined) { this.screenSizeChangeEvent.unsubscribe(); }
     }
@@ -395,19 +347,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.columns.push({ name: 'tActions', label: '', width: 120 });
   }
 
+
   initData() {
-    
-    
     if (this.autoLoad === true) {
         this.loadData();
     }
-    
-    // .subscribe((total: number) => {
-      
-    //   this.totalItems = total;
-    // });
     this.initEntity();
-
   }
 
   loadData() {
@@ -424,10 +369,32 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
       }
   }
 
+
   loadFromServer() {
-    this._curService.loadAll(this.getPageParams(''));
+
+
+   this.apollo.query({
+        query: this.optql.loadql,
+        variables: this.getLoadParams()
+    })    .subscribe(({data}) => {
+      
+      this.dataStore.entities = data[this.optql.listName];
+      //this._entList.next(this.dataStore.entities);
+
+      this._totalItems.next(this.dataStore.entities.length);
+      this.afterLoadAll(this.dataStore.entities);
+      this.isLoading = false;
+      
+      this.reloadPaged();
+    });
+
+    
   }
 
+  getLoadParams() : any {
+     return {};
+  }
+   
   initEntity() {
     this.itemEdit = new TCRMEntity();
   }
@@ -441,8 +408,13 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         this._actions.updateTitle( { action: 'Edit', title: this.catalogName, tparam: this.titleParam} );
 
     }
-    
-    this._curService.load(id);
+    this.apollo.query({
+      query: this.optql.loadentity,
+      variables: { sid: id }
+      })
+      .subscribe(({data}) => {
+        this.afterLoadItem(data[this.optql.singleName]);
+      });
   }
 
   addEntity() {
@@ -457,11 +429,35 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteEntity(id: number) {
-    this._curService.remove(id);
+    //this._curService.remove(id);
+    
+if( id > 0) {
+    this.apollo.mutate({
+      mutation: this.optql.delete,
+      variables: { evalue: id },
+      //update: (store,  { data: { savemarket } }) => {
+      update: (store, { data: deletemdata }  ) => {
+        // Read the data from our cache for this query.
+        const data = store.readQuery({ query: this.optql.loadql });
+        let mdata = data[this.optql.listName];
+        // Add our comment from the mutation to the end.
+          let t = mdata.findIndex( o => o.id == deletemdata[this.optql.deleteName].id);
+          if( t >= 0) {
+             mdata.splice(t, 1);
+          }
+
+        this.dataStore.entities = mdata;
+        this._entList.next(this.dataStore.entities);
+        // Write our data back to the cache.
+        store.writeQuery({ query: this.optql.loadql, data });
+        this.afterDelete(null);
+      }
+      })
+      .subscribe();
+    }
   }
 
   cancelEdit(): void {
-    
     if(this.setTitle === true) {
       this._actions.updateTitle({ action: undefined, title: this.catalogName , tparam: this.titleParam});
     }
@@ -472,14 +468,48 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   submitForm(form) {
 
     if ( form.valid &&  this.beforeSave() === true) {
-      if (this.itemEdit.id > 0) {
-        this._curService.update(this.itemEdit);
-      } else {
-        this._curService.create(this.itemEdit);
-      }
+      this.performSave(this.itemEdit);
+
     } else {
       this._snackBarService.open('There are some errors, please review data ', 'Ok');
     }
+  }
+
+  performSave(item: any) {
+    
+    this.apollo.mutate({
+      mutation: this.optql.mutation,
+      variables: { evalue: item },
+      //update: (store,  { data: { savemarket } }) => {
+      update: (store, { data: savemdata }  ) => {
+        debugger
+        // Read the data from our cache for this query.
+        const data = store.readQuery({ query: this.optql.loadql });
+        let mdata = data[this.optql.listName];
+        // Add our comment from the mutation to the end.
+        
+
+        if( item.id > 0) {
+          let t = mdata.filter( o => o.id == savemdata[this.optql.saveName].id)[0];
+          Object.assign(t, item);
+        } else {
+          this.itemEdit  =  savemdata[this.optql.saveName];
+          mdata.push(this.itemEdit);
+        }
+        this.dataStore.entities = mdata;
+        this._entList.next(this.dataStore.entities);
+        // Write our data back to the cache.
+        store.writeQuery({ query: this.optql.loadql, data });
+        if( item.id > 0 ) {
+          this.afterUpdate(data);
+        } else {
+          this.afterCreate(data);
+        }
+
+      }
+      })
+      .subscribe();
+
   }
 
   beforeSave(): boolean {
@@ -492,34 +522,30 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   afterCreate(item: any) {
-    Object.assign(this.itemEdit, item.item);
+    
+    this.itemEdit.id = item['createmarket']['id'];
     
     if(this.singleEditor === false) {
       this._actions.cancelEditEvent.emit();
       this.isEditing = false;
       this._actions.cancelEdit();
-
     }
-    
-     this.onItemCreated.emit(item);
+
+     this.onItemCreated.emit(this.itemEdit);
     //this._curService.assignList(item.items);
   }
 
   afterUpdate(item: any) {
 
-    Object.assign(this.itemEdit, item.item);
     if( this.singleEditor === false) {
         this.isEditing = false;
         this._actions.cancelEdit();
-        
     }
-    //this._curService.assignList(item.items);
-    this.onItemUpdated.emit(item);
-    
+    this.onItemUpdated.emit(this.itemEdit);
   }
 
   afterDelete(item: any) {
-    this.reloadPaged(undefined);
+  //  this.reloadPaged(undefined);
     
   }
 
@@ -537,23 +563,18 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   confirmDelete(item:  TCRMEntity) {
-    
     this.itemEdit = item;
-    
     this._actions.deleteItemEvent.emit( { title: item.description || item.name || item[this.fieldDelete], objId: this.objId } );
   }
 
   deleteConfirmed(e: IDeleteEventModel) {
-    
     if( e.objId === this.objId) {
-      
       this.deleteEntity(this.itemEdit.id);
     }
   }
 
 
   getPageParams(sText: string) : IPChangeEventSorted {
-
     return {
       page: this.currentPage, pageSize: this.tPageSize, sortBy: this.sortBy,
       sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
@@ -569,14 +590,12 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   search(searchTerm: string): void {
-    
     this.searchTerm = searchTerm;
     this.currentPage = 0;
     this.reloadPaged(this.searchTerm);
   }
 
   page(pagingEvent: IPChangeEventSorted): void {
-    
     this.fromRow = pagingEvent.fromRow;
     this.currentPage = pagingEvent.page - 1;
     //this.pageSize = pagingEvent.pageSize;
@@ -591,15 +610,29 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
         sortType: this.sortType, sText: sText, maxPage: 0, total: 0, fromRow: 0, toRow: 0
       } as IPChangeEventSorted;
       this.addParams(p);
-      this._curService.getPaged(p);
+      this.getPaged(p);
     }
   }
 
+
+  getPaged(p: IPChangeEventSorted) {
+
+    let index = (p.page * p.pageSize) + 1;
+    let t = this.dataStore.entities;
+    if( p.sText != undefined && p.sText.length > 0 ) {
+       t = this._tableService.filterData(t, p.sText, true); 
+    }
+    t = this._tableService.sortData(t, p.sortBy, p.sortType == 'ASC' ? TdDataTableSortingOrder.Ascending : TdDataTableSortingOrder.Descending );
+    t = this._tableService.pageData(t, index , --index + p.pageSize);    
+    this._entList.next(t);
+
+  }
   addParams(p: IPChangeEventSorted) {}
 
   afterLoadItem(itm:  TCRMEntity) {
      this.isEditing = true;
-     this.itemEdit = itm;
+     Object.assign(this.itemEdit, itm);
+     delete this.itemEdit['__typename'];
      this._actions.setEdit({ isChild: this.singleEditor });
      this.onItemLoaded.emit(itm);
      
@@ -630,10 +663,7 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   afterLoadAll(itms: TCRMEntity[]) {
-    
     this.isLoading = false;
-    
-
   }
 
   sendEmail() {
@@ -641,7 +671,10 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadCustomerContact(idcust: number) {
-   this._curService.loadQl(findCustCatalogsQl, { custid: idcust })
+   this.apollo.query( {
+     query: this._crmqueries.findCustCatalogsQl, 
+     variables: { custid: idcust }
+   })
     .subscribe(({data}) => {
       this.catCustomerContact = data['findCustomerContacts'];
       this.catDeliveryPoint = data['findDeliveryPoint'];
@@ -658,9 +691,14 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   loadCountryOrigin(idmill: number) {
-   this._curService.loadQl(findCountryByMill, { idmill: idmill })
+   this.apollo.query( {
+        query: this._crmqueries['country'].loadql,
+        variables: { idmill: idmill }
+   })
     .subscribe(({data}) => {
-      this.catCountry = data['findCountryByMill'];
+      
+      this.catCountry = data[this._crmqueries['country'].listName];
+      this.afterLoadCountry();
     }, (error: Error) => {
       debugger
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
@@ -668,6 +706,9 @@ export class BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  afterLoadCountry() {
+
+  }
 
   cleanMaskModel(val) {
     let t = val.replace('$', '');

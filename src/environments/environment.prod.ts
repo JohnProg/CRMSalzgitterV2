@@ -25,7 +25,7 @@ export const environment: {
   _redirectUrl: 'https://crmsalzgittermx.com/v2/crm/',
   _root: 'https://crmsalzgittermx.com/v2/crm/',
   GRAPH_RESOURCE: 'https://graph.microsoft.com',
-  baseHref: '/v2/',
+  baseHref: '/v2/crm',
   dateFormat: 'YYYY.MM.DD',
   oneDriveBase: 'https://graph.microsoft.com/v1.0/',
   oneDriveRootCustomer: 'CustomerDocumentV2',

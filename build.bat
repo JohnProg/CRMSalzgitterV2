@@ -32,3 +32,10 @@ DBCC CHECKIDENT ('QuotationToCustomer', RESEED, 300000000);
 DBCC CHECKIDENT ('QuotationFromSupplier', RESEED, 200000000);
 DBCC CHECKIDENT ('Opportunity', RESEED, 100000000);
 GO
+
+
+Create ts file for graphql
+
+apollo-codegen introspect-schema http://localhost:64997/api/graphql --output schema.json
+
+apollo-codegen generate **/*.graphql --schema schema.json --target typescript --add-typename --output graphqlInputs.ts

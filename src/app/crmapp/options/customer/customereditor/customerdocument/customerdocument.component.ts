@@ -81,10 +81,9 @@ export class CustomerdocumentComponent extends BaseComponent {
     }
   }
 
-  deleteEntity() {
 
-  }
   confirmDelete(item: CustomerDocument) {
+    
     if( this.checkOneDriveToken() == true) {
       this.itemEdit = item;
       this._actions.deleteItemEvent.emit(  { title: 'Document', objId: this.objId });     
@@ -93,6 +92,7 @@ export class CustomerdocumentComponent extends BaseComponent {
   }
 
   afterDelete(item: CustomerDocument) {
+    debugger
     super.afterDelete(item);
     let docid: string = this.itemEdit.docId;
     this._one.doDelete(docid).end((err, res) => {

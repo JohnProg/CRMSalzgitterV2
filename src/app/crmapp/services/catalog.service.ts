@@ -23,6 +23,7 @@ import {  TCRMEntity, ReturnSaveRequest, QueryResponse } from '../model/index';
 import * as moment from 'moment';
 import { environment } from '../../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { debug } from 'util';
 
 
 export interface IPChangeEventSorted extends IPageChangeEvent {
@@ -58,6 +59,7 @@ export const EMAILTO_FORMAT: any = (v: number) => {
   } ;
 @Injectable()
 export class CRMRestService extends RESTService<TCRMEntity>  {
+
 
   _headers: Headers = new Headers();
   _path: string;
@@ -168,9 +170,6 @@ export class CatalogService {
 
         this.changeTotal(this.dataStore.entities.length);
         this.afterLoadAllEvent.next(this.dataStore.entities);      
-
-
-
     }, (error: Error) => {
       this._loadingService.resolve(this.loadName);
       this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
@@ -280,7 +279,7 @@ export class CatalogService {
       map((response) => response.json())).subscribe((result) => {
         this.dataStore.entities = result.Data;
         this._entList.next(Object.assign({}, this.dataStore).entities);
-        this.changeTotal(result.Total);
+        this.changeTotal(this.dataStore.entities.length);
         this.afterLoadAllEvent.next(this.dataStore.entities);
       }, (error) => {
         this._loadingService.resolve(this.loadName);
@@ -463,6 +462,7 @@ export class CatalogService {
   remove(entId: number, customHandle: boolean = false ) {
     console.log('Registering ' + this.loadName);
     this._loadingService.register(this.loadName);
+    
     this._rest.delete(entId).subscribe( (response) => {
       // this.dataStore.entities.forEach((t, i) => {
       //   if (t.id === entId) { this.dataStore.entities.splice(i, 1); }
@@ -636,6 +636,63 @@ export class CatalogService {
 
   }
 
+  loadAllQL(query: any, gvars: any, cparams: IPChangeEventSorted, itemname: string,  customHandle: boolean = false) {
+    this._loadingService.register(this.loadName);
+    this.loadQl(query, gvars).subscribe((datas: any) => {
+      let d = datas.data[itemname];
+      
+      this.dataStore.entities.splice(0, this.dataStore.entities.length -1);
+      d.forEach(element => {
+        this.dataStore.entities.push(element);
+      });
+      
+      let t = this._tableService.pageData(this.dataStore.entities, 1, cparams.pageSize);
+      this._entList.next(t);
+      this._loadingService.resolve(this.loadName);
+
+        this.changeTotal(this.dataStore.entities.length);
+        this.afterLoadAllEvent.next(this.dataStore.entities);      
+    }, (error: Error) => {
+      this._loadingService.resolve(this.loadName);
+      this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+    });
+  }
+
+  loadEntity(query: any, gvars: any,  itemname: string ) {
+    this._loadingService.register(this.loadName);
+    // return this._http.get( this.fullapi + id).map(response => response.json());
+    this.loadQl(query, gvars).subscribe( (data: any) => {
+
+      Object.assign(this.itemEdit, data.data[itemname]);
+      
+      delete this.itemEdit['__typename'];
+      this._loadingService.resolve(this.loadName);
+       this.afterLoadEmmiterEvent(this.itemEdit);       
+
+    }, error => {
+      this._loadingService.resolve(this.loadName);
+      this._snackBarService.open(' Could not load ' + this.catalogName, 'Ok');
+    });
+  }
+
+
+  createQl(qmutate: any, gvars: any) { //, pname: string[],  catList: TCRMEntity[]) {
+    // return this._http.get( this.fullapi + id).map(response => response.json());
+    return this.apollo.mutate({
+      mutation: qmutate,
+      variables: gvars
+    });
+  }
+
+  patchQl(qmutate: any, gvars: any) { //, pname: string[],  catList: TCRMEntity[]) {
+    // return this._http.get( this.fullapi + id).map(response => response.json());
+
+    return this.apollo.mutate({
+      mutation: qmutate,
+      variables: gvars
+    });
+    
+  }
 
   converBase64toBlob(content, contentType) {
     contentType = contentType || '';

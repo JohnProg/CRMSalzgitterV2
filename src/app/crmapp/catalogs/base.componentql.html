@@ -32,7 +32,7 @@
 
 
  <ng-template tdLoading="items.load">
-      <td-data-table [data]="entList | async" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
+      <td-data-table [data]="entList" [columns]="columns" [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="getSorted($event)">
         <ng-template tdDataTableTemplate="name" let-value="value" let-row="row"  let-column="column">
           <div layout="row">
             <button mat-button (click)="editEntity(row.id)">{{value}}</button>
@@ -53,7 +53,7 @@
 
       
       <td-paging-bar #pagingBarPageSize [firstLast]="true" [pageSize]="pageSize | async"  
-                  [total]="totalItems | async"  (change)="change($event)" >
+                  [total]="_totalItems | async"  (change)="change($event)" >
         <span hide-xs>Rows per page:</span>
 
         <span>{{pagingBarPageSize.range}} <span hide-xs>of {{pagingBarPageSize.total}}</span></span>

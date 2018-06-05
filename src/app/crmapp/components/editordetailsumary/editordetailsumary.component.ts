@@ -238,7 +238,7 @@ export class EditordetailsumaryComponent extends BaseComponent {
       }
       this.isLoading = false;
       this.onHasSumary.emit(itms.length > 0);
-      this.totalItems = itms.length;
+      this._curService.changeTotal(itms.length);
       this.reloadPaged();
       this.isLoading = false;
       this.isEditing = false;
